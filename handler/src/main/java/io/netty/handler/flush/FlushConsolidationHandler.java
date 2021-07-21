@@ -97,6 +97,7 @@ public class FlushConsolidationHandler implements ChannelHandler {
         this.explicitFlushAfterFlushes =
                 ObjectUtil.checkPositive(explicitFlushAfterFlushes, "explicitFlushAfterFlushes");
         this.consolidateWhenNoReadInProgress = consolidateWhenNoReadInProgress;
+<<<<<<< HEAD
         flushTask = consolidateWhenNoReadInProgress ?
                 () -> {
                     if (flushPendingCount > 0 && !readInProgress) {
@@ -104,6 +105,18 @@ public class FlushConsolidationHandler implements ChannelHandler {
                         nextScheduledFlush = null;
                         ctx.flush();
                     } // else we'll flush when the read completes
+=======
+        this.flushTask = consolidateWhenNoReadInProgress ?
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (flushPendingCount > 0 && !readInProgress) {
+                            flushPendingCount = 0;
+                            nextScheduledFlush = null;
+                            ctx.flush();
+                        } // else we'll flush when the read completes
+                    }
+>>>>>>> dev
                 }
                 : null;
     }

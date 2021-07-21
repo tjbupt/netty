@@ -16,9 +16,14 @@
 
 package io.netty.util.internal;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
 
 import io.netty.util.internal.ObjectPool.Handle;
+=======
+import io.netty.util.internal.ObjectPool.Handle;
+import io.netty.util.internal.ObjectPool.ObjectCreator;
+>>>>>>> dev
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +39,17 @@ public final class RecyclableArrayList extends ArrayList<Object> {
 
     private static final int DEFAULT_INITIAL_CAPACITY = 8;
 
+<<<<<<< HEAD
     private static final ObjectPool<RecyclableArrayList> RECYCLER = ObjectPool.newPool(RecyclableArrayList::new);
+=======
+    private static final ObjectPool<RecyclableArrayList> RECYCLER = ObjectPool.newPool(
+            new ObjectCreator<RecyclableArrayList>() {
+        @Override
+        public RecyclableArrayList newObject(Handle<RecyclableArrayList> handle) {
+            return new RecyclableArrayList(handle);
+        }
+    });
+>>>>>>> dev
 
     private boolean insertSinceRecycled;
 
@@ -106,8 +121,12 @@ public final class RecyclableArrayList extends ArrayList<Object> {
 
     @Override
     public boolean add(Object element) {
+<<<<<<< HEAD
         requireNonNull(element, "element");
         if (super.add(element)) {
+=======
+        if (super.add(ObjectUtil.checkNotNull(element, "element"))) {
+>>>>>>> dev
             insertSinceRecycled = true;
             return true;
         }
@@ -116,15 +135,23 @@ public final class RecyclableArrayList extends ArrayList<Object> {
 
     @Override
     public void add(int index, Object element) {
+<<<<<<< HEAD
         requireNonNull(element, "element");
         super.add(index, element);
+=======
+        super.add(index, ObjectUtil.checkNotNull(element, "element"));
+>>>>>>> dev
         insertSinceRecycled = true;
     }
 
     @Override
     public Object set(int index, Object element) {
+<<<<<<< HEAD
         requireNonNull(element, "element");
         Object old = super.set(index, element);
+=======
+        Object old = super.set(index, ObjectUtil.checkNotNull(element, "element"));
+>>>>>>> dev
         insertSinceRecycled = true;
         return old;
     }

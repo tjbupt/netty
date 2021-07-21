@@ -42,6 +42,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import static io.netty.buffer.Unpooled.compositeBuffer;
 import static io.netty.buffer.Unpooled.wrappedBuffer;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+<<<<<<< HEAD
+=======
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+>>>>>>> dev
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SocketGatheringWriteTest extends AbstractSocketTest {
@@ -62,7 +66,16 @@ public class SocketGatheringWriteTest extends AbstractSocketTest {
     @Test
     @Timeout(value = TIMEOUT, unit = TimeUnit.MILLISECONDS)
     public void testGatheringWrite(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testGatheringWrite);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testGatheringWrite(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testGatheringWrite(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -72,7 +85,16 @@ public class SocketGatheringWriteTest extends AbstractSocketTest {
     @Test
     @Timeout(value = TIMEOUT, unit = TimeUnit.MILLISECONDS)
     public void testGatheringWriteNotAutoRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testGatheringWriteNotAutoRead);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testGatheringWriteNotAutoRead(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testGatheringWriteNotAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -82,7 +104,16 @@ public class SocketGatheringWriteTest extends AbstractSocketTest {
     @Test
     @Timeout(value = TIMEOUT, unit = TimeUnit.MILLISECONDS)
     public void testGatheringWriteWithComposite(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testGatheringWriteWithComposite);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testGatheringWriteWithComposite(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testGatheringWriteWithComposite(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -92,7 +123,16 @@ public class SocketGatheringWriteTest extends AbstractSocketTest {
     @Test
     @Timeout(value = TIMEOUT, unit = TimeUnit.MILLISECONDS)
     public void testGatheringWriteWithCompositeNotAutoRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testGatheringWriteWithCompositeNotAutoRead);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testGatheringWriteWithCompositeNotAutoRead(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testGatheringWriteWithCompositeNotAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -103,7 +143,16 @@ public class SocketGatheringWriteTest extends AbstractSocketTest {
     @Test
     @Timeout(value = TIMEOUT, unit = TimeUnit.MILLISECONDS)
     public void testGatheringWriteBig(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testGatheringWriteBig);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testGatheringWriteBig(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testGatheringWriteBig(ServerBootstrap sb, Bootstrap cb) throws Throwable {

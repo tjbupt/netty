@@ -15,7 +15,10 @@
  */
 package io.netty.handler.pcap;
 
+<<<<<<< HEAD
 import io.netty.buffer.ByteBufConvertible;
+=======
+>>>>>>> dev
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelDuplexHandler;
@@ -164,7 +167,11 @@ public final class PcapWriteHandler extends ChannelDuplexHandler implements Clos
 
             ByteBuf byteBuf = byteBufAllocator.buffer();
             try {
+<<<<<<< HEAD
                 pCapWriter = new PcapWriter(outputStream, byteBuf);
+=======
+                this.pCapWriter = new PcapWriter(this.outputStream, byteBuf);
+>>>>>>> dev
             } catch (IOException ex) {
                 ctx.channel().close();
                 ctx.fireExceptionCaught(ex);
@@ -173,7 +180,11 @@ public final class PcapWriteHandler extends ChannelDuplexHandler implements Clos
                 byteBuf.release();
             }
         } else {
+<<<<<<< HEAD
             pCapWriter = new PcapWriter(outputStream);
+=======
+            this.pCapWriter = new PcapWriter(this.outputStream);
+>>>>>>> dev
         }
 
         // If Channel belongs to `SocketChannel` then we're handling TCP.
@@ -239,7 +250,11 @@ public final class PcapWriteHandler extends ChannelDuplexHandler implements Clos
     }
 
     @Override
+<<<<<<< HEAD
     public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
+=======
+    public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+>>>>>>> dev
         if (!isClosed) {
             if (ctx.channel() instanceof SocketChannel) {
                 handleTCP(ctx, msg, true);
@@ -262,16 +277,27 @@ public final class PcapWriteHandler extends ChannelDuplexHandler implements Clos
      *                         else set {@code false}
      */
     private void handleTCP(ChannelHandlerContext ctx, Object msg, boolean isWriteOperation) {
+<<<<<<< HEAD
         if (msg instanceof ByteBufConvertible) {
 
             // If bytes are 0 and `captureZeroByte` is false, we won't capture this.
             if (((ByteBufConvertible) msg).asByteBuf().readableBytes() == 0 && !captureZeroByte) {
+=======
+        if (msg instanceof ByteBuf) {
+
+            // If bytes are 0 and `captureZeroByte` is false, we won't capture this.
+            if (((ByteBuf) msg).readableBytes() == 0 && !captureZeroByte) {
+>>>>>>> dev
                 logger.debug("Discarding Zero Byte TCP Packet. isWriteOperation {}", isWriteOperation);
                 return;
             }
 
             ByteBufAllocator byteBufAllocator = ctx.alloc();
+<<<<<<< HEAD
             ByteBuf packet = ((ByteBufConvertible) msg).asByteBuf().duplicate();
+=======
+            ByteBuf packet = ((ByteBuf) msg).duplicate();
+>>>>>>> dev
             ByteBuf tcpBuf = byteBufAllocator.buffer();
             int bytes = packet.readableBytes();
 
@@ -409,15 +435,26 @@ public final class PcapWriteHandler extends ChannelDuplexHandler implements Clos
 
                 UDPPacket.writePacket(udpBuf, datagramPacket.content(), srcAddr.getPort(), dstAddr.getPort());
                 completeUDPWrite(srcAddr, dstAddr, udpBuf, ctx.alloc(), ctx);
+<<<<<<< HEAD
             } else if (msg instanceof ByteBufConvertible && ((DatagramChannel) ctx.channel()).isConnected()) {
 
                 // If bytes are 0 and `captureZeroByte` is false, we won't capture this.
                 if (((ByteBufConvertible) msg).asByteBuf().readableBytes() == 0 && !captureZeroByte) {
+=======
+            } else if (msg instanceof ByteBuf && ((DatagramChannel) ctx.channel()).isConnected()) {
+
+                // If bytes are 0 and `captureZeroByte` is false, we won't capture this.
+                if (((ByteBuf) msg).readableBytes() == 0 && !captureZeroByte) {
+>>>>>>> dev
                     logger.debug("Discarding Zero Byte UDP Packet");
                     return;
                 }
 
+<<<<<<< HEAD
                 ByteBuf byteBuf = ((ByteBufConvertible) msg).asByteBuf().duplicate();
+=======
+                ByteBuf byteBuf = ((ByteBuf) msg).duplicate();
+>>>>>>> dev
 
                 logger.debug("Writing UDP Data of {} Bytes, Src Addr {}, Dst Addr {}",
                         byteBuf.readableBytes(), srcAddr, dstAddr);

@@ -17,6 +17,10 @@
 package io.netty.util;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Map;
 
@@ -27,19 +31,46 @@ public class DomainWildcardMappingBuilderTest {
 
     @Test
     public void testNullDefaultValue() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new DomainWildcardMappingBuilder<String>(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainWildcardMappingBuilder<String>(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNullDomainNamePatternsAreForbidden() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class,
             () -> new DomainWildcardMappingBuilder<String>("NotFound").add(null, "Some value"));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainWildcardMappingBuilder<String>("NotFound").add(null, "Some value");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNullValuesAreForbidden() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class,
             () -> new DomainWildcardMappingBuilder<String>("NotFound").add("Some key", null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainWildcardMappingBuilder<String>("NotFound").add("Some key", null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

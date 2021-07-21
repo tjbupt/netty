@@ -58,6 +58,14 @@ EXAMPLE_MAP=(
   'udp-dns-client:io.netty.example.dns.udp.DnsClient'
   'tcp-dns-client:io.netty.example.dns.tcp.TcpDnsClient'
   'dot-dns-client:io.netty.example.dns.dot.DoTClient'
+<<<<<<< HEAD
+=======
+)
+
+NEEDS_NPN_MAP=(
+  'spdy-client'
+  'spdy-server'
+>>>>>>> dev
 )
 
 EXAMPLE=''

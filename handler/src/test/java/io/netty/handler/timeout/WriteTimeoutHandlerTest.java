@@ -15,7 +15,14 @@
  */
 package io.netty.handler.timeout;
 
+<<<<<<< HEAD
 import io.netty.channel.DefaultChannelPromise;
+=======
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
@@ -30,6 +37,7 @@ public class WriteTimeoutHandlerTest {
     @Test
     public void testPromiseUseDifferentExecutor() throws Exception {
         EventExecutorGroup group1 = new DefaultEventExecutorGroup(1);
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(false, false);
         try {
             channel.pipeline().addLast(new WriteTimeoutHandler(10000));
@@ -39,10 +47,34 @@ public class WriteTimeoutHandlerTest {
                 latch.countDown();
             });
 
+=======
+        EventExecutorGroup group2 = new DefaultEventExecutorGroup(1);
+        EmbeddedChannel channel = new EmbeddedChannel(false, false);
+        try {
+            channel.pipeline().addLast(group1, new WriteTimeoutHandler(10000));
+            final CountDownLatch latch = new CountDownLatch(1);
+            channel.pipeline().addLast(group2, new ChannelInboundHandlerAdapter() {
+                @Override
+                public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                    ctx.writeAndFlush("something").addListener(new ChannelFutureListener() {
+                        @Override
+                        public void operationComplete(ChannelFuture future) throws Exception {
+                            latch.countDown();
+                        }
+                    });
+                }
+            });
+
+            channel.register();
+>>>>>>> dev
             latch.await();
             assertTrue(channel.finishAndReleaseAll());
         } finally {
             group1.shutdownGracefully();
+<<<<<<< HEAD
+=======
+            group2.shutdownGracefully();
+>>>>>>> dev
         }
     }
 }

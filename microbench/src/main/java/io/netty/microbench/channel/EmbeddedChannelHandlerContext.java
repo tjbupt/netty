@@ -41,10 +41,17 @@ public abstract class EmbeddedChannelHandlerContext implements ChannelHandlerCon
     private SocketAddress localAddress;
 
     protected EmbeddedChannelHandlerContext(ByteBufAllocator alloc, ChannelHandler handler, EmbeddedChannel channel) {
+<<<<<<< HEAD
         this.alloc = requireNonNull(alloc, "alloc");
         this.channel = requireNonNull(channel, "channel");
         this.handler = requireNonNull(handler, "handler");
         eventLoop = requireNonNull(channel.eventLoop(), "eventLoop");
+=======
+        this.alloc = checkNotNull(alloc, "alloc");
+        this.channel = checkNotNull(channel, "channel");
+        this.handler = checkNotNull(handler, "handler");
+        this.eventLoop = checkNotNull(channel.eventLoop(), "eventLoop");
+>>>>>>> dev
     }
 
     protected abstract void handleException(Throwable t);

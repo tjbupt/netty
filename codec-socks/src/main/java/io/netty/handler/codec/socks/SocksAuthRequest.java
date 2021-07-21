@@ -19,6 +19,7 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
+import io.netty.util.internal.ObjectUtil;
 
 import java.nio.charset.CharsetEncoder;
 
@@ -35,9 +36,14 @@ public final class SocksAuthRequest extends SocksRequest {
 
     public SocksAuthRequest(String username, String password) {
         super(SocksRequestType.AUTH);
+<<<<<<< HEAD
         requireNonNull(username, "username");
         requireNonNull(password, "password");
 
+=======
+        ObjectUtil.checkNotNull(username, "username");
+        ObjectUtil.checkNotNull(password, "password");
+>>>>>>> dev
         final CharsetEncoder asciiEncoder = CharsetUtil.encoder(CharsetUtil.US_ASCII);
         if (!asciiEncoder.canEncode(username) || !asciiEncoder.canEncode(password)) {
             throw new IllegalArgumentException(

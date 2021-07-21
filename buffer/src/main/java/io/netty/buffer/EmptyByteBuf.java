@@ -17,10 +17,14 @@
 package io.netty.buffer;
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 
 import io.netty.util.ByteProcessor;
 import io.netty.util.internal.EmptyArrays;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.StringUtil;
 
@@ -65,9 +69,13 @@ public final class EmptyByteBuf extends ByteBuf {
     }
 
     private EmptyByteBuf(ByteBufAllocator alloc, ByteOrder order) {
+<<<<<<< HEAD
         requireNonNull(alloc, "alloc");
 
         this.alloc = alloc;
+=======
+        this.alloc = ObjectUtil.checkNotNull(alloc, "alloc");
+>>>>>>> dev
         this.order = order;
         str = StringUtil.simpleClassName(this) + (order == ByteOrder.BIG_ENDIAN? "BE" : "LE");
     }
@@ -119,8 +127,12 @@ public final class EmptyByteBuf extends ByteBuf {
 
     @Override
     public ByteBuf order(ByteOrder endianness) {
+<<<<<<< HEAD
         requireNonNull(endianness, "endianness");
         if (endianness == order()) {
+=======
+        if (ObjectUtil.checkNotNull(endianness, "endianness") == order()) {
+>>>>>>> dev
             return this;
         }
 

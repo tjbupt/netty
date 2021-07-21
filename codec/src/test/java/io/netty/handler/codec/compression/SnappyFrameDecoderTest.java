@@ -21,6 +21,10 @@ import io.netty.channel.embedded.EmbeddedChannel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -43,56 +47,134 @@ public class SnappyFrameDecoderTest {
 
     @Test
     public void testReservedUnskippableChunkTypeCausesError() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
             0x03, 0x01, 0x00, 0x00, 0x00
         });
 
         assertThrows(DecompressionException.class, () -> channel.writeInbound(in));
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+            0x03, 0x01, 0x00, 0x00, 0x00
+        });
+
+        assertThrows(DecompressionException.class, new Executable() {
+            @Override
+            public void execute() {
+                channel.writeInbound(in);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInvalidStreamIdentifierLength() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
             -0x80, 0x05, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
         });
 
         assertThrows(DecompressionException.class, () -> channel.writeInbound(in));
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+            -0x80, 0x05, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
+        });
+
+        assertThrows(DecompressionException.class, new Executable() {
+            @Override
+            public void execute() {
+                channel.writeInbound(in);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInvalidStreamIdentifierValue() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
             (byte) 0xff, 0x06, 0x00, 0x00, 's', 'n', 'e', 't', 't', 'y'
         });
 
         assertThrows(DecompressionException.class, () -> channel.writeInbound(in));
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+            (byte) 0xff, 0x06, 0x00, 0x00, 's', 'n', 'e', 't', 't', 'y'
+        });
+
+        assertThrows(DecompressionException.class, new Executable() {
+            @Override
+            public void execute() {
+                channel.writeInbound(in);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReservedSkippableBeforeStreamIdentifier() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
             -0x7f, 0x06, 0x00, 0x00, 's', 'n', 'e', 't', 't', 'y'
         });
 
         assertThrows(DecompressionException.class, () -> channel.writeInbound(in));
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+            -0x7f, 0x06, 0x00, 0x00, 's', 'n', 'e', 't', 't', 'y'
+        });
+
+        assertThrows(DecompressionException.class, new Executable() {
+            @Override
+            public void execute() {
+                channel.writeInbound(in);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testUncompressedDataBeforeStreamIdentifier() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
             0x01, 0x05, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
         });
 
         assertThrows(DecompressionException.class, () -> channel.writeInbound(in));
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+            0x01, 0x05, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
+        });
+
+        assertThrows(DecompressionException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                channel.writeInbound(in);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testCompressedDataBeforeStreamIdentifier() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
             0x00, 0x05, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
         });
 
         assertThrows(DecompressionException.class, () -> channel.writeInbound(in));
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+            0x00, 0x05, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
+        });
+
+        assertThrows(DecompressionException.class, new Executable() {
+            @Override
+            public void execute() {
+                channel.writeInbound(in);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -151,15 +233,31 @@ public class SnappyFrameDecoderTest {
 
     @Test
     public void testInvalidChecksumThrowsException() {
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(new SnappyFrameDecoder(true));
         try {
             // checksum here is presented as 0
             ByteBuf in = Unpooled.wrappedBuffer(new byte[]{
+=======
+        final EmbeddedChannel channel = new EmbeddedChannel(new SnappyFrameDecoder(true));
+        try {
+            // checksum here is presented as 0
+            final ByteBuf in = Unpooled.wrappedBuffer(new byte[]{
+>>>>>>> dev
                     (byte) 0xff, 0x06, 0x00, 0x00, 0x73, 0x4e, 0x61, 0x50, 0x70, 0x59,
                     0x01, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 'n', 'e', 't', 't', 'y'
             });
 
+<<<<<<< HEAD
             assertThrows(DecompressionException.class, () -> channel.writeInbound(in));
+=======
+            assertThrows(DecompressionException.class, new Executable() {
+                @Override
+                public void execute() {
+                    channel.writeInbound(in);
+                }
+            });
+>>>>>>> dev
         } finally {
             channel.finishAndReleaseAll();
         }

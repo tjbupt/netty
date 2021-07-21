@@ -18,7 +18,10 @@ package io.netty.example.http2.helloworld.multiplex.server;
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
+=======
+>>>>>>> dev
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -44,6 +47,7 @@ import io.netty.util.ReferenceCountUtil;
  */
 public class Http2ServerInitializer extends ChannelInitializer<SocketChannel> {
 
+<<<<<<< HEAD
     private static final UpgradeCodecFactory upgradeCodecFactory = protocol -> {
         if (AsciiString.contentEquals(Http2CodecUtil.HTTP_UPGRADE_PROTOCOL_NAME, protocol)) {
             return new Http2ServerUpgradeCodec(
@@ -51,6 +55,18 @@ public class Http2ServerInitializer extends ChannelInitializer<SocketChannel> {
                     new Http2MultiplexHandler(new HelloWorldHttp2Handler()));
         } else {
             return null;
+=======
+    private static final UpgradeCodecFactory upgradeCodecFactory = new UpgradeCodecFactory() {
+        @Override
+        public UpgradeCodec newUpgradeCodec(CharSequence protocol) {
+            if (AsciiString.contentEquals(Http2CodecUtil.HTTP_UPGRADE_PROTOCOL_NAME, protocol)) {
+                return new Http2ServerUpgradeCodec(
+                        Http2FrameCodecBuilder.forServer().build(),
+                        new Http2MultiplexHandler(new HelloWorldHttp2Handler()));
+            } else {
+                return null;
+            }
+>>>>>>> dev
         }
     };
 
@@ -98,7 +114,11 @@ public class Http2ServerInitializer extends ChannelInitializer<SocketChannel> {
                 System.err.println("Directly talking: " + msg.protocolVersion() + " (no upgrade was attempted)");
                 ChannelPipeline pipeline = ctx.pipeline();
                 pipeline.addAfter(ctx.name(), null, new HelloWorldHttp1Handler("Direct. No Upgrade Attempted."));
+<<<<<<< HEAD
                 pipeline.addAfter(ctx.name(), null, new HttpObjectAggregator(maxHttpContentLength));
+=======
+                pipeline.replace(this, null, new HttpObjectAggregator(maxHttpContentLength));
+>>>>>>> dev
                 ctx.fireChannelRead(ReferenceCountUtil.retain(msg));
                 pipeline.remove(this);
             }

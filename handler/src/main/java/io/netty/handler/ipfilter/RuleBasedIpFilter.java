@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.internal.ObjectUtil;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -68,10 +69,17 @@ public class RuleBasedIpFilter extends AbstractRemoteAddressFilter<InetSocketAdd
      * @param rules            An array of {@link IpFilterRule} containing all rules.
      */
     public RuleBasedIpFilter(boolean acceptIfNotFound, IpFilterRule... rules) {
+<<<<<<< HEAD
         requireNonNull(rules, "rules");
 
         this.acceptIfNotFound = acceptIfNotFound;
         this.rules = new ArrayList<>(rules.length);
+=======
+        ObjectUtil.checkNotNull(rules, "rules");
+
+        this.acceptIfNotFound = acceptIfNotFound;
+        this.rules = new ArrayList<IpFilterRule>(rules.length);
+>>>>>>> dev
 
         for (IpFilterRule rule : rules) {
             if (rule != null) {

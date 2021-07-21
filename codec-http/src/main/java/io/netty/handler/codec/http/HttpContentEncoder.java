@@ -24,6 +24,10 @@ import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.handler.codec.DecoderResult;
 import io.netty.handler.codec.MessageToMessageCodec;
 import io.netty.util.ReferenceCountUtil;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.StringUtil;
 
 import java.util.ArrayDeque;
@@ -76,7 +80,11 @@ public abstract class HttpContentEncoder extends MessageToMessageCodec<HttpReque
     }
 
     @Override
+<<<<<<< HEAD
     protected void decode(ChannelHandlerContext ctx, HttpRequest msg) throws Exception {
+=======
+    protected void decode(ChannelHandlerContext ctx, HttpRequest msg, List<Object> out) throws Exception {
+>>>>>>> dev
         CharSequence acceptEncoding;
         List<String> acceptEncodingHeaders = msg.headers().getAll(ACCEPT_ENCODING);
         switch (acceptEncodingHeaders.size()) {
@@ -100,7 +108,11 @@ public abstract class HttpContentEncoder extends MessageToMessageCodec<HttpReque
         }
 
         acceptEncodingQueue.add(acceptEncoding);
+<<<<<<< HEAD
         ctx.fireChannelRead(ReferenceCountUtil.retain(msg));
+=======
+        out.add(ReferenceCountUtil.retain(msg));
+>>>>>>> dev
     }
 
     @Override
@@ -364,11 +376,16 @@ public abstract class HttpContentEncoder extends MessageToMessageCodec<HttpReque
         private final EmbeddedChannel contentEncoder;
 
         public Result(String targetContentEncoding, EmbeddedChannel contentEncoder) {
+<<<<<<< HEAD
             requireNonNull(targetContentEncoding, "targetContentEncoding");
             requireNonNull(contentEncoder, "contentEncoder");
 
             this.targetContentEncoding = targetContentEncoding;
             this.contentEncoder = contentEncoder;
+=======
+            this.targetContentEncoding = ObjectUtil.checkNotNull(targetContentEncoding, "targetContentEncoding");
+            this.contentEncoder = ObjectUtil.checkNotNull(contentEncoder, "contentEncoder");
+>>>>>>> dev
         }
 
         public String targetContentEncoding() {

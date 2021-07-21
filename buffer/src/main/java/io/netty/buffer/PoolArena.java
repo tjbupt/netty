@@ -54,12 +54,20 @@ abstract class PoolArena<T> extends SizeClasses implements PoolArenaMetric {
 
     // Metrics for allocations and deallocations
     private long allocationsNormal;
+<<<<<<< HEAD
 
     // We need to use the LongAdder here as this is not guarded via synchronized block.
     private final LongAdder allocationsSmall = new LongAdder();
     private final LongAdder allocationsHuge = new LongAdder();
     private final LongAdder activeBytesHuge = new LongAdder();
 
+=======
+    // We need to use the LongCounter here as this is not guarded via synchronized block.
+    private final LongCounter allocationsSmall = PlatformDependent.newLongCounter();
+    private final LongCounter allocationsHuge = PlatformDependent.newLongCounter();
+    private final LongCounter activeBytesHuge = PlatformDependent.newLongCounter();
+
+>>>>>>> dev
     private long deallocationsSmall;
     private long deallocationsNormal;
 
@@ -109,7 +117,11 @@ abstract class PoolArena<T> extends SizeClasses implements PoolArenaMetric {
     }
 
     private PoolSubpage<T> newSubpagePoolHead() {
+<<<<<<< HEAD
         PoolSubpage<T> head = new PoolSubpage<>();
+=======
+        PoolSubpage<T> head = new PoolSubpage<T>();
+>>>>>>> dev
         head.prev = head;
         head.next = head;
         return head;
@@ -354,8 +366,12 @@ abstract class PoolArena<T> extends SizeClasses implements PoolArenaMetric {
         synchronized (this) {
             allocsNormal = allocationsNormal;
         }
+<<<<<<< HEAD
 
         return allocationsSmall.longValue() + allocsNormal + allocationsHuge.longValue();
+=======
+        return allocationsSmall.value() + allocsNormal + allocationsHuge.value();
+>>>>>>> dev
     }
 
     @Override
@@ -409,9 +425,14 @@ abstract class PoolArena<T> extends SizeClasses implements PoolArenaMetric {
 
     @Override
     public  long numActiveAllocations() {
+<<<<<<< HEAD
 
         long val = allocationsSmall.longValue() + allocationsHuge.longValue()
                 - deallocationsHuge.longValue();
+=======
+        long val = allocationsSmall.value() + allocationsHuge.value()
+                - deallocationsHuge.value();
+>>>>>>> dev
         synchronized (this) {
             val += allocationsNormal - (deallocationsSmall + deallocationsNormal);
         }
@@ -554,13 +575,21 @@ abstract class PoolArena<T> extends SizeClasses implements PoolArenaMetric {
 
         @Override
         protected PoolChunk<byte[]> newChunk(int pageSize, int maxPageIdx, int pageShifts, int chunkSize) {
+<<<<<<< HEAD
             return new PoolChunk<>(
+=======
+            return new PoolChunk<byte[]>(
+>>>>>>> dev
                     this, null, newByteArray(chunkSize), pageSize, pageShifts, chunkSize, maxPageIdx);
         }
 
         @Override
         protected PoolChunk<byte[]> newUnpooledChunk(int capacity) {
+<<<<<<< HEAD
             return new PoolChunk<>(this, null, newByteArray(capacity), capacity);
+=======
+            return new PoolChunk<byte[]>(this, null, newByteArray(capacity), capacity);
+>>>>>>> dev
         }
 
         @Override
@@ -602,13 +631,21 @@ abstract class PoolArena<T> extends SizeClasses implements PoolArenaMetric {
             int pageShifts, int chunkSize) {
             if (directMemoryCacheAlignment == 0) {
                 ByteBuffer memory = allocateDirect(chunkSize);
+<<<<<<< HEAD
                 return new PoolChunk<>(this, memory, memory, pageSize, pageShifts,
+=======
+                return new PoolChunk<ByteBuffer>(this, memory, memory, pageSize, pageShifts,
+>>>>>>> dev
                         chunkSize, maxPageIdx);
             }
 
             final ByteBuffer base = allocateDirect(chunkSize + directMemoryCacheAlignment);
             final ByteBuffer memory = PlatformDependent.alignDirectBuffer(base, directMemoryCacheAlignment);
+<<<<<<< HEAD
             return new PoolChunk<>(this, base, memory, pageSize,
+=======
+            return new PoolChunk<ByteBuffer>(this, base, memory, pageSize,
+>>>>>>> dev
                     pageShifts, chunkSize, maxPageIdx);
         }
 
@@ -616,12 +653,20 @@ abstract class PoolArena<T> extends SizeClasses implements PoolArenaMetric {
         protected PoolChunk<ByteBuffer> newUnpooledChunk(int capacity) {
             if (directMemoryCacheAlignment == 0) {
                 ByteBuffer memory = allocateDirect(capacity);
+<<<<<<< HEAD
                 return new PoolChunk<>(this, memory, memory, capacity);
+=======
+                return new PoolChunk<ByteBuffer>(this, memory, memory, capacity);
+>>>>>>> dev
             }
 
             final ByteBuffer base = allocateDirect(capacity + directMemoryCacheAlignment);
             final ByteBuffer memory = PlatformDependent.alignDirectBuffer(base, directMemoryCacheAlignment);
+<<<<<<< HEAD
             return new PoolChunk<>(this, base, memory, capacity);
+=======
+            return new PoolChunk<ByteBuffer>(this, base, memory, capacity);
+>>>>>>> dev
         }
 
         private static ByteBuffer allocateDirect(int capacity) {

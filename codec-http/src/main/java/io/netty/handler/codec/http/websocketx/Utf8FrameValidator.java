@@ -94,6 +94,10 @@ public class Utf8FrameValidator implements ChannelHandler {
         if (cause instanceof CorruptedFrameException && ctx.channel().isOpen()) {
             ctx.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
         }
+<<<<<<< HEAD
         ctx.fireExceptionCaught(cause);
+=======
+        super.exceptionCaught(ctx, cause);
+>>>>>>> dev
     }
 }

@@ -18,6 +18,10 @@ package io.netty.util.concurrent;
 import io.netty.util.NettyRuntime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -37,9 +41,18 @@ public class NonStickyEventExecutorGroupTest {
 
     @Test
     public void testInvalidGroup() {
-        EventExecutorGroup group = new DefaultEventExecutorGroup(1);
+        final EventExecutorGroup group = new DefaultEventExecutorGroup(1);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalArgumentException.class, () -> new NonStickyEventExecutorGroup(group));
+=======
+            assertThrows(IllegalArgumentException.class, new Executable() {
+                @Override
+                public void execute() {
+                    new NonStickyEventExecutorGroup(group);
+                }
+            });
+>>>>>>> dev
         } finally {
             group.shutdownGracefully();
         }
@@ -119,7 +132,11 @@ public class NonStickyEventExecutorGroupTest {
     private static void execute(EventExecutorGroup group, CountDownLatch startLatch) throws Throwable {
         EventExecutor executor = group.next();
         assertTrue(executor instanceof OrderedEventExecutor);
+<<<<<<< HEAD
         final AtomicReference<Throwable> cause = new AtomicReference<>();
+=======
+        final AtomicReference<Throwable> cause = new AtomicReference<Throwable>();
+>>>>>>> dev
         final AtomicInteger last = new AtomicInteger();
         int tasks = 10000;
         List<Future<?>> futures = new ArrayList<>(tasks);

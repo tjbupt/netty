@@ -16,10 +16,16 @@
 package io.netty.channel.epoll;
 
 import io.netty.channel.ChannelException;
+<<<<<<< HEAD
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultithreadEventLoopGroup;
 import org.junit.jupiter.api.Test;
 
+=======
+
+import org.junit.jupiter.api.Test;
+
+>>>>>>> dev
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class EpollChannelConfigTest {

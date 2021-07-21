@@ -134,7 +134,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testNoTrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST NO TRAFFIC";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testNoTrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testNoTrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testNoTrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -149,7 +158,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testWriteTrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST WRITE";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testWriteTrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testWriteTrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testWriteTrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -164,7 +182,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testReadTrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST READ";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testReadTrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testReadTrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testReadTrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -179,7 +206,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testWrite1TrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST WRITE";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testWrite1TrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testWrite1TrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testWrite1TrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -194,7 +230,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testRead1TrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST READ";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testRead1TrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testRead1TrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testRead1TrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -209,7 +254,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testWriteGlobalTrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST GLOBAL WRITE";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testWriteGlobalTrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testWriteGlobalTrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testWriteGlobalTrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -224,7 +278,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testReadGlobalTrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST GLOBAL READ";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testReadGlobalTrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testReadGlobalTrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testReadGlobalTrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -239,7 +302,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testAutoReadTrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST AUTO READ";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testAutoReadTrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testAutoReadTrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testAutoReadTrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -255,7 +327,16 @@ public class TrafficShapingHandlerTest extends AbstractSocketTest {
     public void testAutoReadGlobalTrafficShapping(TestInfo testInfo) throws Throwable {
         currentTestName = "TEST AUTO READ GLOBAL";
         currentTestRun = 0;
+<<<<<<< HEAD
         run(testInfo, this::testAutoReadGlobalTrafficShapping);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testAutoReadGlobalTrafficShapping(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testAutoReadGlobalTrafficShapping(ServerBootstrap sb, Bootstrap cb) throws Throwable {

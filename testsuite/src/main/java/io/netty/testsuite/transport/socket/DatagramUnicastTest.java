@@ -54,7 +54,16 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
 
     @Test
     public void testSimpleSendDirectByteBuf(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSimpleSendDirectByteBuf);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSimpleSendDirectByteBuf(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleSendDirectByteBuf(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -64,7 +73,16 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
 
     @Test
     public void testSimpleSendHeapByteBuf(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSimpleSendHeapByteBuf);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSimpleSendHeapByteBuf(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleSendHeapByteBuf(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -74,7 +92,16 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
 
     @Test
     public void testSimpleSendCompositeDirectByteBuf(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSimpleSendCompositeDirectByteBuf);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSimpleSendCompositeDirectByteBuf(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleSendCompositeDirectByteBuf(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -91,7 +118,16 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
 
     @Test
     public void testSimpleSendCompositeHeapByteBuf(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSimpleSendCompositeHeapByteBuf);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSimpleSendCompositeHeapByteBuf(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleSendCompositeHeapByteBuf(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -108,7 +144,16 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
 
     @Test
     public void testSimpleSendCompositeMixedByteBuf(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSimpleSendCompositeMixedByteBuf);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSimpleSendCompositeMixedByteBuf(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleSendCompositeMixedByteBuf(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -125,7 +170,16 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
 
     @Test
     public void testSimpleSendWithoutBind(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSimpleSendWithoutBind);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSimpleSendWithoutBind(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleSendWithoutBind(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -143,7 +197,16 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
 
     @Test
     public void testSimpleSendWithConnect(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSimpleSendWithConnect);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSimpleSendWithConnect(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleSendWithConnect(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -161,7 +224,11 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
         try {
             cb.handler(new SimpleChannelInboundHandler<Object>() {
                 @Override
+<<<<<<< HEAD
                 public void messageReceived(ChannelHandlerContext ctx, Object msgs) {
+=======
+                public void channelRead0(ChannelHandlerContext ctx, Object msgs) {
+>>>>>>> dev
                     // Nothing will be sent.
                 }
             });
@@ -177,13 +244,22 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
             }
 
             final CountDownLatch latch = new CountDownLatch(count);
+<<<<<<< HEAD
             AtomicReference<Throwable> errorRef = new AtomicReference<>();
+=======
+            AtomicReference<Throwable> errorRef = new AtomicReference<Throwable>();
+>>>>>>> dev
             sc = setupServerChannel(sb, bytes, sender, latch, errorRef, false);
 
             SocketAddress localAddr = sc.localAddress();
             SocketAddress addr = localAddr instanceof InetSocketAddress ?
+<<<<<<< HEAD
                     sendToAddress((InetSocketAddress) localAddr) : localAddr;
             List<ChannelFuture> futures = new ArrayList<>(count);
+=======
+                    sendToAddress((InetSocketAddress) sc.localAddress()) : localAddr;
+            List<ChannelFuture> futures = new ArrayList<ChannelFuture>(count);
+>>>>>>> dev
             for (int i = 0; i < count; i++) {
                 futures.add(write(cc, buf, addr, wrapType));
             }
@@ -226,18 +302,31 @@ public abstract class DatagramUnicastTest extends AbstractDatagramTest {
         Channel cc = null;
         try {
             final CountDownLatch latch = new CountDownLatch(count);
+<<<<<<< HEAD
             final AtomicReference<Throwable> errorRef = new AtomicReference<>();
             final CountDownLatch clientLatch = new CountDownLatch(count);
             final AtomicReference<Throwable> clientErrorRef = new AtomicReference<>();
+=======
+            final AtomicReference<Throwable> errorRef = new AtomicReference<Throwable>();
+            final CountDownLatch clientLatch = new CountDownLatch(count);
+            final AtomicReference<Throwable> clientErrorRef = new AtomicReference<Throwable>();
+>>>>>>> dev
             cc = setupClientChannel(cb, bytes, clientLatch, clientErrorRef);
             sc = setupServerChannel(sb, bytes, cc.localAddress(), latch, errorRef, true);
 
             SocketAddress localAddr = sc.localAddress();
             SocketAddress addr = localAddr instanceof InetSocketAddress ?
+<<<<<<< HEAD
                     sendToAddress((InetSocketAddress) localAddr) : localAddr;
             cc.connect(addr).syncUninterruptibly();
 
             List<ChannelFuture> futures = new ArrayList<>();
+=======
+                    sendToAddress((InetSocketAddress) sc.localAddress()) : localAddr;
+            cc.connect(addr).syncUninterruptibly();
+
+            List<ChannelFuture> futures = new ArrayList<ChannelFuture>();
+>>>>>>> dev
             for (int i = 0; i < count; i++) {
                 futures.add(write(cc, buf, wrapType));
             }

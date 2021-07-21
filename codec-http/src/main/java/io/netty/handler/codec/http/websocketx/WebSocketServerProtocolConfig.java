@@ -16,8 +16,12 @@
 package io.netty.handler.codec.http.websocketx;
 
 import io.netty.handler.codec.http.websocketx.WebSocketClientProtocolHandler.ClientHandshakeStateEvent;
+<<<<<<< HEAD
 
 import java.util.Objects;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import static io.netty.util.internal.ObjectUtil.checkPositive;
 
@@ -133,7 +137,11 @@ public final class WebSocketServerProtocolConfig {
         private WebSocketDecoderConfig.Builder decoderConfigBuilder;
 
         private Builder(WebSocketServerProtocolConfig serverConfig) {
+<<<<<<< HEAD
             this(Objects.requireNonNull(serverConfig, "serverConfig").websocketPath(),
+=======
+            this(ObjectUtil.checkNotNull(serverConfig, "serverConfig").websocketPath(),
+>>>>>>> dev
                  serverConfig.subprotocols(),
                  serverConfig.checkStartsWith(),
                  serverConfig.handshakeTimeoutMillis(),

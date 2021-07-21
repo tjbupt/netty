@@ -62,6 +62,7 @@ public final class StringUtil {
         // if a char type is used as an index.
         HEX2B = new byte[Character.MAX_VALUE + 1];
         Arrays.fill(HEX2B, (byte) -1);
+<<<<<<< HEAD
         HEX2B['0'] = 0;
         HEX2B['1'] = 1;
         HEX2B['2'] = 2;
@@ -84,6 +85,30 @@ public final class StringUtil {
         HEX2B['d'] = 13;
         HEX2B['e'] = 14;
         HEX2B['f'] = 15;
+=======
+        HEX2B['0'] = (byte) 0;
+        HEX2B['1'] = (byte) 1;
+        HEX2B['2'] = (byte) 2;
+        HEX2B['3'] = (byte) 3;
+        HEX2B['4'] = (byte) 4;
+        HEX2B['5'] = (byte) 5;
+        HEX2B['6'] = (byte) 6;
+        HEX2B['7'] = (byte) 7;
+        HEX2B['8'] = (byte) 8;
+        HEX2B['9'] = (byte) 9;
+        HEX2B['A'] = (byte) 10;
+        HEX2B['B'] = (byte) 11;
+        HEX2B['C'] = (byte) 12;
+        HEX2B['D'] = (byte) 13;
+        HEX2B['E'] = (byte) 14;
+        HEX2B['F'] = (byte) 15;
+        HEX2B['a'] = (byte) 10;
+        HEX2B['b'] = (byte) 11;
+        HEX2B['c'] = (byte) 12;
+        HEX2B['d'] = (byte) 13;
+        HEX2B['e'] = (byte) 14;
+        HEX2B['f'] = (byte) 15;
+>>>>>>> dev
     }
 
     private StringUtil() {
@@ -241,10 +266,18 @@ public final class StringUtil {
      * given, or {@code -1} if the character is invalid.
      */
     public static int decodeHexNibble(final char c) {
+<<<<<<< HEAD
         assert HEX2B.length == Character.MAX_VALUE + 1;
         // Character.digit() is not used here, as it addresses a larger
         // set of characters (both ASCII and full-width latin letters).
         return HEX2B[c];
+=======
+        assert HEX2B.length == (Character.MAX_VALUE + 1);
+        // Character.digit() is not used here, as it addresses a larger
+        // set of characters (both ASCII and full-width latin letters).
+        final int index = c;
+        return HEX2B[index];
+>>>>>>> dev
     }
 
     /**
@@ -644,8 +677,13 @@ public final class StringUtil {
      * @return a char sequence joined by a given separator.
      */
     public static CharSequence join(CharSequence separator, Iterable<? extends CharSequence> elements) {
+<<<<<<< HEAD
         requireNonNull(separator, "separator");
         requireNonNull(elements, "elements");
+=======
+        ObjectUtil.checkNotNull(separator, "separator");
+        ObjectUtil.checkNotNull(elements, "elements");
+>>>>>>> dev
 
         Iterator<? extends CharSequence> iterator = elements.iterator();
         if (!iterator.hasNext()) {

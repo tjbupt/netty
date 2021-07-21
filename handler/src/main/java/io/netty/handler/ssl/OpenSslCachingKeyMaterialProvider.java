@@ -30,7 +30,11 @@ final class OpenSslCachingKeyMaterialProvider extends OpenSslKeyMaterialProvider
 
     private final int maxCachedEntries;
     private volatile boolean full;
+<<<<<<< HEAD
     private final ConcurrentMap<String, OpenSslKeyMaterial> cache = new ConcurrentHashMap<>();
+=======
+    private final ConcurrentMap<String, OpenSslKeyMaterial> cache = new ConcurrentHashMap<String, OpenSslKeyMaterial>();
+>>>>>>> dev
 
     OpenSslCachingKeyMaterialProvider(X509KeyManager keyManager, String password, int maxCachedEntries) {
         super(keyManager, password);

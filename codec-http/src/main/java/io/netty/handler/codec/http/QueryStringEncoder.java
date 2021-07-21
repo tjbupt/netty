@@ -15,17 +15,26 @@
  */
 package io.netty.handler.codec.http;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
 
 import io.netty.buffer.ByteBufUtil;
 import io.netty.util.CharsetUtil;
+=======
+import io.netty.buffer.ByteBufUtil;
+import io.netty.util.CharsetUtil;
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.StringUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+>>>>>>> dev
 
 /**
  * Creates a URL-encoded URI from a path string and key-value parameter pairs.
@@ -60,7 +69,11 @@ public class QueryStringEncoder {
      * path string in the specified charset.
      */
     public QueryStringEncoder(String uri, Charset charset) {
+<<<<<<< HEAD
         Objects.requireNonNull(charset, "charset");
+=======
+        ObjectUtil.checkNotNull(charset, "charset");
+>>>>>>> dev
         uriBuilder = new StringBuilder(uri);
         this.charset = CharsetUtil.UTF_8.equals(charset) ? null : charset;
     }

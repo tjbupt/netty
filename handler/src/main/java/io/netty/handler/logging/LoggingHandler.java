@@ -22,6 +22,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.logging.InternalLogLevel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -83,8 +84,13 @@ public class LoggingHandler implements ChannelHandler {
      * @param byteBufFormat the ByteBuf format
      */
     public LoggingHandler(LogLevel level, ByteBufFormat byteBufFormat) {
+<<<<<<< HEAD
         this.level = requireNonNull(level, "level");
         this.byteBufFormat = requireNonNull(byteBufFormat, "byteBufFormat");
+=======
+        this.level = ObjectUtil.checkNotNull(level, "level");
+        this.byteBufFormat = ObjectUtil.checkNotNull(byteBufFormat, "byteBufFormat");
+>>>>>>> dev
         logger = InternalLoggerFactory.getInstance(getClass());
         internalLevel = level.toInternalLevel();
     }
@@ -117,9 +123,15 @@ public class LoggingHandler implements ChannelHandler {
      * @param byteBufFormat the ByteBuf format
      */
     public LoggingHandler(Class<?> clazz, LogLevel level, ByteBufFormat byteBufFormat) {
+<<<<<<< HEAD
         requireNonNull(clazz, "clazz");
         this.level = requireNonNull(level, "level");
         this.byteBufFormat = requireNonNull(byteBufFormat, "byteBufFormat");
+=======
+        ObjectUtil.checkNotNull(clazz, "clazz");
+        this.level = ObjectUtil.checkNotNull(level, "level");
+        this.byteBufFormat = ObjectUtil.checkNotNull(byteBufFormat, "byteBufFormat");
+>>>>>>> dev
         logger = InternalLoggerFactory.getInstance(clazz);
         internalLevel = level.toInternalLevel();
     }
@@ -151,10 +163,17 @@ public class LoggingHandler implements ChannelHandler {
      * @param byteBufFormat the ByteBuf format
      */
     public LoggingHandler(String name, LogLevel level, ByteBufFormat byteBufFormat) {
+<<<<<<< HEAD
         requireNonNull(name, "name");
 
         this.level = requireNonNull(level, "level");
         this.byteBufFormat = requireNonNull(byteBufFormat, "byteBufFormat");
+=======
+        ObjectUtil.checkNotNull(name, "name");
+
+        this.level = ObjectUtil.checkNotNull(level, "level");
+        this.byteBufFormat = ObjectUtil.checkNotNull(byteBufFormat, "byteBufFormat");
+>>>>>>> dev
         logger = InternalLoggerFactory.getInstance(name);
         internalLevel = level.toInternalLevel();
     }

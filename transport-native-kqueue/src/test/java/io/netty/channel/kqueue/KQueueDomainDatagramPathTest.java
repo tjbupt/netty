@@ -18,7 +18,11 @@ package io.netty.channel.kqueue;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandlerAdapter;
+=======
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.unix.DomainDatagramPacket;
 import io.netty.testsuite.transport.TestsuitePermutation;
 import io.netty.testsuite.transport.socket.AbstractClientSocketTest;
@@ -36,6 +40,7 @@ class KQueueDomainDatagramPathTest extends AbstractClientSocketTest {
 
     @Test
     void testConnectPathDoesNotExist(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, bootstrap -> {
             try {
                 bootstrap.handler(new ChannelHandlerAdapter() { })
@@ -43,12 +48,25 @@ class KQueueDomainDatagramPathTest extends AbstractClientSocketTest {
                 fail("Expected FileNotFoundException");
             } catch (Exception e) {
                 assertTrue(e.getCause() instanceof FileNotFoundException);
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) {
+                try {
+                    bootstrap.handler(new ChannelInboundHandlerAdapter())
+                             .connect(KQueueSocketTestPermutation.newSocketAddress()).sync().channel();
+                    fail("Expected FileNotFoundException");
+                } catch (Exception e) {
+                    assertTrue(e instanceof FileNotFoundException);
+                }
+>>>>>>> dev
             }
         });
     }
 
     @Test
     void testWriteReceiverPathDoesNotExist(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, bootstrap -> {
             try {
                 Channel ch = bootstrap.handler(new ChannelHandlerAdapter() { })
@@ -59,6 +77,21 @@ class KQueueDomainDatagramPathTest extends AbstractClientSocketTest {
                 fail("Expected FileNotFoundException");
             } catch (Exception e) {
                 assertTrue(e.getCause() instanceof FileNotFoundException);
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) {
+                try {
+                    Channel ch = bootstrap.handler(new ChannelInboundHandlerAdapter())
+                                          .bind(KQueueSocketTestPermutation.newSocketAddress()).sync().channel();
+                    ch.writeAndFlush(new DomainDatagramPacket(
+                            Unpooled.copiedBuffer("test", CharsetUtil.US_ASCII),
+                            KQueueSocketTestPermutation.newSocketAddress())).sync();
+                    fail("Expected FileNotFoundException");
+                } catch (Exception e) {
+                    assertTrue(e instanceof FileNotFoundException);
+                }
+>>>>>>> dev
             }
         });
     }

@@ -28,17 +28,25 @@ import java.lang.invoke.MethodType;
 final class Conscrypt {
     // This class exists to avoid loading other conscrypt related classes using features only available in JDK8+,
     // because we need to maintain JDK6+ runtime compatibility.
+<<<<<<< HEAD
 
     private static final MethodHandle IS_CONSCRYPT_SSLENGINE;
 
     static {
         MethodHandle isConscryptSSLEngine = null;
+=======
+    private static final Method IS_CONSCRYPT_SSLENGINE;
+
+    static {
+        Method isConscryptSSLEngine = null;
+>>>>>>> dev
 
         if ((PlatformDependent.javaVersion() >= 8 &&
                 // Only works on Java14 and earlier for now
                 // See https://github.com/google/conscrypt/issues/838
                 PlatformDependent.javaVersion() < 15) || PlatformDependent.isAndroid()) {
             try {
+<<<<<<< HEAD
                 MethodHandles.Lookup lookup = MethodHandles.lookup();
                 Class<?> providerClass = Class.forName("org.conscrypt.OpenSSLProvider", true,
                         PlatformDependent.getClassLoader(ConscryptAlpnSslEngine.class));
@@ -48,6 +56,15 @@ final class Conscrypt {
                         PlatformDependent.getClassLoader(ConscryptAlpnSslEngine.class));
                 isConscryptSSLEngine = lookup.findStatic(conscryptClass, "isConscrypt",
                         MethodType.methodType(boolean.class, SSLEngine.class));
+=======
+                Class<?> providerClass = Class.forName("org.conscrypt.OpenSSLProvider", true,
+                        PlatformDependent.getClassLoader(ConscryptAlpnSslEngine.class));
+                providerClass.newInstance();
+
+                Class<?> conscryptClass = Class.forName("org.conscrypt.Conscrypt", true,
+                        PlatformDependent.getClassLoader(ConscryptAlpnSslEngine.class));
+                isConscryptSSLEngine = conscryptClass.getMethod("isConscrypt", SSLEngine.class);
+>>>>>>> dev
             } catch (Throwable ignore) {
                 // ignore
             }
@@ -67,7 +84,11 @@ final class Conscrypt {
      */
     static boolean isEngineSupported(SSLEngine engine) {
         try {
+<<<<<<< HEAD
             return IS_CONSCRYPT_SSLENGINE != null && (boolean) IS_CONSCRYPT_SSLENGINE.invokeExact(engine);
+=======
+            return IS_CONSCRYPT_SSLENGINE != null && (Boolean) IS_CONSCRYPT_SSLENGINE.invoke(null, engine);
+>>>>>>> dev
         } catch (IllegalAccessException ignore) {
             return false;
         } catch (Throwable ex) {

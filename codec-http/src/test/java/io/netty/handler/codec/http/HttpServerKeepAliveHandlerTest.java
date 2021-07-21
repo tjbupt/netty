@@ -112,11 +112,34 @@ public class HttpServerKeepAliveHandlerTest {
                 { HttpVersion.HTTP_1_1, OK, SET_CHUNKED },
                 { HttpVersion.HTTP_1_1, NO_CONTENT, NOT_SELF_DEFINED_MSG_LENGTH }
         });
+<<<<<<< HEAD
+=======
     }
 
     @ParameterizedTest
     @MethodSource("connectionCloseProvider")
     public void testConnectionCloseHeaderHandledCorrectly(
+            HttpVersion httpVersion, HttpResponseStatus responseStatus, int setSelfDefinedMessageLength) {
+        HttpResponse response = new DefaultFullHttpResponse(httpVersion, responseStatus);
+        response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
+        setupMessageLength(response, setSelfDefinedMessageLength);
+
+        channel.writeAndFlush(response);
+        HttpResponse writtenResponse = channel.readOutbound();
+
+        assertFalse(channel.isOpen());
+        ReferenceCountUtil.release(writtenResponse);
+        assertFalse(channel.finishAndReleaseAll());
+>>>>>>> dev
+    }
+
+    @ParameterizedTest
+    @MethodSource("connectionCloseProvider")
+<<<<<<< HEAD
+    public void testConnectionCloseHeaderHandledCorrectly(
+=======
+    public void testConnectionCloseHeaderHandledCorrectlyForVoidPromise(
+>>>>>>> dev
             HttpVersion httpVersion, HttpResponseStatus responseStatus, int setSelfDefinedMessageLength) {
         HttpResponse response = new DefaultFullHttpResponse(httpVersion, responseStatus);
         response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);

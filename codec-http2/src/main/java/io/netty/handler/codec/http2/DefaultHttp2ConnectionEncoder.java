@@ -31,6 +31,10 @@ import static io.netty.handler.codec.http.HttpStatusClass.INFORMATIONAL;
 import static io.netty.handler.codec.http2.Http2Error.INTERNAL_ERROR;
 import static io.netty.handler.codec.http2.Http2Error.PROTOCOL_ERROR;
 import static io.netty.handler.codec.http2.Http2Exception.connectionError;
+<<<<<<< HEAD
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static java.lang.Integer.MAX_VALUE;
 import static java.lang.Math.min;
@@ -46,7 +50,11 @@ public class DefaultHttp2ConnectionEncoder implements Http2ConnectionEncoder, Ht
     private Http2LifecycleManager lifecycleManager;
     // We prefer ArrayDeque to LinkedList because later will produce more GC.
     // This initial capacity is plenty for SETTINGS traffic.
+<<<<<<< HEAD
     private final Queue<Http2Settings> outstandingLocalSettingsQueue = new ArrayDeque<>(4);
+=======
+    private final Queue<Http2Settings> outstandingLocalSettingsQueue = new ArrayDeque<Http2Settings>(4);
+>>>>>>> dev
     private Queue<Http2Settings> outstandingRemoteSettingsQueue;
 
     public DefaultHttp2ConnectionEncoder(Http2Connection connection, Http2FrameWriter frameWriter) {
@@ -120,6 +128,7 @@ public class DefaultHttp2ConnectionEncoder implements Http2ConnectionEncoder, Ht
     @Override
     public ChannelFuture writeData(final ChannelHandlerContext ctx, final int streamId, ByteBuf data, int padding,
             final boolean endOfStream, ChannelPromise promise) {
+        promise = promise.unvoid();
         final Http2Stream stream;
         try {
             stream = requireStream(streamId);
@@ -547,7 +556,11 @@ public class DefaultHttp2ConnectionEncoder implements Http2ConnectionEncoder, Ht
         FlowControlledHeaders(Http2Stream stream, Http2Headers headers, boolean hasPriority,
                               int streamDependency, short weight, boolean exclusive,
                               int padding, boolean endOfStream, ChannelPromise promise) {
+<<<<<<< HEAD
             super(stream, padding, endOfStream, promise);
+=======
+            super(stream, padding, endOfStream, promise.unvoid());
+>>>>>>> dev
             this.headers = headers;
             this.hasPriorty = hasPriority;
             this.streamDependency = streamDependency;

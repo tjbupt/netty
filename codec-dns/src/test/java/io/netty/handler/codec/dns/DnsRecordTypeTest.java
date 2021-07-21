@@ -43,7 +43,11 @@ public class DnsRecordTypeTest {
 
     @Test
     public void testSanity() throws Exception {
+<<<<<<< HEAD
         assertEquals(allTypes().size(), new HashSet<>(allTypes()).size(),
+=======
+        assertEquals(allTypes().size(), new HashSet<DnsRecordType>(allTypes()).size(),
+>>>>>>> dev
                 "More than one type has the same int value");
     }
 

@@ -16,7 +16,10 @@
 package io.netty.channel.sctp;
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 
 import com.sun.nio.sctp.SctpServerChannel;
 import com.sun.nio.sctp.SctpStandardSocketOptions;
@@ -28,6 +31,7 @@ import io.netty.channel.MessageSizeEstimator;
 import io.netty.channel.RecvByteBufAllocator;
 import io.netty.channel.WriteBufferWaterMark;
 import io.netty.util.NetUtil;
+import io.netty.util.internal.ObjectUtil;
 
 import java.io.IOException;
 import java.util.Map;
@@ -46,8 +50,12 @@ public class DefaultSctpServerChannelConfig extends DefaultChannelConfig impleme
     public DefaultSctpServerChannelConfig(
             io.netty.channel.sctp.SctpServerChannel channel, SctpServerChannel javaChannel) {
         super(channel);
+<<<<<<< HEAD
         requireNonNull(javaChannel, "javaChannel");
         this.javaChannel = javaChannel;
+=======
+        this.javaChannel = ObjectUtil.checkNotNull(javaChannel, "javaChannel");
+>>>>>>> dev
     }
 
     @Override

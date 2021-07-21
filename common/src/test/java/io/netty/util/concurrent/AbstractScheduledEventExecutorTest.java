@@ -16,6 +16,10 @@
 package io.netty.util.concurrent;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -70,27 +74,58 @@ public class AbstractScheduledEventExecutorTest {
 
     @Test
     public void testScheduleAtFixedRateRunnableZero() {
+<<<<<<< HEAD
         TestScheduledEventExecutor executor = new TestScheduledEventExecutor();
         assertThrows(IllegalArgumentException.class,
             () -> executor.scheduleAtFixedRate(TEST_RUNNABLE, 0, 0, TimeUnit.DAYS));
+=======
+        final TestScheduledEventExecutor executor = new TestScheduledEventExecutor();
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                executor.scheduleAtFixedRate(TEST_RUNNABLE, 0, 0, TimeUnit.DAYS);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testScheduleAtFixedRateRunnableNegative() {
+<<<<<<< HEAD
         TestScheduledEventExecutor executor = new TestScheduledEventExecutor();
         assertThrows(IllegalArgumentException.class,
             () -> executor.scheduleAtFixedRate(TEST_RUNNABLE, 0, -1, TimeUnit.DAYS));
+=======
+        final TestScheduledEventExecutor executor = new TestScheduledEventExecutor();
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                executor.scheduleAtFixedRate(TEST_RUNNABLE, 0, -1, TimeUnit.DAYS);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testScheduleWithFixedDelayZero() {
+<<<<<<< HEAD
         TestScheduledEventExecutor executor = new TestScheduledEventExecutor();
         assertThrows(IllegalArgumentException.class,
             () -> executor.scheduleWithFixedDelay(TEST_RUNNABLE, 0, -1, TimeUnit.DAYS));
+=======
+        final TestScheduledEventExecutor executor = new TestScheduledEventExecutor();
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                executor.scheduleWithFixedDelay(TEST_RUNNABLE, 0, -1, TimeUnit.DAYS);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testScheduleWithFixedDelayNegative() {
+<<<<<<< HEAD
         TestScheduledEventExecutor executor = new TestScheduledEventExecutor();
         assertThrows(IllegalArgumentException.class,
             () -> executor.scheduleWithFixedDelay(TEST_RUNNABLE, 0, -1, TimeUnit.DAYS));
@@ -99,6 +134,15 @@ public class AbstractScheduledEventExecutorTest {
     @Test
     public void testDeadlineNanosNotOverflow() {
         assertEquals(Long.MAX_VALUE, AbstractScheduledEventExecutor.deadlineNanos(Long.MAX_VALUE));
+=======
+        final TestScheduledEventExecutor executor = new TestScheduledEventExecutor();
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                executor.scheduleWithFixedDelay(TEST_RUNNABLE, 0, -1, TimeUnit.DAYS);
+            }
+        });
+>>>>>>> dev
     }
 
     private static final class TestScheduledEventExecutor extends AbstractScheduledEventExecutor {

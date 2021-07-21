@@ -14,6 +14,7 @@
  */
 package io.netty.microbench.concurrent;
 
+<<<<<<< HEAD
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.epoll.Epoll;
@@ -25,6 +26,15 @@ import io.netty.microbench.util.AbstractMicrobenchmark;
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.RejectedExecutionHandlers;
 import io.netty.util.concurrent.SingleThreadEventExecutor;
+=======
+import io.netty.channel.epoll.Epoll;
+import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.kqueue.KQueue;
+import io.netty.channel.kqueue.KQueueEventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.microbench.util.AbstractMicrobenchmark;
+import io.netty.util.concurrent.DefaultEventExecutor;
+>>>>>>> dev
 import io.netty.util.internal.PlatformDependent;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -62,7 +72,14 @@ public class BurstCostExecutorsBenchmark extends AbstractMicrobenchmark {
      */
     private static final class SpinExecutorService implements ExecutorService {
 
+<<<<<<< HEAD
         private static final Runnable POISON_PILL = () -> {
+=======
+        private static final Runnable POISON_PILL = new Runnable() {
+            @Override
+            public void run() {
+            }
+>>>>>>> dev
         };
         private final Queue<Runnable> tasks;
         private final AtomicBoolean poisoned = new AtomicBoolean();
@@ -70,12 +87,24 @@ public class BurstCostExecutorsBenchmark extends AbstractMicrobenchmark {
 
         SpinExecutorService(int maxTasks) {
             tasks = PlatformDependent.newFixedMpscQueue(maxTasks);
+<<<<<<< HEAD
             executorThread = new Thread(() -> {
                 final Queue<Runnable> tasks = SpinExecutorService.this.tasks;
                 Runnable task;
                 while ((task = tasks.poll()) != POISON_PILL) {
                     if (task != null) {
                         task.run();
+=======
+            executorThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Queue<Runnable> tasks = SpinExecutorService.this.tasks;
+                    Runnable task;
+                    while ((task = tasks.poll()) != POISON_PILL) {
+                        if (task != null) {
+                            task.run();
+                        }
+>>>>>>> dev
                     }
                 }
             });
@@ -195,7 +224,11 @@ public class BurstCostExecutorsBenchmark extends AbstractMicrobenchmark {
             executorToShutdown = executor;
             break;
         case defaultEventExecutor:
+<<<<<<< HEAD
             executor = new SingleThreadEventExecutor();
+=======
+            executor = new DefaultEventExecutor();
+>>>>>>> dev
             executorToShutdown = executor;
             break;
         case juc:
@@ -203,27 +236,44 @@ public class BurstCostExecutorsBenchmark extends AbstractMicrobenchmark {
             executorToShutdown = executor;
             break;
         case nioEventLoop:
+<<<<<<< HEAD
             EventLoopGroup nioEventLoopGroup = new MultithreadEventLoopGroup(1,
                     new DefaultThreadFactory(MultithreadEventLoopGroup.class), NioHandler.newFactory(),
                     Integer.MAX_VALUE, RejectedExecutionHandlers.reject(), Integer.MAX_VALUE);
+=======
+            NioEventLoopGroup nioEventLoopGroup = new NioEventLoopGroup(1);
+            nioEventLoopGroup.setIoRatio(1);
+>>>>>>> dev
             executor = nioEventLoopGroup.next();
             executorToShutdown = nioEventLoopGroup;
             break;
         case epollEventLoop:
             Epoll.ensureAvailability();
+<<<<<<< HEAD
             EventLoopGroup epollEventLoopGroup = new MultithreadEventLoopGroup(1,
                     new DefaultThreadFactory(MultithreadEventLoopGroup.class), EpollHandler.newFactory(),
                     Integer.MAX_VALUE, RejectedExecutionHandlers.reject(), Integer.MAX_VALUE);
+=======
+            EpollEventLoopGroup epollEventLoopGroup = new EpollEventLoopGroup(1);
+            epollEventLoopGroup.setIoRatio(1);
+>>>>>>> dev
             executor = epollEventLoopGroup.next();
             executorToShutdown = epollEventLoopGroup;
             break;
         case kqueueEventLoop:
             KQueue.ensureAvailability();
+<<<<<<< HEAD
             EventLoopGroup kqueueEventLoopGroup = new MultithreadEventLoopGroup(1,
                     new DefaultThreadFactory(MultithreadEventLoopGroup.class), KQueueHandler.newFactory(),
                     Integer.MAX_VALUE, RejectedExecutionHandlers.reject(), Integer.MAX_VALUE);
             executor = kqueueEventLoopGroup.next();
             executorToShutdown = kqueueEventLoopGroup;
+=======
+            KQueueEventLoopGroup kQueueEventLoopGroup = new KQueueEventLoopGroup(1);
+            kQueueEventLoopGroup.setIoRatio(1);
+            executor = kQueueEventLoopGroup.next();
+            executorToShutdown = kQueueEventLoopGroup;
+>>>>>>> dev
             break;
         }
     }
@@ -249,6 +299,7 @@ public class BurstCostExecutorsBenchmark extends AbstractMicrobenchmark {
         public void setup(BurstCostExecutorsBenchmark bench) {
             final int work = bench.work;
             if (work > 0) {
+<<<<<<< HEAD
                 completeTask = () -> {
                     Blackhole.consumeCPU(work);
                     //We can avoid the full barrier cost of a volatile set given that the
@@ -264,6 +315,29 @@ public class BurstCostExecutorsBenchmark extends AbstractMicrobenchmark {
                     //it would reduce the cost on consumer side while allowing to focus just
                     //to the threads hand-off/wake-up cost
                     DONE_UPDATER.lazySet(PerThreadState.this, completed + 1);
+=======
+                completeTask = new Runnable() {
+                    @Override
+                    public void run() {
+                        Blackhole.consumeCPU(work);
+                        //We can avoid the full barrier cost of a volatile set given that the
+                        //benchmark is focusing on executors with a single threaded consumer:
+                        //it would reduce the cost on consumer side while allowing to focus just
+                        //to the threads hand-off/wake-up cost
+                        DONE_UPDATER.lazySet(PerThreadState.this, completed + 1);
+                    }
+                };
+            } else {
+                completeTask = new Runnable() {
+                    @Override
+                    public void run() {
+                        //We can avoid the full barrier cost of a volatile set given that the
+                        //benchmark is focusing on executors with a single threaded consumer:
+                        //it would reduce the cost on consumer side while allowing to focus just
+                        //to the threads hand-off/wake-up cost
+                        DONE_UPDATER.lazySet(PerThreadState.this, completed + 1);
+                    }
+>>>>>>> dev
                 };
             }
         }

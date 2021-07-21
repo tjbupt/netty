@@ -17,6 +17,10 @@
 package io.netty.util.internal;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Date;
 
@@ -42,7 +46,16 @@ public class TypeParameterMatcherTest {
 
     @Test
     public void testUnsolvedParameter() throws Exception {
+<<<<<<< HEAD
         assertThrows(IllegalStateException.class, () -> TypeParameterMatcher.find(new TypeQ(), TypeX.class, "B"));
+=======
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                TypeParameterMatcher.find(new TypeQ(), TypeX.class, "B");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -139,10 +152,20 @@ public class TypeParameterMatcherTest {
 
     @Test
     public void testErasure() throws Exception {
+<<<<<<< HEAD
         assertThrows(IllegalStateException.class, () -> {
             TypeParameterMatcher m = TypeParameterMatcher.find(new X<String, Date>(), W.class, "E");
             assertTrue(m.match(new Date()));
             assertFalse(m.match(new Object()));
+=======
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                TypeParameterMatcher m = TypeParameterMatcher.find(new X<String, Date>(), W.class, "E");
+                assertTrue(m.match(new Date()));
+                assertFalse(m.match(new Object()));
+            }
+>>>>>>> dev
         });
     }
 }

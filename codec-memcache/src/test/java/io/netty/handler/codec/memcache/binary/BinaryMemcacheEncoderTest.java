@@ -25,6 +25,10 @@ import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,12 +45,20 @@ public class BinaryMemcacheEncoderTest {
     private EmbeddedChannel channel;
 
     @BeforeEach
+<<<<<<< HEAD
     public void setup() throws Exception {
+=======
+    public void setup() {
+>>>>>>> dev
         channel = new EmbeddedChannel(new BinaryMemcacheRequestEncoder());
     }
 
     @AfterEach
+<<<<<<< HEAD
     public void teardown() throws Exception {
+=======
+    public void teardown() {
+>>>>>>> dev
         channel.finishAndReleaseAll();
     }
 
@@ -157,6 +169,15 @@ public class BinaryMemcacheEncoderTest {
     @Test
     public void shouldFailWithoutLastContent() {
         channel.writeOutbound(new DefaultMemcacheContent(Unpooled.EMPTY_BUFFER));
+<<<<<<< HEAD
         assertThrows(EncoderException.class, () -> channel.writeOutbound(new DefaultBinaryMemcacheRequest()));
+=======
+        assertThrows(EncoderException.class, new Executable() {
+            @Override
+            public void execute() {
+                channel.writeOutbound(new DefaultBinaryMemcacheRequest());
+            }
+        });
+>>>>>>> dev
     }
 }

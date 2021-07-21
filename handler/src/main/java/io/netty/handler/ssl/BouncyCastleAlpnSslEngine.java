@@ -15,11 +15,20 @@
  */
 package io.netty.handler.ssl;
 
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.SuppressJava6Requirement;
+
+>>>>>>> dev
 import javax.net.ssl.SSLEngine;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 
+<<<<<<< HEAD
+=======
+@SuppressJava6Requirement(reason = "Usage guarded by java version check")
+>>>>>>> dev
 final class BouncyCastleAlpnSslEngine extends JdkAlpnSslEngine {
 
     BouncyCastleAlpnSslEngine(SSLEngine engine,

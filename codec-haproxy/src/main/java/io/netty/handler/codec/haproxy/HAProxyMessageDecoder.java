@@ -24,6 +24,8 @@ import io.netty.util.CharsetUtil;
 
 import static io.netty.handler.codec.haproxy.HAProxyConstants.*;
 
+import static io.netty.handler.codec.haproxy.HAProxyConstants.*;
+
 /**
  * Decodes an HAProxy proxy protocol header
  *

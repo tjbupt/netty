@@ -123,6 +123,7 @@ abstract class DnsQueryContext implements FutureListener<AddressedEnvelope<DnsRe
         if (parent.channelFuture.isDone()) {
             writeQuery(query, flush, writePromise);
         } else {
+<<<<<<< HEAD
             parent.channelFuture.addListener(future -> {
                 if (future.isSuccess()) {
                     // If the query is done in a late fashion (as the channel was not ready yet) we always flush
@@ -133,6 +134,21 @@ abstract class DnsQueryContext implements FutureListener<AddressedEnvelope<DnsRe
                     Throwable cause = future.cause();
                     promise.tryFailure(cause);
                     writePromise.setFailure(cause);
+=======
+            parent.channelFuture.addListener(new GenericFutureListener<Future<? super Channel>>() {
+                @Override
+                public void operationComplete(Future<? super Channel> future) {
+                    if (future.isSuccess()) {
+                        // If the query is done in a late fashion (as the channel was not ready yet) we always flush
+                        // to ensure we did not race with a previous flush() that was done when the Channel was not
+                        // ready yet.
+                        writeQuery(query, true, writePromise);
+                    } else {
+                        Throwable cause = future.cause();
+                        promise.tryFailure(cause);
+                        writePromise.setFailure(cause);
+                    }
+>>>>>>> dev
                 }
             });
         }
@@ -157,10 +173,23 @@ abstract class DnsQueryContext implements FutureListener<AddressedEnvelope<DnsRe
         // Schedule a query timeout task if necessary.
         final long queryTimeoutMillis = parent.queryTimeoutMillis();
         if (queryTimeoutMillis > 0) {
+<<<<<<< HEAD
             timeoutFuture = parent.ch.eventLoop().schedule(() -> {
                 if (promise.isDone()) {
                     // Received a response before the query times out.
                     return;
+=======
+            timeoutFuture = parent.ch.eventLoop().schedule(new Runnable() {
+                @Override
+                public void run() {
+                    if (promise.isDone()) {
+                        // Received a response before the query times out.
+                        return;
+                    }
+
+                    tryFailure("query via " + protocol() + " timed out after " +
+                            queryTimeoutMillis + " milliseconds", null, true);
+>>>>>>> dev
                 }
 
                 tryFailure("query via " + protocol() + " timed out after " +

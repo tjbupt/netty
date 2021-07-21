@@ -19,6 +19,10 @@ import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -65,9 +69,19 @@ public class SocksCmdResponseDecoderTest {
      */
     @Test
     public void testInvalidAddress() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class,
             () -> testSocksCmdResponseDecoderWithDifferentParams(
                 SocksCmdStatus.SUCCESS, SocksAddressType.IPv4, "1", 80));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSocksCmdResponseDecoderWithDifferentParams(
+                        SocksCmdStatus.SUCCESS, SocksAddressType.IPv4, "1", 80);
+            }
+        });
+>>>>>>> dev
     }
 
     /**

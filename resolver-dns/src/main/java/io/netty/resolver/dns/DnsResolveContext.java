@@ -38,6 +38,7 @@ import io.netty.util.concurrent.FutureListener;
 import io.netty.util.concurrent.Promise;
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.StringUtil;
+import io.netty.util.internal.SuppressJava6Requirement;
 import io.netty.util.internal.ThrowableUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -109,7 +110,11 @@ abstract class DnsResolveContext<T> {
         this.expectedTypes = expectedTypes;
         this.additionals = additionals;
 
+<<<<<<< HEAD
         this.nameServerAddrs = requireNonNull(nameServerAddrs, "nameServerAddrs");
+=======
+        this.nameServerAddrs = ObjectUtil.checkNotNull(nameServerAddrs, "nameServerAddrs");
+>>>>>>> dev
         this.allowedQueries = allowedQueries;
     }
 
@@ -118,7 +123,18 @@ abstract class DnsResolveContext<T> {
         private static final long serialVersionUID = 1209303419266433003L;
 
         private DnsResolveContextException(String message) {
+<<<<<<< HEAD
             super(message, null, false, true);
+=======
+            super(message);
+        }
+
+        @SuppressJava6Requirement(reason = "uses Java 7+ Exception.<init>(String, Throwable, boolean, boolean)" +
+                " but is guarded by version checks")
+        private DnsResolveContextException(String message, boolean shared) {
+            super(message, null, false, true);
+            assert shared;
+>>>>>>> dev
         }
 
         // Override fillInStackTrace() so we not populate the backtrace via a native call and so leak the
@@ -129,7 +145,17 @@ abstract class DnsResolveContext<T> {
         }
 
         static DnsResolveContextException newStatic(String message, Class<?> clazz, String method) {
+<<<<<<< HEAD
             return ThrowableUtil.unknownStackTrace(new DnsResolveContextException(message), clazz, method);
+=======
+            final DnsResolveContextException exception;
+            if (PlatformDependent.javaVersion() >= 7) {
+                exception = new DnsResolveContextException(message, true);
+            } else {
+                exception = new DnsResolveContextException(message);
+            }
+            return ThrowableUtil.unknownStackTrace(exception, clazz, method);
+>>>>>>> dev
         }
     }
 
@@ -439,6 +465,7 @@ abstract class DnsResolveContext<T> {
                 return;
             }
 
+<<<<<<< HEAD
             final Throwable queryCause = future.cause();
             try {
                 if (queryCause == null) {
@@ -449,6 +476,25 @@ abstract class DnsResolveContext<T> {
                     queryLifecycleObserver.queryFailed(queryCause);
                     query(nameServerAddrStream, nameServerAddrStreamIndex + 1, question,
                           newDnsQueryLifecycleObserver(question), true, promise, queryCause);
+=======
+                final Throwable queryCause = future.cause();
+                try {
+                    if (queryCause == null) {
+                        onResponse(nameServerAddrStream, nameServerAddrStreamIndex, question, future.getNow(),
+                                   queryLifecycleObserver, promise);
+                    } else {
+                        // Server did not respond or I/O error occurred; try again.
+                        queryLifecycleObserver.queryFailed(queryCause);
+                        query(nameServerAddrStream, nameServerAddrStreamIndex + 1, question,
+                              newDnsQueryLifecycleObserver(question), true, promise, queryCause);
+                    }
+                } finally {
+                    tryToFinishResolve(nameServerAddrStream, nameServerAddrStreamIndex, question,
+                                       // queryLifecycleObserver has already been terminated at this point so we must
+                                       // not allow it to be terminated again by tryToFinishResolve.
+                                       NoopDnsQueryLifecycleObserver.INSTANCE,
+                                       promise, queryCause);
+>>>>>>> dev
                 }
             } finally {
                 tryToFinishResolve(nameServerAddrStream, nameServerAddrStreamIndex, question,
@@ -476,6 +522,7 @@ abstract class DnsResolveContext<T> {
         queriesInProgress.add(resolveFuture);
 
         Promise<List<InetAddress>> resolverPromise = parent.executor().newPromise();
+<<<<<<< HEAD
         resolverPromise.addListener((FutureListener<List<InetAddress>>) future -> {
             // Remove placeholder.
             queriesInProgress.remove(resolveFuture);
@@ -490,6 +537,25 @@ abstract class DnsResolveContext<T> {
                 // Ignore the server and try the next one...
                 query(nameServerAddrStream, nameServerAddrStreamIndex + 1,
                       question, queryLifecycleObserver, true, promise, cause);
+=======
+        resolverPromise.addListener(new FutureListener<List<InetAddress>>() {
+            @Override
+            public void operationComplete(final Future<List<InetAddress>> future) {
+                // Remove placeholder.
+                queriesInProgress.remove(resolveFuture);
+
+                if (future.isSuccess()) {
+                    List<InetAddress> resolvedAddresses = future.getNow();
+                    DnsServerAddressStream addressStream = new CombinedDnsServerAddressStream(
+                            nameServerAddr, resolvedAddresses, nameServerAddrStream);
+                    query(addressStream, nameServerAddrStreamIndex, question,
+                          queryLifecycleObserver, true, promise, cause);
+                } else {
+                    // Ignore the server and try the next one...
+                    query(nameServerAddrStream, nameServerAddrStreamIndex + 1,
+                          question, queryLifecycleObserver, true, promise, cause);
+                }
+>>>>>>> dev
             }
         });
         DnsCache resolveCache = resolveCache();
@@ -763,7 +829,11 @@ abstract class DnsResolveContext<T> {
 
             // Make sure the record is for the questioned domain.
             if (!recordName.equals(questionName)) {
+<<<<<<< HEAD
                 Map<String, String> cnamesCopy = new HashMap<>(cnames);
+=======
+                Map<String, String> cnamesCopy = new HashMap<String, String>(cnames);
+>>>>>>> dev
                 // Even if the record's name is not exactly same, it might be an alias defined in the CNAME records.
                 String resolved = questionName;
                 do {
@@ -825,7 +895,11 @@ abstract class DnsResolveContext<T> {
             // ArrayList here as duplicates should be found quite unfrequently in the wild and we dont want to pay
             // for the extra memory copy and allocations in this cases later on.
             if (finalResult == null) {
+<<<<<<< HEAD
                 finalResult = new ArrayList<>(8);
+=======
+                finalResult = new ArrayList<T>(8);
+>>>>>>> dev
                 finalResult.add(converted);
             } else if (isDuplicateAllowed() || !finalResult.contains(converted)) {
                 finalResult.add(converted);

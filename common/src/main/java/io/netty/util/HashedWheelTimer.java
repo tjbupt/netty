@@ -15,6 +15,10 @@
  */
 package io.netty.util;
 
+import static io.netty.util.internal.ObjectUtil.checkInRange;
+import static io.netty.util.internal.ObjectUtil.checkPositive;
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -244,8 +248,14 @@ public class HashedWheelTimer implements Timer {
             ThreadFactory threadFactory,
             long tickDuration, TimeUnit unit, int ticksPerWheel, boolean leakDetection,
             long maxPendingTimeouts) {
+<<<<<<< HEAD
         requireNonNull(threadFactory, "threadFactory");
         requireNonNull(unit, "unit");
+=======
+
+        checkNotNull(threadFactory, "threadFactory");
+        checkNotNull(unit, "unit");
+>>>>>>> dev
         checkPositive(tickDuration, "tickDuration");
         checkPositive(ticksPerWheel, "ticksPerWheel");
 
@@ -396,8 +406,13 @@ public class HashedWheelTimer implements Timer {
 
     @Override
     public Timeout newTimeout(TimerTask task, long delay, TimeUnit unit) {
+<<<<<<< HEAD
         requireNonNull(task, "task");
         requireNonNull(unit, "unit");
+=======
+        checkNotNull(task, "task");
+        checkNotNull(unit, "unit");
+>>>>>>> dev
 
         long pendingTimeoutsCount = pendingTimeouts.incrementAndGet();
 

@@ -25,7 +25,11 @@ import org.junit.jupiter.api.TestInfo;
 
 import java.util.List;
 
+<<<<<<< HEAD
 public abstract class AbstractTestsuiteTest<T extends AbstractBootstrap<?, ?, ?>> {
+=======
+public abstract class AbstractTestsuiteTest<T extends AbstractBootstrap<?, ?>> {
+>>>>>>> dev
     protected final InternalLogger logger = InternalLoggerFactory.getInstance(getClass());
     protected volatile T cb;
 
@@ -53,7 +57,11 @@ public abstract class AbstractTestsuiteTest<T extends AbstractBootstrap<?, ?, ?>
 
     protected abstract void configure(T bootstrap, ByteBufAllocator allocator);
 
+<<<<<<< HEAD
     public interface Runner<CB extends AbstractBootstrap<?, ?, ?>> {
+=======
+    public interface Runner<CB extends AbstractBootstrap<?, ?>> {
+>>>>>>> dev
         void run(CB cb) throws Throwable;
     }
 }

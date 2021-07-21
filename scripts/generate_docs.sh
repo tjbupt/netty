@@ -16,7 +16,11 @@
 # ----------------------------------------------------------------------------
 set -e
 # Adjust for different branch if needed
+<<<<<<< HEAD
 VERSION=5.0
+=======
+VERSION=4.1
+>>>>>>> dev
 
 if [ "$#" -ne 2 ]; then
     echo "Expected netty-website directory and tag"
@@ -46,3 +50,8 @@ rm -rf "$WEBSITE_XREF_DIR"/*
 echo "Copy javadocs and xref files"
 cp -r "$API_DIR"/* "$WEBSITE_API_DIR"
 cp -r "$XREF_DIR"/* "$WEBSITE_XREF_DIR"
+<<<<<<< HEAD
+=======
+
+git checkout "$BRANCH"
+>>>>>>> dev

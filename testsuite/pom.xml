@@ -20,7 +20,11 @@
   <parent>
     <groupId>io.netty</groupId>
     <artifactId>netty-parent</artifactId>
+<<<<<<< HEAD
     <version>5.0.0.Final-SNAPSHOT</version>
+=======
+    <version>4.1.67.Final-SNAPSHOT</version>
+>>>>>>> dev
   </parent>
 
   <artifactId>netty-testsuite</artifactId>
@@ -32,6 +36,24 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>netty-common</artifactId>
+<<<<<<< HEAD
+=======
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>netty-buffer</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>netty-transport</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>netty-transport-sctp</artifactId>
+>>>>>>> dev
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -132,6 +154,11 @@
   </dependencies>
 
   <properties>
+<<<<<<< HEAD
+=======
+    <!-- Needed for SSL tests as these use the SelfSignedCertificate --> 
+    <argLine.java9.extras>--add-exports java.base/sun.security.x509=ALL-UNNAMED</argLine.java9.extras>
+>>>>>>> dev
     <skipJapicmp>true</skipJapicmp>
   </properties>
 

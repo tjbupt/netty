@@ -18,9 +18,15 @@ package io.netty.handler.codec.http.websocketx;
 import io.netty.handler.codec.http.EmptyHttpHeaders;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.websocketx.WebSocketClientProtocolHandler.ClientHandshakeStateEvent;
+<<<<<<< HEAD
 
 import java.net.URI;
 import java.util.Objects;
+=======
+import io.netty.util.internal.ObjectUtil;
+
+import java.net.URI;
+>>>>>>> dev
 
 import static io.netty.handler.codec.http.websocketx.WebSocketServerProtocolConfig.DEFAULT_HANDSHAKE_TIMEOUT_MILLIS;
 import static io.netty.util.internal.ObjectUtil.checkPositive;
@@ -197,7 +203,11 @@ public final class WebSocketClientProtocolConfig {
         private boolean absoluteUpgradeUrl;
 
         private Builder(WebSocketClientProtocolConfig clientConfig) {
+<<<<<<< HEAD
             this(Objects.requireNonNull(clientConfig, "clientConfig").webSocketUri(),
+=======
+            this(ObjectUtil.checkNotNull(clientConfig, "clientConfig").webSocketUri(),
+>>>>>>> dev
                  clientConfig.subprotocol(),
                  clientConfig.version(),
                  clientConfig.allowExtensions(),

@@ -15,13 +15,20 @@
  */
 package io.netty.channel.epoll;
 
+<<<<<<< HEAD
 import org.junit.jupiter.api.Assertions;
+=======
+>>>>>>> dev
 import org.junit.jupiter.api.BeforeAll;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -33,10 +40,23 @@ public class LinuxSocketTest {
 
     @Test
     public void testBindNonIpv6SocketToInet6AddressThrows() throws Exception {
+<<<<<<< HEAD
         LinuxSocket socket = LinuxSocket.newSocketStream(false);
         try {
             assertThrows(IOException.class, () -> socket.bind(new InetSocketAddress(InetAddress.getByAddress(
                     new byte[]{'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}), 0)));
+=======
+        final LinuxSocket socket = LinuxSocket.newSocketStream(false);
+        try {
+            assertThrows(IOException.class, new Executable() {
+                @Override
+                public void execute() throws Throwable {
+                    socket.bind(new InetSocketAddress(InetAddress.getByAddress(
+                            new byte[]{'0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}),
+                            0));
+                }
+            });
+>>>>>>> dev
         } finally {
             socket.close();
         }
@@ -44,11 +64,25 @@ public class LinuxSocketTest {
 
     @Test
     public void testConnectNonIpv6SocketToInet6AddressThrows() throws Exception {
+<<<<<<< HEAD
         LinuxSocket socket = LinuxSocket.newSocketStream(false);
         try {
             assertThrows(IOException.class,
                 () -> socket.connect(new InetSocketAddress(InetAddress.getByAddress(new byte[]{
                     '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}), 1234)));
+=======
+        final LinuxSocket socket = LinuxSocket.newSocketStream(false);
+        try {
+            assertThrows(IOException.class,
+                    new Executable() {
+                        @Override
+                        public void execute() throws Throwable {
+                            socket.connect(new InetSocketAddress(InetAddress.getByAddress(new byte[]{
+                                    '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1'}),
+                                    1234));
+                        }
+                    });
+>>>>>>> dev
         } finally {
             socket.close();
         }

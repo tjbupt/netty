@@ -16,6 +16,10 @@
 package io.netty.util;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -43,7 +47,16 @@ public class ConstantPoolTest {
 
     @Test
     public void testCannotProvideNullName() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> pool.valueOf(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                pool.valueOf(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

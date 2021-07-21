@@ -19,9 +19,13 @@ import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
+<<<<<<< HEAD
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+=======
+import java.lang.reflect.Constructor;
+>>>>>>> dev
 import java.lang.reflect.InvocationTargetException;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
@@ -35,16 +39,25 @@ public final class DnsServerAddressStreamProviders {
 
     private static final InternalLogger LOGGER =
             InternalLoggerFactory.getInstance(DnsServerAddressStreamProviders.class);
+<<<<<<< HEAD
     private static final MethodHandle STREAM_PROVIDER_CONSTRUCTOR_HANDLE;
+=======
+    private static final Constructor<? extends DnsServerAddressStreamProvider> STREAM_PROVIDER_CONSTRUCTOR;
+>>>>>>> dev
     private static final String MACOS_PROVIDER_CLASS_NAME =
             "io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider";
 
     static {
+<<<<<<< HEAD
         MethodHandle constructorHandle = null;
+=======
+        Constructor<? extends DnsServerAddressStreamProvider> constructor = null;
+>>>>>>> dev
         if (PlatformDependent.isOsx()) {
             try {
                 // As MacOSDnsServerAddressStreamProvider is contained in another jar which depends on this jar
                 // we use reflection to use it if its on the classpath.
+<<<<<<< HEAD
                 Object maybeProvider = AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
                     try {
                         return Class.forName(
@@ -53,15 +66,33 @@ public final class DnsServerAddressStreamProviders {
                                 DnsServerAddressStreamProviders.class.getClassLoader());
                     } catch (Throwable cause) {
                         return cause;
+=======
+                Object maybeProvider = AccessController.doPrivileged(new PrivilegedAction<Object>() {
+                    @Override
+                    public Object run() {
+                        try {
+                            return Class.forName(
+                                    MACOS_PROVIDER_CLASS_NAME,
+                                    true,
+                                    DnsServerAddressStreamProviders.class.getClassLoader());
+                        } catch (Throwable cause) {
+                            return cause;
+                        }
+>>>>>>> dev
                     }
                 });
                 if (maybeProvider instanceof Class) {
                     @SuppressWarnings("unchecked")
                     Class<? extends DnsServerAddressStreamProvider> providerClass =
                             (Class<? extends DnsServerAddressStreamProvider>) maybeProvider;
+<<<<<<< HEAD
                     MethodHandles.Lookup lookup = MethodHandles.lookup();
                     constructorHandle = lookup.findConstructor(providerClass, MethodType.methodType(void.class));
                     constructorHandle.invoke(); // ctor ensures availability
+=======
+                    constructor = providerClass.getConstructor();
+                    constructor.newInstance();  // ctor ensures availability
+>>>>>>> dev
                     LOGGER.debug("{}: available", MACOS_PROVIDER_CLASS_NAME);
                 } else {
                     throw (Throwable) maybeProvider;
@@ -72,10 +103,17 @@ public final class DnsServerAddressStreamProviders {
             } catch (Throwable cause) {
                 LOGGER.error("Unable to load {}, fallback to system defaults. This may result in "
                         + "incorrect DNS resolutions on MacOS.", MACOS_PROVIDER_CLASS_NAME, cause);
+<<<<<<< HEAD
                 constructorHandle = null;
             }
         }
         STREAM_PROVIDER_CONSTRUCTOR_HANDLE = constructorHandle;
+=======
+                constructor = null;
+            }
+        }
+        STREAM_PROVIDER_CONSTRUCTOR = constructor;
+>>>>>>> dev
     }
 
     private DnsServerAddressStreamProviders() {
@@ -89,6 +127,7 @@ public final class DnsServerAddressStreamProviders {
      * configuration.
      */
     public static DnsServerAddressStreamProvider platformDefault() {
+<<<<<<< HEAD
         if (STREAM_PROVIDER_CONSTRUCTOR_HANDLE != null) {
             try {
                 return (DnsServerAddressStreamProvider) STREAM_PROVIDER_CONSTRUCTOR_HANDLE.invoke();
@@ -96,6 +135,17 @@ public final class DnsServerAddressStreamProviders {
                 // ignore
             } catch (Throwable cause) {
                 PlatformDependent.throwException(cause);
+=======
+        if (STREAM_PROVIDER_CONSTRUCTOR != null) {
+            try {
+                return STREAM_PROVIDER_CONSTRUCTOR.newInstance();
+            } catch (IllegalAccessException e) {
+                // ignore
+            } catch (InstantiationException e) {
+                // ignore
+            } catch (InvocationTargetException e) {
+                // ignore
+>>>>>>> dev
             }
         }
         return unixDefault();

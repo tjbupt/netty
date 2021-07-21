@@ -38,7 +38,16 @@ public class SocketMultipleConnectTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testMultipleConnect(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testMultipleConnect);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testMultipleConnect(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testMultipleConnect(ServerBootstrap sb, Bootstrap cb) throws Exception {
@@ -65,6 +74,18 @@ public class SocketMultipleConnectTest extends AbstractSocketTest {
 
     @Override
     protected List<TestsuitePermutation.BootstrapComboFactory<ServerBootstrap, Bootstrap>> newFactories() {
+<<<<<<< HEAD
         return new ArrayList<>(SocketTestPermutation.INSTANCE.socketWithFastOpen());
+=======
+        List<TestsuitePermutation.BootstrapComboFactory<ServerBootstrap, Bootstrap>> factories
+                = new ArrayList<TestsuitePermutation.BootstrapComboFactory<ServerBootstrap, Bootstrap>>();
+        for (TestsuitePermutation.BootstrapComboFactory<ServerBootstrap, Bootstrap> comboFactory
+                : SocketTestPermutation.INSTANCE.socketWithFastOpen()) {
+            if (comboFactory.newClientInstance().config().group() instanceof NioEventLoopGroup) {
+                factories.add(comboFactory);
+            }
+        }
+        return factories;
+>>>>>>> dev
     }
 }

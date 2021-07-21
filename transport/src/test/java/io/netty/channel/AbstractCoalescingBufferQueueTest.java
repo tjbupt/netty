@@ -43,7 +43,11 @@ public class AbstractCoalescingBufferQueueTest {
     }
 
     private static void testDecrementAll(boolean write) {
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(new ChannelHandler() {
+=======
+        EmbeddedChannel channel = new EmbeddedChannel(new ChannelOutboundHandlerAdapter() {
+>>>>>>> dev
             @Override
             public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
                 ReferenceCountUtil.release(msg);
@@ -63,9 +67,18 @@ public class AbstractCoalescingBufferQueueTest {
         };
 
         final byte[] bytes = new byte[128];
+<<<<<<< HEAD
         queue.add(Unpooled.wrappedBuffer(bytes), future -> {
             queue.add(Unpooled.wrappedBuffer(bytes));
             assertEquals(bytes.length, queue.readableBytes());
+=======
+        queue.add(Unpooled.wrappedBuffer(bytes), new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                queue.add(Unpooled.wrappedBuffer(bytes));
+                assertEquals(bytes.length, queue.readableBytes());
+            }
+>>>>>>> dev
         });
 
         assertEquals(bytes.length, queue.readableBytes());

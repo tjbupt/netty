@@ -15,8 +15,15 @@
  */
 package io.netty.util;
 
+<<<<<<< HEAD
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+=======
+import io.netty.util.internal.ThreadLocalRandom;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -24,7 +31,10 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -37,25 +47,52 @@ public class AbstractReferenceCountedTest {
 
     @Test
     public void testRetainOverflow() {
-        AbstractReferenceCounted referenceCounted = newReferenceCounted();
+        final AbstractReferenceCounted referenceCounted = newReferenceCounted();
         referenceCounted.setRefCnt(Integer.MAX_VALUE);
         assertEquals(Integer.MAX_VALUE, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, referenceCounted::retain);
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.retain();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testRetainOverflow2() {
-        AbstractReferenceCounted referenceCounted = newReferenceCounted();
+        final AbstractReferenceCounted referenceCounted = newReferenceCounted();
         assertEquals(1, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> referenceCounted.retain(Integer.MAX_VALUE));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.retain(Integer.MAX_VALUE);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReleaseOverflow() {
-        AbstractReferenceCounted referenceCounted = newReferenceCounted();
+        final AbstractReferenceCounted referenceCounted = newReferenceCounted();
         referenceCounted.setRefCnt(0);
         assertEquals(0, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> referenceCounted.release(Integer.MAX_VALUE));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.release(Integer.MAX_VALUE);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -72,25 +109,47 @@ public class AbstractReferenceCountedTest {
 
     @Test
     public void testRetainResurrect() {
-        AbstractReferenceCounted referenceCounted = newReferenceCounted();
+        final AbstractReferenceCounted referenceCounted = newReferenceCounted();
         assertTrue(referenceCounted.release());
         assertEquals(0, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, referenceCounted::retain);
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.retain();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testRetainResurrect2() {
-        AbstractReferenceCounted referenceCounted = newReferenceCounted();
+        final AbstractReferenceCounted referenceCounted = newReferenceCounted();
         assertTrue(referenceCounted.release());
         assertEquals(0, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> referenceCounted.retain(2));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.retain(2);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testRetainFromMultipleThreadsThrowsReferenceCountException() throws Exception {
         int threads = 4;
+<<<<<<< HEAD
         Queue<Future<?>> futures = new ArrayDeque<>(threads);
+=======
+        Queue<Future<?>> futures = new ArrayDeque<Future<?>>(threads);
+>>>>>>> dev
         ExecutorService service = Executors.newFixedThreadPool(threads);
         final AtomicInteger refCountExceptions = new AtomicInteger();
 
@@ -102,6 +161,7 @@ public class AbstractReferenceCountedTest {
 
                 for (int a = 0; a < threads; a++) {
                     final int retainCnt = ThreadLocalRandom.current().nextInt(1, Integer.MAX_VALUE);
+<<<<<<< HEAD
                     futures.add(service.submit(() -> {
                         try {
                             retainLatch.await();
@@ -112,6 +172,21 @@ public class AbstractReferenceCountedTest {
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
+=======
+                    futures.add(service.submit(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                retainLatch.await();
+                                try {
+                                    referenceCounted.retain(retainCnt);
+                                } catch (IllegalReferenceCountException e) {
+                                    refCountExceptions.incrementAndGet();
+                                }
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt();
+                            }
+>>>>>>> dev
                         }
                     }));
                 }
@@ -136,7 +211,11 @@ public class AbstractReferenceCountedTest {
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testReleaseFromMultipleThreadsThrowsReferenceCountException() throws Exception {
         int threads = 4;
+<<<<<<< HEAD
         Queue<Future<?>> futures = new ArrayDeque<>(threads);
+=======
+        Queue<Future<?>> futures = new ArrayDeque<Future<?>>(threads);
+>>>>>>> dev
         ExecutorService service = Executors.newFixedThreadPool(threads);
         final AtomicInteger refCountExceptions = new AtomicInteger();
 
@@ -149,6 +228,7 @@ public class AbstractReferenceCountedTest {
                 for (int a = 0; a < threads; a++) {
                     final AtomicInteger releaseCnt = new AtomicInteger(0);
 
+<<<<<<< HEAD
                     futures.add(service.submit(() -> {
                         try {
                             releaseLatch.await();
@@ -161,6 +241,23 @@ public class AbstractReferenceCountedTest {
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
+=======
+                    futures.add(service.submit(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                releaseLatch.await();
+                                try {
+                                    if (referenceCounted.release(releaseCnt.incrementAndGet())) {
+                                        releasedCount.incrementAndGet();
+                                    }
+                                } catch (IllegalReferenceCountException e) {
+                                    refCountExceptions.incrementAndGet();
+                                }
+                            } catch (InterruptedException e) {
+                                Thread.currentThread().interrupt();
+                            }
+>>>>>>> dev
                         }
                     }));
                 }

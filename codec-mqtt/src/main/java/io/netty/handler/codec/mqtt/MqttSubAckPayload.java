@@ -16,8 +16,12 @@
 
 package io.netty.handler.codec.mqtt;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
 
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.StringUtil;
 
 import java.util.ArrayList;
@@ -32,7 +36,11 @@ public class MqttSubAckPayload {
     private final List<Integer> reasonCodes;
 
     public MqttSubAckPayload(int... reasonCodes) {
+<<<<<<< HEAD
         requireNonNull(reasonCodes, "reasonCodes");
+=======
+        ObjectUtil.checkNotNull(reasonCodes, "reasonCodes");
+>>>>>>> dev
 
         List<Integer> list = new ArrayList<Integer>(reasonCodes.length);
         for (int v: reasonCodes) {
@@ -41,10 +49,17 @@ public class MqttSubAckPayload {
         this.reasonCodes = Collections.unmodifiableList(list);
     }
 
+<<<<<<< HEAD
     public MqttSubAckPayload(Iterable<Integer> grantedQoSLevels) {
         requireNonNull(grantedQoSLevels, "grantedQoSLevels");
         List<Integer> list = new ArrayList<>();
         for (Integer v: grantedQoSLevels) {
+=======
+    public MqttSubAckPayload(Iterable<Integer> reasonCodes) {
+        ObjectUtil.checkNotNull(reasonCodes, "reasonCodes");
+        List<Integer> list = new ArrayList<Integer>();
+        for (Integer v: reasonCodes) {
+>>>>>>> dev
             if (v == null) {
                 break;
             }
@@ -54,7 +69,11 @@ public class MqttSubAckPayload {
     }
 
     public List<Integer> grantedQoSLevels() {
+<<<<<<< HEAD
         List<Integer> qosLevels = new ArrayList<>(reasonCodes.size());
+=======
+        List<Integer> qosLevels = new ArrayList<Integer>(reasonCodes.size());
+>>>>>>> dev
         for (int code: reasonCodes) {
             if (code > MqttQoS.EXACTLY_ONCE.value()) {
                 qosLevels.add(MqttQoS.FAILURE.value());

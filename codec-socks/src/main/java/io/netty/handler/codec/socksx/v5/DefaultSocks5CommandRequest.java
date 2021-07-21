@@ -19,6 +19,7 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.handler.codec.DecoderResult;
 import io.netty.util.NetUtil;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.net.IDN;
@@ -35,9 +36,16 @@ public final class DefaultSocks5CommandRequest extends AbstractSocks5Message imp
 
     public DefaultSocks5CommandRequest(
             Socks5CommandType type, Socks5AddressType dstAddrType, String dstAddr, int dstPort) {
+<<<<<<< HEAD
         requireNonNull(type, "type");
         requireNonNull(dstAddrType, "dstAddrType");
         requireNonNull(dstAddr, "dstAddr");
+=======
+
+        this.type = ObjectUtil.checkNotNull(type, "type");
+        ObjectUtil.checkNotNull(dstAddrType, "dstAddrType");
+        ObjectUtil.checkNotNull(dstAddr, "dstAddr");
+>>>>>>> dev
 
         if (dstAddrType == Socks5AddressType.IPv4) {
             if (!NetUtil.isValidIpV4Address(dstAddr)) {
@@ -58,7 +66,6 @@ public final class DefaultSocks5CommandRequest extends AbstractSocks5Message imp
             throw new IllegalArgumentException("dstPort: " + dstPort + " (expected: 0~65535)");
         }
 
-        this.type = type;
         this.dstAddrType = dstAddrType;
         this.dstAddr = dstAddr;
         this.dstPort = dstPort;

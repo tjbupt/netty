@@ -15,7 +15,11 @@
  */
 package io.netty.util.concurrent;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import java.util.concurrent.Executor;
 
@@ -25,13 +29,17 @@ import java.util.concurrent.Executor;
 public final class ImmediateExecutor implements Executor {
     public static final ImmediateExecutor INSTANCE = new ImmediateExecutor();
 
-    private  ImmediateExecutor() {
+    private ImmediateExecutor() {
         // use static instance
     }
 
     @Override
     public void execute(Runnable command) {
+<<<<<<< HEAD
         requireNonNull(command, "command");
         command.run();
+=======
+        ObjectUtil.checkNotNull(command, "command").run();
+>>>>>>> dev
     }
 }

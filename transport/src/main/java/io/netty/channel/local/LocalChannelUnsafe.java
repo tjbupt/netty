@@ -15,6 +15,7 @@
  */
 package io.netty.channel.local;
 
+<<<<<<< HEAD:transport/src/main/java/io/netty/channel/local/LocalChannelUnsafe.java
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPromise;
 
@@ -22,4 +23,15 @@ interface LocalChannelUnsafe extends Channel.Unsafe {
     void register0();
     void deregister0();
     ChannelPromise newPromise();
+=======
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+
+public class ScheduledFutureTaskTest {
+
+    @Test
+    public void testDeadlineNanosNotOverflow() {
+        Assertions.assertEquals(Long.MAX_VALUE, ScheduledFutureTask.deadlineNanos(Long.MAX_VALUE));
+    }
+>>>>>>> dev:common/src/test/java/io/netty/util/concurrent/ScheduledFutureTaskTest.java
 }

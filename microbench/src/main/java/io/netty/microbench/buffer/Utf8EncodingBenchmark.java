@@ -172,7 +172,11 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
 
     private int nestedByteBufUtilWriteUtf8String6(String string) {
         // this calls should be inlined but...what happen to the subsequent calls > MaxInlineLevel?
+<<<<<<< HEAD
         buffer.writerIndex(0);
+=======
+        buffer.resetWriterIndex();
+>>>>>>> dev
         ByteBufUtil.writeUtf8(buffer, string, 0, string.length());
         return buffer.writerIndex();
     }
@@ -182,7 +186,11 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
     public int byteBufUtilWriteUtf8String() {
         int countBytes = 0;
         for (String string : strings) {
+<<<<<<< HEAD
             buffer.writerIndex(0);
+=======
+            buffer.resetWriterIndex();
+>>>>>>> dev
             ByteBufUtil.writeUtf8(buffer, string, 0, string.length());
             countBytes += buffer.writerIndex();
         }
@@ -196,10 +204,17 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
         for (int i = 0, size = dataSetLength; i < size; i++) {
             final StringBuilder stringBuilder = stringBuilders[i];
             final String string = strings[i];
+<<<<<<< HEAD
             buffer.writerIndex(0);
             ByteBufUtil.writeUtf8(buffer, stringBuilder, 0, stringBuilder.length());
             countBytes += buffer.writerIndex();
             buffer.writerIndex(0);
+=======
+            buffer.resetWriterIndex();
+            ByteBufUtil.writeUtf8(buffer, stringBuilder, 0, stringBuilder.length());
+            countBytes += buffer.writerIndex();
+            buffer.resetWriterIndex();
+>>>>>>> dev
             ByteBufUtil.writeUtf8(buffer, string, 0, string.length());
             countBytes += buffer.writerIndex();
         }
@@ -214,6 +229,7 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
             final StringBuilder stringBuilder = stringBuilders[i];
             final String string = strings[i];
             final AnotherCharSequence anotherCharSequence = anotherCharSequences[i];
+<<<<<<< HEAD
             buffer.writerIndex(0);
             ByteBufUtil.writeUtf8(buffer, stringBuilder, 0, stringBuilder.length());
             countBytes += buffer.writerIndex();
@@ -221,6 +237,15 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
             ByteBufUtil.writeUtf8(buffer, string, 0, string.length());
             countBytes += buffer.writerIndex();
             buffer.writerIndex(0);
+=======
+            buffer.resetWriterIndex();
+            ByteBufUtil.writeUtf8(buffer, stringBuilder, 0, stringBuilder.length());
+            countBytes += buffer.writerIndex();
+            buffer.resetWriterIndex();
+            ByteBufUtil.writeUtf8(buffer, string, 0, string.length());
+            countBytes += buffer.writerIndex();
+            buffer.resetWriterIndex();
+>>>>>>> dev
             ByteBufUtil.writeUtf8(buffer, anotherCharSequence, 0, anotherCharSequence.length());
             countBytes += buffer.writerIndex();
         }
@@ -235,6 +260,7 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
             final StringBuilder stringBuilder = stringBuilders[i];
             final String string = strings[i];
             final AsciiString asciiString = asciiStrings[i];
+<<<<<<< HEAD
             buffer.writerIndex(0);
             ByteBufUtil.writeUtf8(buffer, stringBuilder, 0, stringBuilder.length());
             countBytes += buffer.writerIndex();
@@ -242,6 +268,15 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
             ByteBufUtil.writeUtf8(buffer, string, 0, string.length());
             countBytes += buffer.writerIndex();
             buffer.writerIndex(0);
+=======
+            buffer.resetWriterIndex();
+            ByteBufUtil.writeUtf8(buffer, stringBuilder, 0, stringBuilder.length());
+            countBytes += buffer.writerIndex();
+            buffer.resetWriterIndex();
+            ByteBufUtil.writeUtf8(buffer, string, 0, string.length());
+            countBytes += buffer.writerIndex();
+            buffer.resetWriterIndex();
+>>>>>>> dev
             ByteBufUtil.writeUtf8(buffer, asciiString, 0, asciiString.length());
             countBytes += buffer.writerIndex();
         }
@@ -254,7 +289,11 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
         int countBytes = 0;
         for (int i = 0, size = dataSetLength; i < size; i++) {
             final AsciiString asciiString = asciiStrings[i];
+<<<<<<< HEAD
             buffer.writerIndex(0);
+=======
+            buffer.resetWriterIndex();
+>>>>>>> dev
             ByteBufUtil.writeUtf8(buffer, asciiString, 0, asciiString.length());
             countBytes += buffer.writerIndex();
         }
@@ -266,7 +305,11 @@ public class Utf8EncodingBenchmark extends AbstractMicrobenchmark {
     public int writeGetBytes() throws UnsupportedEncodingException {
         int countBytes = 0;
         for (String string : strings) {
+<<<<<<< HEAD
             buffer.writerIndex(0);
+=======
+            buffer.resetWriterIndex();
+>>>>>>> dev
             final byte[] bytes = string.getBytes("UTF-8");
             buffer.writeBytes(bytes);
             countBytes += buffer.writerIndex();

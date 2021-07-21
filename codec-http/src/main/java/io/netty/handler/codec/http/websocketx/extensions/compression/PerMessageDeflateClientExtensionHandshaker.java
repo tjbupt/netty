@@ -30,6 +30,9 @@ import java.util.Objects;
 
 import static io.netty.handler.codec.http.websocketx.extensions.compression.PerMessageDeflateServerExtensionHandshaker.*;
 
+import static io.netty.handler.codec.http.websocketx.extensions.compression.PerMessageDeflateServerExtensionHandshaker.*;
+import static io.netty.util.internal.ObjectUtil.*;
+
 /**
  * <a href="https://tools.ietf.org/html/draft-ietf-hybi-permessage-compression-18">permessage-deflate</a>
  * handshake implementation.
@@ -111,12 +114,20 @@ public final class PerMessageDeflateClientExtensionHandshaker implements WebSock
         this.requestedServerWindowSize = requestedServerWindowSize;
         this.allowClientNoContext = allowClientNoContext;
         this.requestedServerNoContext = requestedServerNoContext;
+<<<<<<< HEAD
         this.extensionFilterProvider = Objects.requireNonNull(extensionFilterProvider, "extensionFilterProvider");
+=======
+        this.extensionFilterProvider = checkNotNull(extensionFilterProvider, "extensionFilterProvider");
+>>>>>>> dev
     }
 
     @Override
     public WebSocketExtensionData newRequestData() {
+<<<<<<< HEAD
         HashMap<String, String> parameters = new HashMap<>(4);
+=======
+        HashMap<String, String> parameters = new HashMap<String, String>(4);
+>>>>>>> dev
         if (requestedServerNoContext) {
             parameters.put(SERVER_NO_CONTEXT, null);
         }

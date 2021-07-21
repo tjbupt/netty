@@ -21,6 +21,10 @@ import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.handler.codec.EncoderException;
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -109,10 +113,22 @@ public class SmtpRequestEncoderTest {
 
     @Test
     public void testThrowsIfContentExpected() {
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(new SmtpRequestEncoder());
         try {
             assertTrue(channel.writeOutbound(SmtpRequests.data()));
             assertThrows(EncoderException.class, () ->channel.writeOutbound(SmtpRequests.noop()));
+=======
+        final EmbeddedChannel channel = new EmbeddedChannel(new SmtpRequestEncoder());
+        try {
+            assertTrue(channel.writeOutbound(SmtpRequests.data()));
+            assertThrows(EncoderException.class, new Executable() {
+                @Override
+                public void execute() {
+                    channel.writeOutbound(SmtpRequests.noop());
+                }
+            });
+>>>>>>> dev
         } finally {
             channel.finishAndReleaseAll();
         }

@@ -44,6 +44,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+<<<<<<< HEAD
+=======
+import org.mockito.invocation.InvocationOnMock;
+>>>>>>> dev
 import org.mockito.stubbing.Answer;
 
 /**
@@ -81,7 +85,16 @@ public class DefaultHttp2LocalFlowControllerTest {
         reset(ctx);
         when(ctx.newPromise()).thenReturn(promise);
         if (allowFlush) {
+<<<<<<< HEAD
             when(ctx.flush()).then((Answer<ChannelHandlerContext>) invocationOnMock -> ctx);
+=======
+            when(ctx.flush()).then(new Answer<ChannelHandlerContext>() {
+                @Override
+                public ChannelHandlerContext answer(InvocationOnMock invocationOnMock) {
+                    return ctx;
+                }
+            });
+>>>>>>> dev
         } else {
             when(ctx.flush()).thenThrow(new AssertionFailedError("forbidden"));
         }

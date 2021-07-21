@@ -18,6 +18,7 @@ services:
     image: netty:centos-6-1.11
 
   build-leak-boringssl-static:
+<<<<<<< HEAD
     image: netty:centos-6-1.11
 
   build-unsafe-buffer:
@@ -30,6 +31,8 @@ services:
     image: netty:centos-6-1.11
 
   deploy:
+=======
+>>>>>>> dev
     image: netty:centos-6-1.11
 
   shell:

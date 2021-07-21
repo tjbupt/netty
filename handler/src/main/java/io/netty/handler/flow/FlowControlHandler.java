@@ -26,6 +26,10 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.internal.ObjectPool;
 import io.netty.util.internal.ObjectPool.Handle;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectPool.ObjectCreator;
+>>>>>>> dev
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -119,6 +123,10 @@ public class FlowControlHandler implements ChannelHandler {
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+<<<<<<< HEAD
+=======
+        super.handlerRemoved(ctx);
+>>>>>>> dev
         if (!isQueueEmpty()) {
             dequeue(ctx, queue.size());
         }
@@ -225,7 +233,16 @@ public class FlowControlHandler implements ChannelHandler {
         private static final int DEFAULT_NUM_ELEMENTS = 2;
 
         private static final ObjectPool<RecyclableArrayDeque> RECYCLER = ObjectPool.newPool(
+<<<<<<< HEAD
                 handle -> new RecyclableArrayDeque(DEFAULT_NUM_ELEMENTS, handle));
+=======
+                new ObjectCreator<RecyclableArrayDeque>() {
+            @Override
+            public RecyclableArrayDeque newObject(Handle<RecyclableArrayDeque> handle) {
+                return new RecyclableArrayDeque(DEFAULT_NUM_ELEMENTS, handle);
+            }
+        });
+>>>>>>> dev
 
         public static RecyclableArrayDeque newInstance() {
             return RECYCLER.get();

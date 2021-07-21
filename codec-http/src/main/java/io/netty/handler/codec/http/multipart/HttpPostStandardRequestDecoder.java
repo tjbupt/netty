@@ -28,6 +28,10 @@ import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder.ErrorDataDec
 import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder.MultiPartStatus;
 import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder.NotEnoughDataDecoderException;
 import io.netty.util.ByteProcessor;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 import io.netty.util.internal.StringUtil;
 
 import java.io.IOException;
@@ -37,9 +41,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static java.util.Objects.requireNonNull;
 
+=======
+import static io.netty.util.internal.ObjectUtil.*;
+>>>>>>> dev
 
 /**
  * This decoder will decode Body and can handle POST BODY.
@@ -149,9 +157,15 @@ public class HttpPostStandardRequestDecoder implements InterfaceHttpPostRequestD
      *             errors
      */
     public HttpPostStandardRequestDecoder(HttpDataFactory factory, HttpRequest request, Charset charset) {
+<<<<<<< HEAD
         this.request = requireNonNull(request, "request");
         this.charset = requireNonNull(charset, "charset");
         this.factory = requireNonNull(factory, "factory");
+=======
+        this.request = checkNotNull(request, "request");
+        this.charset = checkNotNull(charset, "charset");
+        this.factory = checkNotNull(factory, "factory");
+>>>>>>> dev
         try {
             if (request instanceof HttpContent) {
                 // Offer automatically if the given request is as type of HttpContent
@@ -162,7 +176,11 @@ public class HttpPostStandardRequestDecoder implements InterfaceHttpPostRequestD
             }
         } catch (Throwable e) {
             destroy();
+<<<<<<< HEAD
             throw e;
+=======
+            PlatformDependent.throwException(e);
+>>>>>>> dev
         }
     }
 
@@ -499,6 +517,10 @@ public class HttpPostStandardRequestDecoder implements InterfaceHttpPostRequestD
             // error while decoding
             undecodedChunk.readerIndex(firstpos);
             throw new ErrorDataDecoderException(e);
+        } catch (IllegalArgumentException e) {
+            // error while decoding
+            undecodedChunk.readerIndex(firstpos);
+            throw new ErrorDataDecoderException(e);
         }
     }
 
@@ -718,7 +740,11 @@ public class HttpPostStandardRequestDecoder implements InterfaceHttpPostRequestD
 
     private static final class UrlEncodedDetector implements ByteProcessor {
         @Override
+<<<<<<< HEAD
         public boolean process(byte value) {
+=======
+        public boolean process(byte value) throws Exception {
+>>>>>>> dev
             return value != '%' && value != '+';
         }
     }

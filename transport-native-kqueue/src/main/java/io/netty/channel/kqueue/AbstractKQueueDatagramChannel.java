@@ -18,15 +18,26 @@ package io.netty.channel.kqueue;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelMetadata;
 import io.netty.channel.ChannelOutboundBuffer;
+<<<<<<< HEAD
 import io.netty.channel.EventLoop;
+=======
+>>>>>>> dev
 
 import java.io.IOException;
 
 abstract class AbstractKQueueDatagramChannel extends AbstractKQueueChannel {
+<<<<<<< HEAD
     private static final ChannelMetadata METADATA = new ChannelMetadata(true);
 
     AbstractKQueueDatagramChannel(Channel parent, EventLoop eventLoop, BsdSocket fd, boolean active) {
         super(parent, eventLoop, fd, active);
+=======
+
+    private static final ChannelMetadata METADATA = new ChannelMetadata(true);
+
+    AbstractKQueueDatagramChannel(Channel parent, BsdSocket fd, boolean active) {
+        super(parent, fd, active);
+>>>>>>> dev
     }
 
     @Override

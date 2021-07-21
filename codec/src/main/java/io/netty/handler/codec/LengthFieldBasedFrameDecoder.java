@@ -15,15 +15,20 @@
  */
 package io.netty.handler.codec;
 
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkPositive;
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+import static io.netty.util.internal.ObjectUtil.checkPositive;
+import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+>>>>>>> dev
 
 import java.nio.ByteOrder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.serialization.ObjectDecoder;
 
 /**
  * A decoder that splits the received {@link ByteBuf}s dynamically by the
@@ -301,12 +306,22 @@ public class LengthFieldBasedFrameDecoder extends ByteToMessageDecoder {
     public LengthFieldBasedFrameDecoder(
             ByteOrder byteOrder, int maxFrameLength, int lengthFieldOffset, int lengthFieldLength,
             int lengthAdjustment, int initialBytesToStrip, boolean failFast) {
+<<<<<<< HEAD
         requireNonNull(byteOrder, "byteOrder");
 
         checkPositive(maxFrameLength, "maxFrameLength");
 
         checkPositiveOrZero(lengthFieldOffset, "lengthFieldOffset");
 
+=======
+
+        this.byteOrder = checkNotNull(byteOrder, "byteOrder");
+
+        checkPositive(maxFrameLength, "maxFrameLength");
+
+        checkPositiveOrZero(lengthFieldOffset, "lengthFieldOffset");
+
+>>>>>>> dev
         checkPositiveOrZero(initialBytesToStrip, "initialBytesToStrip");
 
         if (lengthFieldOffset > maxFrameLength - lengthFieldLength) {
@@ -317,12 +332,11 @@ public class LengthFieldBasedFrameDecoder extends ByteToMessageDecoder {
                     "lengthFieldLength (" + lengthFieldLength + ").");
         }
 
-        this.byteOrder = byteOrder;
         this.maxFrameLength = maxFrameLength;
         this.lengthFieldOffset = lengthFieldOffset;
         this.lengthFieldLength = lengthFieldLength;
         this.lengthAdjustment = lengthAdjustment;
-        lengthFieldEndOffset = lengthFieldOffset + lengthFieldLength;
+        this.lengthFieldEndOffset = lengthFieldOffset + lengthFieldLength;
         this.initialBytesToStrip = initialBytesToStrip;
         this.failFast = failFast;
     }

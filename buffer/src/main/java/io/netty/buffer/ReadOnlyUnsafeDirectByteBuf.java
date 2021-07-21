@@ -16,7 +16,12 @@
 package io.netty.buffer;
 
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 
 import java.nio.ByteBuffer;
 
@@ -64,7 +69,11 @@ final class ReadOnlyUnsafeDirectByteBuf extends ReadOnlyByteBufferBuf {
     @Override
     public ByteBuf getBytes(int index, ByteBuf dst, int dstIndex, int length) {
         checkIndex(index, length);
+<<<<<<< HEAD
         requireNonNull(dst, "dst");
+=======
+        ObjectUtil.checkNotNull(dst, "dst");
+>>>>>>> dev
         if (dstIndex < 0 || dstIndex > dst.capacity() - length) {
             throw new IndexOutOfBoundsException("dstIndex: " + dstIndex);
         }
@@ -82,7 +91,11 @@ final class ReadOnlyUnsafeDirectByteBuf extends ReadOnlyByteBufferBuf {
     @Override
     public ByteBuf getBytes(int index, byte[] dst, int dstIndex, int length) {
         checkIndex(index, length);
+<<<<<<< HEAD
         requireNonNull(dst, "dst");
+=======
+        ObjectUtil.checkNotNull(dst, "dst");
+>>>>>>> dev
         if (dstIndex < 0 || dstIndex > dst.length - length) {
             throw new IndexOutOfBoundsException(String.format(
                     "dstIndex: %d, length: %d (expected: range(0, %d))", dstIndex, length, dst.length));

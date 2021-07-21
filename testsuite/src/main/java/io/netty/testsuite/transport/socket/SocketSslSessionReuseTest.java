@@ -84,12 +84,27 @@ public class SocketSslSessionReuseTest extends AbstractSocketTest {
     @ParameterizedTest(name = "{index}: serverEngine = {0}, clientEngine = {1}")
     @MethodSource("data")
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
+<<<<<<< HEAD
     public void testSslSessionReuse(SslContext serverCtx, SslContext clientCtx, TestInfo testInfo) throws Throwable {
         run(testInfo, (sb, cb) -> this.testSslSessionReuse(sb, cb, serverCtx, clientCtx));
     }
 
     public void testSslSessionReuse(ServerBootstrap sb, Bootstrap cb,
                                     SslContext serverCtx, SslContext clientCtx) throws Throwable {
+=======
+    public void testSslSessionReuse(final SslContext serverCtx, final SslContext clientCtx, TestInfo testInfo)
+            throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSslSessionReuse(sb, cb, serverCtx, clientCtx);
+            }
+        });
+    }
+
+    public void testSslSessionReuse(ServerBootstrap sb, Bootstrap cb,
+                                    final SslContext serverCtx, final SslContext clientCtx) throws Throwable {
+>>>>>>> dev
         final ReadAndDiscardHandler sh = new ReadAndDiscardHandler(true, true);
         final ReadAndDiscardHandler ch = new ReadAndDiscardHandler(false, true);
         final String[] protocols = { "TLSv1", "TLSv1.1", "TLSv1.2" };

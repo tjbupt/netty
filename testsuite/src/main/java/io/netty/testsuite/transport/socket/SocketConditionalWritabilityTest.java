@@ -36,7 +36,16 @@ public class SocketConditionalWritabilityTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testConditionalWritability(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testConditionalWritability);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testConditionalWritability(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testConditionalWritability(ServerBootstrap sb, Bootstrap cb) throws Throwable {

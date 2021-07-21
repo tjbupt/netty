@@ -18,7 +18,10 @@ package io.netty.example.http2.helloworld.frame.server;
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
+=======
+>>>>>>> dev
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -96,7 +99,11 @@ public class Http2ServerInitializer extends ChannelInitializer<SocketChannel> {
                 System.err.println("Directly talking: " + msg.protocolVersion() + " (no upgrade was attempted)");
                 ChannelPipeline pipeline = ctx.pipeline();
                 pipeline.addAfter(ctx.name(), null, new HelloWorldHttp1Handler("Direct. No Upgrade Attempted."));
+<<<<<<< HEAD
                 pipeline.addAfter(ctx.name(), null, new HttpObjectAggregator(maxHttpContentLength));
+=======
+                pipeline.replace(this, null, new HttpObjectAggregator(maxHttpContentLength));
+>>>>>>> dev
                 ctx.fireChannelRead(ReferenceCountUtil.retain(msg));
                 pipeline.remove(this);
             }

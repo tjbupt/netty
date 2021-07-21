@@ -15,9 +15,14 @@
  */
 package io.netty.resolver.dns;
 
+<<<<<<< HEAD
 import io.netty.channel.EventLoop;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.local.LocalHandler;
+=======
+import io.netty.channel.DefaultEventLoopGroup;
+import io.netty.channel.EventLoop;
+>>>>>>> dev
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.resolver.AddressResolver;
@@ -38,7 +43,11 @@ public class DnsAddressResolverGroupTest {
     public void testUseConfiguredEventLoop() throws InterruptedException {
         NioEventLoopGroup group = new NioEventLoopGroup(1);
         final EventLoop loop = group.next();
+<<<<<<< HEAD
         MultithreadEventLoopGroup defaultEventLoopGroup = new MultithreadEventLoopGroup(1, LocalHandler.newFactory());
+=======
+        DefaultEventLoopGroup defaultEventLoopGroup = new DefaultEventLoopGroup(1);
+>>>>>>> dev
         DnsNameResolverBuilder builder = new DnsNameResolverBuilder()
                 .eventLoop(loop).channelType(NioDatagramChannel.class);
         DnsAddressResolverGroup resolverGroup = new DnsAddressResolverGroup(builder);

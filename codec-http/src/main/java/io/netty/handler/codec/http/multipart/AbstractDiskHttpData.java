@@ -18,6 +18,10 @@ package io.netty.handler.codec.http.multipart;
 import io.netty.buffer.ByteBuf;
 import io.netty.handler.codec.http.HttpConstants;
 import io.netty.util.internal.EmptyArrays;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -33,7 +37,10 @@ import java.nio.file.Files;
 
 import static io.netty.buffer.Unpooled.EMPTY_BUFFER;
 import static io.netty.buffer.Unpooled.wrappedBuffer;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 
 /**
  * Abstract Disk HttpData implementation
@@ -104,7 +111,11 @@ public abstract class AbstractDiskHttpData extends AbstractHttpData {
 
     @Override
     public void setContent(ByteBuf buffer) throws IOException {
+<<<<<<< HEAD
         requireNonNull(buffer, "buffer");
+=======
+        ObjectUtil.checkNotNull(buffer, "buffer");
+>>>>>>> dev
         try {
             size = buffer.readableBytes();
             checkSize(size);
@@ -127,7 +138,12 @@ public abstract class AbstractDiskHttpData extends AbstractHttpData {
                 }
                 return;
             }
+<<<<<<< HEAD
             try (RandomAccessFile accessFile = new RandomAccessFile(file, "rw")) {
+=======
+            RandomAccessFile accessFile = new RandomAccessFile(file, "rw");
+            try {
+>>>>>>> dev
                 accessFile.setLength(0);
                 FileChannel localfileChannel = accessFile.getChannel();
                 ByteBuffer byteBuffer = buffer.nioBuffer();
@@ -137,6 +153,11 @@ public abstract class AbstractDiskHttpData extends AbstractHttpData {
                 }
                 buffer.readerIndex(buffer.readerIndex() + written);
                 localfileChannel.force(false);
+<<<<<<< HEAD
+=======
+            } finally {
+                accessFile.close();
+>>>>>>> dev
             }
             setCompleted();
         } finally {
@@ -201,7 +222,11 @@ public abstract class AbstractDiskHttpData extends AbstractHttpData {
             fileChannel = null;
             setCompleted();
         } else {
+<<<<<<< HEAD
             requireNonNull(buffer, "buffer");
+=======
+            ObjectUtil.checkNotNull(buffer, "buffer");
+>>>>>>> dev
         }
     }
 
@@ -220,13 +245,23 @@ public abstract class AbstractDiskHttpData extends AbstractHttpData {
 
     @Override
     public void setContent(InputStream inputStream) throws IOException {
+<<<<<<< HEAD
         requireNonNull(inputStream, "inputStream");
+=======
+        ObjectUtil.checkNotNull(inputStream, "inputStream");
+>>>>>>> dev
         if (file != null) {
             delete();
         }
         file = tempFile();
+<<<<<<< HEAD
         int written = 0;
         try (RandomAccessFile accessFile = new RandomAccessFile(file, "rw")) {
+=======
+        RandomAccessFile accessFile = new RandomAccessFile(file, "rw");
+        int written = 0;
+        try {
+>>>>>>> dev
             accessFile.setLength(0);
             FileChannel localfileChannel = accessFile.getChannel();
             byte[] bytes = new byte[4096 * 4];
@@ -239,6 +274,11 @@ public abstract class AbstractDiskHttpData extends AbstractHttpData {
                 read = inputStream.read(bytes);
             }
             localfileChannel.force(false);
+<<<<<<< HEAD
+=======
+        } finally {
+            accessFile.close();
+>>>>>>> dev
         }
         size = written;
         if (definedSize > 0 && definedSize < size) {
@@ -365,7 +405,11 @@ public abstract class AbstractDiskHttpData extends AbstractHttpData {
 
     @Override
     public boolean renameTo(File dest) throws IOException {
+<<<<<<< HEAD
         requireNonNull(dest, "dest");
+=======
+        ObjectUtil.checkNotNull(dest, "dest");
+>>>>>>> dev
         if (file == null) {
             throw new IOException("No file defined so cannot be renamed");
         }
@@ -441,7 +485,28 @@ public abstract class AbstractDiskHttpData extends AbstractHttpData {
      * @return the array of bytes
      */
     private static byte[] readFrom(File src) throws IOException {
+<<<<<<< HEAD
         return Files.readAllBytes(src.toPath());
+=======
+        long srcsize = src.length();
+        if (srcsize > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException(
+                    "File too big to be loaded in memory");
+        }
+        RandomAccessFile accessFile = new RandomAccessFile(src, "r");
+        byte[] array = new byte[(int) srcsize];
+        try {
+            FileChannel fileChannel = accessFile.getChannel();
+            ByteBuffer byteBuffer = ByteBuffer.wrap(array);
+            int read = 0;
+            while (read < srcsize) {
+                read += fileChannel.read(byteBuffer);
+            }
+        } finally {
+            accessFile.close();
+        }
+        return array;
+>>>>>>> dev
     }
 
     @Override

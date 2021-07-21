@@ -20,10 +20,13 @@ import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.nio.AbstractNioChannel;
+<<<<<<< HEAD
 import io.netty.channel.nio.NioHandler;
 import io.netty.util.concurrent.AbstractEventExecutor;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.ScheduledFuture;
+=======
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -37,7 +40,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertSame;
+=======
+>>>>>>> dev
 
 public abstract class AbstractNioChannelTest<T extends AbstractNioChannel> {
 

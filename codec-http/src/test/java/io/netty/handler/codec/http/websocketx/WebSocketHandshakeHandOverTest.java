@@ -17,6 +17,10 @@ package io.netty.handler.codec.http.websocketx;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelFuture;
+>>>>>>> dev
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -33,8 +37,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
+<<<<<<< HEAD
 import java.util.concurrent.CompletionException;
 import org.junit.jupiter.api.Timeout;
+=======
+import java.util.List;
+import org.junit.jupiter.api.Timeout;
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -62,12 +72,20 @@ public class WebSocketHandshakeHandOverTest {
         }
 
         @Override
+<<<<<<< HEAD
         protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
+=======
+        protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> out) throws Exception {
+>>>>>>> dev
             if (frame instanceof CloseWebSocketFrame) {
                 serverReceivedCloseHandshake = true;
                 return;
             }
+<<<<<<< HEAD
             super.decode(ctx, frame);
+=======
+            super.decode(ctx, frame, out);
+>>>>>>> dev
         }
     }
 
@@ -144,7 +162,11 @@ public class WebSocketHandshakeHandOverTest {
             }
 
             @Override
+<<<<<<< HEAD
             protected void messageReceived(ChannelHandlerContext ctx, Object msg) throws Exception {
+=======
+            protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+>>>>>>> dev
             }
         });
 
@@ -159,7 +181,11 @@ public class WebSocketHandshakeHandOverTest {
             }
 
             @Override
+<<<<<<< HEAD
             protected void messageReceived(ChannelHandlerContext ctx, Object msg) throws Exception {
+=======
+            protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+>>>>>>> dev
                 if (msg instanceof TextWebSocketFrame) {
                     clientReceivedMessage = true;
                 }
@@ -169,7 +195,11 @@ public class WebSocketHandshakeHandOverTest {
         transferAllDataWithMerge(clientChannel, serverChannel);
         // Server do not send the response back
         // transferAllDataWithMerge(serverChannel, clientChannel);
+<<<<<<< HEAD
         WebSocketClientProtocolHandshakeHandler handshakeHandler =
+=======
+        final WebSocketClientProtocolHandshakeHandler handshakeHandler =
+>>>>>>> dev
                 (WebSocketClientProtocolHandshakeHandler) clientChannel
                         .pipeline().get(WebSocketClientProtocolHandshakeHandler.class.getName());
 
@@ -183,9 +213,18 @@ public class WebSocketHandshakeHandOverTest {
         assertFalse(clientReceivedMessage);
         // Should throw WebSocketHandshakeException
         try {
+<<<<<<< HEAD
             assertTrue(assertThrows(CompletionException.class,
                 () -> handshakeHandler.getHandshakeFuture().syncUninterruptibly())
                     .getCause() instanceof WebSocketHandshakeException);
+=======
+            assertThrows(WebSocketHandshakeException.class, new Executable() {
+                @Override
+                public void execute() {
+                    handshakeHandler.getHandshakeFuture().syncUninterruptibly();
+                }
+            });
+>>>>>>> dev
         } finally {
             serverChannel.finishAndReleaseAll();
         }
@@ -236,7 +275,11 @@ public class WebSocketHandshakeHandOverTest {
                 new CloseNoOpServerProtocolHandler("/test"),
                 new SimpleChannelInboundHandler<Object>() {
                     @Override
+<<<<<<< HEAD
                     protected void messageReceived(ChannelHandlerContext ctx, Object msg) throws Exception {
+=======
+                    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+>>>>>>> dev
                     }
                 });
 
@@ -244,12 +287,25 @@ public class WebSocketHandshakeHandOverTest {
             @Override
             public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
                 if (evt == ClientHandshakeStateEvent.HANDSHAKE_COMPLETE) {
+<<<<<<< HEAD
                     ctx.channel().closeFuture().addListener((ChannelFutureListener) future -> clientForceClosed = true);
+=======
+                    ctx.channel().closeFuture().addListener(new ChannelFutureListener() {
+                        @Override
+                        public void operationComplete(ChannelFuture future) throws Exception {
+                            clientForceClosed = true;
+                        }
+                    });
+>>>>>>> dev
                     handshaker.close(ctx.channel(), new CloseWebSocketFrame());
                 }
             }
             @Override
+<<<<<<< HEAD
             protected void messageReceived(ChannelHandlerContext ctx, Object msg) throws Exception {
+=======
+            protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+>>>>>>> dev
             }
         });
 
@@ -327,6 +383,7 @@ public class WebSocketHandshakeHandOverTest {
     }
 
     private static EmbeddedChannel createClientChannel(ChannelHandler handler, WebSocketClientProtocolConfig config) {
+<<<<<<< HEAD
         return new EmbeddedChannel(
                 new HttpClientCodec(),
                 new HttpObjectAggregator(8192),
@@ -339,6 +396,20 @@ public class WebSocketHandshakeHandOverTest {
         return new EmbeddedChannel(
                 new HttpClientCodec(),
                 new HttpObjectAggregator(8192),
+=======
+        return new EmbeddedChannel(
+                new HttpClientCodec(),
+                new HttpObjectAggregator(8192),
+                new WebSocketClientProtocolHandler(config),
+                handler);
+    }
+
+    private static EmbeddedChannel createClientChannel(WebSocketClientHandshaker handshaker,
+                                                       ChannelHandler handler) throws Exception {
+        return new EmbeddedChannel(
+                new HttpClientCodec(),
+                new HttpObjectAggregator(8192),
+>>>>>>> dev
                 // Note that we're switching off close frames handling on purpose to test forced close on timeout.
                 new WebSocketClientProtocolHandler(handshaker, false, false),
                 handler);

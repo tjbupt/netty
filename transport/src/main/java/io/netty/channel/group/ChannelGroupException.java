@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelException;
 import io.netty.channel.ChannelFuture;
+import io.netty.util.internal.ObjectUtil;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -34,10 +35,15 @@ public class ChannelGroupException extends ChannelException implements Iterable<
     private final Collection<Map.Entry<Channel, Throwable>> failed;
 
     public ChannelGroupException(Collection<Map.Entry<Channel, Throwable>> causes) {
+<<<<<<< HEAD
         requireNonNull(causes, "causes");
         if (causes.isEmpty()) {
             throw new IllegalArgumentException("causes must be non empty");
         }
+=======
+        ObjectUtil.checkNonEmpty(causes, "causes");
+
+>>>>>>> dev
         failed = Collections.unmodifiableCollection(causes);
     }
 

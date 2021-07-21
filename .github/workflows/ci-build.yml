@@ -17,7 +17,11 @@ name: Build project
 
 on:
   push:
+<<<<<<< HEAD
     branches: [ "master"]
+=======
+    branches: [ "4.1"]
+>>>>>>> dev
 
   schedule:
     - cron: '30 1 * * 1'  # At 01:30 on Monday, every Monday.

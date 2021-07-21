@@ -51,10 +51,25 @@ public final class Http1RequestHandler extends Http2RequestHandler {
     protected void sendResponse(final ChannelHandlerContext ctx, String streamId, int latency,
             final FullHttpResponse response, final FullHttpRequest request) {
         HttpUtil.setContentLength(response, response.content().readableBytes());
+<<<<<<< HEAD
         ctx.executor().schedule(() -> {
             if (isKeepAlive(request)) {
                 if (request.protocolVersion().equals(HTTP_1_0)) {
                     response.headers().set(CONNECTION, KEEP_ALIVE);
+=======
+        ctx.executor().schedule(new Runnable() {
+            @Override
+            public void run() {
+                if (isKeepAlive(request)) {
+                    if (request.protocolVersion().equals(HTTP_1_0)) {
+                        response.headers().set(CONNECTION, KEEP_ALIVE);
+                    }
+                    ctx.writeAndFlush(response);
+                } else {
+                    // Tell the client we're going to close the connection.
+                    response.headers().set(CONNECTION, CLOSE);
+                    ctx.writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+>>>>>>> dev
                 }
                 ctx.writeAndFlush(response);
             } else {

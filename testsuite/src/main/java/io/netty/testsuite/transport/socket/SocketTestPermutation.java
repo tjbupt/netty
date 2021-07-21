@@ -62,7 +62,12 @@ public class SocketTestPermutation {
             new MultithreadEventLoopGroup(WORKERS, new DefaultThreadFactory("testsuite-nio-worker", true),
                     NioHandler.newFactory());
 
+<<<<<<< HEAD
     protected <A extends AbstractBootstrap<?, ?, ?>, B extends AbstractBootstrap<?, ?, ?>>
+=======
+    protected <A extends AbstractBootstrap<?, ?>, B extends AbstractBootstrap<?, ?>>
+
+>>>>>>> dev
     List<BootstrapComboFactory<A, B>> combo(List<BootstrapFactory<A>> sbfs, List<BootstrapFactory<B>> cbfs) {
 
         List<BootstrapComboFactory<A, B>> list = new ArrayList<>();
@@ -116,13 +121,47 @@ public class SocketTestPermutation {
         return list;
     }
 
+<<<<<<< HEAD
+=======
+    public List<BootstrapComboFactory<ServerBootstrap, Bootstrap>> socketWithFastOpen() {
+        // Make the list of ServerBootstrap factories.
+        List<BootstrapFactory<ServerBootstrap>> sbfs = serverSocket();
+
+        // Make the list of Bootstrap factories.
+        List<BootstrapFactory<Bootstrap>> cbfs = clientSocketWithFastOpen();
+
+        // Populate the combinations
+        List<BootstrapComboFactory<ServerBootstrap, Bootstrap>> list = combo(sbfs, cbfs);
+
+        // Remove the OIO-OIO case which often leads to a dead lock by its nature.
+        list.remove(list.size() - 1);
+
+        return list;
+    }
+
+>>>>>>> dev
     public List<BootstrapComboFactory<Bootstrap, Bootstrap>> datagram(final InternetProtocolFamily family) {
         // Make the list of Bootstrap factories.
         List<BootstrapFactory<Bootstrap>> bfs = Collections.singletonList(
                 () -> new Bootstrap().group(nioWorkerGroup).channelFactory(new ChannelFactory<Channel>() {
                     @Override
+<<<<<<< HEAD
                     public Channel newChannel(EventLoop eventLoop) {
                         return new NioDatagramChannel(eventLoop, family);
+=======
+                    public Bootstrap newInstance() {
+                        return new Bootstrap().group(nioWorkerGroup).channelFactory(new ChannelFactory<Channel>() {
+                            @Override
+                            public Channel newChannel() {
+                                return new NioDatagramChannel(family);
+                            }
+
+                            @Override
+                            public String toString() {
+                                return NioDatagramChannel.class.getSimpleName() + ".class";
+                            }
+                        });
+>>>>>>> dev
                     }
 
                     @Override

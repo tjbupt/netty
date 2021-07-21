@@ -15,6 +15,11 @@
 
 package io.netty.handler.codec.http2;
 
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+import io.netty.util.internal.SuppressJava6Requirement;
+>>>>>>> dev
 import io.netty.util.internal.ThrowableUtil;
 import io.netty.util.internal.UnstableApi;
 
@@ -74,6 +79,26 @@ public class Http2Exception extends Exception {
         assert shared;
         this.error = requireNonNull(error, "error");
         this.shutdownHint = requireNonNull(shutdownHint, "shutdownHint");
+    }
+
+    static Http2Exception newStatic(Http2Error error, String message, ShutdownHint shutdownHint,
+                                    Class<?> clazz, String method) {
+        final Http2Exception exception;
+        if (PlatformDependent.javaVersion() >= 7) {
+            exception = new StacklessHttp2Exception(error, message, shutdownHint, true);
+        } else {
+            exception = new StacklessHttp2Exception(error, message, shutdownHint);
+        }
+        return ThrowableUtil.unknownStackTrace(exception, clazz, method);
+    }
+
+    @SuppressJava6Requirement(reason = "uses Java 7+ Exception.<init>(String, Throwable, boolean, boolean)" +
+            " but is guarded by version checks")
+    private Http2Exception(Http2Error error, String message, ShutdownHint shutdownHint, boolean shared) {
+        super(message, null, false, true);
+        assert shared;
+        this.error = checkNotNull(error, "error");
+        this.shutdownHint = checkNotNull(shutdownHint, "shutdownHint");
     }
 
     public Http2Error error() {
@@ -307,7 +332,15 @@ public class Http2Exception extends Exception {
         private static final long serialVersionUID = 1077888485687219443L;
 
         StacklessHttp2Exception(Http2Error error, String message, ShutdownHint shutdownHint) {
+<<<<<<< HEAD
             super(error, message, shutdownHint, true);
+=======
+            super(error, message, shutdownHint);
+        }
+
+        StacklessHttp2Exception(Http2Error error, String message, ShutdownHint shutdownHint, boolean shared) {
+            super(error, message, shutdownHint, shared);
+>>>>>>> dev
         }
 
         // Override fillInStackTrace() so we not populate the backtrace via a native call and so leak the

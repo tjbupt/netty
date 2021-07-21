@@ -46,7 +46,16 @@ public class SocketRstTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
     public void testSoLingerZeroCausesOnlyRstOnClose(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSoLingerZeroCausesOnlyRstOnClose);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSoLingerZeroCausesOnlyRstOnClose(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSoLingerZeroCausesOnlyRstOnClose(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -102,7 +111,16 @@ public class SocketRstTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
     public void testNoRstIfSoLingerOnClose(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testNoRstIfSoLingerOnClose);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testNoRstIfSoLingerOnClose(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testNoRstIfSoLingerOnClose(ServerBootstrap sb, Bootstrap cb) throws Throwable {

@@ -37,7 +37,11 @@ public class Http2MultiplexCodecBuilder
 
     Http2MultiplexCodecBuilder(boolean server, ChannelHandler childHandler) {
         server(server);
+<<<<<<< HEAD
         this.childHandler = checkSharable(requireNonNull(childHandler, "childHandler"));
+=======
+        this.childHandler = checkSharable(checkNotNull(childHandler, "childHandler"));
+>>>>>>> dev
         // For backwards compatibility we should disable to timeout by default at this layer.
         gracefulShutdownTimeoutMillis(0);
     }
@@ -52,7 +56,11 @@ public class Http2MultiplexCodecBuilder
 
     // For testing only.
     Http2MultiplexCodecBuilder frameWriter(Http2FrameWriter frameWriter) {
+<<<<<<< HEAD
         this.frameWriter = requireNonNull(frameWriter, "frameWriter");
+=======
+        this.frameWriter = checkNotNull(frameWriter, "frameWriter");
+>>>>>>> dev
         return this;
     }
 

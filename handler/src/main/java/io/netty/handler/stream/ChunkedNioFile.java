@@ -21,6 +21,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.FileRegion;
+import io.netty.util.internal.ObjectUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,6 +87,7 @@ public class ChunkedNioFile implements ChunkedInput<ByteBuf> {
      * @param chunkSize the number of bytes to fetch on each
      *                  {@link #readChunk(ChannelHandlerContext)} call
      */
+<<<<<<< HEAD
     public ChunkedNioFile(FileChannel in, long offset, long length, int chunkSize) throws IOException {
         requireNonNull(in, "in");
         if (offset < 0) {
@@ -101,6 +103,14 @@ public class ChunkedNioFile implements ChunkedInput<ByteBuf> {
                     "chunkSize: " + chunkSize +
                     " (expected: a positive integer)");
         }
+=======
+    public ChunkedNioFile(FileChannel in, long offset, long length, int chunkSize)
+            throws IOException {
+        ObjectUtil.checkNotNull(in, "in");
+        ObjectUtil.checkPositiveOrZero(offset, "offset");
+        ObjectUtil.checkPositiveOrZero(length, "length");
+        ObjectUtil.checkPositive(chunkSize, "chunkSize");
+>>>>>>> dev
         if (!in.isOpen()) {
             throw new ClosedChannelException();
         }

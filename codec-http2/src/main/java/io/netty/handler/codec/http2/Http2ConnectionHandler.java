@@ -81,6 +81,7 @@ public class Http2ConnectionHandler extends ByteToMessageDecoder implements Http
     protected Http2ConnectionHandler(Http2ConnectionDecoder decoder, Http2ConnectionEncoder encoder,
                                      Http2Settings initialSettings) {
         this(decoder, encoder, initialSettings, false);
+<<<<<<< HEAD
     }
 
     protected Http2ConnectionHandler(Http2ConnectionDecoder decoder, Http2ConnectionEncoder encoder,
@@ -94,6 +95,21 @@ public class Http2ConnectionHandler extends ByteToMessageDecoder implements Http
         }
     }
 
+=======
+    }
+
+    protected Http2ConnectionHandler(Http2ConnectionDecoder decoder, Http2ConnectionEncoder encoder,
+                                     Http2Settings initialSettings, boolean decoupleCloseAndGoAway) {
+        this.initialSettings = checkNotNull(initialSettings, "initialSettings");
+        this.decoder = checkNotNull(decoder, "decoder");
+        this.encoder = checkNotNull(encoder, "encoder");
+        this.decoupleCloseAndGoAway = decoupleCloseAndGoAway;
+        if (encoder.connection() != decoder.connection()) {
+            throw new IllegalArgumentException("Encoder and Decoder do not share the same connection object");
+        }
+    }
+
+>>>>>>> dev
     /**
      * Get the amount of time (in milliseconds) this endpoint will wait for all streams to be closed before closing
      * the connection during the graceful shutdown process. Returns -1 if this connection is configured to wait
@@ -452,11 +468,19 @@ public class Http2ConnectionHandler extends ByteToMessageDecoder implements Http
     }
 
     @Override
+<<<<<<< HEAD
     public void close(ChannelHandlerContext ctx, ChannelPromise promise) {
+=======
+    public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+>>>>>>> dev
         if (decoupleCloseAndGoAway) {
             ctx.close(promise);
             return;
         }
+<<<<<<< HEAD
+=======
+        promise = promise.unvoid();
+>>>>>>> dev
         // Avoid NotYetConnectedException and avoid sending before connection preface
         if (!ctx.channel().isActive() || !prefaceSent()) {
             ctx.close(promise);
@@ -496,11 +520,22 @@ public class Http2ConnectionHandler extends ByteToMessageDecoder implements Http
                 closeListener = listener;
             } else if (promise != null) {
                 final ChannelFutureListener oldCloseListener = closeListener;
+<<<<<<< HEAD
                 closeListener = future1 -> {
                     try {
                         oldCloseListener.operationComplete(future1);
                     } finally {
                         listener.operationComplete(future1);
+=======
+                closeListener = new ChannelFutureListener() {
+                    @Override
+                    public void operationComplete(ChannelFuture future) throws Exception {
+                        try {
+                            oldCloseListener.operationComplete(future);
+                        } finally {
+                            listener.operationComplete(future);
+                        }
+>>>>>>> dev
                     }
                 };
             }
@@ -543,7 +578,11 @@ public class Http2ConnectionHandler extends ByteToMessageDecoder implements Http
         // Discard bytes of the cumulation buffer if needed.
         discardSomeReadBytes();
 
+<<<<<<< HEAD
         // Ensure we never stall the HTTP/2 Channel. Flow-control is enforced by HTTP/2.
+=======
+        // Ensure we never stale the HTTP/2 Channel. Flow-control is enforced by HTTP/2.
+>>>>>>> dev
         //
         // See https://tools.ietf.org/html/rfc7540#section-5.2.2
         if (!ctx.channel().config().isAutoRead()) {
@@ -933,7 +972,16 @@ public class Http2ConnectionHandler extends ByteToMessageDecoder implements Http
                                      long timeout, TimeUnit unit) {
             this.ctx = ctx;
             this.promise = promise;
+<<<<<<< HEAD
             timeoutTask = ctx.executor().schedule(this::doClose, timeout, unit);
+=======
+            timeoutTask = ctx.executor().schedule(new Runnable() {
+                @Override
+                public void run() {
+                    doClose();
+                }
+            }, timeout, unit);
+>>>>>>> dev
         }
 
         @Override

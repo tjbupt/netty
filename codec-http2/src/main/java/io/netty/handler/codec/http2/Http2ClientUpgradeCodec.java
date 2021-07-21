@@ -105,8 +105,13 @@ public class Http2ClientUpgradeCodec implements HttpClientUpgradeHandler.Upgrade
     private Http2ClientUpgradeCodec(String handlerName, Http2ConnectionHandler connectionHandler, ChannelHandler
         upgradeToHandler, Http2MultiplexHandler http2MultiplexHandler) {
         this.handlerName = handlerName;
+<<<<<<< HEAD
         this.connectionHandler = requireNonNull(connectionHandler, "connectionHandler");
         this.upgradeToHandler = requireNonNull(upgradeToHandler, "upgradeToHandler");
+=======
+        this.connectionHandler = checkNotNull(connectionHandler, "connectionHandler");
+        this.upgradeToHandler = checkNotNull(upgradeToHandler, "upgradeToHandler");
+>>>>>>> dev
         this.http2MultiplexHandler = http2MultiplexHandler;
     }
 

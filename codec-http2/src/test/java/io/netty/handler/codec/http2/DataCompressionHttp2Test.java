@@ -224,10 +224,20 @@ public class DataCompressionHttp2Test {
             final Http2Headers headers = new DefaultHttp2Headers().method(POST).path(PATH)
                     .set(HttpHeaderNames.CONTENT_ENCODING, HttpHeaderValues.BR);
 
+<<<<<<< HEAD
             runInChannel(clientChannel, () -> {
                 clientEncoder.writeHeaders(ctxClient(), 3, headers, 0, false, newPromiseClient());
                 clientEncoder.writeData(ctxClient(), 3, data.retain(), 0, true, newPromiseClient());
                 clientHandler.flush(ctxClient());
+=======
+            runInChannel(clientChannel, new Http2Runnable() {
+                @Override
+                public void run() throws Http2Exception {
+                    clientEncoder.writeHeaders(ctxClient(), 3, headers, 0, false, newPromiseClient());
+                    clientEncoder.writeData(ctxClient(), 3, data.retain(), 0, true, newPromiseClient());
+                    clientHandler.flush(ctxClient());
+                }
+>>>>>>> dev
             });
             awaitServer();
             assertEquals(text, serverOut.toString(CharsetUtil.UTF_8.name()));
@@ -245,10 +255,20 @@ public class DataCompressionHttp2Test {
             final Http2Headers headers = new DefaultHttp2Headers().method(POST).path(PATH)
                     .set(HttpHeaderNames.CONTENT_ENCODING, HttpHeaderValues.BR);
 
+<<<<<<< HEAD
             runInChannel(clientChannel, () -> {
                 clientEncoder.writeHeaders(ctxClient(), 3, headers, 0, false, newPromiseClient());
                 clientEncoder.writeData(ctxClient(), 3, data.retain(), 0, true, newPromiseClient());
                 clientHandler.flush(ctxClient());
+=======
+            runInChannel(clientChannel, new Http2Runnable() {
+                @Override
+                public void run() throws Http2Exception {
+                    clientEncoder.writeHeaders(ctxClient(), 3, headers, 0, false, newPromiseClient());
+                    clientEncoder.writeData(ctxClient(), 3, data.retain(), 0, true, newPromiseClient());
+                    clientHandler.flush(ctxClient());
+                }
+>>>>>>> dev
             });
             awaitServer();
             assertEquals(text, serverOut.toString(CharsetUtil.UTF_8.name()));
@@ -266,10 +286,20 @@ public class DataCompressionHttp2Test {
             final Http2Headers headers = new DefaultHttp2Headers().method(POST).path(PATH)
                     .set(HttpHeaderNames.CONTENT_ENCODING, HttpHeaderValues.ZSTD);
 
+<<<<<<< HEAD
             runInChannel(clientChannel, () -> {
                 clientEncoder.writeHeaders(ctxClient(), 3, headers, 0, false, newPromiseClient());
                 clientEncoder.writeData(ctxClient(), 3, data.retain(), 0, true, newPromiseClient());
                 clientHandler.flush(ctxClient());
+=======
+            runInChannel(clientChannel, new Http2Runnable() {
+                @Override
+                public void run() throws Http2Exception {
+                    clientEncoder.writeHeaders(ctxClient(), 3, headers, 0, false, newPromiseClient());
+                    clientEncoder.writeData(ctxClient(), 3, data.retain(), 0, true, newPromiseClient());
+                    clientHandler.flush(ctxClient());
+                }
+>>>>>>> dev
             });
             awaitServer();
             assertEquals(text, serverOut.toString(CharsetUtil.UTF_8.name()));
@@ -287,10 +317,20 @@ public class DataCompressionHttp2Test {
             final Http2Headers headers = new DefaultHttp2Headers().method(POST).path(PATH)
                     .set(HttpHeaderNames.CONTENT_ENCODING, HttpHeaderValues.ZSTD);
 
+<<<<<<< HEAD
             runInChannel(clientChannel, () -> {
                 clientEncoder.writeHeaders(ctxClient(), 3, headers, 0, false, newPromiseClient());
                 clientEncoder.writeData(ctxClient(), 3, data.retain(), 0, true, newPromiseClient());
                 clientHandler.flush(ctxClient());
+=======
+            runInChannel(clientChannel, new Http2Runnable() {
+                @Override
+                public void run() throws Http2Exception {
+                    clientEncoder.writeHeaders(ctxClient(), 3, headers, 0, false, newPromiseClient());
+                    clientEncoder.writeData(ctxClient(), 3, data.retain(), 0, true, newPromiseClient());
+                    clientHandler.flush(ctxClient());
+                }
+>>>>>>> dev
             });
             awaitServer();
             assertEquals(text, serverOut.toString(CharsetUtil.UTF_8.name()));

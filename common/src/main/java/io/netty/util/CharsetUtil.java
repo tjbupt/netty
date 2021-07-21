@@ -61,7 +61,18 @@ public final class CharsetUtil {
      * 7-bit ASCII, as known as ISO646-US or the Basic Latin block of the
      * Unicode character set
      */
+<<<<<<< HEAD
     public static final Charset US_ASCII = StandardCharsets.US_ASCII;
+=======
+    public static final Charset US_ASCII = Charset.forName("US-ASCII");
+
+    private static final Charset[] CHARSETS = new Charset[]
+            { UTF_16, UTF_16BE, UTF_16LE, UTF_8, ISO_8859_1, US_ASCII };
+
+    public static Charset[] values() {
+        return CHARSETS;
+    }
+>>>>>>> dev
 
     /**
      * @deprecated Use {@link #encoder(Charset)}.

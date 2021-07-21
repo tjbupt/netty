@@ -26,12 +26,20 @@ import io.netty.channel.ChannelId;
 import io.netty.channel.ChannelMetadata;
 import io.netty.channel.ChannelOutboundBuffer;
 import io.netty.channel.ChannelPipeline;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelProgressivePromise;
+>>>>>>> dev
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.DefaultChannelConfig;
 import io.netty.channel.DefaultChannelPipeline;
 import io.netty.channel.EventLoop;
 import io.netty.channel.MessageSizeEstimator;
 import io.netty.channel.RecvByteBufAllocator;
+<<<<<<< HEAD
+=======
+import io.netty.channel.VoidChannelPromise;
+>>>>>>> dev
 import io.netty.channel.WriteBufferWaterMark;
 import io.netty.handler.codec.http2.Http2FrameCodec.DefaultHttp2FrameStream;
 import io.netty.util.DefaultAttributeMap;
@@ -54,11 +62,22 @@ import static java.lang.Math.min;
 
 abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements Http2StreamChannel {
 
+<<<<<<< HEAD
     static final Http2FrameStreamVisitor WRITABLE_VISITOR = stream -> {
         final AbstractHttp2StreamChannel childChannel = (AbstractHttp2StreamChannel)
                 ((DefaultHttp2FrameStream) stream).attachment;
         childChannel.trySetWritable();
         return true;
+=======
+    static final Http2FrameStreamVisitor WRITABLE_VISITOR = new Http2FrameStreamVisitor() {
+        @Override
+        public boolean visit(Http2FrameStream stream) {
+            final AbstractHttp2StreamChannel childChannel = (AbstractHttp2StreamChannel)
+                    ((DefaultHttp2FrameStream) stream).attachment;
+            childChannel.trySetWritable();
+            return true;
+        }
+>>>>>>> dev
     };
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(AbstractHttp2StreamChannel.class);
@@ -78,11 +97,22 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
 
         static final FlowControlledFrameSizeEstimator INSTANCE = new FlowControlledFrameSizeEstimator();
 
+<<<<<<< HEAD
     private static final Handle HANDLE_INSTANCE = msg -> {
         return msg instanceof Http2DataFrame ?
                 // Guard against overflow.
                 (int) min(Integer.MAX_VALUE, ((Http2DataFrame) msg).initialFlowControlledBytes() +
                         (long) MIN_HTTP2_FRAME_SIZE) : MIN_HTTP2_FRAME_SIZE;
+=======
+        private static final Handle HANDLE_INSTANCE = new Handle() {
+            @Override
+            public int size(Object msg) {
+                return msg instanceof Http2DataFrame ?
+                        // Guard against overflow.
+                        (int) min(Integer.MAX_VALUE, ((Http2DataFrame) msg).initialFlowControlledBytes() +
+                                (long) MIN_HTTP2_FRAME_SIZE) : MIN_HTTP2_FRAME_SIZE;
+            }
+>>>>>>> dev
         };
 
         @Override
@@ -108,12 +138,25 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
 
             // Notify the child-channel and close it.
             streamChannel.pipeline().fireExceptionCaught(cause);
+<<<<<<< HEAD
             streamChannel.unsafe().close(streamChannel.newPromise());
         }
     }
 
     private final ChannelFutureListener windowUpdateFrameWriteListener = future ->
             windowUpdateFrameWriteComplete(future, AbstractHttp2StreamChannel.this);
+=======
+            streamChannel.unsafe().close(streamChannel.unsafe().voidPromise());
+        }
+    }
+
+    private final ChannelFutureListener windowUpdateFrameWriteListener = new ChannelFutureListener() {
+        @Override
+        public void operationComplete(ChannelFuture future) {
+            windowUpdateFrameWriteComplete(future, AbstractHttp2StreamChannel.this);
+        }
+    };
+>>>>>>> dev
 
     /**
      * The current status of the read-processing for a {@link AbstractHttp2StreamChannel}.
@@ -259,7 +302,16 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
         if (invokeLater) {
             Runnable task = fireChannelWritabilityChangedTask;
             if (task == null) {
+<<<<<<< HEAD
                 fireChannelWritabilityChangedTask = task = pipeline::fireChannelWritabilityChanged;
+=======
+                fireChannelWritabilityChangedTask = task = new Runnable() {
+                    @Override
+                    public void run() {
+                        pipeline.fireChannelWritabilityChanged();
+                    }
+                };
+>>>>>>> dev
             }
             eventLoop().execute(task);
         } else {
@@ -419,11 +471,14 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
     }
 
     @Override
+<<<<<<< HEAD
     public ChannelFuture register() {
         return pipeline().register();
     }
 
     @Override
+=======
+>>>>>>> dev
     public ChannelFuture deregister() {
         return pipeline().deregister();
     }
@@ -454,11 +509,14 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
     }
 
     @Override
+<<<<<<< HEAD
     public ChannelFuture register(ChannelPromise promise) {
         return pipeline().register(promise);
     }
 
     @Override
+=======
+>>>>>>> dev
     public ChannelFuture deregister(ChannelPromise promise) {
         return pipeline().deregister(promise);
     }
@@ -489,6 +547,14 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
     }
 
     @Override
+<<<<<<< HEAD
+=======
+    public ChannelProgressivePromise newProgressivePromise() {
+        return pipeline().newProgressivePromise();
+    }
+
+    @Override
+>>>>>>> dev
     public ChannelFuture newSucceededFuture() {
         return pipeline().newSucceededFuture();
     }
@@ -499,6 +565,14 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
     }
 
     @Override
+<<<<<<< HEAD
+=======
+    public ChannelPromise voidPromise() {
+        return pipeline().voidPromise();
+    }
+
+    @Override
+>>>>>>> dev
     public int hashCode() {
         return id().hashCode();
     }
@@ -547,7 +621,11 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
             }
         } else {
             if (inboundBuffer == null) {
+<<<<<<< HEAD
                 inboundBuffer = new ArrayDeque<>(4);
+=======
+                inboundBuffer = new ArrayDeque<Object>(4);
+>>>>>>> dev
             }
             inboundBuffer.add(frame);
         }
@@ -560,6 +638,11 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
     }
 
     private final class Http2ChannelUnsafe implements Unsafe {
+<<<<<<< HEAD
+=======
+        private final VoidChannelPromise unsafeVoidPromise =
+                new VoidChannelPromise(AbstractHttp2StreamChannel.this, false);
+>>>>>>> dev
         @SuppressWarnings("deprecation")
         private RecvByteBufAllocator.Handle recvHandle;
         private boolean writeDoneAndNoFlush;
@@ -595,7 +678,11 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
         }
 
         @Override
+<<<<<<< HEAD
         public void register(ChannelPromise promise) {
+=======
+        public void register(EventLoop eventLoop, ChannelPromise promise) {
+>>>>>>> dev
             if (!promise.setUncancellable()) {
                 return;
             }
@@ -611,9 +698,12 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
             pipeline().fireChannelRegistered();
             if (isActive()) {
                 pipeline().fireChannelActive();
+<<<<<<< HEAD
                 if (config().isAutoRead()) {
                     read();
                 }
+=======
+>>>>>>> dev
             }
         }
 
@@ -639,9 +729,20 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
                 if (closePromise.isDone()) {
                     // Closed already.
                     promise.setSuccess();
+<<<<<<< HEAD
                 } else  {
                     // This means close() was called before so we just register a listener and return
                     closePromise.addListener((ChannelFutureListener) future -> promise.setSuccess());
+=======
+                } else if (!(promise instanceof VoidChannelPromise)) { // Only needed if no VoidChannelPromise.
+                    // This means close() was called before so we just register a listener and return
+                    closePromise.addListener(new ChannelFutureListener() {
+                        @Override
+                        public void operationComplete(ChannelFuture future) {
+                            promise.setSuccess();
+                        }
+                    });
+>>>>>>> dev
                 }
                 return;
             }
@@ -658,7 +759,11 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
             // as otherwise we may send a RST on a stream in an invalid state and cause a connection error.
             if (parent().isActive() && !readEOS && Http2CodecUtil.isStreamIdValid(stream.id())) {
                 Http2StreamFrame resetFrame = new DefaultHttp2ResetFrame(Http2Error.CANCEL).stream(stream());
+<<<<<<< HEAD
                 write(resetFrame, newPromise());
+=======
+                write(resetFrame, unsafe().voidPromise());
+>>>>>>> dev
                 flush();
             }
 
@@ -678,12 +783,20 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
             closePromise.setSuccess();
             promise.setSuccess();
 
+<<<<<<< HEAD
             fireChannelInactiveAndDeregister(newPromise(), wasActive);
+=======
+            fireChannelInactiveAndDeregister(voidPromise(), wasActive);
+>>>>>>> dev
         }
 
         @Override
         public void closeForcibly() {
+<<<<<<< HEAD
             close(newPromise());
+=======
+            close(unsafe().voidPromise());
+>>>>>>> dev
         }
 
         @Override
@@ -709,6 +822,7 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
             //
             // See:
             // https://github.com/netty/netty/issues/4435
+<<<<<<< HEAD
             invokeLater(()-> {
                 if (fireChannelInactive) {
                     pipeline.fireChannelInactive();
@@ -720,11 +834,31 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
                     pipeline.fireChannelUnregistered();
                 }
                 safeSetSuccess(promise);
+=======
+            invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (fireChannelInactive) {
+                        pipeline.fireChannelInactive();
+                    }
+                    // The user can fire `deregister` events multiple times but we only want to fire the pipeline
+                    // event if the channel was actually registered.
+                    if (registered) {
+                        registered = false;
+                        pipeline.fireChannelUnregistered();
+                    }
+                    safeSetSuccess(promise);
+                }
+>>>>>>> dev
             });
         }
 
         private void safeSetSuccess(ChannelPromise promise) {
+<<<<<<< HEAD
             if (!promise.trySuccess()) {
+=======
+            if (!(promise instanceof VoidChannelPromise) && !promise.trySuccess()) {
+>>>>>>> dev
                 logger.warn("Failed to mark a promise as success because it is done already: {}", promise);
             }
         }
@@ -845,10 +979,13 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
 
             allocHandle.readComplete();
             pipeline().fireChannelReadComplete();
+<<<<<<< HEAD
             if (config().isAutoRead()) {
                 read();
             }
 
+=======
+>>>>>>> dev
             // Reading data may result in frames being written (e.g. WINDOW_UPDATE, RST, etc..). If the parent
             // channel is not currently reading we need to force a flush at the child channel, because we cannot
             // rely upon flush occurring in channelReadComplete on the parent channel.
@@ -939,6 +1076,7 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
             } else {
                 final long bytes = FlowControlledFrameSizeEstimator.HANDLE_INSTANCE.size(frame);
                 incrementPendingOutboundBytes(bytes, false);
+<<<<<<< HEAD
                 f.addListener((ChannelFutureListener) future ->  {
                     if (firstWrite) {
                         firstWriteComplete(future, promise);
@@ -946,6 +1084,18 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
                         writeComplete(future, promise);
                     }
                     decrementPendingOutboundBytes(bytes, false);
+=======
+                f.addListener(new ChannelFutureListener() {
+                    @Override
+                    public void operationComplete(ChannelFuture future) {
+                        if (firstWrite) {
+                            firstWriteComplete(future, promise);
+                        } else {
+                            writeComplete(future, promise);
+                        }
+                        decrementPendingOutboundBytes(bytes, false);
+                    }
+>>>>>>> dev
                 });
                 writeDoneAndNoFlush = true;
             }
@@ -1018,6 +1168,14 @@ abstract class AbstractHttp2StreamChannel extends DefaultAttributeMap implements
         }
 
         @Override
+<<<<<<< HEAD
+=======
+        public ChannelPromise voidPromise() {
+            return unsafeVoidPromise;
+        }
+
+        @Override
+>>>>>>> dev
         public ChannelOutboundBuffer outboundBuffer() {
             // Always return null as we not use the ChannelOutboundBuffer and not even support it.
             return null;

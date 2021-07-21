@@ -29,6 +29,10 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.extensions.WebSocketExtension;
 import io.netty.handler.codec.http.websocketx.extensions.WebSocketExtensionFilter;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Random;
 
@@ -226,8 +230,17 @@ public class PerMessageDeflateDecoderTest {
 
     @Test
     public void testSelectivityDecompressionSkip() {
+<<<<<<< HEAD
         WebSocketExtensionFilter selectivityDecompressionFilter =
                 frame -> frame instanceof TextWebSocketFrame && frame.content().readableBytes() < 100;
+=======
+        WebSocketExtensionFilter selectivityDecompressionFilter = new WebSocketExtensionFilter() {
+            @Override
+            public boolean mustSkip(WebSocketFrame frame) {
+                return frame instanceof TextWebSocketFrame && frame.content().readableBytes() < 100;
+            }
+        };
+>>>>>>> dev
         EmbeddedChannel encoderChannel = new EmbeddedChannel(
                 ZlibCodecFactory.newZlibEncoder(ZlibWrapper.NONE, 9, 15, 8));
         EmbeddedChannel decoderChannel = new EmbeddedChannel(
@@ -267,11 +280,24 @@ public class PerMessageDeflateDecoderTest {
 
     @Test
     public void testIllegalStateWhenDecompressionInProgress() {
+<<<<<<< HEAD
         WebSocketExtensionFilter selectivityDecompressionFilter = frame -> frame.content().readableBytes() < 100;
 
         EmbeddedChannel encoderChannel = new EmbeddedChannel(
                 ZlibCodecFactory.newZlibEncoder(ZlibWrapper.NONE, 9, 15, 8));
         EmbeddedChannel decoderChannel = new EmbeddedChannel(
+=======
+        WebSocketExtensionFilter selectivityDecompressionFilter = new WebSocketExtensionFilter() {
+            @Override
+            public boolean mustSkip(WebSocketFrame frame) {
+                return frame.content().readableBytes() < 100;
+            }
+        };
+
+        EmbeddedChannel encoderChannel = new EmbeddedChannel(
+                ZlibCodecFactory.newZlibEncoder(ZlibWrapper.NONE, 9, 15, 8));
+        final EmbeddedChannel decoderChannel = new EmbeddedChannel(
+>>>>>>> dev
                 new PerMessageDeflateDecoder(false, selectivityDecompressionFilter));
 
         byte[] firstPayload = new byte[200];
@@ -288,7 +314,11 @@ public class PerMessageDeflateDecoderTest {
 
         BinaryWebSocketFrame firstPart = new BinaryWebSocketFrame(false, WebSocketExtension.RSV1,
                                                                   compressedFirstPayload);
+<<<<<<< HEAD
         ContinuationWebSocketFrame finalPart = new ContinuationWebSocketFrame(true, WebSocketExtension.RSV1,
+=======
+        final ContinuationWebSocketFrame finalPart = new ContinuationWebSocketFrame(true, WebSocketExtension.RSV1,
+>>>>>>> dev
                                                                               compressedFinalPayload);
         assertTrue(decoderChannel.writeInbound(firstPart));
 
@@ -300,7 +330,16 @@ public class PerMessageDeflateDecoderTest {
 
         //final part throwing exception
         try {
+<<<<<<< HEAD
             assertThrows(DecoderException.class, () -> decoderChannel.writeInbound(finalPart));
+=======
+            assertThrows(DecoderException.class, new Executable() {
+                @Override
+                public void execute() {
+                    decoderChannel.writeInbound(finalPart);
+                }
+            });
+>>>>>>> dev
         } finally {
             assertTrue(finalPart.release());
             assertFalse(encoderChannel.finishAndReleaseAll());

@@ -15,8 +15,12 @@
  */
 package io.netty.util.concurrent;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
 
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -100,7 +104,11 @@ public final class ImmediateEventExecutor extends AbstractEventExecutor {
 
     @Override
     public void execute(Runnable command) {
+<<<<<<< HEAD
         requireNonNull(command, "command");
+=======
+        ObjectUtil.checkNotNull(command, "command");
+>>>>>>> dev
         if (!RUNNING.get()) {
             RUNNING.set(true);
             try {

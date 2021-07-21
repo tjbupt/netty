@@ -23,6 +23,7 @@ import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaderValues;
 import io.netty.handler.codec.http.HttpRequest;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.nio.charset.Charset;
@@ -85,9 +86,16 @@ public class HttpPostRequestDecoder implements InterfaceHttpPostRequestDecoder {
      *             errors
      */
     public HttpPostRequestDecoder(HttpDataFactory factory, HttpRequest request, Charset charset) {
+<<<<<<< HEAD
         requireNonNull(factory, "factory");
         requireNonNull(request, "request");
         requireNonNull(charset, "charset");
+=======
+        ObjectUtil.checkNotNull(factory, "factory");
+        ObjectUtil.checkNotNull(request, "request");
+        ObjectUtil.checkNotNull(charset, "charset");
+
+>>>>>>> dev
         // Fill default values
         if (isMultipart(request)) {
             decoder = new HttpPostMultipartRequestDecoder(factory, request, charset);

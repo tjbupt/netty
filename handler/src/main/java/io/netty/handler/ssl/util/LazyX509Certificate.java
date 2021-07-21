@@ -16,6 +16,10 @@
 package io.netty.handler.ssl.util;
 
 import io.netty.util.internal.ObjectUtil;
+<<<<<<< HEAD:handler/src/main/java/io/netty/handler/ssl/util/LazyX509Certificate.java
+=======
+import io.netty.util.internal.SuppressJava6Requirement;
+>>>>>>> dev:handler/src/main/java/io/netty/handler/ssl/OpenSslX509Certificate.java
 
 import javax.security.auth.x500.X500Principal;
 import java.io.ByteArrayInputStream;
@@ -96,7 +100,11 @@ public final class LazyX509Certificate extends X509Certificate {
     }
 
     // No @Override annotation as it was only introduced in Java8.
+<<<<<<< HEAD:handler/src/main/java/io/netty/handler/ssl/util/LazyX509Certificate.java
     @Override
+=======
+    @SuppressJava6Requirement(reason = "Can only be called from Java8 as class is package-private")
+>>>>>>> dev:handler/src/main/java/io/netty/handler/ssl/OpenSslX509Certificate.java
     public void verify(PublicKey key, Provider sigProvider)
             throws CertificateException, NoSuchAlgorithmException, InvalidKeyException, SignatureException {
         unwrap().verify(key, sigProvider);

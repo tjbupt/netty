@@ -15,6 +15,7 @@
  */
 package io.netty.util.concurrent;
 
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.PlatformDependent;
 
 import static java.util.Objects.requireNonNull;
@@ -36,8 +37,12 @@ public final class FailedFuture<V> extends CompleteFuture<V> {
      */
     public FailedFuture(EventExecutor executor, Throwable cause) {
         super(executor);
+<<<<<<< HEAD
         requireNonNull(cause, "cause");
         this.cause = cause;
+=======
+        this.cause = ObjectUtil.checkNotNull(cause, "cause");
+>>>>>>> dev
     }
 
     @Override

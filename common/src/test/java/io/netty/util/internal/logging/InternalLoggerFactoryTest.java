@@ -18,6 +18,10 @@ package io.netty.util.internal.logging;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -48,7 +52,16 @@ public class InternalLoggerFactoryTest {
 
     @Test
     public void shouldNotAllowNullDefaultFactory() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> InternalLoggerFactory.setDefaultFactory(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                InternalLoggerFactory.setDefaultFactory(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

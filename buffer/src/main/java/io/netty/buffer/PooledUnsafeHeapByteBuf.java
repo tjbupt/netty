@@ -17,12 +17,25 @@ package io.netty.buffer;
 
 import io.netty.util.internal.ObjectPool;
 import io.netty.util.internal.ObjectPool.Handle;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectPool.ObjectCreator;
+>>>>>>> dev
 import io.netty.util.internal.PlatformDependent;
 
 final class PooledUnsafeHeapByteBuf extends PooledHeapByteBuf {
 
     private static final ObjectPool<PooledUnsafeHeapByteBuf> RECYCLER = ObjectPool.newPool(
+<<<<<<< HEAD
             handle -> new PooledUnsafeHeapByteBuf(handle, 0));
+=======
+            new ObjectCreator<PooledUnsafeHeapByteBuf>() {
+        @Override
+        public PooledUnsafeHeapByteBuf newObject(Handle<PooledUnsafeHeapByteBuf> handle) {
+            return new PooledUnsafeHeapByteBuf(handle, 0);
+        }
+    });
+>>>>>>> dev
 
     static PooledUnsafeHeapByteBuf newUnsafeInstance(int maxCapacity) {
         PooledUnsafeHeapByteBuf buf = RECYCLER.get();

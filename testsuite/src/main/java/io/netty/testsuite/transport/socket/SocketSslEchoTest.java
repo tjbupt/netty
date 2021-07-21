@@ -190,9 +190,14 @@ public class SocketSslEchoTest extends AbstractSocketTest {
         return params;
     }
 
+<<<<<<< HEAD
     private final AtomicReference<Throwable> clientException = new AtomicReference<>();
     private final AtomicReference<Throwable> serverException = new AtomicReference<>();
 
+=======
+    private final AtomicReference<Throwable> clientException = new AtomicReference<Throwable>();
+    private final AtomicReference<Throwable> serverException = new AtomicReference<Throwable>();
+>>>>>>> dev
     private final AtomicInteger clientSendCounter = new AtomicInteger();
     private final AtomicInteger clientRecvCounter = new AtomicInteger();
     private final AtomicInteger serverRecvCounter = new AtomicInteger();
@@ -245,7 +250,16 @@ public class SocketSslEchoTest extends AbstractSocketTest {
         this.autoRead = autoRead;
         this.useChunkedWriteHandler = useChunkedWriteHandler;
         this.useCompositeByteBuf = useCompositeByteBuf;
+<<<<<<< HEAD
         run(testInfo, this::testSslEcho);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSslEcho(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSslEcho(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -525,7 +539,11 @@ public class SocketSslEchoTest extends AbstractSocketTest {
         }
 
         @Override
+<<<<<<< HEAD
         public void messageReceived(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+=======
+        public void channelRead0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+>>>>>>> dev
             byte[] actual = new byte[in.readableBytes()];
             in.readBytes(actual);
 
@@ -562,7 +580,11 @@ public class SocketSslEchoTest extends AbstractSocketTest {
         }
 
         @Override
+<<<<<<< HEAD
         public void messageReceived(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+=======
+        public void channelRead0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+>>>>>>> dev
             byte[] actual = new byte[in.readableBytes()];
             in.readBytes(actual);
 

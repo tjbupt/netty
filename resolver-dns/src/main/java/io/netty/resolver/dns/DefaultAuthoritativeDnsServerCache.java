@@ -16,6 +16,10 @@
 package io.netty.resolver.dns;
 
 import io.netty.channel.EventLoop;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 
 import java.net.InetSocketAddress;
 import java.util.Comparator;
@@ -111,9 +115,13 @@ public class DefaultAuthoritativeDnsServerCache implements AuthoritativeDnsServe
 
     @Override
     public boolean clear(String hostname) {
+<<<<<<< HEAD
         requireNonNull(hostname, "hostname");
 
         return resolveCache.clear(hostname);
+=======
+        return resolveCache.clear(checkNotNull(hostname, "hostname"));
+>>>>>>> dev
     }
 
     @Override

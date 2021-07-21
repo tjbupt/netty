@@ -238,12 +238,24 @@ public abstract class AbstractNioChannel extends AbstractChannel {
                     // Schedule connect timeout.
                     int connectTimeoutMillis = config().getConnectTimeoutMillis();
                     if (connectTimeoutMillis > 0) {
+<<<<<<< HEAD
                         connectTimeoutFuture = eventLoop().schedule(() -> {
                             ChannelPromise connectPromise = AbstractNioChannel.this.connectPromise;
                             if (connectPromise != null && !connectPromise.isDone()
                                     && connectPromise.tryFailure(new ConnectTimeoutException(
                                     "connection timed out: " + remoteAddress))) {
                                 close(newPromise());
+=======
+                        connectTimeoutFuture = eventLoop().schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                ChannelPromise connectPromise = AbstractNioChannel.this.connectPromise;
+                                if (connectPromise != null && !connectPromise.isDone()
+                                        && connectPromise.tryFailure(new ConnectTimeoutException(
+                                                "connection timed out: " + remoteAddress))) {
+                                    close(voidPromise());
+                                }
+>>>>>>> dev
                             }
                         }, connectTimeoutMillis, TimeUnit.MILLISECONDS);
                     }

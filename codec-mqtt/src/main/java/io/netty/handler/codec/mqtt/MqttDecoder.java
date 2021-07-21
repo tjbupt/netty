@@ -279,7 +279,11 @@ public final class MqttDecoder extends ReplayingDecoder<DecoderState> {
             case PINGREQ:
             case PINGRESP:
                 // Empty variable header
+<<<<<<< HEAD
                 return new Result<>(null, 0);
+=======
+                return new Result<Object>(null, 0);
+>>>>>>> dev
             default:
                 //shouldn't reach here
                 throw new DecoderException("Unknown message type: " + mqttFixedHeader.messageType());
@@ -340,7 +344,11 @@ public final class MqttDecoder extends ReplayingDecoder<DecoderState> {
                 cleanSession,
                 keepAlive,
                 properties);
+<<<<<<< HEAD
         return new Result<>(mqttConnectVariableHeader, numberOfBytesConsumed);
+=======
+        return new Result<MqttConnectVariableHeader>(mqttConnectVariableHeader, numberOfBytesConsumed);
+>>>>>>> dev
     }
 
     private static Result<MqttConnAckVariableHeader> decodeConnAckVariableHeader(
@@ -362,7 +370,11 @@ public final class MqttDecoder extends ReplayingDecoder<DecoderState> {
 
         final MqttConnAckVariableHeader mqttConnAckVariableHeader =
                 new MqttConnAckVariableHeader(MqttConnectReturnCode.valueOf(returnCode), sessionPresent, properties);
+<<<<<<< HEAD
         return new Result<>(mqttConnAckVariableHeader, numberOfBytesConsumed);
+=======
+        return new Result<MqttConnAckVariableHeader>(mqttConnAckVariableHeader, numberOfBytesConsumed);
+>>>>>>> dev
     }
 
     private static Result<MqttMessageIdAndPropertiesVariableHeader> decodeMessageIdAndPropertiesVariableHeader(
@@ -472,7 +484,11 @@ public final class MqttDecoder extends ReplayingDecoder<DecoderState> {
 
         final MqttPublishVariableHeader mqttPublishVariableHeader =
                 new MqttPublishVariableHeader(decodedTopic.value, messageId, properties);
+<<<<<<< HEAD
         return new Result<>(mqttPublishVariableHeader, numberOfBytesConsumed);
+=======
+        return new Result<MqttPublishVariableHeader>(mqttPublishVariableHeader, numberOfBytesConsumed);
+>>>>>>> dev
     }
 
     /**
@@ -578,7 +594,11 @@ public final class MqttDecoder extends ReplayingDecoder<DecoderState> {
                         decodedWillMessage,
                         decodedUserName != null ? decodedUserName.value : null,
                         decodedPassword);
+<<<<<<< HEAD
         return new Result<>(mqttConnectPayload, numberOfBytesConsumed);
+=======
+        return new Result<MqttConnectPayload>(mqttConnectPayload, numberOfBytesConsumed);
+>>>>>>> dev
     }
 
     private static Result<MqttSubscribePayload> decodeSubscribePayload(
@@ -611,7 +631,11 @@ public final class MqttDecoder extends ReplayingDecoder<DecoderState> {
     private static Result<MqttSubAckPayload> decodeSubackPayload(
             ByteBuf buffer,
             int bytesRemainingInVariablePart) {
+<<<<<<< HEAD
         final List<Integer> grantedQos = new ArrayList<>(bytesRemainingInVariablePart);
+=======
+        final List<Integer> grantedQos = new ArrayList<Integer>(bytesRemainingInVariablePart);
+>>>>>>> dev
         int numberOfBytesConsumed = 0;
         while (numberOfBytesConsumed < bytesRemainingInVariablePart) {
             int reasonCode = buffer.readUnsignedByte();
@@ -619,6 +643,20 @@ public final class MqttDecoder extends ReplayingDecoder<DecoderState> {
             grantedQos.add(reasonCode);
         }
         return new Result<>(new MqttSubAckPayload(grantedQos), numberOfBytesConsumed);
+    }
+
+    private static Result<MqttUnsubAckPayload> decodeUnsubAckPayload(
+        ChannelHandlerContext ctx,
+        ByteBuf buffer,
+        int bytesRemainingInVariablePart) {
+        final List<Short> reasonCodes = new ArrayList<Short>(bytesRemainingInVariablePart);
+        int numberOfBytesConsumed = 0;
+        while (numberOfBytesConsumed < bytesRemainingInVariablePart) {
+            short reasonCode = buffer.readUnsignedByte();
+            numberOfBytesConsumed++;
+            reasonCodes.add(reasonCode);
+        }
+        return new Result<MqttUnsubAckPayload>(new MqttUnsubAckPayload(reasonCodes), numberOfBytesConsumed);
     }
 
     private static Result<MqttUnsubAckPayload> decodeUnsubAckPayload(

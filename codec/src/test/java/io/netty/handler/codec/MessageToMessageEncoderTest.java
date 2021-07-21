@@ -21,6 +21,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.embedded.EmbeddedChannel;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -35,13 +39,22 @@ public class MessageToMessageEncoderTest {
      */
     @Test
     public void testException() {
-        EmbeddedChannel channel = new EmbeddedChannel(new MessageToMessageEncoder<Object>() {
+        final EmbeddedChannel channel = new EmbeddedChannel(new MessageToMessageEncoder<Object>() {
             @Override
             protected void encode(ChannelHandlerContext ctx, Object msg, List<Object> out) throws Exception {
                 throw new Exception();
             }
         });
+<<<<<<< HEAD
         assertThrows(EncoderException.class, () -> channel.writeOutbound(new Object()));
+=======
+        assertThrows(EncoderException.class, new Executable() {
+            @Override
+            public void execute() {
+                channel.writeOutbound(new Object());
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

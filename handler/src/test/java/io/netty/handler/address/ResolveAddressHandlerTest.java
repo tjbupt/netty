@@ -19,6 +19,7 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.EventLoopGroup;
@@ -26,6 +27,14 @@ import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.local.LocalAddress;
 import io.netty.channel.local.LocalChannel;
 import io.netty.channel.local.LocalHandler;
+=======
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.DefaultEventLoopGroup;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.local.LocalAddress;
+import io.netty.channel.local.LocalChannel;
+>>>>>>> dev
 import io.netty.channel.local.LocalServerChannel;
 import io.netty.resolver.AbstractAddressResolver;
 import io.netty.resolver.AddressResolver;
@@ -56,7 +65,11 @@ public class ResolveAddressHandlerTest {
 
     @BeforeAll
     public static void createEventLoop() {
+<<<<<<< HEAD
         group = new MultithreadEventLoopGroup(LocalHandler.newFactory());
+=======
+        group = new DefaultEventLoopGroup();
+>>>>>>> dev
     }
 
     @AfterAll
@@ -84,7 +97,11 @@ public class ResolveAddressHandlerTest {
         ServerBootstrap sb = new ServerBootstrap();
         sb.group(group)
                 .channel(LocalServerChannel.class)
+<<<<<<< HEAD
                 .childHandler(new ChannelHandler() {
+=======
+                .childHandler(new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
                     @Override
                     public void channelActive(ChannelHandlerContext ctx) {
                         ctx.close();

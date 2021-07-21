@@ -41,8 +41,13 @@ public abstract class AbstractAddressResolver<T extends SocketAddress> implement
      *                 by {@link #resolve(SocketAddress)}
      */
     protected AbstractAddressResolver(EventExecutor executor) {
+<<<<<<< HEAD
         this.executor = requireNonNull(executor, "executor");
         matcher = TypeParameterMatcher.find(this, AbstractAddressResolver.class, "T");
+=======
+        this.executor = checkNotNull(executor, "executor");
+        this.matcher = TypeParameterMatcher.find(this, AbstractAddressResolver.class, "T");
+>>>>>>> dev
     }
 
     /**
@@ -51,8 +56,13 @@ public abstract class AbstractAddressResolver<T extends SocketAddress> implement
      * @param addressType the type of the {@link SocketAddress} supported by this resolver
      */
     protected AbstractAddressResolver(EventExecutor executor, Class<? extends T> addressType) {
+<<<<<<< HEAD
         this.executor = requireNonNull(executor, "executor");
         matcher = TypeParameterMatcher.get(addressType);
+=======
+        this.executor = checkNotNull(executor, "executor");
+        this.matcher = TypeParameterMatcher.get(addressType);
+>>>>>>> dev
     }
 
     /**

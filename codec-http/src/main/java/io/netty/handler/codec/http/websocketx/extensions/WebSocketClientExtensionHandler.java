@@ -17,7 +17,11 @@ package io.netty.handler.codec.http.websocketx.extensions;
 
 import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
+=======
+import io.netty.channel.ChannelDuplexHandler;
+>>>>>>> dev
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.CodecException;

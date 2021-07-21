@@ -21,6 +21,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
@@ -28,6 +29,14 @@ import io.netty.channel.DefaultFileRegion;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.nio.NioHandler;
+=======
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.DefaultFileRegion;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+>>>>>>> dev
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -66,17 +75,38 @@ public class FileRegionThrottleTest {
 
         tmp = PlatformDependent.createTempFile("netty-traffic", ".tmp", null);
         tmp.deleteOnExit();
+<<<<<<< HEAD
         try (FileOutputStream out = new FileOutputStream(tmp)) {
+=======
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(tmp);
+>>>>>>> dev
             out.write(BYTES);
             out.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
+<<<<<<< HEAD
+=======
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
+>>>>>>> dev
         }
     }
 
     @BeforeEach
     public void setUp() {
+<<<<<<< HEAD
         group = new MultithreadEventLoopGroup(NioHandler.newFactory());
+=======
+        group = new NioEventLoopGroup();
+>>>>>>> dev
     }
 
     @AfterEach
@@ -121,7 +151,11 @@ public class FileRegionThrottleTest {
         return bc.connect(server).sync();
     }
 
+<<<<<<< HEAD
     private static final class MessageDecoder implements ChannelHandler {
+=======
+    private static final class MessageDecoder extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             if (msg instanceof ByteBuf) {
@@ -136,7 +170,11 @@ public class FileRegionThrottleTest {
         }
     }
 
+<<<<<<< HEAD
     private static final class ReadHandler implements ChannelHandler {
+=======
+    private static final class ReadHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         private long bytesTransferred;
         private CountDownLatch latch;
 

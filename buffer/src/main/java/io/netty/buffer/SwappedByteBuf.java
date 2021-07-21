@@ -18,6 +18,7 @@ package io.netty.buffer;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.util.ByteProcessor;
+import io.netty.util.internal.ObjectUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,8 +43,12 @@ public class SwappedByteBuf extends ByteBuf {
     private final ByteOrder order;
 
     public SwappedByteBuf(ByteBuf buf) {
+<<<<<<< HEAD
         requireNonNull(buf, "buf");
         this.buf = buf;
+=======
+        this.buf = ObjectUtil.checkNotNull(buf, "buf");
+>>>>>>> dev
         if (buf.order() == ByteOrder.BIG_ENDIAN) {
             order = ByteOrder.LITTLE_ENDIAN;
         } else {
@@ -58,8 +63,12 @@ public class SwappedByteBuf extends ByteBuf {
 
     @Override
     public ByteBuf order(ByteOrder endianness) {
+<<<<<<< HEAD
         requireNonNull(endianness, "endianness");
         if (endianness == order) {
+=======
+        if (ObjectUtil.checkNotNull(endianness, "endianness") == order) {
+>>>>>>> dev
             return this;
         }
         return buf;

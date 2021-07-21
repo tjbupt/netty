@@ -174,7 +174,11 @@ public class EmbeddedChannel extends AbstractChannel {
      */
     public EmbeddedChannel(Channel parent, ChannelId channelId, boolean register, boolean hasDisconnect,
                            final ChannelHandler... handlers) {
+<<<<<<< HEAD
         super(parent, new EmbeddedEventLoop(), channelId);
+=======
+        super(parent, channelId);
+>>>>>>> dev
         metadata = metadata(hasDisconnect);
         config = new DefaultChannelConfig(this);
         setup(register, handlers);

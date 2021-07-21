@@ -18,6 +18,8 @@ package io.netty.testsuite.util;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.util.CharsetUtil;
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.SuppressJava6Requirement;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 import org.junit.jupiter.api.TestInfo;
@@ -39,6 +41,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+<<<<<<< HEAD
+=======
+import java.util.function.Function;
+>>>>>>> dev
 import javax.management.MBeanServer;
 
 public final class TestUtils {
@@ -104,8 +110,19 @@ public final class TestUtils {
     /**
      * Returns the method name of the current test.
      */
+<<<<<<< HEAD
     public static String testMethodName(TestInfo testInfo) {
         String testMethodName = testInfo.getTestMethod().map(Method::getName).orElse("[unknown method]");
+=======
+    @SuppressJava6Requirement(reason = "Test only")
+    public static String testMethodName(TestInfo testInfo) {
+        String testMethodName = testInfo.getTestMethod().map(new Function<Method, String>() {
+            @Override
+            public String apply(Method method) {
+                return method.getName();
+            }
+        }).orElse("[unknown method]");
+>>>>>>> dev
         if (testMethodName.contains("[")) {
             testMethodName = testMethodName.substring(0, testMethodName.indexOf('['));
         }
@@ -124,7 +141,12 @@ public final class TestUtils {
     }
 
     public static void dump(String filenamePrefix) throws IOException {
+<<<<<<< HEAD
         requireNonNull(filenamePrefix, "filenamePrefix");
+=======
+
+        ObjectUtil.checkNotNull(filenamePrefix, "filenamePrefix");
+>>>>>>> dev
 
         final String timestamp = timestamp();
         final File heapDumpFile = new File(filenamePrefix + '.' + timestamp + ".hprof");
@@ -146,7 +168,16 @@ public final class TestUtils {
     }
 
     public static void compressHeapDumps() throws IOException {
+<<<<<<< HEAD
         final File[] files = new File(System.getProperty("user.dir")).listFiles((dir, name) -> name.endsWith(".hprof"));
+=======
+        final File[] files = new File(System.getProperty("user.dir")).listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.endsWith(".hprof");
+            }
+        });
+>>>>>>> dev
         if (files == null) {
             logger.warn("failed to find heap dump due to I/O error!");
             return;

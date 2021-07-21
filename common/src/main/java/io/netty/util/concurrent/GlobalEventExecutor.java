@@ -15,8 +15,12 @@
  */
 package io.netty.util.concurrent;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
 
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.ThreadExecutorMap;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -70,6 +74,10 @@ public final class GlobalEventExecutor extends AbstractScheduledEventExecutor im
     private final Future<?> terminationFuture = new FailedFuture<>(this, new UnsupportedOperationException());
 
     private GlobalEventExecutor() {
+<<<<<<< HEAD
+=======
+        scheduledTaskQueue().add(quietPeriodTask);
+>>>>>>> dev
         threadFactory = ThreadExecutorMap.apply(new DefaultThreadFactory(
                 DefaultThreadFactory.toPoolName(getClass()), false, Thread.NORM_PRIORITY, null), this);
     }
@@ -139,8 +147,12 @@ public final class GlobalEventExecutor extends AbstractScheduledEventExecutor im
      * before.
      */
     private void addTask(Runnable task) {
+<<<<<<< HEAD
         requireNonNull(task, "task");
         taskQueue.add(task);
+=======
+        taskQueue.add(ObjectUtil.checkNotNull(task, "task"));
+>>>>>>> dev
     }
 
     @Override
@@ -193,7 +205,11 @@ public final class GlobalEventExecutor extends AbstractScheduledEventExecutor im
      * @return {@code true} if and only if the worker thread has been terminated
      */
     public boolean awaitInactivity(long timeout, TimeUnit unit) throws InterruptedException {
+<<<<<<< HEAD
         requireNonNull(unit, "unit");
+=======
+        ObjectUtil.checkNotNull(unit, "unit");
+>>>>>>> dev
 
         final Thread thread = this.thread;
         if (thread == null) {
@@ -205,9 +221,13 @@ public final class GlobalEventExecutor extends AbstractScheduledEventExecutor im
 
     @Override
     public void execute(Runnable task) {
+<<<<<<< HEAD
         requireNonNull(task, "task");
 
         addTask(task);
+=======
+        addTask(ObjectUtil.checkNotNull(task, "task"));
+>>>>>>> dev
         if (!inEventLoop()) {
             startThread();
         }
@@ -260,6 +280,10 @@ public final class GlobalEventExecutor extends AbstractScheduledEventExecutor im
                     boolean stopped = started.compareAndSet(true, false);
                     assert stopped;
 
+<<<<<<< HEAD
+=======
+                    // Check if there are pending entries added by execute() or schedule*() while we do CAS above.
+>>>>>>> dev
                     // Do not check scheduledTaskQueue because it is not thread-safe and can only be mutated from a
                     // TaskRunner actively running tasks.
                     if (taskQueue.isEmpty()) {

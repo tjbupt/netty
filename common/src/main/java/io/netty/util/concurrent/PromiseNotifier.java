@@ -19,7 +19,11 @@ import io.netty.util.internal.PromiseNotificationUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkNotNullWithIAE;
 
 /**

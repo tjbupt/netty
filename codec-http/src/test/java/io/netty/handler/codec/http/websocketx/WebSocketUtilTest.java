@@ -17,8 +17,20 @@ package io.netty.handler.codec.http.websocketx;
 
 import org.junit.jupiter.api.Test;
 
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
 
+=======
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
+import io.netty.buffer.Unpooled;
+import io.netty.handler.codec.base64.Base64;
+import io.netty.util.CharsetUtil;
+import io.netty.util.internal.EmptyArrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+>>>>>>> dev
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WebSocketUtilTest {
@@ -42,4 +54,26 @@ public class WebSocketUtilTest {
         }
     }
 
+    @Test
+    public void testBase64() {
+        String base64 = WebSocketUtil.base64(EmptyArrays.EMPTY_BYTES);
+        assertNotNull(base64);
+        assertTrue(base64.isEmpty());
+
+        base64 = WebSocketUtil.base64("foo".getBytes(CharsetUtil.UTF_8));
+        assertEquals(base64, "Zm9v");
+
+        base64 = WebSocketUtil.base64("bar".getBytes(CharsetUtil.UTF_8));
+        ByteBuf src = Unpooled.wrappedBuffer(base64.getBytes(CharsetUtil.UTF_8));
+        try {
+            ByteBuf dst = Base64.decode(src);
+            try {
+                assertEquals(new String(ByteBufUtil.getBytes(dst), CharsetUtil.UTF_8), "bar");
+            } finally {
+                dst.release();
+            }
+        } finally {
+            src.release();
+        }
+    }
 }

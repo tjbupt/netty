@@ -19,6 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 public class ClientCookieEncoderTest {
 
@@ -50,8 +54,17 @@ public class ClientCookieEncoderTest {
 
     @Test
     public void testRejectCookieValueWithSemicolon() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class,
             () -> ClientCookieEncoder.STRICT.encode(new DefaultCookie("myCookie", "foo;bar")));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                ClientCookieEncoder.STRICT.encode(new DefaultCookie("myCookie", "foo;bar"));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

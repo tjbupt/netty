@@ -28,8 +28,12 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.embedded.EmbeddedChannel;
+<<<<<<< HEAD
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.nio.NioHandler;
+=======
+import io.netty.channel.nio.NioEventLoopGroup;
+>>>>>>> dev
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -41,6 +45,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.net.SocketAddress;
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> dev
 import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Exchanger;
@@ -380,7 +388,11 @@ public class FlowControlHandlerTest {
         final Exchanger<Channel> peerRef = new Exchanger<Channel>();
         final CountDownLatch latch = new CountDownLatch(3);
         final AtomicReference<Throwable> causeRef = new AtomicReference<Throwable>();
+<<<<<<< HEAD
         ChannelHandler handler = new ChannelHandler() {
+=======
+        ChannelInboundHandlerAdapter handler = new ChannelDuplexHandler() {
+>>>>>>> dev
             @Override
             public void channelActive(ChannelHandlerContext ctx) throws Exception {
                 ctx.fireChannelActive();
@@ -432,7 +444,11 @@ public class FlowControlHandlerTest {
         final EmbeddedChannel channel = new EmbeddedChannel(false, false,
             new FlowControlHandler(),
             new IdleStateHandler(delayMillis, 0, 0, MILLISECONDS),
+<<<<<<< HEAD
             new ChannelHandler() {
+=======
+            new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
                 @Override
                 public void channelActive(ChannelHandlerContext ctx) {
                     ctx.fireChannelActive();
@@ -485,6 +501,7 @@ public class FlowControlHandlerTest {
     public void testRemoveFlowControl() throws Exception {
         final CountDownLatch latch = new CountDownLatch(3);
 
+<<<<<<< HEAD
         ChannelHandler handler = new ChannelHandler() {
             @Override
             public void channelActive(ChannelHandlerContext ctx) {
@@ -496,6 +513,19 @@ public class FlowControlHandlerTest {
             public void channelRead(ChannelHandlerContext ctx, Object msg) {
                 latch.countDown();
                 ctx.fireChannelRead(msg);
+=======
+        ChannelInboundHandlerAdapter handler = new ChannelDuplexHandler() {
+            @Override
+            public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                //do the first read
+                ctx.read();
+                super.channelActive(ctx);
+            }
+            @Override
+            public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+                latch.countDown();
+                super.channelRead(ctx, msg);
+>>>>>>> dev
             }
         };
 
@@ -517,7 +547,11 @@ public class FlowControlHandlerTest {
                 }
             }
         };
+<<<<<<< HEAD
         ChannelHandler tail = new ChannelHandler() {
+=======
+        ChannelInboundHandlerAdapter tail = new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
             @Override
             public void channelRead(ChannelHandlerContext ctx, Object msg) {
                 //consume this msg
@@ -546,7 +580,11 @@ public class FlowControlHandlerTest {
      */
     private static final class OneByteToThreeStringsDecoder extends ByteToMessageDecoder {
         @Override
+<<<<<<< HEAD
         protected void decode(ChannelHandlerContext ctx, ByteBuf in) {
+=======
+        protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+>>>>>>> dev
             for (int i = 0; i < in.readableBytes(); i++) {
                 ctx.fireChannelRead("1");
                 ctx.fireChannelRead("2");

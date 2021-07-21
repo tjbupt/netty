@@ -19,6 +19,7 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.handler.codec.DecoderResult;
 import io.netty.util.AbstractReferenceCounted;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.UnstableApi;
 
 /**
@@ -40,8 +41,12 @@ public abstract class AbstractMemcacheObject extends AbstractReferenceCounted im
 
     @Override
     public void setDecoderResult(DecoderResult result) {
+<<<<<<< HEAD
         requireNonNull(result, "result");
 
         decoderResult = result;
+=======
+        this.decoderResult = ObjectUtil.checkNotNull(result, "DecoderResult should not be null.");
+>>>>>>> dev
     }
 }

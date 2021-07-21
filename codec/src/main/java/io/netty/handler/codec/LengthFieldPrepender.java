@@ -16,7 +16,10 @@
 package io.netty.handler.codec;
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -150,9 +153,13 @@ public class LengthFieldPrepender extends MessageToMessageEncoder<ByteBuf> {
                     "lengthFieldLength must be either 1, 2, 3, 4, or 8: " +
                     lengthFieldLength);
         }
+<<<<<<< HEAD
         requireNonNull(byteOrder, "byteOrder");
 
         this.byteOrder = byteOrder;
+=======
+        this.byteOrder = ObjectUtil.checkNotNull(byteOrder, "byteOrder");
+>>>>>>> dev
         this.lengthFieldLength = lengthFieldLength;
         this.lengthIncludesLengthFieldLength = lengthIncludesLengthFieldLength;
         this.lengthAdjustment = lengthAdjustment;

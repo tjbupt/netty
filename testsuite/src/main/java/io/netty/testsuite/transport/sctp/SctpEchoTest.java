@@ -50,7 +50,16 @@ public class SctpEchoTest extends AbstractSctpTest {
     @Test
     public void testSimpleEcho(TestInfo testInfo) throws Throwable {
         assumeTrue(TestUtils.isSctpSupported());
+<<<<<<< HEAD
         run(testInfo, this::testSimpleEcho);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSimpleEcho(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleEcho(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -60,7 +69,16 @@ public class SctpEchoTest extends AbstractSctpTest {
     @Test
     public void testSimpleEchoUnordered(TestInfo testInfo) throws Throwable {
         assumeTrue(TestUtils.isSctpSupported());
+<<<<<<< HEAD
         run(testInfo, this::testSimpleEchoUnordered);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSimpleEchoUnordered(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleEchoUnordered(ServerBootstrap sb, Bootstrap cb) throws Throwable {

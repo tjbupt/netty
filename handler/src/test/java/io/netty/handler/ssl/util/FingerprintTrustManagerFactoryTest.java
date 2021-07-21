@@ -96,8 +96,12 @@ public class FingerprintTrustManagerFactoryTest {
 
     @Test
     public void testValidSHA1Fingerprint() throws Exception {
+<<<<<<< HEAD
         FingerprintTrustManagerFactory factory =  FingerprintTrustManagerFactory.builder("SHA-1")
                 .fingerprints(FIRST_CERT_SHA1_FINGERPRINT).build();
+=======
+        FingerprintTrustManagerFactory factory = new FingerprintTrustManagerFactory(FIRST_CERT_SHA1_FINGERPRINT);
+>>>>>>> dev
 
         assertTrue(factory.engineGetTrustManagers().length > 0);
         assertTrue(factory.engineGetTrustManagers()[0] instanceof X509TrustManager);

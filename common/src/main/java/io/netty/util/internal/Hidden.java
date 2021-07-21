@@ -20,6 +20,11 @@ import io.netty.util.concurrent.FastThreadLocalThread;
 import reactor.blockhound.BlockHound;
 import reactor.blockhound.integration.BlockHoundIntegration;
 
+<<<<<<< HEAD
+=======
+import java.util.function.Function;
+import java.util.function.Predicate;
+>>>>>>> dev
 
 /**
  * Contains classes that must have public visibility but are not public API.
@@ -33,6 +38,10 @@ class Hidden {
      * and SHOULD NOT be considered a public API.
      */
     @UnstableApi
+<<<<<<< HEAD
+=======
+    @SuppressJava6Requirement(reason = "BlockHound is Java 8+, but this class is only loaded by it's SPI")
+>>>>>>> dev
     public static final class NettyBlockHoundIntegration implements BlockHoundIntegration {
 
         @Override
@@ -71,6 +80,7 @@ class Hidden {
                     "io.netty.util.concurrent.SingleThreadEventExecutor",
                     "confirmShutdown"
             );
+<<<<<<< HEAD
             builder.allowBlockingCallsInside("io.netty.util.concurrent.GlobalEventExecutor",
                     "addTask");
 
@@ -84,6 +94,8 @@ class Hidden {
             builder.allowBlockingCallsInside(
                     "io.netty.util.concurrent.SingleThreadEventExecutor",
                     "takeTask");
+=======
+>>>>>>> dev
 
             builder.allowBlockingCallsInside(
                     "io.netty.handler.ssl.SslHandler",
@@ -98,6 +110,24 @@ class Hidden {
                     "io.netty.handler.ssl.SslHandler",
                     "runDelegatedTasks"
             );
+<<<<<<< HEAD
+=======
+            builder.allowBlockingCallsInside(
+                    "io.netty.util.concurrent.GlobalEventExecutor",
+                    "takeTask");
+
+            builder.allowBlockingCallsInside(
+                    "io.netty.util.concurrent.GlobalEventExecutor",
+                    "addTask");
+
+            builder.allowBlockingCallsInside(
+                    "io.netty.util.concurrent.SingleThreadEventExecutor",
+                    "takeTask");
+
+            builder.allowBlockingCallsInside(
+                    "io.netty.util.concurrent.SingleThreadEventExecutor",
+                    "addTask");
+>>>>>>> dev
 
             builder.allowBlockingCallsInside(
                     "io.netty.handler.ssl.ReferenceCountedOpenSslClientContext$ExtendedTrustManagerVerifyCallback",
@@ -129,8 +159,28 @@ class Hidden {
                     "io.netty.resolver.HostsFileEntriesProvider$ParserImpl",
                     "parse");
 
+<<<<<<< HEAD
             builder.nonBlockingThreadPredicate(p -> thread ->
                     p.test(thread) || thread instanceof FastThreadLocalThread);
+=======
+            builder.nonBlockingThreadPredicate(new Function<Predicate<Thread>, Predicate<Thread>>() {
+                @Override
+                public Predicate<Thread> apply(final Predicate<Thread> p) {
+                    return new Predicate<Thread>() {
+                        @Override
+                        @SuppressJava6Requirement(reason = "Predicate#test")
+                        public boolean test(Thread thread) {
+                            return p.test(thread) || thread instanceof FastThreadLocalThread;
+                        }
+                    };
+                }
+            });
+        }
+
+        @Override
+        public int compareTo(BlockHoundIntegration o) {
+            return 0;
+>>>>>>> dev
         }
     }
 }

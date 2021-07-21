@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
 import io.netty.util.NetUtil;
+import io.netty.util.internal.ObjectUtil;
 
 import java.net.IDN;
 
@@ -63,8 +64,13 @@ public final class SocksCmdResponse extends SocksResponse {
      */
     public SocksCmdResponse(SocksCmdStatus cmdStatus, SocksAddressType addressType, String host, int port) {
         super(SocksResponseType.CMD);
+<<<<<<< HEAD
         requireNonNull(cmdStatus, "cmdStatus");
         requireNonNull(addressType, "addressType");
+=======
+        ObjectUtil.checkNotNull(cmdStatus, "cmdStatus");
+        ObjectUtil.checkNotNull(addressType, "addressType");
+>>>>>>> dev
         if (host != null) {
             switch (addressType) {
                 case IPv4:

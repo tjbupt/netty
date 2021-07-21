@@ -36,7 +36,12 @@ import static io.netty.channel.ChannelOption.SO_REUSEADDR;
 import static io.netty.channel.ChannelOption.SO_SNDBUF;
 import static io.netty.channel.ChannelOption.TCP_NODELAY;
 
+<<<<<<< HEAD
 public final class EpollSocketChannelConfig extends EpollDuplexChannelConfig implements SocketChannelConfig {
+=======
+public final class EpollSocketChannelConfig extends EpollChannelConfig implements SocketChannelConfig {
+    private volatile boolean allowHalfClosure;
+>>>>>>> dev
     private volatile boolean tcpFastopen;
 
     /**
@@ -560,6 +565,14 @@ public final class EpollSocketChannelConfig extends EpollDuplexChannelConfig imp
      */
     public boolean isTcpFastOpenConnect() {
         return tcpFastopen;
+<<<<<<< HEAD
+=======
+    }
+
+    @Override
+    public boolean isAllowHalfClosure() {
+        return allowHalfClosure;
+>>>>>>> dev
     }
 
     @Override

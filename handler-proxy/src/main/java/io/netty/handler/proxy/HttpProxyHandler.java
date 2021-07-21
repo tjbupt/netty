@@ -21,8 +21,14 @@ import static java.util.Objects.requireNonNull;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandler;
+import io.netty.channel.ChannelOutboundHandler;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
+<<<<<<< HEAD
+=======
+import io.netty.handler.codec.base64.Base64;
+>>>>>>> dev
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpClientCodec;
@@ -35,6 +41,11 @@ import io.netty.handler.codec.http.HttpUtil;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.LastHttpContent;
 import io.netty.util.AsciiString;
+<<<<<<< HEAD
+=======
+import io.netty.util.CharsetUtil;
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -46,7 +57,10 @@ public final class HttpProxyHandler extends ProxyHandler {
 
     private static final String PROTOCOL = "http";
     private static final String AUTH_BASIC = "basic";
+<<<<<<< HEAD
     private static final byte[] BASIC_BYTES = "Basic ".getBytes(StandardCharsets.UTF_8);
+=======
+>>>>>>> dev
 
     // Wrapper for the HttpClientCodec to prevent it to be removed by other handlers by mistake (for example the
     // WebSocket*Handshaker.
@@ -97,6 +111,7 @@ public final class HttpProxyHandler extends ProxyHandler {
                             HttpHeaders headers,
                             boolean ignoreDefaultPortsInConnectHostHeader) {
         super(proxyAddress);
+<<<<<<< HEAD
         requireNonNull(username, "username");
         requireNonNull(password, "password");
         this.username = username;
@@ -108,6 +123,23 @@ public final class HttpProxyHandler extends ProxyHandler {
         System.arraycopy(authzBase64, 0, authzHeader, 6, authzBase64.length);
 
         authorization = new AsciiString(authzHeader, /*copy=*/ false);
+=======
+        this.username = ObjectUtil.checkNotNull(username, "username");
+        this.password = ObjectUtil.checkNotNull(password, "password");
+
+        ByteBuf authz = Unpooled.copiedBuffer(username + ':' + password, CharsetUtil.UTF_8);
+        ByteBuf authzBase64;
+        try {
+            authzBase64 = Base64.encode(authz, false);
+        } finally {
+            authz.release();
+        }
+        try {
+            authorization = new AsciiString("Basic " + authzBase64.toString(CharsetUtil.US_ASCII));
+        } finally {
+            authzBase64.release();
+        }
+>>>>>>> dev
 
         this.outboundHeaders = headers;
         this.ignoreDefaultPortsInConnectHostHeader = ignoreDefaultPortsInConnectHostHeader;
@@ -226,7 +258,11 @@ public final class HttpProxyHandler extends ProxyHandler {
         }
     }
 
+<<<<<<< HEAD
     private static final class HttpClientCodecWrapper implements ChannelHandler {
+=======
+    private static final class HttpClientCodecWrapper implements ChannelInboundHandler, ChannelOutboundHandler {
+>>>>>>> dev
         final HttpClientCodec codec = new HttpClientCodec();
 
         @Override
@@ -286,28 +322,48 @@ public final class HttpProxyHandler extends ProxyHandler {
 
         @Override
         public void bind(ChannelHandlerContext ctx, SocketAddress localAddress,
+<<<<<<< HEAD
                          ChannelPromise promise) {
+=======
+                         ChannelPromise promise) throws Exception {
+>>>>>>> dev
             codec.bind(ctx, localAddress, promise);
         }
 
         @Override
         public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress, SocketAddress localAddress,
+<<<<<<< HEAD
                             ChannelPromise promise) {
+=======
+                            ChannelPromise promise) throws Exception {
+>>>>>>> dev
             codec.connect(ctx, remoteAddress, localAddress, promise);
         }
 
         @Override
+<<<<<<< HEAD
         public void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) {
+=======
+        public void disconnect(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+>>>>>>> dev
             codec.disconnect(ctx, promise);
         }
 
         @Override
+<<<<<<< HEAD
         public void close(ChannelHandlerContext ctx, ChannelPromise promise) {
+=======
+        public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+>>>>>>> dev
             codec.close(ctx, promise);
         }
 
         @Override
+<<<<<<< HEAD
         public void deregister(ChannelHandlerContext ctx, ChannelPromise promise) {
+=======
+        public void deregister(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+>>>>>>> dev
             codec.deregister(ctx, promise);
         }
 
@@ -317,12 +373,20 @@ public final class HttpProxyHandler extends ProxyHandler {
         }
 
         @Override
+<<<<<<< HEAD
         public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
+=======
+        public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+>>>>>>> dev
             codec.write(ctx, msg, promise);
         }
 
         @Override
+<<<<<<< HEAD
         public void flush(ChannelHandlerContext ctx) {
+=======
+        public void flush(ChannelHandlerContext ctx) throws Exception {
+>>>>>>> dev
             codec.flush(ctx);
         }
     }

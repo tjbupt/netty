@@ -16,8 +16,14 @@
 
 package io.netty.handler.ssl.util;
 
+<<<<<<< HEAD
 import java.security.KeyStore;
 import java.util.Objects;
+=======
+import io.netty.util.internal.ObjectUtil;
+
+import java.security.KeyStore;
+>>>>>>> dev
 import javax.net.ssl.ManagerFactoryParameters;
 import javax.net.ssl.TrustManager;
 
@@ -25,7 +31,11 @@ public final class TrustManagerFactoryWrapper extends SimpleTrustManagerFactory 
     private final TrustManager tm;
 
     public TrustManagerFactoryWrapper(TrustManager tm) {
+<<<<<<< HEAD
         this.tm = Objects.requireNonNull(tm, "tm");
+=======
+        this.tm = ObjectUtil.checkNotNull(tm, "tm");
+>>>>>>> dev
     }
 
     @Override

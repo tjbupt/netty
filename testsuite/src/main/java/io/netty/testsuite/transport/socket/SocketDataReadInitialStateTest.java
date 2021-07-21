@@ -39,7 +39,16 @@ public class SocketDataReadInitialStateTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
     public void testAutoReadOffNoDataReadUntilReadCalled(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testAutoReadOffNoDataReadUntilReadCalled);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testAutoReadOffNoDataReadUntilReadCalled(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testAutoReadOffNoDataReadUntilReadCalled(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -134,7 +143,16 @@ public class SocketDataReadInitialStateTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
     public void testAutoReadOnDataReadImmediately(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testAutoReadOnDataReadImmediately);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testAutoReadOnDataReadImmediately(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testAutoReadOnDataReadImmediately(ServerBootstrap sb, Bootstrap cb) throws Throwable {

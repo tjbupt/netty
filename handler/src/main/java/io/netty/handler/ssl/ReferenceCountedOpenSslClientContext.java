@@ -16,6 +16,10 @@
 package io.netty.handler.ssl;
 
 import io.netty.internal.tcnative.CertificateCallback;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.SuppressJava6Requirement;
+>>>>>>> dev
 import io.netty.internal.tcnative.SSL;
 import io.netty.internal.tcnative.SSLContext;
 
@@ -47,7 +51,11 @@ import javax.security.auth.x500.X500Principal;
  */
 public final class ReferenceCountedOpenSslClientContext extends ReferenceCountedOpenSslContext {
 
+<<<<<<< HEAD
     private static final Set<String> SUPPORTED_KEY_TYPES = Collections.unmodifiableSet(new LinkedHashSet<>(
+=======
+    private static final Set<String> SUPPORTED_KEY_TYPES = Collections.unmodifiableSet(new LinkedHashSet<String>(
+>>>>>>> dev
             Arrays.asList(OpenSslKeyMaterialManager.KEY_TYPE_RSA,
                           OpenSslKeyMaterialManager.KEY_TYPE_DH_RSA,
                           OpenSslKeyMaterialManager.KEY_TYPE_EC,
@@ -157,13 +165,7 @@ public final class ReferenceCountedOpenSslClientContext extends ReferenceCounted
                 //
                 //            See https://github.com/netty/netty/issues/5372
 
-                // Use this to prevent an error when running on java < 7
-                if (useExtendedTrustManager(manager)) {
-                    SSLContext.setCertVerifyCallback(ctx,
-                            new ExtendedTrustManagerVerifyCallback(engineMap, (X509ExtendedTrustManager) manager));
-                } else {
-                    SSLContext.setCertVerifyCallback(ctx, new TrustManagerVerifyCallback(engineMap, manager));
-                }
+                setVerifyCallback(ctx, engineMap, manager);
             } catch (Exception e) {
                 if (keyMaterialProvider != null) {
                     keyMaterialProvider.destroy();
@@ -192,6 +194,20 @@ public final class ReferenceCountedOpenSslClientContext extends ReferenceCounted
         }
     }
 
+<<<<<<< HEAD
+=======
+    @SuppressJava6Requirement(reason = "Guarded by java version check")
+    private static void setVerifyCallback(long ctx, OpenSslEngineMap engineMap, X509TrustManager manager) {
+        // Use this to prevent an error when running on java < 7
+        if (useExtendedTrustManager(manager)) {
+            SSLContext.setCertVerifyCallback(ctx,
+                    new ExtendedTrustManagerVerifyCallback(engineMap, (X509ExtendedTrustManager) manager));
+        } else {
+            SSLContext.setCertVerifyCallback(ctx, new TrustManagerVerifyCallback(engineMap, manager));
+        }
+    }
+
+>>>>>>> dev
     static final class OpenSslClientSessionContext extends OpenSslSessionContext {
         OpenSslClientSessionContext(ReferenceCountedOpenSslContext context, OpenSslKeyMaterialProvider provider) {
             super(context, provider, SSL.SSL_SESS_CACHE_CLIENT, new OpenSslClientSessionCache(context.engineMap));
@@ -213,6 +229,7 @@ public final class ReferenceCountedOpenSslClientContext extends ReferenceCounted
         }
     }
 
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     private static final class ExtendedTrustManagerVerifyCallback extends AbstractCertificateVerifier {
         private final X509ExtendedTrustManager manager;
 

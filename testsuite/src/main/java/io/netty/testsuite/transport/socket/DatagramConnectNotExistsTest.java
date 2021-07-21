@@ -48,10 +48,22 @@ public class DatagramConnectNotExistsTest extends AbstractClientSocketTest {
     @Test
     @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
     public void testConnectNotExists(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testConnectNotExists);
     }
 
     public void testConnectNotExists(Bootstrap cb) throws Throwable {
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) {
+                testConnectNotExists(bootstrap);
+            }
+        });
+    }
+
+    public void testConnectNotExists(Bootstrap cb) {
+>>>>>>> dev
         // Currently not works on windows
         // See https://github.com/netty/netty/issues/11285
         assumeFalse(PlatformDependent.isWindows());
@@ -68,7 +80,13 @@ public class DatagramConnectNotExistsTest extends AbstractClientSocketTest {
             assertTrue(datagramChannel.isActive());
             datagramChannel.writeAndFlush(
                     Unpooled.copiedBuffer("test", CharsetUtil.US_ASCII)).syncUninterruptibly();
+<<<<<<< HEAD
             assertTrue(promise.syncUninterruptibly().getNow() instanceof PortUnreachableException);
+=======
+            if (!(datagramChannel instanceof OioDatagramChannel)) {
+                assertTrue(promise.syncUninterruptibly().getNow() instanceof PortUnreachableException);
+            }
+>>>>>>> dev
         } finally {
             future.channel().close();
         }

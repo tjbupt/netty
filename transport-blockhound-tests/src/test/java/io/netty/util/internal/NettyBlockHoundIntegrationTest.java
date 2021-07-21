@@ -126,7 +126,11 @@ public class NettyBlockHoundIntegrationTest {
     @Timeout(value = 5000, unit = TimeUnit.MILLISECONDS)
     public void testSingleThreadEventExecutorTakeTask() throws InterruptedException {
         SingleThreadEventExecutor executor =
+<<<<<<< HEAD
                 new SingleThreadEventExecutor(new DefaultThreadFactory("test")) {
+=======
+                new SingleThreadEventExecutor(null, new DefaultThreadFactory("test"), true) {
+>>>>>>> dev
                     @Override
                     protected void run() {
                         while (!confirmShutdown()) {
@@ -152,7 +156,11 @@ public class NettyBlockHoundIntegrationTest {
     public void testSingleThreadEventExecutorAddTask() throws Exception {
         TestLinkedBlockingQueue<Runnable> taskQueue = new TestLinkedBlockingQueue<>();
         SingleThreadEventExecutor executor =
+<<<<<<< HEAD
                 new SingleThreadEventExecutor(new DefaultThreadFactory("test")) {
+=======
+                new SingleThreadEventExecutor(null, new DefaultThreadFactory("test"), true) {
+>>>>>>> dev
                     @Override
                     protected Queue<Runnable> newTaskQueue(int maxPendingTasks) {
                         return taskQueue;
@@ -366,7 +374,11 @@ public class NettyBlockHoundIntegrationTest {
     private static void doTestParseResolverFilesAllowsBlockingCalls(Callable<Object> callable)
             throws InterruptedException {
         SingleThreadEventExecutor executor =
+<<<<<<< HEAD
                 new SingleThreadEventExecutor(new DefaultThreadFactory("test")) {
+=======
+                new SingleThreadEventExecutor(null, new DefaultThreadFactory("test"), true) {
+>>>>>>> dev
                     @Override
                     protected void run() {
                         while (!confirmShutdown()) {

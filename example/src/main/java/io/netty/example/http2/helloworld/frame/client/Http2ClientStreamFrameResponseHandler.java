@@ -33,7 +33,11 @@ public final class Http2ClientStreamFrameResponseHandler extends SimpleChannelIn
     private final CountDownLatch latch = new CountDownLatch(1);
 
     @Override
+<<<<<<< HEAD
     protected void messageReceived(ChannelHandlerContext ctx, Http2StreamFrame msg) {
+=======
+    protected void channelRead0(ChannelHandlerContext ctx, Http2StreamFrame msg) throws Exception {
+>>>>>>> dev
         System.out.println("Received HTTP/2 'stream' frame: " + msg);
 
         // isEndStream() is not from a common interface, so we currently must check both

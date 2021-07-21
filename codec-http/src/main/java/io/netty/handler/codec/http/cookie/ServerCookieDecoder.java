@@ -66,7 +66,11 @@ public final class ServerCookieDecoder extends CookieDecoder {
      * @return the decoded {@link Cookie}
      */
     public List<Cookie> decodeAll(String header) {
+<<<<<<< HEAD
         List<Cookie> cookies = new ArrayList<>();
+=======
+        List<Cookie> cookies = new ArrayList<Cookie>();
+>>>>>>> dev
         decode(cookies, header);
         return Collections.unmodifiableList(cookies);
     }
@@ -77,7 +81,11 @@ public final class ServerCookieDecoder extends CookieDecoder {
      * @return the decoded {@link Cookie}
      */
     public Set<Cookie> decode(String header) {
+<<<<<<< HEAD
         Set<Cookie> cookies = new TreeSet<>();
+=======
+        Set<Cookie> cookies = new TreeSet<Cookie>();
+>>>>>>> dev
         decode(cookies, header);
         return cookies;
     }
@@ -86,7 +94,11 @@ public final class ServerCookieDecoder extends CookieDecoder {
      * Decodes the specified {@code Cookie} HTTP header value into a {@link Cookie}.
      */
     private void decode(Collection<? super Cookie> cookies, String header) {
+<<<<<<< HEAD
         final int headerLen = requireNonNull(header, "header").length();
+=======
+        final int headerLen = checkNotNull(header, "header").length();
+>>>>>>> dev
 
         if (headerLen == 0) {
             return;

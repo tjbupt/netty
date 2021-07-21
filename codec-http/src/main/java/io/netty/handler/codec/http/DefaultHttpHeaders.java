@@ -68,7 +68,11 @@ public class DefaultHttpHeaders extends HttpHeaders {
     }
 
     /**
+<<<<<<< HEAD
      * <b>Warning!</b> Setting {@code validate} to {@code false} will mean that Netty won't
+=======
+     * <b>Warning!</b> Setting <code>validate</code> to <code>false</code> will mean that Netty won't
+>>>>>>> dev
      * validate & protect against user-supplied header values that are malicious.
      * This can leave your server implementation vulnerable to
      * <a href="https://cwe.mitre.org/data/definitions/113.html">

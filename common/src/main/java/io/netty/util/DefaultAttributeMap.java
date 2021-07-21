@@ -15,7 +15,11 @@
  */
 package io.netty.util;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
@@ -86,7 +90,11 @@ public class DefaultAttributeMap implements AttributeMap {
     @SuppressWarnings("unchecked")
     @Override
     public <T> Attribute<T> attr(AttributeKey<T> key) {
+<<<<<<< HEAD
         requireNonNull(key, "key");
+=======
+        ObjectUtil.checkNotNull(key, "key");
+>>>>>>> dev
         DefaultAttribute newAttribute = null;
         for (;;) {
             final DefaultAttribute[] attributes = this.attributes;
@@ -121,7 +129,11 @@ public class DefaultAttributeMap implements AttributeMap {
 
     @Override
     public <T> boolean hasAttr(AttributeKey<T> key) {
+<<<<<<< HEAD
         requireNonNull(key, "key");
+=======
+        ObjectUtil.checkNotNull(key, "key");
+>>>>>>> dev
         return searchAttributeByKey(attributes, key) >= 0;
     }
 

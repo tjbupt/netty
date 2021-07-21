@@ -25,7 +25,17 @@ import io.netty.util.UncheckedBooleanSupplier;
 class EpollRecvByteAllocatorHandle extends DelegatingHandle implements ExtendedHandle {
     private final PreferredDirectByteBufAllocator preferredDirectByteBufAllocator =
             new PreferredDirectByteBufAllocator();
+<<<<<<< HEAD
     private final UncheckedBooleanSupplier defaultMaybeMoreDataSupplier = this::maybeMoreDataToRead;
+=======
+    private final UncheckedBooleanSupplier defaultMaybeMoreDataSupplier = new UncheckedBooleanSupplier() {
+        @Override
+        public boolean get() {
+            return maybeMoreDataToRead();
+        }
+    };
+    private boolean isEdgeTriggered;
+>>>>>>> dev
     private boolean receivedRdHup;
 
     EpollRecvByteAllocatorHandle(ExtendedHandle handle) {

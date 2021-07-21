@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.internal.ObjectUtil;
 
 import java.nio.ByteBuffer;
 import java.util.zip.CRC32;
@@ -145,7 +146,11 @@ public class JdkZlibDecoder extends ZlibDecoder {
     private JdkZlibDecoder(ZlibWrapper wrapper, byte[] dictionary, boolean decompressConcatenated, int maxAllocation) {
         super(maxAllocation);
 
+<<<<<<< HEAD
         requireNonNull(wrapper, "wrapper");
+=======
+        ObjectUtil.checkNotNull(wrapper, "wrapper");
+>>>>>>> dev
 
         this.decompressConcatenated = decompressConcatenated;
         switch (wrapper) {
@@ -235,6 +240,7 @@ public class JdkZlibDecoder extends ZlibDecoder {
             boolean readFooter = false;
             while (!inflater.needsInput()) {
                 int writerIndex = decompressed.writerIndex();
+<<<<<<< HEAD
                 int writable = decompressed.writableBytes();
                 int outputLength;
                 if (decompressed.hasArray()) {
@@ -248,6 +254,11 @@ public class JdkZlibDecoder extends ZlibDecoder {
                     throw new IllegalStateException(
                             "Decompress buffer must have array or exactly 1 NIO buffer: " + decompressed);
                 }
+=======
+                int outIndex = decompressed.arrayOffset() + writerIndex;
+                int writable = decompressed.writableBytes();
+                int outputLength = inflater.inflate(outArray, outIndex, writable);
+>>>>>>> dev
                 if (outputLength > 0) {
                     decompressed.writerIndex(writerIndex + outputLength);
                     if (crc != null) {

@@ -68,7 +68,11 @@ final class NetUtilInitializations {
 
     static NetworkIfaceAndInetAddress determineLoopback(Inet4Address localhost4, Inet6Address localhost6) {
         // Retrieve the list of available network interfaces.
+<<<<<<< HEAD
         List<NetworkInterface> ifaces = new ArrayList<>();
+=======
+        List<NetworkInterface> ifaces = new ArrayList<NetworkInterface>();
+>>>>>>> dev
         try {
             Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
             if (interfaces != null) {

@@ -57,6 +57,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import io.netty.handler.codec.TooLongFrameException;
+import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -179,7 +180,11 @@ public class WebSocket08FrameEncoder extends MessageToMessageEncoder<WebSocketFr
 
             // Write payload
             if (maskPayload) {
+<<<<<<< HEAD
                 int random = ThreadLocalRandom.current().nextInt();
+=======
+                int random = PlatformDependent.threadLocalRandom().nextInt(Integer.MAX_VALUE);
+>>>>>>> dev
                 mask = ByteBuffer.allocate(4).putInt(random).array();
                 buf.writeBytes(mask);
 

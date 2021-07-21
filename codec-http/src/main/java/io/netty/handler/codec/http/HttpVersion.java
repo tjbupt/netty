@@ -17,10 +17,14 @@ package io.netty.handler.codec.http;
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static io.netty.util.internal.ObjectUtil.checkNonEmptyAfterTrim;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 
 import io.netty.buffer.ByteBuf;
 import io.netty.util.CharsetUtil;
+import io.netty.util.internal.ObjectUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,7 +61,11 @@ public class HttpVersion implements Comparable<HttpVersion> {
      * returned.
      */
     public static HttpVersion valueOf(String text) {
+<<<<<<< HEAD
         requireNonNull(text, "text");
+=======
+        ObjectUtil.checkNotNull(text, "text");
+>>>>>>> dev
 
         text = text.trim();
 

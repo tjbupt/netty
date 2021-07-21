@@ -15,7 +15,11 @@
  */
 package io.netty.channel.unix;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import java.io.File;
 import java.net.SocketAddress;
@@ -29,8 +33,12 @@ public class DomainSocketAddress extends SocketAddress {
     private final String socketPath;
 
     public DomainSocketAddress(String socketPath) {
+<<<<<<< HEAD
         requireNonNull(socketPath, "socketPath");
         this.socketPath = socketPath;
+=======
+        this.socketPath = ObjectUtil.checkNotNull(socketPath, "socketPath");
+>>>>>>> dev
     }
 
     public DomainSocketAddress(File file) {

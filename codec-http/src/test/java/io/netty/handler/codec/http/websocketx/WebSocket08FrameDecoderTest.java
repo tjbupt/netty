@@ -32,18 +32,29 @@ public class WebSocket08FrameDecoderTest {
     public void channelInactive() throws Exception {
         final WebSocket08FrameDecoder decoder = new WebSocket08FrameDecoder(true, true, 65535, false);
         final ChannelHandlerContext ctx = mock(ChannelHandlerContext.class);
+<<<<<<< HEAD
         decoder.handlerAdded(ctx);
+=======
+>>>>>>> dev
         decoder.channelInactive(ctx);
         verify(ctx).fireChannelInactive();
     }
 
     @Test
     public void supportIanaStatusCodes() throws Exception {
+<<<<<<< HEAD
         Set<Integer> forbiddenIanaCodes = new HashSet<>();
         forbiddenIanaCodes.add(1004);
         forbiddenIanaCodes.add(1005);
         forbiddenIanaCodes.add(1006);
         Set<Integer> validIanaCodes = new HashSet<>();
+=======
+        Set<Integer> forbiddenIanaCodes = new HashSet<Integer>();
+        forbiddenIanaCodes.add(1004);
+        forbiddenIanaCodes.add(1005);
+        forbiddenIanaCodes.add(1006);
+        Set<Integer> validIanaCodes = new HashSet<Integer>();
+>>>>>>> dev
         for (int i = 1000; i < 1015; i++) {
             validIanaCodes.add(i);
         }

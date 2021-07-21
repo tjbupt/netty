@@ -17,7 +17,10 @@ package io.netty.handler.traffic;
 
 import static io.netty.util.internal.ObjectUtil.checkPositive;
 
+<<<<<<< HEAD
 import io.netty.buffer.ByteBufConvertible;
+=======
+>>>>>>> dev
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.channel.Channel;
@@ -514,6 +517,10 @@ public abstract class AbstractTrafficShapingHandler implements ChannelHandler {
             //release the reopen task
             channel.attr(REOPEN_TASK).set(null);
         }
+<<<<<<< HEAD
+=======
+        super.handlerRemoved(ctx);
+>>>>>>> dev
     }
 
     /**

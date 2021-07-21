@@ -150,7 +150,11 @@ public final class ReadOnlyHttpHeaders extends HttpHeaders {
         }
         List<Map.Entry<String, String>> entries = new ArrayList<>(size());
         for (int i = 0; i < nameValuePairs.length; i += 2) {
+<<<<<<< HEAD
             entries.add(new SimpleImmutableEntry<>(nameValuePairs[i].toString(),
+=======
+            entries.add(new SimpleImmutableEntry<String, String>(nameValuePairs[i].toString(),
+>>>>>>> dev
                     nameValuePairs[i + 1].toString())); // lgtm[java/index-out-of-bounds]
         }
         return entries;

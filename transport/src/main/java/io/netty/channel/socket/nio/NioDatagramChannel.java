@@ -33,8 +33,16 @@ import io.netty.channel.socket.DatagramChannelConfig;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.InternetProtocolFamily;
 import io.netty.util.UncheckedBooleanSupplier;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.SocketUtils;
 import io.netty.util.internal.StringUtil;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.SuppressJava6Requirement;
+>>>>>>> dev
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -92,6 +100,7 @@ public final class NioDatagramChannel
         }
     }
 
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     private static DatagramChannel newSocket(SelectorProvider provider, InternetProtocolFamily ipFamily) {
         if (ipFamily == null) {
             return newSocket(provider);
@@ -388,6 +397,7 @@ public final class NioDatagramChannel
         return joinGroup(multicastAddress, networkInterface, source, newPromise());
     }
 
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     @Override
     public ChannelFuture joinGroup(
             InetAddress multicastAddress, NetworkInterface networkInterface,
@@ -395,8 +405,13 @@ public final class NioDatagramChannel
 
         checkJavaVersion();
 
+<<<<<<< HEAD
         requireNonNull(multicastAddress, "multicastAddress");
         requireNonNull(networkInterface, "networkInterface");
+=======
+        ObjectUtil.checkNotNull(multicastAddress, "multicastAddress");
+        ObjectUtil.checkNotNull(networkInterface, "networkInterface");
+>>>>>>> dev
 
         try {
             MembershipKey key;
@@ -463,14 +478,20 @@ public final class NioDatagramChannel
         return leaveGroup(multicastAddress, networkInterface, source, newPromise());
     }
 
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     @Override
     public ChannelFuture leaveGroup(
             InetAddress multicastAddress, NetworkInterface networkInterface, InetAddress source,
             ChannelPromise promise) {
         checkJavaVersion();
 
+<<<<<<< HEAD
         requireNonNull(multicastAddress, "multicastAddress");
         requireNonNull(networkInterface, "networkInterface");
+=======
+        ObjectUtil.checkNotNull(multicastAddress, "multicastAddress");
+        ObjectUtil.checkNotNull(networkInterface, "networkInterface");
+>>>>>>> dev
 
         synchronized (this) {
             if (memberships != null) {
@@ -512,15 +533,22 @@ public final class NioDatagramChannel
     /**
      * Block the given sourceToBlock address for the given multicastAddress on the given networkInterface
      */
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     @Override
     public ChannelFuture block(
             InetAddress multicastAddress, NetworkInterface networkInterface,
             InetAddress sourceToBlock, ChannelPromise promise) {
         checkJavaVersion();
 
+<<<<<<< HEAD
         requireNonNull(multicastAddress, "multicastAddress");
         requireNonNull(sourceToBlock, "sourceToBlock");
         requireNonNull(networkInterface, "networkInterface");
+=======
+        ObjectUtil.checkNotNull(multicastAddress, "multicastAddress");
+        ObjectUtil.checkNotNull(sourceToBlock, "sourceToBlock");
+        ObjectUtil.checkNotNull(networkInterface, "networkInterface");
+>>>>>>> dev
 
         synchronized (this) {
             if (memberships != null) {

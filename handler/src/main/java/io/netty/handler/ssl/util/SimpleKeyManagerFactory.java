@@ -17,6 +17,10 @@
 package io.netty.handler.ssl.util;
 
 import io.netty.util.concurrent.FastThreadLocal;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.StringUtil;
 import io.netty.util.internal.SuppressJava6Requirement;
@@ -24,7 +28,10 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.Provider;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+>>>>>>> dev
 import javax.net.ssl.ManagerFactoryParameters;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
@@ -70,7 +77,11 @@ public abstract class SimpleKeyManagerFactory extends KeyManagerFactory {
      * @param name the name of this {@link KeyManagerFactory}
      */
     protected SimpleKeyManagerFactory(String name) {
+<<<<<<< HEAD
         super(CURRENT_SPI.get(), PROVIDER, Objects.requireNonNull(name, "name"));
+=======
+        super(CURRENT_SPI.get(), PROVIDER, ObjectUtil.checkNotNull(name, "name"));
+>>>>>>> dev
         CURRENT_SPI.get().init(this);
         CURRENT_SPI.remove();
     }

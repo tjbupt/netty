@@ -15,7 +15,10 @@
  */
 package io.netty.handler.ssl;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
 
 import java.math.BigInteger;

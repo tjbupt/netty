@@ -15,12 +15,18 @@
  */
 package io.netty.channel.epoll;
 
+<<<<<<< HEAD
 import io.netty.buffer.ByteBufConvertible;
+=======
+>>>>>>> dev
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelException;
 import io.netty.channel.ChannelOutboundBuffer;
+<<<<<<< HEAD
 import io.netty.channel.EventLoop;
+=======
+>>>>>>> dev
 import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.util.concurrent.GlobalEventExecutor;
@@ -123,8 +129,13 @@ public final class EpollSocketChannel extends AbstractEpollStreamChannel impleme
             ChannelOutboundBuffer outbound = unsafe().outboundBuffer();
             outbound.addFlush();
             Object curr;
+<<<<<<< HEAD
             if ((curr = outbound.current()) instanceof ByteBufConvertible) {
                 ByteBuf initialData = ((ByteBufConvertible) curr).asByteBuf();
+=======
+            if ((curr = outbound.current()) instanceof ByteBuf) {
+                ByteBuf initialData = (ByteBuf) curr;
+>>>>>>> dev
                 // If no cookie is present, the write fails with EINPROGRESS and this call basically
                 // becomes a normal async connect. All writes will be sent normally afterwards.
                 long localFlushedAmount = doWriteOrSendBytes(

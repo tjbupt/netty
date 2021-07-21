@@ -15,8 +15,13 @@
  */
 package io.netty.handler.address;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+=======
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.embedded.EmbeddedChannel;
 import org.junit.jupiter.api.Test;
@@ -36,7 +41,11 @@ public class DynamicAddressConnectHandlerTest {
     @Test
     public void testReplaceAddresses() {
 
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(new ChannelHandler() {
+=======
+        EmbeddedChannel channel = new EmbeddedChannel(new ChannelOutboundHandlerAdapter() {
+>>>>>>> dev
             @Override
             public void connect(ChannelHandlerContext ctx, SocketAddress remoteAddress,
                                 SocketAddress localAddress, ChannelPromise promise) {

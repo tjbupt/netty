@@ -19,8 +19,13 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
+<<<<<<< HEAD
 
 import io.netty.util.internal.PlatformDependent;
+=======
+import io.netty.util.internal.PlatformDependent;
+
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -32,7 +37,10 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.UUID;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 
 import static io.netty.util.CharsetUtil.*;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -51,7 +59,11 @@ public class AbstractMemoryHttpDataTest {
             tmpFile.deleteOnExit();
             FileOutputStream fos = new FileOutputStream(tmpFile);
             byte[] bytes = new byte[4096];
+<<<<<<< HEAD
             ThreadLocalRandom.current().nextBytes(bytes);
+=======
+            PlatformDependent.threadLocalRandom().nextBytes(bytes);
+>>>>>>> dev
             try {
                 fos.write(bytes);
                 fos.flush();
@@ -78,7 +90,11 @@ public class AbstractMemoryHttpDataTest {
             tmpFile.deleteOnExit();
             final int totalByteCount = 4096;
             byte[] bytes = new byte[totalByteCount];
+<<<<<<< HEAD
             ThreadLocalRandom.current().nextBytes(bytes);
+=======
+            PlatformDependent.threadLocalRandom().nextBytes(bytes);
+>>>>>>> dev
             ByteBuf content = Unpooled.wrappedBuffer(bytes);
             test.setContent(content);
             boolean succ = test.renameTo(tmpFile);
@@ -117,6 +133,7 @@ public class AbstractMemoryHttpDataTest {
         TestHttpData test = new TestHttpData("test", UTF_8, 0);
         String contentStr = "foo_test";
         ByteBuf buf = Unpooled.wrappedBuffer(contentStr.getBytes(UTF_8));
+<<<<<<< HEAD
         int readerIndex = buf.readerIndex();
 
         try (ByteBufInputStream is = new ByteBufInputStream(buf)) {
@@ -125,6 +142,18 @@ public class AbstractMemoryHttpDataTest {
             assertEquals(test.getString(UTF_8), contentStr);
             buf.readerIndex(readerIndex);
             assertTrue(ByteBufUtil.equals(buf, test.getByteBuf()));
+=======
+        buf.markReaderIndex();
+        ByteBufInputStream is = new ByteBufInputStream(buf);
+        try {
+            test.setContent(is);
+            assertFalse(buf.isReadable());
+            assertEquals(test.getString(UTF_8), contentStr);
+            buf.resetReaderIndex();
+            assertTrue(ByteBufUtil.equals(buf, test.getByteBuf()));
+        } finally {
+            is.close();
+>>>>>>> dev
         }
 
         Random random = new SecureRandom();

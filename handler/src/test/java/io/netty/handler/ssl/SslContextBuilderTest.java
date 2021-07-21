@@ -18,10 +18,16 @@ package io.netty.handler.ssl;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 import io.netty.util.CharsetUtil;
+<<<<<<< HEAD
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+=======
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
+>>>>>>> dev
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLException;
@@ -107,7 +113,11 @@ public class SslContextBuilderTest {
     @Test
     public void testContextFromManagersOpenssl() throws Exception {
         OpenSsl.ensureAvailability();
+<<<<<<< HEAD
         assumeTrue(OpenSsl.supportsKeyManagerFactory());
+=======
+        assumeTrue(OpenSsl.useKeyManagerFactory());
+>>>>>>> dev
         testContextFromManagers(SslProvider.OPENSSL);
     }
 

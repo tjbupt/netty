@@ -22,6 +22,7 @@ import io.netty.handler.codec.base64.Base64;
 import io.netty.util.CharsetUtil;
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.SystemPropertyUtil;
+import io.netty.util.internal.ThrowableUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -54,8 +55,13 @@ import java.util.Date;
  * {@link java.io.File#createTempFile(String, String)}, and they are deleted when the JVM exits using
  * {@link java.io.File#deleteOnExit()}.
  * </p><p>
+<<<<<<< HEAD
  * The certificate is generated using <a href="https://www.bouncycastle.org/">Bouncy Castle</a>, which is an
  * <em>optional</em> dependency of Netty.
+=======
+ * At first, this method tries to use OpenJDK's X.509 implementation (the {@code sun.security.x509} package).
+ * If it fails, it tries to use <a href="https://www.bouncycastle.org/">Bouncy Castle</a> as a fallback.
+>>>>>>> dev
  * </p>
  */
 public final class SelfSignedCertificate {
@@ -88,10 +94,33 @@ public final class SelfSignedCertificate {
      */
     public SelfSignedCertificate() throws CertificateException {
         this(DEFAULT_NOT_BEFORE, DEFAULT_NOT_AFTER, "RSA", DEFAULT_KEY_LENGTH_BITS);
+<<<<<<< HEAD
     }
 
     /**
      * Creates a new instance.
+     * <p> Algorithm: RSA </p>
+     *
+     * @param notBefore Certificate is not valid before this time
+     * @param notAfter  Certificate is not valid after this time
+     */
+    public SelfSignedCertificate(Date notBefore, Date notAfter)
+            throws CertificateException {
+        this("localhost", notBefore, notAfter, "RSA", DEFAULT_KEY_LENGTH_BITS);
+=======
+>>>>>>> dev
+    }
+
+    /**
+     * Creates a new instance.
+<<<<<<< HEAD
+     *
+     * @param notBefore Certificate is not valid before this time
+     * @param notAfter  Certificate is not valid after this time
+     * @param algorithm Key pair algorithm
+     * @param bits      the number of bits of the generated private key
+     */
+=======
      * <p> Algorithm: RSA </p>
      *
      * @param notBefore Certificate is not valid before this time
@@ -110,6 +139,7 @@ public final class SelfSignedCertificate {
      * @param algorithm Key pair algorithm
      * @param bits      the number of bits of the generated private key
      */
+>>>>>>> dev
     public SelfSignedCertificate(Date notBefore, Date notAfter, String algorithm, int bits)
             throws CertificateException {
         this("localhost", notBefore, notAfter, algorithm, bits);
@@ -236,6 +266,7 @@ public final class SelfSignedCertificate {
 
         String[] paths;
         try {
+<<<<<<< HEAD
             paths = BouncyCastleSelfSignedCertGenerator.generate(
                     fqdn, keypair, random, notBefore, notAfter, algorithm);
         } catch (Throwable throwable) {
@@ -243,6 +274,24 @@ public final class SelfSignedCertificate {
             throw new CertificateException(
                     "No provider succeeded to generate a self-signed certificate. " +
                     "See debug log for the root cause.", throwable);
+=======
+            // Try Bouncy Castle first as otherwise we will see an IllegalAccessError on more recent JDKs.
+            paths = BouncyCastleSelfSignedCertGenerator.generate(
+                    fqdn, keypair, random, notBefore, notAfter, algorithm);
+        } catch (Throwable t) {
+            logger.debug("Failed to generate a self-signed X.509 certificate using Bouncy Castle:", t);
+            try {
+                // Try the OpenJDK's proprietary implementation.
+                paths = OpenJdkSelfSignedCertGenerator.generate(fqdn, keypair, random, notBefore, notAfter, algorithm);
+            } catch (Throwable t2) {
+                logger.debug("Failed to generate a self-signed X.509 certificate using sun.security.x509:", t2);
+                final CertificateException certificateException = new CertificateException(
+                        "No provider succeeded to generate a self-signed certificate. " +
+                                "See debug log for the root cause.", t2);
+                ThrowableUtil.addSuppressed(certificateException, t);
+                throw certificateException;
+            }
+>>>>>>> dev
         }
 
         certificate = new File(paths[0]);

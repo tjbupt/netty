@@ -17,13 +17,19 @@ package io.netty.channel.epoll;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+<<<<<<< HEAD
 import io.netty.buffer.ByteBufConvertible;
+=======
+>>>>>>> dev
 import io.netty.channel.AddressedEnvelope;
 import io.netty.channel.ChannelMetadata;
 import io.netty.channel.ChannelOutboundBuffer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.DefaultAddressedEnvelope;
+<<<<<<< HEAD
 import io.netty.channel.EventLoop;
+=======
+>>>>>>> dev
 import io.netty.channel.unix.DomainDatagramChannel;
 import io.netty.channel.unix.DomainDatagramChannelConfig;
 import io.netty.channel.unix.DomainDatagramPacket;
@@ -62,6 +68,7 @@ public final class EpollDomainDatagramChannel extends AbstractEpollChannel imple
 
     private final EpollDomainDatagramChannelConfig config;
 
+<<<<<<< HEAD
     public EpollDomainDatagramChannel(EventLoop eventLoop) {
         this(eventLoop, newSocketDomainDgram(), false);
     }
@@ -72,6 +79,18 @@ public final class EpollDomainDatagramChannel extends AbstractEpollChannel imple
 
     private EpollDomainDatagramChannel(EventLoop eventLoop, LinuxSocket socket, boolean active) {
         super(null, eventLoop, socket, active);
+=======
+    public EpollDomainDatagramChannel() {
+        this(newSocketDomainDgram(), false);
+    }
+
+    public EpollDomainDatagramChannel(int fd) {
+        this(new LinuxSocket(fd), true);
+    }
+
+    private EpollDomainDatagramChannel(LinuxSocket socket, boolean active) {
+        super(null, socket, active);
+>>>>>>> dev
         config = new EpollDomainDatagramChannelConfig(this);
     }
 
@@ -166,7 +185,11 @@ public final class EpollDomainDatagramChannel extends AbstractEpollChannel imple
             data = envelope.content();
             remoteAddress = envelope.recipient();
         } else {
+<<<<<<< HEAD
             data = ((ByteBufConvertible) msg).asByteBuf();
+=======
+            data = (ByteBuf) msg;
+>>>>>>> dev
             remoteAddress = null;
         }
 
@@ -185,7 +208,11 @@ public final class EpollDomainDatagramChannel extends AbstractEpollChannel imple
                         remoteAddress.path().getBytes(CharsetUtil.UTF_8));
             }
         } else if (data.nioBufferCount() > 1) {
+<<<<<<< HEAD
             IovArray array = registration().cleanIovArray();
+=======
+            IovArray array = ((EpollEventLoop) eventLoop()).cleanIovArray();
+>>>>>>> dev
             array.add(data, data.readerIndex(), data.readableBytes());
             int cnt = array.count();
             assert cnt != 0;
@@ -218,20 +245,34 @@ public final class EpollDomainDatagramChannel extends AbstractEpollChannel imple
                     new DomainDatagramPacket(newDirectBuffer(packet, content), packet.recipient()) : msg;
         }
 
+<<<<<<< HEAD
         if (msg instanceof ByteBufConvertible) {
             ByteBuf buf = ((ByteBufConvertible) msg).asByteBuf();
+=======
+        if (msg instanceof ByteBuf) {
+            ByteBuf buf = (ByteBuf) msg;
+>>>>>>> dev
             return UnixChannelUtil.isBufferCopyNeededForWrite(buf) ? newDirectBuffer(buf) : buf;
         }
 
         if (msg instanceof AddressedEnvelope) {
             @SuppressWarnings("unchecked")
             AddressedEnvelope<Object, SocketAddress> e = (AddressedEnvelope<Object, SocketAddress>) msg;
+<<<<<<< HEAD
             if (e.content() instanceof ByteBufConvertible &&
                     (e.recipient() == null || e.recipient() instanceof DomainSocketAddress)) {
 
                 ByteBuf content = ((ByteBufConvertible) e.content()).asByteBuf();
                 return UnixChannelUtil.isBufferCopyNeededForWrite(content) ?
                         new DefaultAddressedEnvelope<>(
+=======
+            if (e.content() instanceof ByteBuf &&
+                    (e.recipient() == null || e.recipient() instanceof DomainSocketAddress)) {
+
+                ByteBuf content = (ByteBuf) e.content();
+                return UnixChannelUtil.isBufferCopyNeededForWrite(content) ?
+                        new DefaultAddressedEnvelope<ByteBuf, DomainSocketAddress>(
+>>>>>>> dev
                                 newDirectBuffer(e, content), (DomainSocketAddress) e.recipient()) : e;
             }
         }
@@ -299,6 +340,10 @@ public final class EpollDomainDatagramChannel extends AbstractEpollChannel imple
                 return;
             }
             final EpollRecvByteAllocatorHandle allocHandle = recvBufAllocHandle();
+<<<<<<< HEAD
+=======
+            allocHandle.edgeTriggered(isFlagSet(Native.EPOLLET));
+>>>>>>> dev
 
             final ChannelPipeline pipeline = pipeline();
             final ByteBufAllocator allocator = config.getAllocator();
@@ -375,7 +420,10 @@ public final class EpollDomainDatagramChannel extends AbstractEpollChannel imple
                 if (exception != null) {
                     pipeline.fireExceptionCaught(exception);
                 }
+<<<<<<< HEAD
                 readIfIsAutoRead();
+=======
+>>>>>>> dev
             } finally {
                 epollInFinally(config);
             }

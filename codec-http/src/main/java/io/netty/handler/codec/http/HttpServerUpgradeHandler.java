@@ -27,9 +27,15 @@ import java.util.List;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.SWITCHING_PROTOCOLS;
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
 import static io.netty.util.AsciiString.containsAllContentEqualsIgnoreCase;
 import static io.netty.util.AsciiString.containsContentEqualsIgnoreCase;
+=======
+import static io.netty.util.AsciiString.containsAllContentEqualsIgnoreCase;
+import static io.netty.util.AsciiString.containsContentEqualsIgnoreCase;
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.StringUtil.COMMA;
 
 /**
@@ -216,8 +222,13 @@ public class HttpServerUpgradeHandler extends HttpObjectAggregator {
                                     int maxContentLength, boolean validateHeaders) {
         super(maxContentLength);
 
+<<<<<<< HEAD
         this.sourceCodec = requireNonNull(sourceCodec, "sourceCodec");
         this.upgradeCodecFactory = requireNonNull(upgradeCodecFactory, "upgradeCodecFactory");
+=======
+        this.sourceCodec = checkNotNull(sourceCodec, "sourceCodec");
+        this.upgradeCodecFactory = checkNotNull(upgradeCodecFactory, "upgradeCodecFactory");
+>>>>>>> dev
         this.validateHeaders = validateHeaders;
     }
 

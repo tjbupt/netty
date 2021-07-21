@@ -15,7 +15,10 @@
 package io.netty.example.http2.helloworld.client;
 
 import io.netty.buffer.Unpooled;
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
+=======
+>>>>>>> dev
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -134,7 +137,11 @@ public class Http2ClientInitializer extends ChannelInitializer<SocketChannel> {
     /**
      * A handler that triggers the cleartext upgrade to HTTP/2 by sending an initial HTTP request.
      */
+<<<<<<< HEAD
     private final class UpgradeRequestHandler implements ChannelHandler {
+=======
+    private final class UpgradeRequestHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
 
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {

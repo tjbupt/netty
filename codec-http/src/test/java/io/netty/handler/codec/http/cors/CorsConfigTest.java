@@ -20,6 +20,10 @@ import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static io.netty.handler.codec.http.HttpHeadersTestUtils.of;
 import static io.netty.handler.codec.http.cors.CorsConfigBuilder.forAnyOrigin;
@@ -128,8 +132,17 @@ public class CorsConfigTest {
 
     @Test
     public void shouldThrowIfValueIsNull() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class,
             () -> forOrigin("*").preflightResponseHeader("HeaderName", new Object[]{null}).build());
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                forOrigin("*").preflightResponseHeader("HeaderName", new Object[]{null}).build();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

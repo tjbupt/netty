@@ -102,9 +102,15 @@ public class JdkSslContext extends SslContext {
     private static String[] defaultProtocols(SSLContext context, SSLEngine engine) {
         // Choose the sensible default list of protocols that respects JDK flags, eg. jdk.tls.client.protocols
         final String[] supportedProtocols = context.getDefaultSSLParameters().getProtocols();
+<<<<<<< HEAD
         Set<String> supportedProtocolsSet = new HashSet<>(supportedProtocols.length);
         Collections.addAll(supportedProtocolsSet, supportedProtocols);
         List<String> protocols = new ArrayList<>();
+=======
+        Set<String> supportedProtocolsSet = new HashSet<String>(supportedProtocols.length);
+        Collections.addAll(supportedProtocolsSet, supportedProtocols);
+        List<String> protocols = new ArrayList<String>();
+>>>>>>> dev
         addIfSupported(
                 supportedProtocolsSet, protocols,
                 SslProtocols.TLS_v1_3, SslProtocols.TLS_v1_2,

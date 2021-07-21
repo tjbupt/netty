@@ -51,6 +51,30 @@ import io.netty.handler.codec.TooLongFrameException;
  *     after this decoder in the {@link ChannelPipeline}.</td>
  * </tr>
  * </table>
+ *
+ * <h3>Parameters that control parsing behavior</h3>
+ * <table border="1">
+ * <tr>
+ * <th>Name</th><th>Default value</th><th>Meaning</th>
+ * </tr>
+ * <tr>
+ * <td>{@code allowDuplicateContentLengths}</td>
+ * <td>{@value #DEFAULT_ALLOW_DUPLICATE_CONTENT_LENGTHS}</td>
+ * <td>When set to {@code false}, will reject any messages that contain multiple Content-Length header fields.
+ *     When set to {@code true}, will allow multiple Content-Length headers only if they are all the same decimal value.
+ *     The duplicated field-values will be replaced with a single valid Content-Length field.
+ *     See <a href="https://tools.ietf.org/html/rfc7230#section-3.3.2">RFC 7230, Section 3.3.2</a>.</td>
+ * </tr>
+ * <tr>
+ * <td>{@code allowPartialChunks}</td>
+ * <td>{@value #DEFAULT_ALLOW_PARTIAL_CHUNKS}</td>
+ * <td>If the length of a chunk exceeds the {@link ByteBuf}s readable bytes and {@code allowPartialChunks}
+ *     is set to {@code true}, the chunk will be split into multiple {@link HttpContent}s.
+ *     Otherwise, if the chunk size does not exceed {@code maxChunkSize} and {@code allowPartialChunks}
+ *     is set to {@code false}, the {@link ByteBuf} is not decoded into an {@link HttpContent} until
+ *     the readable bytes are greater or equal to the chunk size.</td>
+ * </tr>
+ * </table>
  */
 public class HttpRequestDecoder extends HttpObjectDecoder {
 
@@ -66,6 +90,7 @@ public class HttpRequestDecoder extends HttpObjectDecoder {
      * Creates a new instance with the specified parameters.
      */
     public HttpRequestDecoder(
+<<<<<<< HEAD
             int maxInitialLineLength, int maxHeaderSize) {
         super(maxInitialLineLength, maxHeaderSize, DEFAULT_CHUNKED_SUPPORTED);
     }
@@ -73,11 +98,21 @@ public class HttpRequestDecoder extends HttpObjectDecoder {
     public HttpRequestDecoder(
             int maxInitialLineLength, int maxHeaderSize, boolean validateHeaders) {
         super(maxInitialLineLength, maxHeaderSize, DEFAULT_CHUNKED_SUPPORTED, validateHeaders);
+=======
+            int maxInitialLineLength, int maxHeaderSize, int maxChunkSize) {
+        super(maxInitialLineLength, maxHeaderSize, maxChunkSize, DEFAULT_CHUNKED_SUPPORTED);
+    }
+
+    public HttpRequestDecoder(
+            int maxInitialLineLength, int maxHeaderSize, int maxChunkSize, boolean validateHeaders) {
+        super(maxInitialLineLength, maxHeaderSize, maxChunkSize, DEFAULT_CHUNKED_SUPPORTED, validateHeaders);
+>>>>>>> dev
     }
 
     public HttpRequestDecoder(
             int maxInitialLineLength, int maxHeaderSize, boolean validateHeaders,
             int initialBufferSize) {
+<<<<<<< HEAD
         super(maxInitialLineLength, maxHeaderSize, DEFAULT_CHUNKED_SUPPORTED, validateHeaders, initialBufferSize);
     }
 
@@ -86,6 +121,24 @@ public class HttpRequestDecoder extends HttpObjectDecoder {
             int initialBufferSize, boolean allowDuplicateContentLengths) {
         super(maxInitialLineLength, maxHeaderSize, DEFAULT_CHUNKED_SUPPORTED, validateHeaders,
               initialBufferSize, allowDuplicateContentLengths);
+=======
+        super(maxInitialLineLength, maxHeaderSize, maxChunkSize, DEFAULT_CHUNKED_SUPPORTED, validateHeaders,
+              initialBufferSize);
+    }
+
+    public HttpRequestDecoder(
+            int maxInitialLineLength, int maxHeaderSize, int maxChunkSize, boolean validateHeaders,
+            int initialBufferSize, boolean allowDuplicateContentLengths) {
+        super(maxInitialLineLength, maxHeaderSize, maxChunkSize, DEFAULT_CHUNKED_SUPPORTED, validateHeaders,
+              initialBufferSize, allowDuplicateContentLengths);
+    }
+
+    public HttpRequestDecoder(
+            int maxInitialLineLength, int maxHeaderSize, int maxChunkSize, boolean validateHeaders,
+            int initialBufferSize, boolean allowDuplicateContentLengths, boolean allowPartialChunks) {
+        super(maxInitialLineLength, maxHeaderSize, maxChunkSize, DEFAULT_CHUNKED_SUPPORTED, validateHeaders,
+              initialBufferSize, allowDuplicateContentLengths, allowPartialChunks);
+>>>>>>> dev
     }
 
     @Override

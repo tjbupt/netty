@@ -30,7 +30,11 @@ import io.netty.handler.codec.http.HttpVersion;
  */
 public class OkResponseHandler extends SimpleChannelInboundHandler<Object> {
     @Override
+<<<<<<< HEAD
     public void messageReceived(ChannelHandlerContext ctx, Object msg) {
+=======
+    public void channelRead0(ChannelHandlerContext ctx, Object msg) {
+>>>>>>> dev
         final FullHttpResponse response = new DefaultFullHttpResponse(
                 HttpVersion.HTTP_1_1, HttpResponseStatus.OK, Unpooled.EMPTY_BUFFER);
         response.headers().set("custom-response-header", "Some value");

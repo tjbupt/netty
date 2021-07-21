@@ -17,6 +17,10 @@
 package io.netty.util;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Map;
 
@@ -30,17 +34,44 @@ public class DomainNameMappingTest {
 
     @Test
     public void testNullDefaultValueInDeprecatedApi() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new DomainNameMapping<String>(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainNameMapping<String>(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNullDomainNamePatternsAreForbiddenInDeprecatedApi() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new DomainNameMapping<>("NotFound").add(null, "Some value"));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainNameMapping<String>("NotFound").add(null, "Some value");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNullValuesAreForbiddenInDeprecatedApi() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new DomainNameMapping<>("NotFound").add("Some key", null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainNameMapping<String>("NotFound").add("Some key", null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -108,19 +139,47 @@ public class DomainNameMappingTest {
 
     @Test
     public void testNullDefaultValue() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new DomainNameMappingBuilder<String>(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainNameMappingBuilder<String>(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNullDomainNamePatternsAreForbidden() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class,
             () -> new DomainNameMappingBuilder<>("NotFound").add(null, "Some value"));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainNameMappingBuilder<String>("NotFound").add(null, "Some value");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNullValuesAreForbidden() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class,
             () -> new DomainNameMappingBuilder<>("NotFound").add("Some key", null));
+=======
+
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DomainNameMappingBuilder<String>("NotFound").add("Some key", null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

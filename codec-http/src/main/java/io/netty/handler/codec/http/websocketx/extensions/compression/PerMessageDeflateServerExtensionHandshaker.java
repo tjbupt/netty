@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import static io.netty.util.internal.ObjectUtil.*;
+
 /**
  * <a href="https://tools.ietf.org/html/draft-ietf-hybi-permessage-compression-18">permessage-deflate</a>
  * handshake implementation.
@@ -117,7 +119,11 @@ public final class PerMessageDeflateServerExtensionHandshaker implements WebSock
         this.preferredClientWindowSize = preferredClientWindowSize;
         this.allowServerNoContext = allowServerNoContext;
         this.preferredClientNoContext = preferredClientNoContext;
+<<<<<<< HEAD
         this.extensionFilterProvider = Objects.requireNonNull(extensionFilterProvider, "extensionFilterProvider");
+=======
+        this.extensionFilterProvider = checkNotNull(extensionFilterProvider, "extensionFilterProvider");
+>>>>>>> dev
     }
 
     @Override

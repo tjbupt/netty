@@ -27,6 +27,10 @@ import io.netty.handler.codec.stomp.StompHeadersSubframe;
 import io.netty.handler.codec.stomp.StompSubframeEncoder;
 import io.netty.microbench.channel.EmbeddedChannelWriteReleaseHandlerContext;
 import io.netty.microbench.util.AbstractMicrobenchmark;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ThreadLocalRandom;
+>>>>>>> dev
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Level;
@@ -41,8 +45,11 @@ import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.profile.GCProfiler;
 import org.openjdk.jmh.runner.options.ChainedOptionsBuilder;
 
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
 
+=======
+>>>>>>> dev
 @State(Scope.Benchmark)
 @Fork(value = 2)
 @Threads(1)
@@ -58,6 +65,12 @@ public class StompEncoderBenchmark extends AbstractMicrobenchmark {
     @Param({ "true", "false" })
     public boolean pooledAllocator;
 
+<<<<<<< HEAD
+=======
+    @Param({ "true", "false" })
+    public boolean voidPromise;
+
+>>>>>>> dev
     @Param
     public ExampleStompHeadersSubframe.HeadersType headersType;
 
@@ -97,7 +110,11 @@ public class StompEncoderBenchmark extends AbstractMicrobenchmark {
     }
 
     private ChannelPromise newPromise() {
+<<<<<<< HEAD
         return context.newPromise();
+=======
+        return voidPromise? context.voidPromise() : context.newPromise();
+>>>>>>> dev
     }
 
     @Override

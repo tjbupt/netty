@@ -16,6 +16,10 @@
 package io.netty.handler.codec.dns;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -52,13 +56,33 @@ public class AbstractDnsRecordTest {
 
     @Test
     public void testValidDomainNameLength() {
+<<<<<<< HEAD
         String name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         assertThrows(IllegalArgumentException.class, () -> new AbstractDnsRecord(name, DnsRecordType.A, 0) { });
+=======
+        final String name = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new AbstractDnsRecord(name, DnsRecordType.A, 0) { };
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testValidDomainNameUmlautLength() {
+<<<<<<< HEAD
         String name = "äaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         assertThrows(IllegalArgumentException.class, () -> new AbstractDnsRecord(name, DnsRecordType.A, 0) { });
+=======
+        final String name = "äaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new AbstractDnsRecord(name, DnsRecordType.A, 0) { };
+            }
+        });
+>>>>>>> dev
     }
 }

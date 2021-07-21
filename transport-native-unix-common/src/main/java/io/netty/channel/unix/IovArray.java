@@ -225,8 +225,13 @@ public final class IovArray implements MessageProcessor {
 
     @Override
     public boolean processMessage(Object msg) throws Exception {
+<<<<<<< HEAD
         if (msg instanceof ByteBufConvertible) {
             ByteBuf buffer = ((ByteBufConvertible) msg).asByteBuf();
+=======
+        if (msg instanceof ByteBuf) {
+            ByteBuf buffer = (ByteBuf) msg;
+>>>>>>> dev
             return add(buffer, buffer.readerIndex(), buffer.readableBytes());
         }
         return false;

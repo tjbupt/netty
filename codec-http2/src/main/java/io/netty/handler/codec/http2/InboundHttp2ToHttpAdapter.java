@@ -29,7 +29,11 @@ import static io.netty.handler.codec.http2.Http2Error.INTERNAL_ERROR;
 import static io.netty.handler.codec.http2.Http2Error.PROTOCOL_ERROR;
 import static io.netty.handler.codec.http2.Http2Exception.connectionError;
 import static io.netty.handler.codec.http.HttpResponseStatus.OK;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkPositive;
 
 /**
@@ -72,9 +76,13 @@ public class InboundHttp2ToHttpAdapter extends Http2EventAdapter {
 
     protected InboundHttp2ToHttpAdapter(Http2Connection connection, int maxContentLength,
                                         boolean validateHttpHeaders, boolean propagateSettings) {
+<<<<<<< HEAD
 
         requireNonNull(connection, "connection");
         this.connection = connection;
+=======
+        this.connection = checkNotNull(connection, "connection");
+>>>>>>> dev
         this.maxContentLength = checkPositive(maxContentLength, "maxContentLength");
         this.validateHttpHeaders = validateHttpHeaders;
         this.propagateSettings = propagateSettings;

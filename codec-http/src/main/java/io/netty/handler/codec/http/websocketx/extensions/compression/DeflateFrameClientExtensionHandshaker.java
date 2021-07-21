@@ -27,6 +27,9 @@ import java.util.Objects;
 
 import static io.netty.handler.codec.http.websocketx.extensions.compression.DeflateFrameServerExtensionHandshaker.*;
 
+import static io.netty.handler.codec.http.websocketx.extensions.compression.DeflateFrameServerExtensionHandshaker.*;
+import static io.netty.util.internal.ObjectUtil.*;
+
 /**
  * <a href="https://tools.ietf.org/id/draft-tyoshino-hybi-websocket-perframe-deflate-06.txt">perframe-deflate</a>
  * handshake implementation.
@@ -70,7 +73,11 @@ public final class DeflateFrameClientExtensionHandshaker implements WebSocketCli
         }
         this.compressionLevel = compressionLevel;
         this.useWebkitExtensionName = useWebkitExtensionName;
+<<<<<<< HEAD
         this.extensionFilterProvider = Objects.requireNonNull(extensionFilterProvider, "extensionFilterProvider");
+=======
+        this.extensionFilterProvider = checkNotNull(extensionFilterProvider, "extensionFilterProvider");
+>>>>>>> dev
     }
 
     @Override

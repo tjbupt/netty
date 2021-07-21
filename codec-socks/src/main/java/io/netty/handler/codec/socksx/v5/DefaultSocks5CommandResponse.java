@@ -19,6 +19,7 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.handler.codec.DecoderResult;
 import io.netty.util.NetUtil;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.net.IDN;
@@ -39,8 +40,15 @@ public final class DefaultSocks5CommandResponse extends AbstractSocks5Message im
 
     public DefaultSocks5CommandResponse(
             Socks5CommandStatus status, Socks5AddressType bndAddrType, String bndAddr, int bndPort) {
+<<<<<<< HEAD
         requireNonNull(status, "status");
         requireNonNull(bndAddrType, "bndAddrType");
+=======
+
+        ObjectUtil.checkNotNull(status, "status");
+        ObjectUtil.checkNotNull(bndAddrType, "bndAddrType");
+
+>>>>>>> dev
         if (bndAddr != null) {
             if (bndAddrType == Socks5AddressType.IPv4) {
                 if (!NetUtil.isValidIpV4Address(bndAddr)) {

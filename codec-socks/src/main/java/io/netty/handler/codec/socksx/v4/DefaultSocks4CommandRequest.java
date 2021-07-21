@@ -18,6 +18,7 @@ package io.netty.handler.codec.socksx.v4;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.handler.codec.DecoderResult;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.net.IDN;
@@ -52,6 +53,7 @@ public class DefaultSocks4CommandRequest extends AbstractSocks4Message implement
      * @param userId the {@code USERID} field of the request
      */
     public DefaultSocks4CommandRequest(Socks4CommandType type, String dstAddr, int dstPort, String userId) {
+<<<<<<< HEAD
         requireNonNull(type, "type");
         requireNonNull(dstAddr, "dstAddr");
         if (dstPort <= 0 || dstPort >= 65536) {
@@ -62,6 +64,15 @@ public class DefaultSocks4CommandRequest extends AbstractSocks4Message implement
         this.userId = userId;
         this.type = type;
         this.dstAddr = IDN.toASCII(dstAddr);
+=======
+        if (dstPort <= 0 || dstPort >= 65536) {
+            throw new IllegalArgumentException("dstPort: " + dstPort + " (expected: 1~65535)");
+        }
+        this.type = ObjectUtil.checkNotNull(type, "type");
+        this.dstAddr = IDN.toASCII(
+                ObjectUtil.checkNotNull(dstAddr, "dstAddr"));
+        this.userId = ObjectUtil.checkNotNull(userId, "userId");
+>>>>>>> dev
         this.dstPort = dstPort;
     }
 

@@ -26,6 +26,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.MessageToMessageEncoder;
+import io.netty.util.internal.ObjectUtil;
 
 /**
  * Encodes a {@link ByteBuf} into a Base64-encoded {@link ByteBuf}.
@@ -56,10 +57,13 @@ public class Base64Encoder extends MessageToMessageEncoder<ByteBuf> {
     }
 
     public Base64Encoder(boolean breakLines, Base64Dialect dialect) {
+<<<<<<< HEAD
         requireNonNull(dialect, "dialect");
 
+=======
+        this.dialect = ObjectUtil.checkNotNull(dialect, "dialect");
+>>>>>>> dev
         this.breakLines = breakLines;
-        this.dialect = dialect;
     }
 
     @Override

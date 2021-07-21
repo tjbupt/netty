@@ -15,7 +15,11 @@
  */
 package io.netty.channel.epoll;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkNotNullWithIAE;
 import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
 
@@ -31,9 +35,15 @@ final class TcpMd5Util {
 
     static Collection<InetAddress> newTcpMd5Sigs(AbstractEpollChannel channel, Collection<InetAddress> current,
                                          Map<InetAddress, byte[]> newKeys) throws IOException {
+<<<<<<< HEAD
         requireNonNull(channel, "channel");
         requireNonNull(current, "current");
         requireNonNull(newKeys, "newKeys");
+=======
+        checkNotNull(channel, "channel");
+        checkNotNull(current, "current");
+        checkNotNull(newKeys, "newKeys");
+>>>>>>> dev
 
         // Validate incoming values
         for (Entry<InetAddress, byte[]> e : newKeys.entrySet()) {

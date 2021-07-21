@@ -38,6 +38,12 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 import io.netty.util.concurrent.Future;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
+<<<<<<< HEAD
+=======
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+>>>>>>> dev
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -103,6 +109,7 @@ public class SocketStartTlsTest extends AbstractSocketTest {
         return params;
     }
 
+<<<<<<< HEAD
     @ParameterizedTest(name = PARAMETERIZED_NAME)
     @MethodSource("data")
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
@@ -113,14 +120,53 @@ public class SocketStartTlsTest extends AbstractSocketTest {
     public void testStartTls(ServerBootstrap sb, Bootstrap cb,
                              SslContext serverCtx, SslContext clientCtx) throws Throwable {
         testStartTls(sb, cb, serverCtx, clientCtx, true);
+=======
+    @BeforeAll
+    public static void createExecutor() {
+        executor = new DefaultEventExecutorGroup(2);
+    }
+
+    @AfterAll
+    public static void shutdownExecutor() throws Exception {
+        executor.shutdownGracefully().sync();
+>>>>>>> dev
     }
 
     @ParameterizedTest(name = PARAMETERIZED_NAME)
     @MethodSource("data")
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
+<<<<<<< HEAD
     public void testStartTlsNotAutoRead(SslContext serverCtx, SslContext clientCtx,
                                         TestInfo testInfo) throws Throwable {
         run(testInfo, (sb, cb) -> testStartTlsNotAutoRead(sb, cb, serverCtx, clientCtx));
+=======
+    public void testStartTls(final SslContext serverCtx, final SslContext clientCtx, TestInfo testInfo)
+            throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testStartTls(sb, cb, serverCtx, clientCtx);
+            }
+        });
+    }
+
+    public void testStartTls(ServerBootstrap sb, Bootstrap cb,
+                             SslContext serverCtx, SslContext clientCtx) throws Throwable {
+        testStartTls(sb, cb, serverCtx, clientCtx, true);
+    }
+
+    @ParameterizedTest(name = PARAMETERIZED_NAME)
+    @MethodSource("data")
+    @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
+    public void testStartTlsNotAutoRead(final SslContext serverCtx, final SslContext clientCtx,
+                                        TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testStartTlsNotAutoRead(sb, cb, serverCtx, clientCtx);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testStartTlsNotAutoRead(ServerBootstrap sb, Bootstrap cb,

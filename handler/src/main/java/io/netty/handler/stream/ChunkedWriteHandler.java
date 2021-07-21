@@ -169,7 +169,11 @@ public class ChunkedWriteHandler implements ChannelHandler {
                     }
                     currentWrite.fail(cause);
                 } else {
+<<<<<<< HEAD
                     currentWrite.success();
+=======
+                    currentWrite.success(inputLength);
+>>>>>>> dev
                 }
             } else {
                 if (cause == null) {
@@ -256,6 +260,7 @@ public class ChunkedWriteHandler implements ChannelHandler {
                     // We need to remove the element from the queue before we call writeAndFlush() as this operation
                     // may cause an action that also touches the queue.
                     queue.remove();
+<<<<<<< HEAD
                 }
                 // Flush each chunk to conserve memory
                 ChannelFuture f = ctx.writeAndFlush(message);
@@ -278,6 +283,40 @@ public class ChunkedWriteHandler implements ChannelHandler {
                         f.addListener((ChannelFutureListener) future -> handleFuture(future, currentWrite, resume));
                     }
                 }
+=======
+                }
+                // Flush each chunk to conserve memory
+                ChannelFuture f = ctx.writeAndFlush(message);
+                if (endOfInput) {
+                    if (f.isDone()) {
+                        handleEndOfInputFuture(f, currentWrite);
+                    } else {
+                        // Register a listener which will close the input once the write is complete.
+                        // This is needed because the Chunk may have some resource bound that can not
+                        // be closed before its not written.
+                        //
+                        // See https://github.com/netty/netty/issues/303
+                        f.addListener(new ChannelFutureListener() {
+                            @Override
+                            public void operationComplete(ChannelFuture future) {
+                                handleEndOfInputFuture(future, currentWrite);
+                            }
+                        });
+                    }
+                } else {
+                    final boolean resume = !channel.isWritable();
+                    if (f.isDone()) {
+                        handleFuture(f, currentWrite, resume);
+                    } else {
+                        f.addListener(new ChannelFutureListener() {
+                            @Override
+                            public void operationComplete(ChannelFuture future) {
+                                handleFuture(future, currentWrite, resume);
+                            }
+                        });
+                    }
+                }
+>>>>>>> dev
                 requiresFlush = false;
             } else {
                 queue.remove();
@@ -306,7 +345,12 @@ public class ChunkedWriteHandler implements ChannelHandler {
             long inputProgress = input.progress();
             long inputLength = input.length();
             closeInput(input);
+<<<<<<< HEAD
             currentWrite.success();
+=======
+            currentWrite.progress(inputProgress, inputLength);
+            currentWrite.success(inputLength);
+>>>>>>> dev
         }
     }
 
@@ -316,6 +360,10 @@ public class ChunkedWriteHandler implements ChannelHandler {
             closeInput(input);
             currentWrite.fail(future.cause());
         } else {
+<<<<<<< HEAD
+=======
+            currentWrite.progress(input.progress(), input.length());
+>>>>>>> dev
             if (resume && future.channel().isWritable()) {
                 resumeTransfer();
             }

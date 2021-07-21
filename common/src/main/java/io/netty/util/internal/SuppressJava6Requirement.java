@@ -25,7 +25,11 @@ import java.lang.annotation.Target;
  * Annotation to suppress the Java 6 source code requirement checks for a method.
  */
 @Retention(RetentionPolicy.CLASS)
+<<<<<<< HEAD
 @Target({ ElementType.METHOD, ElementType.CONSTRUCTOR })
+=======
+@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.TYPE })
+>>>>>>> dev
 public @interface SuppressJava6Requirement {
 
     String reason();

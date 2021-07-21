@@ -50,14 +50,17 @@ public class UnpooledHeapByteBuf extends AbstractReferenceCountedByteBuf {
     public UnpooledHeapByteBuf(ByteBufAllocator alloc, int initialCapacity, int maxCapacity) {
         super(maxCapacity);
 
+<<<<<<< HEAD
         requireNonNull(alloc, "alloc");
 
+=======
+>>>>>>> dev
         if (initialCapacity > maxCapacity) {
             throw new IllegalArgumentException(String.format(
                     "initialCapacity(%d) > maxCapacity(%d)", initialCapacity, maxCapacity));
         }
 
-        this.alloc = alloc;
+        this.alloc = checkNotNull(alloc, "alloc");
         setArray(allocateArray(initialCapacity));
         setIndex(0, 0);
     }
@@ -71,9 +74,14 @@ public class UnpooledHeapByteBuf extends AbstractReferenceCountedByteBuf {
     protected UnpooledHeapByteBuf(ByteBufAllocator alloc, byte[] initialArray, int maxCapacity) {
         super(maxCapacity);
 
+<<<<<<< HEAD
         requireNonNull(alloc, "alloc");
         requireNonNull(initialArray, "initialArray");
 
+=======
+        checkNotNull(alloc, "alloc");
+        checkNotNull(initialArray, "initialArray");
+>>>>>>> dev
         if (initialArray.length > maxCapacity) {
             throw new IllegalArgumentException(String.format(
                     "initialCapacity(%d) > maxCapacity(%d)", initialArray.length, maxCapacity));

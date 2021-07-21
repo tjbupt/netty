@@ -46,7 +46,16 @@ public class CompositeBufferGatheringWriteTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
     public void testSingleCompositeBufferWrite(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSingleCompositeBufferWrite);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSingleCompositeBufferWrite(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSingleCompositeBufferWrite(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -143,7 +152,16 @@ public class CompositeBufferGatheringWriteTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 10000, unit = TimeUnit.MILLISECONDS)
     public void testCompositeBufferPartialWriteDoesNotCorruptData(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testCompositeBufferPartialWriteDoesNotCorruptData);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testCompositeBufferPartialWriteDoesNotCorruptData(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     protected void compositeBufferPartialWriteDoesNotCorruptDataInitServerConfig(ChannelConfig config,

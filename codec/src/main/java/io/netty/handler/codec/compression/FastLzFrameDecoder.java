@@ -185,7 +185,11 @@ public class FastLzFrameDecoder extends ByteToMessageDecoder {
                 }
 
                 if (output.length > 0) {
+<<<<<<< HEAD
                     ctx.fireChannelRead(Unpooled.wrappedBuffer(output).writerIndex(originalLength));
+=======
+                    out.add(Unpooled.wrappedBuffer(output).writerIndex(originalLength));
+>>>>>>> dev
                 }
                 in.skipBytes(chunkLength);
 

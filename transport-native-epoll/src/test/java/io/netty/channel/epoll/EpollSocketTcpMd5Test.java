@@ -29,6 +29,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.net.InetSocketAddress;
 import java.util.Collections;
@@ -90,6 +94,7 @@ public class EpollSocketTcpMd5Test {
     }
 
     @Test
+<<<<<<< HEAD
     public void testKeyMismatch() throws Throwable {
         server.config().setOption(EpollChannelOption.TCP_MD5SIG,
                 Collections.singletonMap(NetUtil.LOCALHOST4, SERVER_KEY));
@@ -106,6 +111,25 @@ public class EpollSocketTcpMd5Test {
             client.close().syncUninterruptibly();
         });
         assertTrue(completion.getCause() instanceof ConnectTimeoutException);
+=======
+    public void testKeyMismatch() throws Exception {
+        server.config().setOption(EpollChannelOption.TCP_MD5SIG,
+                Collections.<InetAddress, byte[]>singletonMap(NetUtil.LOCALHOST4, SERVER_KEY));
+
+        assertThrows(ConnectTimeoutException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                EpollSocketChannel client = (EpollSocketChannel) new Bootstrap().group(GROUP)
+                        .channel(EpollSocketChannel.class)
+                        .handler(new ChannelInboundHandlerAdapter())
+                        .option(EpollChannelOption.TCP_MD5SIG,
+                                Collections.<InetAddress, byte[]>singletonMap(NetUtil.LOCALHOST4, BAD_KEY))
+                        .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 1000)
+                        .connect(server.localAddress()).syncUninterruptibly().channel();
+                client.close().syncUninterruptibly();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

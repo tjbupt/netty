@@ -30,7 +30,10 @@ import java.util.BitSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -42,7 +45,11 @@ public final class InternalThreadLocalMap {
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(InternalThreadLocalMap.class);
     private static final ThreadLocal<InternalThreadLocalMap> slowThreadLocalMap =
+<<<<<<< HEAD
             new ThreadLocal<>();
+=======
+            new ThreadLocal<InternalThreadLocalMap>();
+>>>>>>> dev
     private static final AtomicInteger nextIndex = new AtomicInteger();
 
     private static final int DEFAULT_ARRAY_LIST_INITIAL_CAPACITY = 8;
@@ -60,6 +67,10 @@ public final class InternalThreadLocalMap {
     private int futureListenerStackDepth;
     private int localChannelReaderStackDepth;
     private Map<Class<?>, Boolean> handlerSharableCache;
+<<<<<<< HEAD
+=======
+    private IntegerHolder counterHashCode;
+>>>>>>> dev
     private ThreadLocalRandom random;
     private Map<Class<?>, TypeParameterMatcher> typeParameterMatcherGetCache;
     private Map<Class<?>, Map<String, TypeParameterMatcher>> typeParameterMatcherFindCache;
@@ -73,6 +84,9 @@ public final class InternalThreadLocalMap {
     private ArrayList<Object> arrayList;
 
     private BitSet cleanerFlags;
+
+    /** @deprecated These padding fields will be removed in the future. */
+    public long rp1, rp2, rp3, rp4, rp5, rp6, rp7, rp8, rp9;
 
     static {
         STRING_BUILDER_INITIAL_SIZE =
@@ -279,7 +293,11 @@ public final class InternalThreadLocalMap {
         Map<Class<?>, Boolean> cache = handlerSharableCache;
         if (cache == null) {
             // Start with small capacity to keep memory overhead as low as possible.
+<<<<<<< HEAD
             handlerSharableCache = cache = new WeakHashMap<>(HANDLER_SHARABLE_CACHE_INITIAL_CAPACITY);
+=======
+            handlerSharableCache = cache = new WeakHashMap<Class<?>, Boolean>(HANDLER_SHARABLE_CACHE_INITIAL_CAPACITY);
+>>>>>>> dev
         }
         return cache;
     }

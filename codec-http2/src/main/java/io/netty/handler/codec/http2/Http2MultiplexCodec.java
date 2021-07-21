@@ -177,8 +177,12 @@ public class Http2MultiplexCodec extends Http2FrameCodec {
                 } else {
                     streamChannel = new Http2MultiplexCodecStreamChannel(stream, inboundStreamHandler);
                 }
+<<<<<<< HEAD
 
                 ChannelFuture future = streamChannel.register();
+=======
+                ChannelFuture future = ctx.channel().eventLoop().register(streamChannel);
+>>>>>>> dev
                 if (future.isDone()) {
                     Http2MultiplexHandler.registerDone(future);
                 } else {
@@ -221,6 +225,7 @@ public class Http2MultiplexCodec extends Http2FrameCodec {
         }
         // Notify which streams were not processed by the remote peer and are safe to retry on another connection:
         try {
+<<<<<<< HEAD
             forEachActiveStream(stream -> {
                 final int streamId = stream.id();
                 AbstractHttp2StreamChannel channel = (AbstractHttp2StreamChannel)
@@ -229,6 +234,19 @@ public class Http2MultiplexCodec extends Http2FrameCodec {
                     channel.pipeline().fireUserEventTriggered(goAwayFrame.retainedDuplicate());
                 }
                 return true;
+=======
+            forEachActiveStream(new Http2FrameStreamVisitor() {
+                @Override
+                public boolean visit(Http2FrameStream stream) {
+                    final int streamId = stream.id();
+                    AbstractHttp2StreamChannel channel = (AbstractHttp2StreamChannel)
+                            ((DefaultHttp2FrameStream) stream).attachment;
+                    if (streamId > goAwayFrame.lastStreamId() && connection().local().isValidStreamId(streamId)) {
+                        channel.pipeline().fireUserEventTriggered(goAwayFrame.retainedDuplicate());
+                    }
+                    return true;
+                }
+>>>>>>> dev
             });
         } catch (Http2Exception e) {
             ctx.fireExceptionCaught(e);
@@ -278,10 +296,17 @@ public class Http2MultiplexCodec extends Http2FrameCodec {
             // to writable to not affect fairness. These will be "limited" by their own watermarks in any case.
             forEachActiveStream(AbstractHttp2StreamChannel.WRITABLE_VISITOR);
         }
+<<<<<<< HEAD
 
         super.channelWritabilityChanged(ctx);
     }
 
+=======
+
+        super.channelWritabilityChanged(ctx);
+    }
+
+>>>>>>> dev
     final void flush0(ChannelHandlerContext ctx) {
         flush(ctx);
     }

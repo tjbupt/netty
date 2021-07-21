@@ -16,7 +16,11 @@
 
 package io.netty.util.internal.logging;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 /**
  * Creates an {@link InternalLogger} or changes the default factory
@@ -117,8 +121,12 @@ public abstract class InternalLoggerFactory {
      * Changes the default factory.
      */
     public static void setDefaultFactory(InternalLoggerFactory defaultFactory) {
+<<<<<<< HEAD
         requireNonNull(defaultFactory, "defaultFactory");
         InternalLoggerFactory.defaultFactory = defaultFactory;
+=======
+        InternalLoggerFactory.defaultFactory = ObjectUtil.checkNotNull(defaultFactory, "defaultFactory");
+>>>>>>> dev
     }
 
     /**

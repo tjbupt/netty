@@ -22,7 +22,13 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
 import io.netty.channel.ChannelPipeline;
+=======
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.ChannelProgressivePromise;
+>>>>>>> dev
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.Attribute;
@@ -104,8 +110,13 @@ final class Http2FrameInboundWriter {
         writer.writeFrame(ctx, frameType, streamId, flags, payload, ctx.newPromise()).syncUninterruptibly();
     }
 
+<<<<<<< HEAD
     private static final class WriteInboundChannelHandlerContext
             implements ChannelHandlerContext, ChannelHandler {
+=======
+    private static final class WriteInboundChannelHandlerContext extends ChannelOutboundHandlerAdapter
+            implements ChannelHandlerContext {
+>>>>>>> dev
         private final EmbeddedChannel channel;
 
         WriteInboundChannelHandlerContext(EmbeddedChannel channel) {
@@ -249,11 +260,14 @@ final class Http2FrameInboundWriter {
         }
 
         @Override
+<<<<<<< HEAD
         public ChannelFuture register() {
             return channel.register();
         }
 
         @Override
+=======
+>>>>>>> dev
         public ChannelFuture deregister() {
             return channel.deregister();
         }
@@ -284,11 +298,14 @@ final class Http2FrameInboundWriter {
         }
 
         @Override
+<<<<<<< HEAD
         public ChannelFuture register(ChannelPromise promise) {
             return channel.register(promise);
         }
 
         @Override
+=======
+>>>>>>> dev
         public ChannelFuture deregister(ChannelPromise promise) {
             return channel.deregister(promise);
         }
@@ -326,6 +343,14 @@ final class Http2FrameInboundWriter {
         }
 
         @Override
+<<<<<<< HEAD
+=======
+        public ChannelProgressivePromise newProgressivePromise() {
+            return channel.newProgressivePromise();
+        }
+
+        @Override
+>>>>>>> dev
         public ChannelFuture newSucceededFuture() {
             return channel.newSucceededFuture();
         }
@@ -334,5 +359,13 @@ final class Http2FrameInboundWriter {
         public ChannelFuture newFailedFuture(Throwable cause) {
             return channel.newFailedFuture(cause);
         }
+<<<<<<< HEAD
+=======
+
+        @Override
+        public ChannelPromise voidPromise() {
+            return channel.voidPromise();
+        }
+>>>>>>> dev
     }
 }

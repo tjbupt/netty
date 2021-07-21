@@ -16,6 +16,10 @@
 package io.netty.buffer;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -49,9 +53,18 @@ public abstract class AbstractPooledByteBufTest extends AbstractByteBufTest {
 
     @Test
     public void ensureWritableWithNotEnoughSpaceShouldThrow() {
-        ByteBuf buf = newBuffer(1, 10);
+        final ByteBuf buf = newBuffer(1, 10);
         try {
+<<<<<<< HEAD
             assertThrows(IndexOutOfBoundsException.class, () -> buf.ensureWritable(11));
+=======
+            assertThrows(IndexOutOfBoundsException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.ensureWritable(11);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }

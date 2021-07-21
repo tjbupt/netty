@@ -23,6 +23,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -148,7 +152,16 @@ public abstract class AbstractByteBufTest {
         } catch (IndexOutOfBoundsException e) {
             fail();
         }
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.readerIndex(-1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.readerIndex(-1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -158,7 +171,16 @@ public abstract class AbstractByteBufTest {
         } catch (IndexOutOfBoundsException e) {
             fail();
         }
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.readerIndex(buffer.capacity() + 1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.readerIndex(buffer.capacity() + 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -168,7 +190,16 @@ public abstract class AbstractByteBufTest {
         } catch (IndexOutOfBoundsException e) {
             fail();
         }
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.readerIndex(CAPACITY * 3 / 2));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.readerIndex(CAPACITY * 3 / 2);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -181,7 +212,16 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void writerIndexBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.writerIndex(-1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.writerIndex(-1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -192,7 +232,16 @@ public abstract class AbstractByteBufTest {
         } catch (IndexOutOfBoundsException e) {
             fail();
         }
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.writerIndex(buffer.capacity() + 1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.writerIndex(buffer.capacity() + 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -203,7 +252,16 @@ public abstract class AbstractByteBufTest {
         } catch (IndexOutOfBoundsException e) {
             fail();
         }
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.writerIndex(CAPACITY / 4));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.writerIndex(CAPACITY / 4);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -217,72 +275,198 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void getBooleanBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getBoolean(-1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getBoolean(-1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getBooleanBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getBoolean(buffer.capacity()));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getBoolean(buffer.capacity());
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getByteBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getByte(-1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getByte(-1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getByteBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getByte(buffer.capacity()));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getByte(buffer.capacity());
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getShortBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getShort(-1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getShort(-1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getShortBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getShort(buffer.capacity() - 1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getShort(buffer.capacity() - 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getMediumBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getMedium(-1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getMedium(-1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getMediumBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getMedium(buffer.capacity() - 2));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getMedium(buffer.capacity() - 2);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getIntBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getInt(-1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getInt(-1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getIntBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getInt(buffer.capacity() - 3));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getInt(buffer.capacity() - 3);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getLongBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getLong(-1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getLong(-1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getLongBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getLong(buffer.capacity() - 7));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getLong(buffer.capacity() - 7);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getByteArrayBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getBytes(-1, EMPTY_BYTES));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getBytes(-1, EMPTY_BYTES);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void getByteArrayBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getBytes(-1, EMPTY_BYTES, 0, 0));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getBytes(-1, EMPTY_BYTES, 0, 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -323,42 +507,114 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void getByteBufferBoundaryCheck() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getBytes(-1, ByteBuffer.allocate(0)));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getBytes(-1, ByteBuffer.allocate(0));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void copyBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.copy(-1, 0));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.copy(-1, 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void copyBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.copy(0, buffer.capacity() + 1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.copy(0, buffer.capacity() + 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void copyBoundaryCheck3() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.copy(buffer.capacity() + 1, 0));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.copy(buffer.capacity() + 1, 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void copyBoundaryCheck4() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.copy(buffer.capacity(), 1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.copy(buffer.capacity(), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void setIndexBoundaryCheck1() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.setIndex(-1, CAPACITY));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.setIndex(-1, CAPACITY);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void setIndexBoundaryCheck2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.setIndex(CAPACITY / 2, CAPACITY / 4));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.setIndex(CAPACITY / 2, CAPACITY / 4);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void setIndexBoundaryCheck3() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.setIndex(0, CAPACITY + 1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.setIndex(0, CAPACITY + 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -385,7 +641,16 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void getDirectByteBufferBoundaryCheck() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> buffer.getBytes(-1, ByteBuffer.allocateDirect(0)));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer.getBytes(-1, ByteBuffer.allocateDirect(0));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -2566,10 +2831,20 @@ public abstract class AbstractByteBufTest {
     public void readByteThrowsIndexOutOfBoundsException() {
         final ByteBuf buffer = newBuffer(8);
         try {
+<<<<<<< HEAD
             assertThrows(IndexOutOfBoundsException.class, () -> {
                 buffer.writeByte(0);
                 assertEquals((byte) 0, buffer.readByte());
                 buffer.readByte();
+=======
+            assertThrows(IndexOutOfBoundsException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buffer.writeByte(0);
+                    assertEquals((byte) 0, buffer.readByte());
+                    buffer.readByte();
+                }
+>>>>>>> dev
             });
         } finally {
             buffer.release();
@@ -2633,129 +2908,354 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testDiscardReadBytesAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().discardReadBytes());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().discardReadBytes();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testDiscardSomeReadBytesAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().discardSomeReadBytes());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().discardSomeReadBytes();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testEnsureWritableAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().ensureWritable(16));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().ensureWritable(16);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetBooleanAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getBoolean(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getBoolean(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetByteAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getByte(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getByte(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetUnsignedByteAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getUnsignedByte(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getUnsignedByte(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetShortAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getShort(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getShort(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetShortLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getShortLE(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getShortLE(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetUnsignedShortAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getUnsignedShort(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getUnsignedShort(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetUnsignedShortLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getUnsignedShortLE(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getUnsignedShortLE(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetMediumAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getMedium(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getMedium(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetMediumLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getMediumLE(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getMediumLE(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetUnsignedMediumAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getUnsignedMedium(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getUnsignedMedium(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetIntAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getInt(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getInt(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetIntLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getIntLE(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getIntLE(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetUnsignedIntAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getUnsignedInt(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getUnsignedInt(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetUnsignedIntLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getUnsignedIntLE(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getUnsignedIntLE(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetLongAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getLong(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getLong(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetLongLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getLongLE(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getLongLE(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetCharAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getChar(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getChar(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetFloatAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getFloat(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getFloat(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetFloatLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getFloatLE(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getFloatLE(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetDoubleAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getDouble(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getDouble(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetDoubleLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getDoubleLE(0));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getDoubleLE(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetBytesAfterRelease() {
-        ByteBuf buffer = buffer(8);
+        final ByteBuf buffer = buffer(8);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getBytes(0, buffer));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().getBytes(0, buffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -2763,9 +3263,18 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testGetBytesAfterRelease2() {
-        ByteBuf buffer = buffer();
+        final ByteBuf buffer = buffer();
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getBytes(0, buffer, 1));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().getBytes(0, buffer, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -2773,9 +3282,18 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testGetBytesAfterRelease3() {
-        ByteBuf buffer = buffer();
+        final ByteBuf buffer = buffer();
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getBytes(0, buffer, 0, 1));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().getBytes(0, buffer, 0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -2783,101 +3301,272 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testGetBytesAfterRelease4() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getBytes(0, new byte[8]));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getBytes(0, new byte[8]);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetBytesAfterRelease5() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getBytes(0, new byte[8], 0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getBytes(0, new byte[8], 0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetBytesAfterRelease6() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().getBytes(0, ByteBuffer.allocate(8)));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().getBytes(0, ByteBuffer.allocate(8));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetBytesAfterRelease7() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().getBytes(0, new ByteArrayOutputStream(), 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().getBytes(0, new ByteArrayOutputStream(), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetBytesAfterRelease8() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().getBytes(0, new DevNullGatheringByteChannel(), 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().getBytes(0, new DevNullGatheringByteChannel(), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetBooleanAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setBoolean(0, true));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setBoolean(0, true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetByteAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setByte(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setByte(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetShortAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setShort(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setShort(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetShortLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setShortLE(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setShortLE(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetMediumAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setMedium(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setMedium(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetMediumLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setMediumLE(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setMediumLE(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetIntAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setInt(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setInt(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetIntLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setIntLE(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setIntLE(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetLongAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setLong(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setLong(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetLongLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setLongLE(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setLongLE(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetCharAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setChar(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setChar(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetFloatAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setFloat(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setFloat(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetDoubleAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setDouble(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setDouble(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetBytesAfterRelease() {
-        ByteBuf buffer = buffer();
+        final ByteBuf buffer = buffer();
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setBytes(0, buffer));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().setBytes(0, buffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -2885,9 +3574,18 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testSetBytesAfterRelease2() {
-        ByteBuf buffer = buffer();
+        final ByteBuf buffer = buffer();
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setBytes(0, buffer, 1));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().setBytes(0, buffer, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -2895,9 +3593,18 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testSetBytesAfterRelease3() {
-        ByteBuf buffer = buffer();
+        final ByteBuf buffer = buffer();
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setBytes(0, buffer, 0, 1));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().setBytes(0, buffer, 0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -2905,26 +3612,62 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testSetUsAsciiCharSequenceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> testSetCharSequenceAfterRelease0(CharsetUtil.US_ASCII));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSetCharSequenceAfterRelease0(CharsetUtil.US_ASCII);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetIso88591CharSequenceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> testSetCharSequenceAfterRelease0(CharsetUtil.ISO_8859_1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSetCharSequenceAfterRelease0(CharsetUtil.ISO_8859_1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetUtf8CharSequenceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> testSetCharSequenceAfterRelease0(CharsetUtil.UTF_8));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSetCharSequenceAfterRelease0(CharsetUtil.UTF_8);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetUtf16CharSequenceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> testSetCharSequenceAfterRelease0(CharsetUtil.UTF_16));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSetCharSequenceAfterRelease0(CharsetUtil.UTF_16);
+            }
+        });
+>>>>>>> dev
     }
 
     private void testSetCharSequenceAfterRelease0(Charset charset) {
@@ -2933,156 +3676,426 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testSetBytesAfterRelease4() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setBytes(0, new byte[8]));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setBytes(0, new byte[8]);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetBytesAfterRelease5() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setBytes(0, new byte[8], 0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setBytes(0, new byte[8], 0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetBytesAfterRelease6() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setBytes(0, ByteBuffer.allocate(8)));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setBytes(0, ByteBuffer.allocate(8));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetBytesAfterRelease7() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().setBytes(0, new ByteArrayInputStream(new byte[8]), 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().setBytes(0, new ByteArrayInputStream(new byte[8]), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetBytesAfterRelease8() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().setBytes(0, new TestScatteringByteChannel(), 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().setBytes(0, new TestScatteringByteChannel(), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetZeroAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().setZero(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().setZero(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadBooleanAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readBoolean());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readBoolean();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadByteAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readByte());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readByte();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadUnsignedByteAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readUnsignedByte());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readUnsignedByte();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadShortAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readShort());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readShort();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadShortLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readShortLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readShortLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadUnsignedShortAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readUnsignedShort());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readUnsignedShort();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadUnsignedShortLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readUnsignedShortLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readUnsignedShortLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadMediumAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readMedium());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readMedium();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadMediumLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readMediumLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readMediumLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadUnsignedMediumAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readUnsignedMedium());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readUnsignedMedium();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadUnsignedMediumLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readUnsignedMediumLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readUnsignedMediumLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadIntAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readInt());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readInt();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadIntLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readIntLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readIntLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadUnsignedIntAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readUnsignedInt());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readUnsignedInt();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadUnsignedIntLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readUnsignedIntLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readUnsignedIntLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadLongAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readLong());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readLong();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadLongLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readLongLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readLongLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadCharAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readChar());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readChar();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadFloatAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readFloat());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readFloat();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadFloatLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readFloatLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readFloatLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadDoubleAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readDouble());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readDouble();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadDoubleLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readDoubleLE());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readDoubleLE();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadBytesAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readBytes(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readBytes(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadBytesAfterRelease2() {
-        ByteBuf buffer = buffer(8);
+        final ByteBuf buffer = buffer(8);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readBytes(buffer));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().readBytes(buffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -3090,9 +4103,18 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testReadBytesAfterRelease3() {
-        ByteBuf buffer = buffer(8);
+        final ByteBuf buffer = buffer(8);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readBytes(buffer));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().readBytes(buffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -3100,9 +4122,18 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testReadBytesAfterRelease4() {
-        ByteBuf buffer = buffer(8);
+        final ByteBuf buffer = buffer(8);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readBytes(buffer, 0, 1));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().readBytes(buffer, 0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -3110,117 +4141,315 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testReadBytesAfterRelease5() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readBytes(new byte[8]));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readBytes(new byte[8]);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadBytesAfterRelease6() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readBytes(new byte[8], 0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readBytes(new byte[8], 0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadBytesAfterRelease7() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().readBytes(ByteBuffer.allocate(8)));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().readBytes(ByteBuffer.allocate(8));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadBytesAfterRelease8() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().readBytes(new ByteArrayOutputStream(), 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().readBytes(new ByteArrayOutputStream(), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadBytesAfterRelease9() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().readBytes(new ByteArrayOutputStream(), 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().readBytes(new ByteArrayOutputStream(), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadBytesAfterRelease10() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().readBytes(new DevNullGatheringByteChannel(), 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().readBytes(new DevNullGatheringByteChannel(), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteBooleanAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeBoolean(true));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeBoolean(true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteByteAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeByte(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeByte(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteShortAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeShort(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeShort(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteShortLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeShortLE(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeShortLE(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteMediumAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeMedium(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeMedium(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteMediumLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeMediumLE(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeMediumLE(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteIntAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeInt(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeInt(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteIntLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeIntLE(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeIntLE(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteLongAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeLong(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeLong(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteLongLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeLongLE(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeLongLE(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteCharAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeChar(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeChar(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteFloatAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeFloat(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeFloat(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteFloatLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeFloatLE(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeFloatLE(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteDoubleAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeDouble(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeDouble(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteDoubleLEAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeDoubleLE(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeDoubleLE(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteBytesAfterRelease() {
-        ByteBuf buffer = buffer(8);
+        final ByteBuf buffer = buffer(8);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeBytes(buffer));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().writeBytes(buffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -3228,9 +4457,18 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testWriteBytesAfterRelease2() {
-        ByteBuf buffer = copiedBuffer(new byte[8]);
+        final ByteBuf buffer = copiedBuffer(new byte[8]);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeBytes(buffer, 1));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().writeBytes(buffer, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -3238,9 +4476,18 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testWriteBytesAfterRelease3() {
-        ByteBuf buffer = buffer(8);
+        final ByteBuf buffer = buffer(8);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeBytes(buffer, 0, 1));
+=======
+            assertThrows(IllegalReferenceCountException.class, new Executable() {
+                @Override
+                public void execute() {
+                    releasedBuffer().writeBytes(buffer, 0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -3248,27 +4495,64 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testWriteBytesAfterRelease4() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeBytes(new byte[8]));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeBytes(new byte[8]);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteBytesAfterRelease5() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeBytes(new byte[8], 0 , 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeBytes(new byte[8], 0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteBytesAfterRelease6() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeBytes(ByteBuffer.allocate(8)));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeBytes(ByteBuffer.allocate(8));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteBytesAfterRelease7() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().writeBytes(new ByteArrayInputStream(new byte[8]), 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().writeBytes(new ByteArrayInputStream(new byte[8]), 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteBytesAfterRelease8() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> releasedBuffer().writeBytes(new TestScatteringByteChannel(), 1));
     }
@@ -3276,29 +4560,83 @@ public abstract class AbstractByteBufTest {
     @Test
     public void testWriteZeroAfterRelease() throws IOException {
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().writeZero(1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() throws IOException {
+                releasedBuffer().writeBytes(new TestScatteringByteChannel(), 1);
+            }
+        });
+    }
+
+    @Test
+    public void testWriteZeroAfterRelease() {
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().writeZero(1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteUsAsciiCharSequenceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> testWriteCharSequenceAfterRelease0(CharsetUtil.US_ASCII));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                testWriteCharSequenceAfterRelease0(CharsetUtil.US_ASCII);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteIso88591CharSequenceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class,
             () -> testWriteCharSequenceAfterRelease0(CharsetUtil.ISO_8859_1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                testWriteCharSequenceAfterRelease0(CharsetUtil.ISO_8859_1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteUtf8CharSequenceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> testWriteCharSequenceAfterRelease0(CharsetUtil.UTF_8));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                testWriteCharSequenceAfterRelease0(CharsetUtil.UTF_8);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testWriteUtf16CharSequenceAfterRelease() {
         assertThrows(IllegalReferenceCountException.class,
+<<<<<<< HEAD
             () -> testWriteCharSequenceAfterRelease0(CharsetUtil.UTF_16));
+=======
+                new Executable() {
+                    @Override
+                    public void execute() {
+                        testWriteCharSequenceAfterRelease0(CharsetUtil.UTF_16);
+                    }
+                });
+>>>>>>> dev
     }
 
     private void testWriteCharSequenceAfterRelease0(Charset charset) {
@@ -3308,50 +4646,123 @@ public abstract class AbstractByteBufTest {
     @Test
     public void testForEachByteAfterRelease() {
         assertThrows(IllegalReferenceCountException.class,
+<<<<<<< HEAD
             () -> releasedBuffer().forEachByte(new TestByteProcessor()));
+=======
+                new Executable() {
+                    @Override
+                    public void execute() {
+                        releasedBuffer().forEachByte(new TestByteProcessor());
+                    }
+                });
+>>>>>>> dev
     }
 
     @Test
     public void testForEachByteAfterRelease1() {
         assertThrows(IllegalReferenceCountException.class,
+<<<<<<< HEAD
             () -> releasedBuffer().forEachByte(0, 1, new TestByteProcessor()));
+=======
+                new Executable() {
+                    @Override
+                    public void execute() {
+                        releasedBuffer().forEachByte(0, 1, new TestByteProcessor());
+                    }
+                });
+>>>>>>> dev
     }
 
     @Test
     public void testForEachByteDescAfterRelease() {
         assertThrows(IllegalReferenceCountException.class,
+<<<<<<< HEAD
             () -> releasedBuffer().forEachByteDesc(new TestByteProcessor()));
+=======
+                new Executable() {
+                    @Override
+                    public void execute() {
+                        releasedBuffer().forEachByteDesc(new TestByteProcessor());
+                    }
+                });
+>>>>>>> dev
     }
 
     @Test
     public void testForEachByteDescAfterRelease1() {
         assertThrows(IllegalReferenceCountException.class,
+<<<<<<< HEAD
             () -> releasedBuffer().forEachByteDesc(0, 1, new TestByteProcessor()));
+=======
+                new Executable() {
+                    @Override
+                    public void execute() {
+                        releasedBuffer().forEachByteDesc(0, 1, new TestByteProcessor());
+                    }
+                });
+>>>>>>> dev
     }
 
     @Test
     public void testCopyAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().copy());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().copy();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testCopyAfterRelease1() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().copy());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().copy();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNioBufferAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().nioBuffer());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().nioBuffer();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNioBufferAfterRelease1() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().nioBuffer(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().nioBuffer(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInternalNioBufferAfterRelease() {
         testInternalNioBufferAfterRelease0(IllegalReferenceCountException.class);
+<<<<<<< HEAD
     }
 
     protected void testInternalNioBufferAfterRelease0(final Class<? extends Throwable> expectedException) {
@@ -3362,11 +4773,42 @@ public abstract class AbstractByteBufTest {
     @Test
     public void testNioBuffersAfterRelease() {
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().nioBuffers());
+=======
+    }
+
+    protected void testInternalNioBufferAfterRelease0(final Class<? extends Throwable> expectedException) {
+        final ByteBuf releasedBuffer = releasedBuffer();
+        assertThrows(expectedException, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer.internalNioBuffer(releasedBuffer.readerIndex(), 1);
+            }
+        });
+    }
+
+    @Test
+    public void testNioBuffersAfterRelease() {
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().nioBuffers();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNioBuffersAfterRelease2() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().nioBuffers(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().nioBuffers(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -3397,12 +4839,30 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testSliceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().slice());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().slice();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSliceAfterRelease2() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().slice(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().slice(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     private static void assertSliceFailAfterRelease(ByteBuf... bufs) {
@@ -3462,12 +4922,30 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testRetainedSliceAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().retainedSlice());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().retainedSlice();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testRetainedSliceAfterRelease2() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().retainedSlice(0, 1));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().retainedSlice(0, 1);
+            }
+        });
+>>>>>>> dev
     }
 
     private static void assertRetainedSliceFailAfterRelease(ByteBuf... bufs) {
@@ -3527,12 +5005,30 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testDuplicateAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().duplicate());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().duplicate();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testRetainedDuplicateAfterRelease() {
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> releasedBuffer().retainedDuplicate());
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                releasedBuffer().retainedDuplicate();
+            }
+        });
+>>>>>>> dev
     }
 
     private static void assertDuplicateFailAfterRelease(ByteBuf... bufs) {
@@ -3623,12 +5119,30 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testReadSliceOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testReadSliceOutOfBounds(false));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testReadSliceOutOfBounds(false);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReadRetainedSliceOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testReadSliceOutOfBounds(true));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testReadSliceOutOfBounds(true);
+            }
+        });
+>>>>>>> dev
     }
 
     private void testReadSliceOutOfBounds(boolean retainedSlice) {
@@ -3679,22 +5193,58 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testSetUsAsciiCharSequenceNoExpand() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSetCharSequenceNoExpand(CharsetUtil.US_ASCII));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSetCharSequenceNoExpand(CharsetUtil.US_ASCII);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetUtf8CharSequenceNoExpand() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSetCharSequenceNoExpand(CharsetUtil.UTF_8));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSetCharSequenceNoExpand(CharsetUtil.UTF_8);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetIso88591CharSequenceNoExpand() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSetCharSequenceNoExpand(CharsetUtil.ISO_8859_1));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSetCharSequenceNoExpand(CharsetUtil.ISO_8859_1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetUtf16CharSequenceNoExpand() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSetCharSequenceNoExpand(CharsetUtil.UTF_16));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSetCharSequenceNoExpand(CharsetUtil.UTF_16);
+            }
+        });
+>>>>>>> dev
     }
 
     private void testSetCharSequenceNoExpand(Charset charset) {
@@ -3779,42 +5329,114 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testRetainedSliceIndexOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSliceOutOfBounds(true, true, true));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceOutOfBounds(true, true, true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testRetainedSliceLengthOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSliceOutOfBounds(true, true, false));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceOutOfBounds(true, true, false);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testMixedSliceAIndexOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSliceOutOfBounds(true, false, true));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceOutOfBounds(true, false, true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testMixedSliceALengthOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSliceOutOfBounds(true, false, false));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceOutOfBounds(true, false, false);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testMixedSliceBIndexOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSliceOutOfBounds(false, true, true));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceOutOfBounds(false, true, true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testMixedSliceBLengthOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSliceOutOfBounds(false, true, false));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceOutOfBounds(false, true, false);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSliceIndexOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSliceOutOfBounds(false, false, true));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceOutOfBounds(false, false, true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSliceLengthOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> testSliceOutOfBounds(false, false, false));
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceOutOfBounds(false, false, false);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -4072,12 +5694,30 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testSliceCapacityChange() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> testSliceCapacityChange(false));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceCapacityChange(false);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testRetainedSliceCapacityChange() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> testSliceCapacityChange(true));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                testSliceCapacityChange(true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -4707,11 +6347,20 @@ public abstract class AbstractByteBufTest {
     public void testGetBytesByteBuffer() {
         byte[] bytes = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
         // Ensure destination buffer is bigger then what is in the ByteBuf.
-        ByteBuffer nioBuffer = ByteBuffer.allocate(bytes.length + 1);
-        ByteBuf buffer = newBuffer(bytes.length);
+        final ByteBuffer nioBuffer = ByteBuffer.allocate(bytes.length + 1);
+        final ByteBuf buffer = newBuffer(bytes.length);
         try {
             buffer.writeBytes(bytes);
+<<<<<<< HEAD
             assertThrows(IndexOutOfBoundsException.class, () -> buffer.getBytes(buffer.readerIndex(), nioBuffer));
+=======
+            assertThrows(IndexOutOfBoundsException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buffer.getBytes(buffer.readerIndex(), nioBuffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -4871,11 +6520,20 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testCapacityEnforceMaxCapacity() {
-        ByteBuf buffer = newBuffer(3, 13);
+        final ByteBuf buffer = newBuffer(3, 13);
         assertEquals(13, buffer.maxCapacity());
         assertEquals(3, buffer.capacity());
         try {
+<<<<<<< HEAD
             assertThrows(IllegalArgumentException.class, () -> buffer.capacity(14));
+=======
+            assertThrows(IllegalArgumentException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buffer.capacity(14);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -4883,11 +6541,20 @@ public abstract class AbstractByteBufTest {
 
     @Test
     public void testCapacityNegative() {
-        ByteBuf buffer = newBuffer(3, 13);
+        final ByteBuf buffer = newBuffer(3, 13);
         assertEquals(13, buffer.maxCapacity());
         assertEquals(3, buffer.capacity());
         try {
+<<<<<<< HEAD
             assertThrows(IllegalArgumentException.class, () -> buffer.capacity(-1));
+=======
+            assertThrows(IllegalArgumentException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buffer.capacity(-1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }
@@ -4926,7 +6593,7 @@ public abstract class AbstractByteBufTest {
         String content1 = "hello";
         String content2 = "world";
         int length = content1.length() + content2.length();
-        ByteBuf buffer = newBuffer(length);
+        final ByteBuf buffer = newBuffer(length);
         buffer.setIndex(0, 0);
         buffer.writeCharSequence(content1, CharsetUtil.US_ASCII);
         buffer.skipBytes(content1.length());
@@ -4935,7 +6602,16 @@ public abstract class AbstractByteBufTest {
         assertTrue(buffer.readerIndex() <= buffer.writerIndex());
 
         try {
+<<<<<<< HEAD
             assertThrows(IndexOutOfBoundsException.class, () -> buffer.readerIndex(buffer.writerIndex() + 1));
+=======
+            assertThrows(IndexOutOfBoundsException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buffer.resetWriterIndex();
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }

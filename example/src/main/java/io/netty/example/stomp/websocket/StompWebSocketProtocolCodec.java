@@ -58,9 +58,15 @@ public class StompWebSocketProtocolCodec extends MessageToMessageCodec<WebSocket
     }
 
     @Override
+<<<<<<< HEAD
     protected void decode(ChannelHandlerContext ctx, WebSocketFrame webSocketFrame) {
         if (webSocketFrame instanceof TextWebSocketFrame || webSocketFrame instanceof BinaryWebSocketFrame) {
             ctx.fireChannelRead(webSocketFrame.content().retain());
+=======
+    protected void decode(ChannelHandlerContext ctx, WebSocketFrame webSocketFrame, List<Object> out) {
+        if (webSocketFrame instanceof TextWebSocketFrame || webSocketFrame instanceof BinaryWebSocketFrame) {
+            out.add(webSocketFrame.content().retain());
+>>>>>>> dev
         } else {
             ctx.close();
         }

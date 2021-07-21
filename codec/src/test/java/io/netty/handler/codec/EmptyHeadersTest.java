@@ -15,6 +15,10 @@
 package io.netty.handler.codec;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,132 +36,366 @@ public class EmptyHeadersTest {
 
     @Test
     public void testAddStringValue() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.add("name", "value"));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.add("name", "value");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddStringValues() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.add("name", "value1", "value2"));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.add("name", "value1", "value2");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddStringValuesIterable() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.add("name", Arrays.asList("value1", "value2")));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.add("name", Arrays.asList("value1", "value2"));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddBoolean() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addBoolean("name", true));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addBoolean("name", true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddByte() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addByte("name", (byte) 1));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addByte("name", (byte) 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddChar() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addChar("name", 'a'));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addChar("name", 'a');
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddDouble() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addDouble("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addDouble("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddFloat() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addFloat("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addFloat("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddInt() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addInt("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addInt("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddLong() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addLong("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addLong("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddShort() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addShort("name", (short) 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addShort("name", (short) 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddTimeMillis() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.addTimeMillis("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.addTimeMillis("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetStringValue() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.set("name", "value"));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.set("name", "value");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetStringValues() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.set("name", "value1", "value2"));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.set("name", "value1", "value2");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetStringValuesIterable() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.set("name", Arrays.asList("value1", "value2")));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.set("name", Arrays.asList("value1", "value2"));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetBoolean() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setBoolean("name", true));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setBoolean("name", true);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetByte() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setByte("name", (byte) 1));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setByte("name", (byte) 1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetChar() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setChar("name", 'a'));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setChar("name", 'a');
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetDouble() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setDouble("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setDouble("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetFloat() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setFloat("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setFloat("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetInt() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setInt("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setInt("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetLong() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setLong("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setLong("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetShort() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setShort("name", (short) 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setShort("name", (short) 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetTimeMillis() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setTimeMillis("name", 0));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setTimeMillis("name", 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetAll() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.setAll(new TestEmptyHeaders()));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.setAll(new TestEmptyHeaders());
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSet() {
+<<<<<<< HEAD
         assertThrows(UnsupportedOperationException.class, () -> HEADERS.set(new TestEmptyHeaders()));
+=======
+        assertThrows(UnsupportedOperationException.class, new Executable() {
+            @Override
+            public void execute() {
+                HEADERS.set(new TestEmptyHeaders());
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

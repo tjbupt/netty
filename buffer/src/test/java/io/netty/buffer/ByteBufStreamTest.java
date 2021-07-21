@@ -16,8 +16,13 @@
 package io.netty.buffer;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.io.EOFException;
+import java.io.IOException;
 import java.nio.charset.Charset;
 
 import static io.netty.util.internal.EmptyArrays.*;
@@ -292,9 +297,20 @@ public class ByteBufStreamTest {
         ByteBuf buf = Unpooled.buffer(16);
         buf.writeBytes(new byte[] { 1, 2, 3, 4, 5, 6 });
 
+<<<<<<< HEAD
         ByteBufInputStream in = new ByteBufInputStream(buf, 0);
         try {
             assertThrows(EOFException.class, in::readByte);
+=======
+        final ByteBufInputStream in = new ByteBufInputStream(buf, 0);
+        try {
+            assertThrows(EOFException.class, new Executable() {
+                @Override
+                public void execute() throws IOException {
+                    in.readBoolean();
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
             in.close();

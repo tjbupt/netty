@@ -118,6 +118,7 @@ public class SocketSslGreetingTest extends AbstractSocketTest {
     @ParameterizedTest(name = "{index}: serverEngine = {0}, clientEngine = {1}, delegate = {2}")
     @MethodSource("data")
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
+<<<<<<< HEAD
     public void testSslGreeting(SslContext serverCtx, SslContext clientCtx, boolean delegate,
                                 TestInfo testInfo) throws Throwable {
         run(testInfo, (sb, cb) -> testSslGreeting(sb, cb, serverCtx, clientCtx, delegate));
@@ -125,6 +126,20 @@ public class SocketSslGreetingTest extends AbstractSocketTest {
 
     public void testSslGreeting(ServerBootstrap sb, Bootstrap cb, SslContext serverCtx,
                                 SslContext clientCtx, boolean delegate) throws Throwable {
+=======
+    public void testSslGreeting(final SslContext serverCtx, final SslContext clientCtx, final boolean delegate,
+                                TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSslGreeting(sb, cb, serverCtx, clientCtx, delegate);
+            }
+        });
+    }
+
+    public void testSslGreeting(ServerBootstrap sb, Bootstrap cb, final SslContext serverCtx,
+                                final SslContext clientCtx, boolean delegate) throws Throwable {
+>>>>>>> dev
         final ServerHandler sh = new ServerHandler();
         final ClientHandler ch = new ClientHandler();
 

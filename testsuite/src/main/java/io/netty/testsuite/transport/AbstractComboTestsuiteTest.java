@@ -25,8 +25,13 @@ import org.junit.jupiter.api.TestInfo;
 
 import java.util.List;
 
+<<<<<<< HEAD
 public abstract class AbstractComboTestsuiteTest<SB extends AbstractBootstrap<?, ?, ?>,
         CB extends AbstractBootstrap<?, ?, ?>> {
+=======
+public abstract class AbstractComboTestsuiteTest<SB extends AbstractBootstrap<?, ?>,
+        CB extends AbstractBootstrap<?, ?>> {
+>>>>>>> dev
     protected final InternalLogger logger = InternalLoggerFactory.getInstance(getClass());
     protected volatile CB cb;
     protected volatile SB sb;
@@ -56,7 +61,11 @@ public abstract class AbstractComboTestsuiteTest<SB extends AbstractBootstrap<?,
 
     protected abstract void configure(SB sb, CB cb, ByteBufAllocator allocator);
 
+<<<<<<< HEAD
     public interface Runner<SB extends AbstractBootstrap<?, ?, ?>, CB extends AbstractBootstrap<?, ?, ?>> {
+=======
+    public interface Runner<SB extends AbstractBootstrap<?, ?>, CB extends AbstractBootstrap<?, ?>> {
+>>>>>>> dev
         void run(SB sb, CB cb) throws Throwable;
     }
 }

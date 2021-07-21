@@ -30,22 +30,50 @@ public class ThreadExecutorMapTest {
     @Test
     public void testDecorateExecutor() {
         Executor executor = ThreadExecutorMap.apply(ImmediateExecutor.INSTANCE, ImmediateEventExecutor.INSTANCE);
+<<<<<<< HEAD
         executor.execute(() -> assertSame(ImmediateEventExecutor.INSTANCE, ThreadExecutorMap.currentExecutor()));
+=======
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                assertSame(ImmediateEventExecutor.INSTANCE, ThreadExecutorMap.currentExecutor());
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testDecorateRunnable() {
+<<<<<<< HEAD
         ThreadExecutorMap.apply(() ->
                 assertSame(ImmediateEventExecutor.INSTANCE,
                         ThreadExecutorMap.currentExecutor()), ImmediateEventExecutor.INSTANCE).run();
+=======
+        ThreadExecutorMap.apply(new Runnable() {
+            @Override
+            public void run() {
+                assertSame(ImmediateEventExecutor.INSTANCE,
+                        ThreadExecutorMap.currentExecutor());
+            }
+        }, ImmediateEventExecutor.INSTANCE).run();
+>>>>>>> dev
     }
 
     @Test
     public void testDecorateThreadFactory() throws InterruptedException {
         ThreadFactory threadFactory =
                 ThreadExecutorMap.apply(Executors.defaultThreadFactory(), ImmediateEventExecutor.INSTANCE);
+<<<<<<< HEAD
         Thread thread = threadFactory.newThread(() -> assertSame(ImmediateEventExecutor.INSTANCE,
                 ThreadExecutorMap.currentExecutor()));
+=======
+        Thread thread = threadFactory.newThread(new Runnable() {
+            @Override
+            public void run() {
+                assertSame(ImmediateEventExecutor.INSTANCE, ThreadExecutorMap.currentExecutor());
+            }
+        });
+>>>>>>> dev
         thread.start();
         thread.join();
     }

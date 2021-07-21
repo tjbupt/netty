@@ -38,6 +38,7 @@ abstract class ByteBufChecksum implements Checksum {
         return true;
     };
 
+<<<<<<< HEAD
     static ByteBufChecksum wrapChecksum(Checksum checksum) {
         requireNonNull(checksum, "checksum");
         if (checksum instanceof ByteBufChecksum) {
@@ -50,6 +51,28 @@ abstract class ByteBufChecksum implements Checksum {
                     checksum.update(b);
                 }
             };
+=======
+    private static Method updateByteBuffer(Checksum checksum) {
+        if (PlatformDependent.javaVersion() >= 8) {
+            try {
+                Method method = checksum.getClass().getDeclaredMethod("update", ByteBuffer.class);
+                method.invoke(checksum, ByteBuffer.allocate(1));
+                return method;
+            } catch (Throwable ignore) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    static ByteBufChecksum wrapChecksum(Checksum checksum) {
+        ObjectUtil.checkNotNull(checksum, "checksum");
+        if (checksum instanceof ByteBufChecksum) {
+            return (ByteBufChecksum) checksum;
+        }
+        if (checksum instanceof Adler32 && ADLER32_UPDATE_METHOD != null) {
+            return new ReflectiveByteBufChecksum(checksum, ADLER32_UPDATE_METHOD);
+>>>>>>> dev
         }
         if (checksum instanceof CRC32) {
             return new OptimizedByteBufChecksum<CRC32>((CRC32) checksum) {
@@ -84,7 +107,11 @@ abstract class ByteBufChecksum implements Checksum {
                 update(b.array(), b.arrayOffset() + off, len);
             } else {
                 try {
+<<<<<<< HEAD
                     update(CompressionUtil.safeNioBuffer(b, off, len));
+=======
+                    method.invoke(checksum, CompressionUtil.safeNioBuffer(b, off, len));
+>>>>>>> dev
                 } catch (Throwable cause) {
                     throw new Error();
                 }

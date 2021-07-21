@@ -15,7 +15,13 @@
  */
 package io.netty.handler.codec.http;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 
 /**
  * The default {@link HttpResponse} implementation.
@@ -88,8 +94,12 @@ public class DefaultHttpResponse extends DefaultHttpMessage implements HttpRespo
 
     @Override
     public HttpResponse setStatus(HttpResponseStatus status) {
+<<<<<<< HEAD
         requireNonNull(status, "status");
         this.status = status;
+=======
+        this.status = ObjectUtil.checkNotNull(status, "status");
+>>>>>>> dev
         return this;
     }
 

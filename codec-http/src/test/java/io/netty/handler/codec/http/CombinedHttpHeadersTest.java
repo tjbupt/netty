@@ -17,6 +17,10 @@ package io.netty.handler.codec.http;
 
 import io.netty.handler.codec.http.HttpHeadersTestUtils.HeaderValue;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -145,7 +149,16 @@ public class CombinedHttpHeadersTest {
     public void addCharSequencesCsvNullValue() {
         final CombinedHttpHeaders headers = newCombinedHttpHeaders();
         final String value = null;
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> headers.add(HEADER_NAME, value));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                headers.add(HEADER_NAME, value);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

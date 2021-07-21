@@ -15,7 +15,11 @@
  */
 package io.netty.handler.ssl;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import javax.net.ssl.SSLEngine;
 import java.util.ArrayList;
@@ -33,8 +37,13 @@ public final class SupportedCipherSuiteFilter implements CipherSuiteFilter {
     @Override
     public String[] filterCipherSuites(Iterable<String> ciphers, List<String> defaultCiphers,
             Set<String> supportedCiphers) {
+<<<<<<< HEAD
         requireNonNull(defaultCiphers, "defaultCiphers");
         requireNonNull(supportedCiphers, "supportedCiphers");
+=======
+        ObjectUtil.checkNotNull(defaultCiphers, "defaultCiphers");
+        ObjectUtil.checkNotNull(supportedCiphers, "supportedCiphers");
+>>>>>>> dev
 
         final List<String> newCiphers;
         if (ciphers == null) {

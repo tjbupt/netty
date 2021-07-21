@@ -22,6 +22,10 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.ssl.ReferenceCountedOpenSslContext;
 import io.netty.handler.ssl.ReferenceCountedOpenSslEngine;
 import io.netty.handler.ssl.SslHandshakeCompletionEvent;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.UnstableApi;
 
 import javax.net.ssl.SSLHandshakeException;
@@ -33,7 +37,11 @@ import javax.net.ssl.SSLHandshakeException;
  * @see ReferenceCountedOpenSslEngine#getOcspResponse()
  */
 @UnstableApi
+<<<<<<< HEAD
 public abstract class OcspClientHandler implements ChannelHandler {
+=======
+public abstract class OcspClientHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
 
     private final ReferenceCountedOpenSslEngine engine;
 

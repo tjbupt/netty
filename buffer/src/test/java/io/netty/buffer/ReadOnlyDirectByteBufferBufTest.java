@@ -17,6 +17,10 @@ package io.netty.buffer;
 
 import io.netty.util.internal.PlatformDependent;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -26,6 +30,12 @@ import java.nio.ByteBuffer;
 import java.nio.ReadOnlyBufferException;
 import java.nio.channels.FileChannel;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -52,7 +62,16 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testConstructWithWritable() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> buffer(allocate(1)));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                buffer(ReadOnlyDirectByteBufferBufTest.this.allocate(1));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -99,9 +118,18 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void ensureWritableShouldThrow() {
-        ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer()).clear();
+        final ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer()).clear();
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.ensureWritable(1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.ensureWritable(1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -109,9 +137,18 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testSetByte() {
-        ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
+        final ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setByte(0, 1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setByte(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -119,9 +156,18 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testSetInt() {
-        ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
+        final ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setInt(0, 1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setInt(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -129,9 +175,18 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testSetShort() {
-        ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
+        final ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setShort(0, 1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setShort(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -139,9 +194,18 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testSetMedium() {
-        ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
+        final ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setMedium(0, 1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setMedium(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -149,9 +213,18 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testSetLong() {
-        ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
+        final ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setLong(0, 1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setLong(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -159,9 +232,18 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testSetBytesViaArray() {
-        ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
+        final ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setBytes(0, "test".getBytes()));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setBytes(0, "test".getBytes());
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -169,10 +251,19 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testSetBytesViaBuffer() {
-        ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
-        ByteBuf copy = Unpooled.copyInt(1);
+        final ByteBuf buf = buffer(allocate(8).asReadOnlyBuffer());
+        final ByteBuf copy = Unpooled.copyInt(1);
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setBytes(0, copy));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setBytes(0, copy);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
             copy.release();
@@ -181,10 +272,19 @@ public class ReadOnlyDirectByteBufferBufTest {
 
     @Test
     public void testSetBytesViaStream() throws IOException {
-        ByteBuf buf = buffer(ByteBuffer.allocateDirect(8).asReadOnlyBuffer());
+        final ByteBuf buf = buffer(ByteBuffer.allocateDirect(8).asReadOnlyBuffer());
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class,
                 () -> buf.setBytes(0, new ByteArrayInputStream("test".getBytes()), 2));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() throws Throwable {
+                    buf.setBytes(0, new ByteArrayInputStream("test".getBytes()), 2);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -253,11 +353,24 @@ public class ReadOnlyDirectByteBufferBufTest {
     public void testGetBytesByteBuffer() {
         byte[] bytes = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
         // Ensure destination buffer is bigger then what is in the ByteBuf.
+<<<<<<< HEAD
         ByteBuffer nioBuffer = ByteBuffer.allocate(bytes.length + 1);
         ByteBuf buffer = buffer(((ByteBuffer) allocate(bytes.length)
                 .put(bytes).flip()).asReadOnlyBuffer());
         try {
             assertThrows(IndexOutOfBoundsException.class, () -> buffer.getBytes(buffer.readerIndex(), nioBuffer));
+=======
+        final ByteBuffer nioBuffer = ByteBuffer.allocate(bytes.length + 1);
+        final ByteBuf buffer = buffer(((ByteBuffer) allocate(bytes.length)
+                .put(bytes).flip()).asReadOnlyBuffer());
+        try {
+            assertThrows(IndexOutOfBoundsException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buffer.getBytes(buffer.readerIndex(), nioBuffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             buffer.release();
         }

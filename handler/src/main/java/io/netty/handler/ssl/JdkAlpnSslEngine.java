@@ -16,6 +16,7 @@
 package io.netty.handler.ssl;
 
 import io.netty.util.internal.StringUtil;
+import io.netty.util.internal.SuppressJava6Requirement;
 
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLEngineResult;
@@ -31,6 +32,10 @@ import static io.netty.handler.ssl.SslUtils.toSSLHandshakeException;
 import static io.netty.handler.ssl.JdkApplicationProtocolNegotiator.ProtocolSelectionListener;
 import static io.netty.handler.ssl.JdkApplicationProtocolNegotiator.ProtocolSelector;
 
+<<<<<<< HEAD:handler/src/main/java/io/netty/handler/ssl/JdkAlpnSslEngine.java
+=======
+@SuppressJava6Requirement(reason = "Usage guarded by java version check")
+>>>>>>> dev:handler/src/main/java/io/netty/handler/ssl/Java9SslEngine.java
 class JdkAlpnSslEngine extends JdkSslEngine {
     private final ProtocolSelectionListener selectionListener;
     private final AlpnSelector alpnSelector;
@@ -86,7 +91,11 @@ class JdkAlpnSslEngine extends JdkSslEngine {
         if (isServer) {
             selectionListener = null;
             alpnSelector = new AlpnSelector(applicationNegotiator.protocolSelectorFactory().
+<<<<<<< HEAD:handler/src/main/java/io/netty/handler/ssl/JdkAlpnSslEngine.java
                     newSelector(this, new LinkedHashSet<>(applicationNegotiator.protocols())));
+=======
+                    newSelector(this, new LinkedHashSet<String>(applicationNegotiator.protocols())));
+>>>>>>> dev:handler/src/main/java/io/netty/handler/ssl/Java9SslEngine.java
             setHandshakeApplicationProtocolSelector.accept(engine, alpnSelector);
         } else {
             selectionListener = applicationNegotiator.protocolListenerFactory()

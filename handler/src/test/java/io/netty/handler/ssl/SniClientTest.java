@@ -45,17 +45,29 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+<<<<<<< HEAD
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+=======
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
+>>>>>>> dev
 
 public class SniClientTest {
     private static final String PARAMETERIZED_NAME = "{index}: serverSslProvider = {0}, clientSslProvider = {1}";
     static Collection<Object[]> parameters() {
+<<<<<<< HEAD
         List<SslProvider> providers = new ArrayList<>(Arrays.asList(SslProvider.values()));
+=======
+        List<SslProvider> providers = new ArrayList<SslProvider>(Arrays.asList(SslProvider.values()));
+>>>>>>> dev
         if (!OpenSsl.isAvailable()) {
             providers.remove(SslProvider.OPENSSL);
             providers.remove(SslProvider.OPENSSL_REFCNT);
@@ -74,7 +86,11 @@ public class SniClientTest {
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     @MethodSource("parameters")
     public void testSniSNIMatcherMatchesClient(SslProvider serverProvider, SslProvider clientProvider)
+<<<<<<< HEAD
             throws Throwable {
+=======
+            throws Exception {
+>>>>>>> dev
         assumeTrue(PlatformDependent.javaVersion() >= 8);
         SniClientJava8TestUtil.testSniClient(serverProvider, clientProvider, true);
     }
@@ -114,8 +130,18 @@ public class SniClientTest {
                                                     .build();
             } else {
                 // The used OpenSSL version does support a KeyManagerFactory, so use it.
+<<<<<<< HEAD
                 KeyManagerFactory kmf = SniClientJava8TestUtil.newSniX509KeyManagerFactory(cert, sniHostName);
                 sslServerContext = SslContextBuilder.forServer(kmf)
+=======
+                KeyManagerFactory kmf = PlatformDependent.javaVersion() >= 8 ?
+                        SniClientJava8TestUtil.newSniX509KeyManagerFactory(cert, sniHostName) :
+                        SslContext.buildKeyManagerFactory(
+                                new X509Certificate[] { cert.cert() }, null,
+                                cert.key(), null, null, null);
+
+               sslServerContext = SslContextBuilder.forServer(kmf)
+>>>>>>> dev
                                                    .sslProvider(sslServerProvider)
                                                    .build();
             }

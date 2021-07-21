@@ -25,6 +25,10 @@ import io.netty.util.ReferenceCountUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.List;
 
@@ -72,6 +76,7 @@ public class RedisDecoderTest {
 
     @Test
     public void shouldNotDecodeInlineCommandByDefault() {
+<<<<<<< HEAD
         assertThrows(DecoderException.class, () -> {
             assertFalse(channel.writeInbound(byteBufOf("P")));
             assertFalse(channel.writeInbound(byteBufOf("I")));
@@ -80,6 +85,19 @@ public class RedisDecoderTest {
             assertTrue(channel.writeInbound(byteBufOf("\r\n")));
 
             channel.readInbound();
+=======
+        assertThrows(DecoderException.class, new Executable() {
+            @Override
+            public void execute() {
+                assertFalse(channel.writeInbound(byteBufOf("P")));
+                assertFalse(channel.writeInbound(byteBufOf("I")));
+                assertFalse(channel.writeInbound(byteBufOf("N")));
+                assertFalse(channel.writeInbound(byteBufOf("G")));
+                assertTrue(channel.writeInbound(byteBufOf("\r\n")));
+
+                channel.readInbound();
+            }
+>>>>>>> dev
         });
     }
 
@@ -277,10 +295,19 @@ public class RedisDecoderTest {
         buf.writeBytes(byteBufOf("*2\r\n+Foo\r\n-Bar\r\n"));
         assertTrue(channel.writeInbound(buf));
 
-        ArrayRedisMessage msg = channel.readInbound();
+        final ArrayRedisMessage msg = channel.readInbound();
 
         ReferenceCountUtil.release(msg);
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> ReferenceCountUtil.release(msg));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                ReferenceCountUtil.release(msg);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -293,9 +320,18 @@ public class RedisDecoderTest {
 
         ArrayRedisMessage msg = channel.readInbound();
 
-        List<RedisMessage> children = msg.children();
+        final List<RedisMessage> children = msg.children();
         ReferenceCountUtil.release(msg);
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> ReferenceCountUtil.release(children.get(1)));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                ReferenceCountUtil.release(children.get(1));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -308,9 +344,18 @@ public class RedisDecoderTest {
         ArrayRedisMessage msg = channel.readInbound();
 
         List<RedisMessage> children = msg.children();
-        ByteBuf childBuf = ((FullBulkStringRedisMessage) children.get(0)).content();
+        final ByteBuf childBuf = ((FullBulkStringRedisMessage) children.get(0)).content();
         ReferenceCountUtil.release(msg);
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> ReferenceCountUtil.release(childBuf));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                ReferenceCountUtil.release(childBuf);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

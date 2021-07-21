@@ -39,7 +39,16 @@ public class SocketCancelWriteTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testCancelWrite(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testCancelWrite);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testCancelWrite(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testCancelWrite(ServerBootstrap sb, Bootstrap cb) throws Throwable {

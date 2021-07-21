@@ -19,9 +19,14 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
+=======
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.unix.DomainDatagramChannel;
 import io.netty.channel.unix.DomainDatagramPacket;
@@ -44,13 +49,26 @@ class KQueueDomainDatagramUnicastTest extends DatagramUnicastTest {
 
     @Test
     void testBind(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, (bootstrap, bootstrap2) -> testBind(bootstrap2));
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testBind(bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     private void testBind(Bootstrap cb) throws Throwable {
         Channel channel = null;
         try {
+<<<<<<< HEAD
             channel = cb.handler(new ChannelHandlerAdapter() { })
+=======
+            channel = cb.handler(new ChannelInboundHandlerAdapter())
+>>>>>>> dev
                         .bind(newSocketAddress()).sync().channel();
             assertThat(channel.localAddress()).isNotNull()
                     .isInstanceOf(DomainSocketAddress.class);
@@ -85,7 +103,11 @@ class KQueueDomainDatagramUnicastTest extends DatagramUnicastTest {
         cb.handler(new SimpleChannelInboundHandler<DomainDatagramPacket>() {
 
             @Override
+<<<<<<< HEAD
             public void messageReceived(ChannelHandlerContext ctx, DomainDatagramPacket msg) {
+=======
+            public void channelRead0(ChannelHandlerContext ctx, DomainDatagramPacket msg) {
+>>>>>>> dev
                 try {
                     ByteBuf buf = msg.content();
                     assertEquals(bytes.length, buf.readableBytes());
@@ -111,6 +133,7 @@ class KQueueDomainDatagramUnicastTest extends DatagramUnicastTest {
     protected Channel setupServerChannel(Bootstrap sb, final byte[] bytes, final SocketAddress sender,
                                          final CountDownLatch latch, final AtomicReference<Throwable> errorRef,
                                          final boolean echo) throws Throwable {
+<<<<<<< HEAD
         sb.handler(new ChannelInitializer<Channel>() {
 
             @Override
@@ -147,6 +170,38 @@ class KQueueDomainDatagramUnicastTest extends DatagramUnicastTest {
                         errorRef.compareAndSet(null, cause);
                     }
                 });
+=======
+        sb.handler(new SimpleChannelInboundHandler<DomainDatagramPacket>() {
+
+            @Override
+            public void channelRead0(ChannelHandlerContext ctx, DomainDatagramPacket msg) {
+                try {
+                    if (sender == null) {
+                        assertNotNull(msg.sender());
+                    } else {
+                        assertEquals(sender, msg.sender());
+                    }
+
+                    ByteBuf buf = msg.content();
+                    assertEquals(bytes.length, buf.readableBytes());
+                    for (int i = 0; i < bytes.length; i++) {
+                        assertEquals(bytes[i], buf.getByte(buf.readerIndex() + i));
+                    }
+
+                    assertEquals(ctx.channel().localAddress(), msg.recipient());
+
+                    if (echo) {
+                        ctx.writeAndFlush(new DomainDatagramPacket(buf.retainedDuplicate(), msg.sender()));
+                    }
+                } finally {
+                    latch.countDown();
+                }
+            }
+
+            @Override
+            public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+                errorRef.compareAndSet(null, cause);
+>>>>>>> dev
             }
         });
         return sb.bind(newSocketAddress()).sync().channel();

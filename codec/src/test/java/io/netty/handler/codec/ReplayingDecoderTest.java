@@ -21,6 +21,10 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.channel.socket.ChannelInputShutdownEvent;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.BlockingQueue;

@@ -414,7 +414,11 @@ public class HttpContentEncoderTest {
         };
 
         final AtomicBoolean channelInactiveCalled = new AtomicBoolean();
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(encoder, new ChannelHandler() {
+=======
+        final EmbeddedChannel channel = new EmbeddedChannel(encoder, new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
             @Override
             public void channelInactive(ChannelHandlerContext ctx) throws Exception {
                 assertTrue(channelInactiveCalled.compareAndSet(false, true));

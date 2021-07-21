@@ -26,6 +26,10 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 
 import java.net.URI;
 import java.nio.ByteBuffer;
@@ -255,8 +259,13 @@ public class WebSocketClientHandshaker00 extends WebSocketClientHandshaker {
         char[] randomChars = new char[count];
         int randCount = 0;
         while (randCount < count) {
+<<<<<<< HEAD
             int rand = ThreadLocalRandom.current().nextInt(0x22, 0x7e);
             if (rand < 0x2f || 0x3a < rand) {
+=======
+            int rand = PlatformDependent.threadLocalRandom().nextInt(0x7e) + 0x21;
+            if (0x21 < rand && rand < 0x2f || 0x3a < rand && rand < 0x7e) {
+>>>>>>> dev
                 randomChars[randCount] = (char) rand;
                 randCount += 1;
             }

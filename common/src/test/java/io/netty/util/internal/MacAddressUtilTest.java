@@ -16,6 +16,10 @@
 package io.netty.util.internal;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static io.netty.util.internal.EmptyArrays.EMPTY_BYTES;
 import static io.netty.util.internal.MacAddressUtil.parseMAC;
@@ -97,51 +101,141 @@ public class MacAddressUtilTest {
 
     @Test
     public void testParseMacInvalid7HexGroupsA() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00-AA-11-BB-22-CC-FF"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00-AA-11-BB-22-CC-FF");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalid7HexGroupsB() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00:AA:11:BB:22:CC:FF"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00:AA:11:BB:22:CC:FF");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalidEUI48MixedSeparatorA() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00-AA:11-BB-22-CC"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00-AA:11-BB-22-CC");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalidEUI48MixedSeparatorB() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00:AA-11:BB:22:CC"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00:AA-11:BB:22:CC");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalidEUI64MixedSeparatorA() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00-AA-11-FF-FE-BB-22:CC"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00-AA-11-FF-FE-BB-22:CC");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalidEUI64MixedSeparatorB() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00:AA:11:FF:FE:BB:22-CC"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00:AA:11:FF:FE:BB:22-CC");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalidEUI48TrailingSeparatorA() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00-AA-11-BB-22-CC-"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00-AA-11-BB-22-CC-");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalidEUI48TrailingSeparatorB() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00:AA:11:BB:22:CC:"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00:AA:11:BB:22:CC:");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalidEUI64TrailingSeparatorA() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00-AA-11-FF-FE-BB-22-CC-"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00-AA-11-FF-FE-BB-22-CC-");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testParseMacInvalidEUI64TrailingSeparatorB() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseMAC("00:AA:11:FF:FE:BB:22:CC:"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseMAC("00:AA:11:FF:FE:BB:22:CC:");
+            }
+        });
+>>>>>>> dev
     }
 }

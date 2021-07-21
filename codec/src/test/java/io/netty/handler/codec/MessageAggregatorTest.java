@@ -16,7 +16,10 @@
 
 package io.netty.handler.codec;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
+=======
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

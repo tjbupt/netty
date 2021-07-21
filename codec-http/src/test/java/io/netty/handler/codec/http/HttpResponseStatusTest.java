@@ -17,6 +17,10 @@ package io.netty.handler.codec.http;
 
 import io.netty.util.AsciiString;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static io.netty.handler.codec.http.HttpResponseStatus.parseLine;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,12 +53,30 @@ public class HttpResponseStatusTest {
 
     @Test
     public void parseLineStringMalformedCode() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseLine("200a"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseLine("200a");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void parseLineStringMalformedCodeWithPhrase() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseLine("200a foo"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseLine("200a foo");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -82,11 +104,29 @@ public class HttpResponseStatusTest {
 
     @Test
     public void parseLineAsciiStringMalformedCode() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseLine(new AsciiString("200a")));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseLine(new AsciiString("200a"));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void parseLineAsciiStringMalformedCodeWithPhrase() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> parseLine(new AsciiString("200a foo")));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                parseLine(new AsciiString("200a foo"));
+            }
+        });
+>>>>>>> dev
     }
 }

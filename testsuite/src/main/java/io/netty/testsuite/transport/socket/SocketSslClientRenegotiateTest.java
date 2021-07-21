@@ -116,8 +116,13 @@ public class SocketSslClientRenegotiateTest extends AbstractSocketTest {
         return params;
     }
 
+<<<<<<< HEAD
     private final AtomicReference<Throwable> clientException = new AtomicReference<>();
     private final AtomicReference<Throwable> serverException = new AtomicReference<>();
+=======
+    private final AtomicReference<Throwable> clientException = new AtomicReference<Throwable>();
+    private final AtomicReference<Throwable> serverException = new AtomicReference<Throwable>();
+>>>>>>> dev
 
     private volatile Channel clientChannel;
     private volatile Channel serverChannel;
@@ -133,12 +138,26 @@ public class SocketSslClientRenegotiateTest extends AbstractSocketTest {
     @ParameterizedTest(name = "{index}: serverEngine = {0}, clientEngine = {1}, delegate = {2}")
     @MethodSource("data")
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
+<<<<<<< HEAD
     public void testSslRenegotiationRejected(SslContext serverCtx, SslContext clientCtx, boolean delegate,
                                              TestInfo testInfo) throws Throwable {
         // BoringSSL does not support renegotiation intentionally.
         assumeFalse("BoringSSL".equals(OpenSsl.versionString()));
         assumeTrue(OpenSsl.isAvailable());
         run(testInfo, (sb, cb) -> testSslRenegotiationRejected(sb, cb, serverCtx, clientCtx, delegate));
+=======
+    public void testSslRenegotiationRejected(final SslContext serverCtx, final SslContext clientCtx,
+                                             final boolean delegate, TestInfo testInfo) throws Throwable {
+        // BoringSSL does not support renegotiation intentionally.
+        assumeFalse("BoringSSL".equals(OpenSsl.versionString()));
+        assumeTrue(OpenSsl.isAvailable());
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSslRenegotiationRejected(sb, cb, serverCtx, clientCtx, delegate);
+            }
+        });
+>>>>>>> dev
     }
 
     private static SslHandler newSslHandler(SslContext sslCtx, ByteBufAllocator allocator, Executor executor) {
@@ -149,8 +168,13 @@ public class SocketSslClientRenegotiateTest extends AbstractSocketTest {
         }
     }
 
+<<<<<<< HEAD
     public void testSslRenegotiationRejected(ServerBootstrap sb, Bootstrap cb, SslContext serverCtx,
                                              SslContext clientCtx, boolean delegate) throws Throwable {
+=======
+    public void testSslRenegotiationRejected(ServerBootstrap sb, Bootstrap cb, final SslContext serverCtx,
+                                             final SslContext clientCtx, boolean delegate) throws Throwable {
+>>>>>>> dev
         reset();
 
         final ExecutorService executorService = delegate ? Executors.newCachedThreadPool() : null;

@@ -28,6 +28,39 @@ import static org.junit.jupiter.api.Assertions.*;
 public abstract class AbstractEventLoopTest {
 
     @Test
+<<<<<<< HEAD
+=======
+    public void testReregister() {
+        EventLoopGroup group = newEventLoopGroup();
+        EventLoopGroup group2 = newEventLoopGroup();
+        final EventExecutorGroup eventExecutorGroup = new DefaultEventExecutorGroup(2);
+
+        ServerBootstrap bootstrap = new ServerBootstrap();
+        ChannelFuture future = bootstrap.channel(newChannel()).group(group)
+                .childHandler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    public void initChannel(SocketChannel ch) {
+                    }
+                }).handler(new ChannelInitializer<ServerSocketChannel>() {
+                    @Override
+                    public void initChannel(ServerSocketChannel ch) {
+                        ch.pipeline().addLast(new TestChannelHandler());
+                        ch.pipeline().addLast(eventExecutorGroup, new TestChannelHandler2());
+                    }
+                })
+                .bind(0).awaitUninterruptibly();
+
+        EventExecutor executor = future.channel().pipeline().context(TestChannelHandler2.class).executor();
+        EventExecutor executor1 = future.channel().pipeline().context(TestChannelHandler.class).executor();
+        future.channel().deregister().awaitUninterruptibly();
+        Channel channel = group2.register(future.channel()).awaitUninterruptibly().channel();
+        EventExecutor executorNew = channel.pipeline().context(TestChannelHandler.class).executor();
+        assertNotSame(executor1, executorNew);
+        assertSame(executor, future.channel().pipeline().context(TestChannelHandler2.class).executor());
+    }
+
+    @Test
+>>>>>>> dev
     @Timeout(value = 5000, unit = TimeUnit.MILLISECONDS)
     public void testShutdownGracefullyNoQuietPeriod() throws Exception {
         EventLoopGroup loop = newEventLoopGroup();

@@ -22,9 +22,14 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
+<<<<<<< HEAD
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioHandler;
+=======
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.nio.NioEventLoopGroup;
+>>>>>>> dev
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.haproxy.HAProxyMessage;
@@ -37,8 +42,13 @@ public final class HAProxyServer {
     static final int PORT = Integer.parseInt(System.getProperty("port", "8080"));
 
     public static void main(String[] args) throws Exception {
+<<<<<<< HEAD
         EventLoopGroup bossGroup = new MultithreadEventLoopGroup(1, NioHandler.newFactory());
         EventLoopGroup workerGroup = new MultithreadEventLoopGroup(NioHandler.newFactory());
+=======
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup();
+>>>>>>> dev
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
@@ -58,9 +68,15 @@ public final class HAProxyServer {
             ch.pipeline().addLast(
                     new LoggingHandler(LogLevel.DEBUG),
                     new HAProxyMessageDecoder(),
+<<<<<<< HEAD
                     new SimpleChannelInboundHandler<Object>() {
                         @Override
                         protected void messageReceived(ChannelHandlerContext ctx, Object msg) {
+=======
+                    new SimpleChannelInboundHandler() {
+                        @Override
+                        protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+>>>>>>> dev
                             if (msg instanceof HAProxyMessage) {
                                 System.out.println("proxy message: " + msg);
                             } else if (msg instanceof ByteBuf) {

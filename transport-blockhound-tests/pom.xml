@@ -20,7 +20,11 @@
   <parent>
     <groupId>io.netty</groupId>
     <artifactId>netty-parent</artifactId>
+<<<<<<< HEAD
     <version>5.0.0.Final-SNAPSHOT</version>
+=======
+    <version>4.1.67.Final-SNAPSHOT</version>
+>>>>>>> dev
   </parent>
 
   <artifactId>netty-transport-blockhound-tests</artifactId>
@@ -71,6 +75,13 @@
   </profiles>
 
   <properties>
+<<<<<<< HEAD
+=======
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- Needed for SelfSignedCertificate -->
+    <argLine.java9.extras>--add-exports java.base/sun.security.x509=ALL-UNNAMED</argLine.java9.extras>
+>>>>>>> dev
     <skipJapicmp>true</skipJapicmp>
     <!-- Do not deploy this module -->
     <skipDeploy>true</skipDeploy>

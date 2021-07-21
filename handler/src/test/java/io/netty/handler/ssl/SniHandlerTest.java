@@ -60,7 +60,11 @@ import io.netty.util.Mapping;
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.ReferenceCounted;
 import io.netty.util.concurrent.Promise;
+<<<<<<< HEAD
 
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.ResourcesUtil;
 import io.netty.util.internal.StringUtil;
 import org.hamcrest.CoreMatchers;
@@ -140,7 +144,11 @@ public class SniHandlerTest {
     }
 
     static Iterable<?> data() {
+<<<<<<< HEAD
         List<SslProvider> params = new ArrayList<>(3);
+=======
+        List<SslProvider> params = new ArrayList<SslProvider>(3);
+>>>>>>> dev
         if (OpenSsl.isAvailable()) {
             params.add(SslProvider.OPENSSL);
             params.add(SslProvider.OPENSSL_REFCNT);
@@ -156,8 +164,13 @@ public class SniHandlerTest {
         try {
             final AtomicReference<SslHandshakeCompletionEvent> evtRef =
                     new AtomicReference<SslHandshakeCompletionEvent>();
+<<<<<<< HEAD
             SniHandler handler = new SniHandler(new DomainNameMappingBuilder<>(nettyContext).build());
             final EmbeddedChannel ch = new EmbeddedChannel(handler, new ChannelHandler() {
+=======
+            SniHandler handler = new SniHandler(new DomainNameMappingBuilder<SslContext>(nettyContext).build());
+            final EmbeddedChannel ch = new EmbeddedChannel(handler, new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
                 @Override
                 public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
                     if (evt instanceof SslHandshakeCompletionEvent) {

@@ -24,7 +24,10 @@ import io.netty.handler.ssl.util.SelfSignedCertificate;
 import io.netty.internal.tcnative.SSL;
 import io.netty.util.CharsetUtil;
 import io.netty.util.internal.EmptyArrays;
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 import io.netty.util.internal.PlatformDependent;
 import org.junit.AssumptionViolatedException;
 import org.junit.jupiter.api.AfterEach;
@@ -56,7 +59,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 
 import static io.netty.handler.ssl.OpenSslTestUtils.checkShouldUseKeyManagerFactory;
 import static io.netty.handler.ssl.ReferenceCountedOpenSslEngine.MAX_PLAINTEXT_LENGTH;
@@ -1148,6 +1154,7 @@ public class OpenSslEngineTest extends SSLEngineTest {
                 @Override
                 public void execute() throws Throwable {
                     engine.setSSLParameters(parameters);
+<<<<<<< HEAD
                 }
             });
         } finally {
@@ -1164,6 +1171,24 @@ public class OpenSslEngineTest extends SSLEngineTest {
                     assertNotEquals(HandshakeStatus.NEED_TASK, engine.getHandshakeStatus());
                     break;
                 }
+=======
+                }
+            });
+        } finally {
+            cleanupServerSslEngine(engine);
+            ssc.delete();
+        }
+    }
+
+    private static void runTasksIfNeeded(SSLEngine engine) {
+        if (engine.getHandshakeStatus() == HandshakeStatus.NEED_TASK) {
+            for (;;) {
+                Runnable task = engine.getDelegatedTask();
+                if (task == null) {
+                    assertNotEquals(HandshakeStatus.NEED_TASK, engine.getHandshakeStatus());
+                    break;
+                }
+>>>>>>> dev
                 task.run();
             }
         }

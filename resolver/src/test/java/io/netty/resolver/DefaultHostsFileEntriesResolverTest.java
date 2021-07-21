@@ -16,7 +16,10 @@
 package io.netty.resolver;
 
 import io.netty.util.NetUtil;
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 
 import java.net.Inet4Address;
@@ -48,8 +51,13 @@ public class DefaultHostsFileEntriesResolverTest {
 
     @Test
     public void shouldntFindWhenAddressTypeDoesntMatch() {
+<<<<<<< HEAD
         Map<String, List<InetAddress>> inet4Entries = new HashMap<>();
         Map<String, List<InetAddress>> inet6Entries = new HashMap<>();
+=======
+        Map<String, List<InetAddress>> inet4Entries = new HashMap<String, List<InetAddress>>();
+        Map<String, List<InetAddress>> inet6Entries = new HashMap<String, List<InetAddress>>();
+>>>>>>> dev
 
         inet4Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST4));
 
@@ -62,11 +70,19 @@ public class DefaultHostsFileEntriesResolverTest {
 
     @Test
     public void shouldPickIpv4WhenBothAreDefinedButIpv4IsPreferred() {
+<<<<<<< HEAD
         Map<String, List<InetAddress>> inet4Entries = new HashMap<>();
         Map<String, List<InetAddress>> inet6Entries = new HashMap<>();
 
         inet4Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST4));
         inet6Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST6));
+=======
+        Map<String, List<InetAddress>> inet4Entries = new HashMap<String, List<InetAddress>>();
+        Map<String, List<InetAddress>> inet6Entries = new HashMap<String, List<InetAddress>>();
+
+        inet4Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST4));
+        inet6Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST6));
+>>>>>>> dev
 
         DefaultHostsFileEntriesResolver resolver =
                 new DefaultHostsFileEntriesResolver(new HostsFileEntriesProvider(inet4Entries, inet6Entries));
@@ -77,11 +93,19 @@ public class DefaultHostsFileEntriesResolverTest {
 
     @Test
     public void shouldPickIpv6WhenBothAreDefinedButIpv6IsPreferred() {
+<<<<<<< HEAD
         Map<String, List<InetAddress>> inet4Entries = new HashMap<>();
         Map<String, List<InetAddress>> inet6Entries = new HashMap<>();
 
         inet4Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST4));
         inet6Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST6));
+=======
+        Map<String, List<InetAddress>> inet4Entries = new HashMap<String, List<InetAddress>>();
+        Map<String, List<InetAddress>> inet6Entries = new HashMap<String, List<InetAddress>>();
+
+        inet4Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST4));
+        inet6Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST6));
+>>>>>>> dev
 
         DefaultHostsFileEntriesResolver resolver =
                 new DefaultHostsFileEntriesResolver(new HostsFileEntriesProvider(inet4Entries, inet6Entries));
@@ -92,10 +116,17 @@ public class DefaultHostsFileEntriesResolverTest {
 
     @Test
     public void shouldntFindWhenAddressesTypeDoesntMatch() {
+<<<<<<< HEAD
         Map<String, List<InetAddress>> inet4Entries = new HashMap<>();
         Map<String, List<InetAddress>> inet6Entries = new HashMap<>();
 
         inet4Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST4));
+=======
+        Map<String, List<InetAddress>> inet4Entries = new HashMap<String, List<InetAddress>>();
+        Map<String, List<InetAddress>> inet6Entries = new HashMap<String, List<InetAddress>>();
+
+        inet4Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST4));
+>>>>>>> dev
 
         DefaultHostsFileEntriesResolver resolver =
                 new DefaultHostsFileEntriesResolver(new HostsFileEntriesProvider(inet4Entries, inet6Entries));
@@ -106,11 +137,19 @@ public class DefaultHostsFileEntriesResolverTest {
 
     @Test
     public void shouldPickIpv4FirstWhenBothAreDefinedButIpv4IsPreferred() {
+<<<<<<< HEAD
         Map<String, List<InetAddress>> inet4Entries = new HashMap<>();
         Map<String, List<InetAddress>> inet6Entries = new HashMap<>();
 
         inet4Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST4));
         inet6Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST6));
+=======
+        Map<String, List<InetAddress>> inet4Entries = new HashMap<String, List<InetAddress>>();
+        Map<String, List<InetAddress>> inet6Entries = new HashMap<String, List<InetAddress>>();
+
+        inet4Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST4));
+        inet6Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST6));
+>>>>>>> dev
 
         DefaultHostsFileEntriesResolver resolver =
                 new DefaultHostsFileEntriesResolver(new HostsFileEntriesProvider(inet4Entries, inet6Entries));
@@ -124,11 +163,19 @@ public class DefaultHostsFileEntriesResolverTest {
 
     @Test
     public void shouldPickIpv6FirstWhenBothAreDefinedButIpv6IsPreferred() {
+<<<<<<< HEAD
         Map<String, List<InetAddress>> inet4Entries = new HashMap<>();
         Map<String, List<InetAddress>> inet6Entries = new HashMap<>();
 
         inet4Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST4));
         inet6Entries.put("localhost", Collections.singletonList(NetUtil.LOCALHOST6));
+=======
+        Map<String, List<InetAddress>> inet4Entries = new HashMap<String, List<InetAddress>>();
+        Map<String, List<InetAddress>> inet6Entries = new HashMap<String, List<InetAddress>>();
+
+        inet4Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST4));
+        inet6Entries.put("localhost", Collections.<InetAddress>singletonList(NetUtil.LOCALHOST6));
+>>>>>>> dev
 
         DefaultHostsFileEntriesResolver resolver =
                 new DefaultHostsFileEntriesResolver(new HostsFileEntriesProvider(inet4Entries, inet6Entries));

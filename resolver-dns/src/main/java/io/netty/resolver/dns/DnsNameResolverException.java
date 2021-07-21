@@ -19,6 +19,10 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.handler.codec.dns.DnsQuestion;
 import io.netty.util.internal.EmptyArrays;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import java.net.InetSocketAddress;
 

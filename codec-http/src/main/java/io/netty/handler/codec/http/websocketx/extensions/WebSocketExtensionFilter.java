@@ -27,13 +27,31 @@ public interface WebSocketExtensionFilter {
      * A {@link WebSocketExtensionFilter} that never skip the evaluation of an
      * any given extensions {@link WebSocketExtension}.
      */
+<<<<<<< HEAD
     WebSocketExtensionFilter NEVER_SKIP = frame -> false;
+=======
+    WebSocketExtensionFilter NEVER_SKIP = new WebSocketExtensionFilter() {
+        @Override
+        public boolean mustSkip(WebSocketFrame frame) {
+            return false;
+        }
+    };
+>>>>>>> dev
 
     /**
      * A {@link WebSocketExtensionFilter} that always skip the evaluation of an
      * any given extensions {@link WebSocketExtension}.
      */
+<<<<<<< HEAD
     WebSocketExtensionFilter ALWAYS_SKIP = frame -> true;
+=======
+    WebSocketExtensionFilter ALWAYS_SKIP = new WebSocketExtensionFilter() {
+        @Override
+        public boolean mustSkip(WebSocketFrame frame) {
+            return true;
+        }
+    };
+>>>>>>> dev
 
     /**
      * Returns {@code true} if the evaluation of the extension must skipped

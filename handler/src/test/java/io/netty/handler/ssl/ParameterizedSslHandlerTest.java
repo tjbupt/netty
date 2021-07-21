@@ -25,15 +25,25 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
+<<<<<<< HEAD
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultithreadEventLoopGroup;
+=======
+import io.netty.channel.DefaultEventLoopGroup;
+import io.netty.channel.EventLoopGroup;
+>>>>>>> dev
 import io.netty.channel.ServerChannel;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.local.LocalAddress;
 import io.netty.channel.local.LocalChannel;
+<<<<<<< HEAD
 import io.netty.channel.local.LocalHandler;
 import io.netty.channel.local.LocalServerChannel;
 import io.netty.channel.nio.NioHandler;
+=======
+import io.netty.channel.local.LocalServerChannel;
+import io.netty.channel.nio.NioEventLoopGroup;
+>>>>>>> dev
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
@@ -72,7 +82,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static io.netty.buffer.ByteBufUtil.writeAscii;
+<<<<<<< HEAD
 import static java.util.concurrent.ThreadLocalRandom.current;
+=======
+import static io.netty.util.internal.ThreadLocalRandom.current;
+>>>>>>> dev
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -82,7 +96,11 @@ public class ParameterizedSslHandlerTest {
     private static final String PARAMETERIZED_NAME = "{index}: clientProvider={0}, {index}: serverProvider={1}";
 
     static Collection<Object[]> data() {
+<<<<<<< HEAD
         List<SslProvider> providers = new ArrayList<>(3);
+=======
+        List<SslProvider> providers = new ArrayList<SslProvider>(3);
+>>>>>>> dev
         if (OpenSsl.isAvailable()) {
             providers.add(SslProvider.OPENSSL);
             providers.add(SslProvider.OPENSSL_REFCNT);
@@ -514,7 +532,11 @@ public class ParameterizedSslHandlerTest {
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void reentryOnHandshakeCompleteNioChannel(SslProvider clientProvider, SslProvider serverProvider)
             throws Exception {
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(NioHandler.newFactory());
+=======
+        EventLoopGroup group = new NioEventLoopGroup();
+>>>>>>> dev
         try {
             Class<? extends ServerChannel> serverClass = NioServerSocketChannel.class;
             Class<? extends Channel> clientClass = NioSocketChannel.class;
@@ -537,7 +559,11 @@ public class ParameterizedSslHandlerTest {
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void reentryOnHandshakeCompleteLocalChannel(SslProvider clientProvider, SslProvider serverProvider)
             throws Exception {
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(LocalHandler.newFactory());
+=======
+        EventLoopGroup group = new DefaultEventLoopGroup();
+>>>>>>> dev
         try {
             Class<? extends ServerChannel> serverClass = LocalServerChannel.class;
             Class<? extends Channel> clientClass = LocalChannel.class;
@@ -645,7 +671,11 @@ public class ParameterizedSslHandlerTest {
         }
 
         @Override
+<<<<<<< HEAD
         protected void messageReceived(ChannelHandlerContext ctx, ByteBuf msg) {
+=======
+        protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) {
+>>>>>>> dev
             readQueue.append(msg.toString(CharsetUtil.US_ASCII));
             if (readQueue.length() >= toWrite.length()) {
                 doneLatch.countDown();

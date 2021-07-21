@@ -16,7 +16,13 @@
 package io.netty.channel;
 
 import io.netty.buffer.ByteBuf;
+<<<<<<< HEAD
 import io.netty.util.concurrent.EventExecutor;
+=======
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.EventExecutorGroup;
+import io.netty.util.concurrent.UnorderedThreadPoolEventExecutor;
+>>>>>>> dev
 
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
@@ -28,7 +34,11 @@ import java.util.NoSuchElementException;
 
 /**
  * A list of {@link ChannelHandler}s which handles or intercepts inbound events and outbound operations of a
+<<<<<<< HEAD
  * {@link Channel}. {@link ChannelPipeline} implements an advanced form of the
+=======
+ * {@link Channel}.  {@link ChannelPipeline} implements an advanced form of the
+>>>>>>> dev
  * <a href="https://www.oracle.com/technetwork/java/interceptingfilter-142169.html">Intercepting Filter</a> pattern
  * to give a user full control over how an event is handled and how the {@link ChannelHandler}s in a pipeline
  * interact with each other.
@@ -200,6 +210,11 @@ import java.util.NoSuchElementException;
  * // {@link java.util.concurrent.Executor} to ensure you don't block the {@link EventLoop}.
  * pipeline.addLast("handler",  new MyBusinessLogicHandler());
  * </pre>
+ *
+ * Be aware that while using {@link DefaultEventLoopGroup} will offload the operation from the {@link EventLoop} it will
+ * still process tasks in a serial fashion per {@link ChannelHandlerContext} and so guarantee ordering. Due the ordering
+ * it may still become a bottle-neck. If ordering is not a requirement for your use-case you may want to consider using
+ * {@link UnorderedThreadPoolEventExecutor} to maximize the parallelism of the task execution.
  *
  * <h3>Thread safety</h3>
  * <p>

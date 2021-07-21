@@ -61,7 +61,7 @@ import io.netty.util.internal.StringUtil;
  *      extends {@link ReplayingDecoder}&lt;{@link Void}&gt; {
  *
  *   protected void decode({@link ChannelHandlerContext} ctx,
- *                           {@link ByteBuf} buf) throws Exception {
+ *                           {@link ByteBuf} buf, List&lt;Object&gt; out) throws Exception {
  *
  *     out.add(buf.readBytes(buf.readInt()));
  *   }

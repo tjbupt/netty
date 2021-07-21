@@ -403,6 +403,15 @@ public final class EpollDatagramChannelConfig extends EpollChannelConfig impleme
         } catch (IOException e) {
             throw new ChannelException(e);
         }
+<<<<<<< HEAD
+=======
+    }
+
+    @Override
+    public EpollDatagramChannelConfig setEpollMode(EpollMode mode) {
+        super.setEpollMode(mode);
+        return this;
+>>>>>>> dev
     }
 
     /**

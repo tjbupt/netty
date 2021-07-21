@@ -68,7 +68,11 @@ public class CipherSuiteCanaryTest {
     private static SelfSignedCertificate CERT;
 
     static Collection<Object[]> parameters() {
+<<<<<<< HEAD
        List<Object[]> dst = new ArrayList<>();
+=======
+       List<Object[]> dst = new ArrayList<Object[]>();
+>>>>>>> dev
        dst.addAll(expand("TLS_DHE_RSA_WITH_AES_128_GCM_SHA256")); // DHE-RSA-AES128-GCM-SHA256
        return dst;
     }

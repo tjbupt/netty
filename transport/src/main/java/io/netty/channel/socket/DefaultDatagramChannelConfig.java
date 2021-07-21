@@ -23,6 +23,7 @@ import io.netty.channel.FixedRecvByteBufAllocator;
 import io.netty.channel.MessageSizeEstimator;
 import io.netty.channel.RecvByteBufAllocator;
 import io.netty.channel.WriteBufferWaterMark;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -53,8 +54,12 @@ public class DefaultDatagramChannelConfig extends DefaultChannelConfig implement
      */
     public DefaultDatagramChannelConfig(DatagramChannel channel, DatagramSocket javaSocket) {
         super(channel, new FixedRecvByteBufAllocator(2048));
+<<<<<<< HEAD
         requireNonNull(javaSocket, "javaSocket");
         this.javaSocket = javaSocket;
+=======
+        this.javaSocket = ObjectUtil.checkNotNull(javaSocket, "javaSocket");
+>>>>>>> dev
     }
 
     protected final DatagramSocket javaSocket() {

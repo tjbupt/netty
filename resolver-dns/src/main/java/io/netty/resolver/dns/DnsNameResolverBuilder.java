@@ -30,6 +30,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.intValue;
 import static java.util.Objects.requireNonNull;
 
@@ -52,6 +56,10 @@ public final class DnsNameResolverBuilder {
     private boolean completeOncePreferredResolved;
     private boolean recursionDesired = true;
     private int maxQueriesPerResolve = -1;
+<<<<<<< HEAD
+=======
+    private boolean traceEnabled;
+>>>>>>> dev
     private int maxPayloadSize = 4096;
     private boolean optResourceEnabled = true;
     private HostsFileEntriesResolver hostsFileEntriesResolver = HostsFileEntriesResolver.DEFAULT;
@@ -330,6 +338,24 @@ public final class DnsNameResolverBuilder {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Sets if this resolver should generate the detailed trace information in an exception message so that
+     * it is easier to understand the cause of resolution failure.
+     *
+     * @param traceEnabled true if trace is enabled
+     * @return {@code this}
+     * @deprecated Prefer to {@linkplain #dnsQueryLifecycleObserverFactory(DnsQueryLifecycleObserverFactory) configure}
+     * a {@link LoggingDnsQueryLifeCycleObserverFactory} instead.
+     */
+    @Deprecated
+    public DnsNameResolverBuilder traceEnabled(boolean traceEnabled) {
+        this.traceEnabled = traceEnabled;
+        return this;
+    }
+
+    /**
+>>>>>>> dev
      * Sets the capacity of the datagram packet buffer (in bytes).  The default value is {@code 4096} bytes.
      *
      * @param maxPayloadSize the capacity of the datagram packet buffer

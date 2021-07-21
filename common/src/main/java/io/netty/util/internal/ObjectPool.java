@@ -17,8 +17,11 @@ package io.netty.util.internal;
 
 import io.netty.util.Recycler;
 
+<<<<<<< HEAD
 import java.util.Objects;
 
+=======
+>>>>>>> dev
 /**
  * Light-weight object pool.
  *
@@ -66,7 +69,11 @@ public abstract class ObjectPool<T> {
      * that should be pooled.
      */
     public static <T> ObjectPool<T> newPool(final ObjectCreator<T> creator) {
+<<<<<<< HEAD
         return new RecyclerObjectPool<T>(Objects.requireNonNull(creator, "creator"));
+=======
+        return new RecyclerObjectPool<T>(ObjectUtil.checkNotNull(creator, "creator"));
+>>>>>>> dev
     }
 
     private static final class RecyclerObjectPool<T> extends ObjectPool<T> {

@@ -34,6 +34,9 @@ import java.util.Objects;
 
 import static io.netty.handler.codec.http.websocketx.extensions.compression.PerMessageDeflateDecoder.*;
 
+import static io.netty.handler.codec.http.websocketx.extensions.compression.PerMessageDeflateDecoder.*;
+import static io.netty.util.internal.ObjectUtil.*;
+
 /**
  * Deflate implementation of a payload compressor for
  * <tt>io.netty.handler.codec.http.websocketx.WebSocketFrame</tt>.
@@ -59,7 +62,11 @@ abstract class DeflateEncoder extends WebSocketExtensionEncoder {
         this.compressionLevel = compressionLevel;
         this.windowSize = windowSize;
         this.noContext = noContext;
+<<<<<<< HEAD
         this.extensionEncoderFilter = Objects.requireNonNull(extensionEncoderFilter, "extensionEncoderFilter");
+=======
+        this.extensionEncoderFilter = checkNotNull(extensionEncoderFilter, "extensionEncoderFilter");
+>>>>>>> dev
     }
 
     /**

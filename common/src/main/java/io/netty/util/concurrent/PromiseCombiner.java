@@ -44,7 +44,16 @@ public final class PromiseCombiner {
             if (executor.inEventLoop()) {
                 operationComplete0(future);
             } else {
+<<<<<<< HEAD
                 executor.execute(() -> operationComplete0(future));
+=======
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        operationComplete0(future);
+                    }
+                });
+>>>>>>> dev
             }
         }
 
@@ -77,7 +86,11 @@ public final class PromiseCombiner {
      * @param executor the {@link EventExecutor} to use for notifications.
      */
     public PromiseCombiner(EventExecutor executor) {
+<<<<<<< HEAD
         this.executor = requireNonNull(executor, "executor");
+=======
+        this.executor = ObjectUtil.checkNotNull(executor, "executor");
+>>>>>>> dev
     }
 
     /**
@@ -145,7 +158,11 @@ public final class PromiseCombiner {
      * @param aggregatePromise the promise to notify when all combined futures have finished
      */
     public void finish(Promise<Void> aggregatePromise) {
+<<<<<<< HEAD
         requireNonNull(aggregatePromise, "aggregatePromise");
+=======
+        ObjectUtil.checkNotNull(aggregatePromise, "aggregatePromise");
+>>>>>>> dev
         checkInEventLoop();
         if (this.aggregatePromise != null) {
             throw new IllegalStateException("Already finished");

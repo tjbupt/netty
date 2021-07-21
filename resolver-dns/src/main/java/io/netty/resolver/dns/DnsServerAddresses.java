@@ -16,7 +16,11 @@
 
 package io.netty.resolver.dns;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
 
 import java.net.InetSocketAddress;
@@ -149,7 +153,11 @@ public abstract class DnsServerAddresses {
      * Returns the {@link DnsServerAddresses} that yields only a single {@code address}.
      */
     public static DnsServerAddresses singleton(final InetSocketAddress address) {
+<<<<<<< HEAD
         requireNonNull(address, "address");
+=======
+        checkNotNull(address, "address");
+>>>>>>> dev
         if (address.isUnresolved()) {
             throw new IllegalArgumentException("cannot use an unresolved DNS server address: " + address);
         }
@@ -158,7 +166,11 @@ public abstract class DnsServerAddresses {
     }
 
     private static List<InetSocketAddress> sanitize(Iterable<? extends InetSocketAddress> addresses) {
+<<<<<<< HEAD
         requireNonNull(addresses, "addresses");
+=======
+        checkNotNull(addresses, "addresses");
+>>>>>>> dev
 
         final List<InetSocketAddress> list;
         if (addresses instanceof Collection) {
@@ -181,7 +193,11 @@ public abstract class DnsServerAddresses {
     }
 
     private static List<InetSocketAddress> sanitize(InetSocketAddress[] addresses) {
+<<<<<<< HEAD
         requireNonNull(addresses, "addresses");
+=======
+        checkNotNull(addresses, "addresses");
+>>>>>>> dev
 
         List<InetSocketAddress> list = new ArrayList<>(addresses.length);
         for (InetSocketAddress a: addresses) {

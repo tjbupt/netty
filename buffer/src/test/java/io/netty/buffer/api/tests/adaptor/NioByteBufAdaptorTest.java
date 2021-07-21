@@ -5,7 +5,11 @@
  * version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at:
  *
+<<<<<<< HEAD:buffer/src/test/java/io/netty/buffer/api/tests/adaptor/NioByteBufAdaptorTest.java
  *   https://www.apache.org/licenses/LICENSE-2.0
+=======
+ * https://www.apache.org/licenses/LICENSE-2.0
+>>>>>>> dev:transport-sctp/src/main/java/com/sun/nio/sctp/PeerAddressChangeNotification.java
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT

@@ -21,6 +21,7 @@ import io.netty.util.CharsetUtil;
 import io.netty.util.IllegalReferenceCountException;
 import io.netty.util.ResourceLeakDetector;
 import io.netty.util.ResourceLeakDetectorFactory;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.StringUtil;
 import io.netty.util.internal.SystemPropertyUtil;
@@ -39,7 +40,10 @@ import java.nio.charset.Charset;
 
 import static io.netty.util.internal.MathUtil.isOutOfBounds;
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 
 /**
  * A skeletal implementation of a buffer.
@@ -194,6 +198,10 @@ public abstract class AbstractByteBuf extends ByteBuf {
             readerIndex = 0;
         } else {
             ensureAccessible();
+<<<<<<< HEAD
+=======
+            adjustMarkers(readerIndex);
+>>>>>>> dev
             writerIndex = readerIndex = 0;
         }
         return this;
@@ -204,6 +212,10 @@ public abstract class AbstractByteBuf extends ByteBuf {
         if (readerIndex > 0) {
             if (readerIndex == writerIndex) {
                 ensureAccessible();
+<<<<<<< HEAD
+=======
+                adjustMarkers(readerIndex);
+>>>>>>> dev
                 writerIndex = readerIndex = 0;
                 return this;
             }
@@ -211,12 +223,37 @@ public abstract class AbstractByteBuf extends ByteBuf {
             if (readerIndex >= capacity() >>> 1) {
                 setBytes(0, this, readerIndex, writerIndex - readerIndex);
                 writerIndex -= readerIndex;
+<<<<<<< HEAD
+=======
+                adjustMarkers(readerIndex);
+>>>>>>> dev
                 readerIndex = 0;
                 return this;
             }
         }
         ensureAccessible();
         return this;
+    }
+
+<<<<<<< HEAD
+    // Called after a capacity reduction
+    protected final void trimIndicesToCapacity(int newCapacity) {
+        if (writerIndex() > newCapacity) {
+            setIndex0(Math.min(readerIndex(), newCapacity), newCapacity);
+=======
+    protected final void adjustMarkers(int decrement) {
+        if (markedReaderIndex <= decrement) {
+            markedReaderIndex = 0;
+            if (markedWriterIndex <= decrement) {
+                markedWriterIndex = 0;
+            } else {
+                markedWriterIndex -= decrement;
+            }
+        } else {
+            markedReaderIndex -= decrement;
+            markedWriterIndex -= decrement;
+>>>>>>> dev
+        }
     }
 
     // Called after a capacity reduction
@@ -290,7 +327,11 @@ public abstract class AbstractByteBuf extends ByteBuf {
         if (endianness == order()) {
             return this;
         }
+<<<<<<< HEAD
         requireNonNull(endianness, "endianness");
+=======
+        ObjectUtil.checkNotNull(endianness, "endianness");
+>>>>>>> dev
         return newSwappedByteBuf();
     }
 
@@ -598,7 +639,11 @@ public abstract class AbstractByteBuf extends ByteBuf {
     @Override
     public ByteBuf setBytes(int index, ByteBuf src, int length) {
         checkIndex(index, length);
+<<<<<<< HEAD
         requireNonNull(src, "src");
+=======
+        ObjectUtil.checkNotNull(src, "src");
+>>>>>>> dev
         if (checkBounds) {
             checkReadableBounds(src, length);
         }

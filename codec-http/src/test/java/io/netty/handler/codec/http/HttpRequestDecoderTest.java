@@ -319,7 +319,11 @@ public class HttpRequestDecoderTest {
     }
 
     private static void testTooLargeInitialLineWithControlCharsOnly(String controlChars) {
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(new HttpRequestDecoder(15, 1024));
+=======
+        EmbeddedChannel channel = new EmbeddedChannel(new HttpRequestDecoder(15, 1024, 1024));
+>>>>>>> dev
         String requestStr = controlChars + "GET / HTTP/1.1\r\n" +
                 "Host: localhost1\r\n\r\n";
 

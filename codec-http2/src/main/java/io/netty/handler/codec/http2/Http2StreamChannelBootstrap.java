@@ -48,8 +48,13 @@ public final class Http2StreamChannelBootstrap {
 
     // The order in which ChannelOptions are applied is important they may depend on each other for validation
     // purposes.
+<<<<<<< HEAD
     private final Map<ChannelOption<?>, Object> options = new LinkedHashMap<>();
     private final Map<AttributeKey<?>, Object> attrs = new ConcurrentHashMap<>();
+=======
+    private final Map<ChannelOption<?>, Object> options = new LinkedHashMap<ChannelOption<?>, Object>();
+    private final Map<AttributeKey<?>, Object> attrs = new ConcurrentHashMap<AttributeKey<?>, Object>();
+>>>>>>> dev
     private final Channel channel;
     private volatile ChannelHandler handler;
 
@@ -66,7 +71,11 @@ public final class Http2StreamChannelBootstrap {
      */
     @SuppressWarnings("unchecked")
     public <T> Http2StreamChannelBootstrap option(ChannelOption<T> option, T value) {
+<<<<<<< HEAD
         requireNonNull(option, "option");
+=======
+        ObjectUtil.checkNotNull(option, "option");
+>>>>>>> dev
 
         synchronized (options) {
             if (value == null) {
@@ -84,7 +93,11 @@ public final class Http2StreamChannelBootstrap {
      */
     @SuppressWarnings("unchecked")
     public <T> Http2StreamChannelBootstrap attr(AttributeKey<T> key, T value) {
+<<<<<<< HEAD
         requireNonNull(key, "key");
+=======
+        ObjectUtil.checkNotNull(key, "key");
+>>>>>>> dev
         if (value == null) {
             attrs.remove(key);
         } else {
@@ -122,11 +135,22 @@ public final class Http2StreamChannelBootstrap {
                 open0(ctx, promise);
             } else {
                 final ChannelHandlerContext finalCtx = ctx;
+<<<<<<< HEAD
                 executor.execute(() -> {
                     if (channel.isActive()) {
                         open0(finalCtx, promise);
                     } else {
                         promise.setFailure(new ClosedChannelException());
+=======
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (channel.isActive()) {
+                            open0(finalCtx, promise);
+                        } else {
+                            promise.setFailure(new ClosedChannelException());
+                        }
+>>>>>>> dev
                     }
                 });
             }
@@ -188,6 +212,7 @@ public final class Http2StreamChannelBootstrap {
             return;
         }
 
+<<<<<<< HEAD
         ChannelFuture future = streamChannel.register();
         future.addListener((ChannelFutureListener) future1 -> {
             if (future1.isSuccess()) {
@@ -197,6 +222,16 @@ public final class Http2StreamChannelBootstrap {
             } else {
                 if (streamChannel.isRegistered()) {
                     streamChannel.close();
+=======
+        ChannelFuture future = ctx.channel().eventLoop().register(streamChannel);
+        future.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                if (future.isSuccess()) {
+                    promise.setSuccess(streamChannel);
+                } else if (future.isCancelled()) {
+                    promise.cancel(false);
+>>>>>>> dev
                 } else {
                     streamChannel.unsafe().closeForcibly();
                 }

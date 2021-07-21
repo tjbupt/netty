@@ -129,8 +129,13 @@ final class NativeDatagramPacketArray {
                     }
                 }
                 added = add0(buf, buf.readerIndex(), buf.readableBytes(), segmentSize, packet.recipient());
+<<<<<<< HEAD
             } else if (msg instanceof ByteBufConvertible && connected) {
                     ByteBuf buf = ((ByteBufConvertible) msg).asByteBuf();
+=======
+            } else if (msg instanceof ByteBuf && connected) {
+                ByteBuf buf = (ByteBuf) msg;
+>>>>>>> dev
                 added = add0(buf, buf.readerIndex(), buf.readableBytes(), 0, null);
             } else {
                 added = false;

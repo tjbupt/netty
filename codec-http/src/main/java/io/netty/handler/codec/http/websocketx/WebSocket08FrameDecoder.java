@@ -59,6 +59,7 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.TooLongFrameException;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -144,6 +145,7 @@ public class WebSocket08FrameDecoder extends ByteToMessageDecoder
             .maxFramePayloadLength(maxFramePayloadLength)
             .allowMaskMismatch(allowMaskMismatch)
             .build());
+<<<<<<< HEAD
     }
 
     /**
@@ -158,6 +160,22 @@ public class WebSocket08FrameDecoder extends ByteToMessageDecoder
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+=======
+    }
+
+    /**
+     * Constructor
+     *
+     * @param decoderConfig
+     *            Frames decoder configuration.
+     */
+    public WebSocket08FrameDecoder(WebSocketDecoderConfig decoderConfig) {
+        this.config = ObjectUtil.checkNotNull(decoderConfig, "decoderConfig");
+    }
+
+    @Override
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+>>>>>>> dev
         // Discard all data received if closing handshake was received before.
         if (receivedClosingHandshake) {
             in.skipBytes(actualReadableBytes());
@@ -324,6 +342,7 @@ public class WebSocket08FrameDecoder extends ByteToMessageDecoder
                 // Processing ping/pong/close frames because they cannot be
                 // fragmented
                 if (frameOpcode == OPCODE_PING) {
+<<<<<<< HEAD
                     WebSocketFrame frame = new PingWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer);
                     payloadBuffer = null;
                     ctx.fireChannelRead(frame);
@@ -333,14 +352,28 @@ public class WebSocket08FrameDecoder extends ByteToMessageDecoder
                     WebSocketFrame frame = new PongWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer);
                     payloadBuffer = null;
                     ctx.fireChannelRead(frame);
+=======
+                    out.add(new PingWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer));
+                    payloadBuffer = null;
+                    return;
+                }
+                if (frameOpcode == OPCODE_PONG) {
+                    out.add(new PongWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer));
+                    payloadBuffer = null;
+>>>>>>> dev
                     return;
                 }
                 if (frameOpcode == OPCODE_CLOSE) {
                     receivedClosingHandshake = true;
                     checkCloseFrameBody(ctx, payloadBuffer);
+<<<<<<< HEAD
                     WebSocketFrame frame = new CloseWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer);
                     payloadBuffer = null;
                     ctx.fireChannelRead(frame);
+=======
+                    out.add(new CloseWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer));
+                    payloadBuffer = null;
+>>>>>>> dev
                     return;
                 }
 
@@ -357,6 +390,7 @@ public class WebSocket08FrameDecoder extends ByteToMessageDecoder
 
                 // Return the frame
                 if (frameOpcode == OPCODE_TEXT) {
+<<<<<<< HEAD
                     WebSocketFrame frame = new TextWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer);
                     payloadBuffer = null;
                     ctx.fireChannelRead(frame);
@@ -370,6 +404,19 @@ public class WebSocket08FrameDecoder extends ByteToMessageDecoder
                     WebSocketFrame frame = new ContinuationWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer);
                     payloadBuffer = null;
                     ctx.fireChannelRead(frame);
+=======
+                    out.add(new TextWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer));
+                    payloadBuffer = null;
+                    return;
+                } else if (frameOpcode == OPCODE_BINARY) {
+                    out.add(new BinaryWebSocketFrame(frameFinalFlag, frameRsv, payloadBuffer));
+                    payloadBuffer = null;
+                    return;
+                } else if (frameOpcode == OPCODE_CONT) {
+                    out.add(new ContinuationWebSocketFrame(frameFinalFlag, frameRsv,
+                                                           payloadBuffer));
+                    payloadBuffer = null;
+>>>>>>> dev
                     return;
                 } else {
                     throw new UnsupportedOperationException("Cannot decode web socket frame with opcode: "

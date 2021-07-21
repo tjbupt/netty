@@ -44,6 +44,10 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.net.ConnectException;
 import java.nio.channels.ClosedChannelException;
@@ -819,6 +823,7 @@ public class LocalChannelTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void testConnectionRefused() throws Throwable {
         try {
             Bootstrap sb = new Bootstrap();
@@ -829,6 +834,19 @@ public class LocalChannelTest {
         } catch (CompletionException e) {
             throw e.getCause();
         }
+=======
+    public void testConnectionRefused() {
+        final Bootstrap sb = new Bootstrap();
+        sb.group(group1)
+        .channel(LocalChannel.class)
+        .handler(new TestHandler());
+        assertThrows(ConnectException.class, new Executable() {
+            @Override
+            public void execute() {
+                sb.connect(LocalAddress.ANY).syncUninterruptibly();
+            }
+        });
+>>>>>>> dev
     }
 
     private static final class LatchChannelFutureListener extends CountDownLatch implements ChannelFutureListener {

@@ -130,7 +130,11 @@ public final class MacOSDnsServerAddressStreamProvider implements DnsServerAddre
             return Collections.emptyMap();
         }
         Arrays.sort(resolvers, RESOLVER_COMPARATOR);
+<<<<<<< HEAD
         Map<String, DnsServerAddresses> resolverMap = new HashMap<>(resolvers.length);
+=======
+        Map<String, DnsServerAddresses> resolverMap = new HashMap<String, DnsServerAddresses>(resolvers.length);
+>>>>>>> dev
         for (DnsResolver resolver: resolvers) {
             // Skip mdns
             if ("mdns".equalsIgnoreCase(resolver.options())) {

@@ -111,7 +111,11 @@ public final class HostsFileParser {
     }
 
     private static Map<String, ?> toMapWithSingleValue(Map<String, List<InetAddress>> fromMapWithListValue) {
+<<<<<<< HEAD
         Map<String, InetAddress> result = new HashMap<>();
+=======
+        Map<String, InetAddress> result = new HashMap<String, InetAddress>();
+>>>>>>> dev
         for (Map.Entry<String, List<InetAddress>> entry : fromMapWithListValue.entrySet()) {
             List<InetAddress> value = entry.getValue();
             if (!value.isEmpty()) {

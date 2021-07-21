@@ -30,6 +30,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.MessageToMessageDecoder;
+import io.netty.util.internal.ObjectUtil;
 
 /**
  * Decodes a received {@link ByteBuf} into a
@@ -95,8 +96,12 @@ public class ProtobufDecoder extends MessageToMessageDecoder<ByteBuf> {
     }
 
     public ProtobufDecoder(MessageLite prototype, ExtensionRegistryLite extensionRegistry) {
+<<<<<<< HEAD
         requireNonNull(prototype, "prototype");
         this.prototype = prototype.getDefaultInstanceForType();
+=======
+        this.prototype = ObjectUtil.checkNotNull(prototype, "prototype").getDefaultInstanceForType();
+>>>>>>> dev
         this.extensionRegistry = extensionRegistry;
     }
 

@@ -21,6 +21,7 @@ import io.netty.util.concurrent.CompleteFuture;
 import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import io.netty.util.internal.ObjectUtil;
 
 /**
  * A skeletal {@link ChannelFuture} implementation which represents a
@@ -37,8 +38,12 @@ abstract class CompleteChannelFuture extends CompleteFuture<Void> implements Cha
      */
     protected CompleteChannelFuture(Channel channel, EventExecutor executor) {
         super(executor);
+<<<<<<< HEAD
         requireNonNull(channel, "channel");
         this.channel = channel;
+=======
+        this.channel = ObjectUtil.checkNotNull(channel, "channel");
+>>>>>>> dev
     }
 
     @Override

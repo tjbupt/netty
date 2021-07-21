@@ -18,6 +18,7 @@ package io.netty.handler.codec.memcache;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 import io.netty.util.internal.UnstableApi;
 
@@ -33,8 +34,12 @@ public class DefaultMemcacheContent extends AbstractMemcacheObject implements Me
      * Creates a new instance with the specified content.
      */
     public DefaultMemcacheContent(ByteBuf content) {
+<<<<<<< HEAD
         requireNonNull(content, "content");
         this.content = content;
+=======
+        this.content = ObjectUtil.checkNotNull(content, "content");
+>>>>>>> dev
     }
 
     @Override

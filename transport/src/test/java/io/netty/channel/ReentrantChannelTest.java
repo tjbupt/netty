@@ -19,7 +19,12 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.LoggingHandler.Event;
 import io.netty.channel.local.LocalAddress;
+<<<<<<< HEAD
 
+=======
+import io.netty.util.concurrent.Future;
+import io.netty.util.concurrent.GenericFutureListener;
+>>>>>>> dev
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
@@ -267,7 +272,11 @@ public class ReentrantChannelTest extends BaseChannelTest {
             fail();
         } catch (Throwable cce) {
             // FIXME:  shouldn't this contain the "intentional failure" exception?
+<<<<<<< HEAD
             assertThat(cce.getCause(), Matchers.instanceOf(ClosedChannelException.class));
+=======
+            assertThat(cce, Matchers.instanceOf(ClosedChannelException.class));
+>>>>>>> dev
         }
 
         clientChannel.closeFuture().sync();

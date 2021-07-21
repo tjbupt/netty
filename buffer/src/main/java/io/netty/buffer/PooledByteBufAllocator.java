@@ -55,7 +55,16 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
     private static final int MIN_PAGE_SIZE = 4096;
     private static final int MAX_CHUNK_SIZE = (int) (((long) Integer.MAX_VALUE + 1) / 2);
 
+<<<<<<< HEAD
     private final Runnable trimTask = this::trimCurrentThreadCache;
+=======
+    private final Runnable trimTask = new Runnable() {
+        @Override
+        public void run() {
+            PooledByteBufAllocator.this.trimCurrentThreadCache();
+        }
+    };
+>>>>>>> dev
 
     static {
         int defaultAlignment = SystemPropertyUtil.getInt(
@@ -121,8 +130,27 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
         DEFAULT_CACHE_TRIM_INTERVAL = SystemPropertyUtil.getInt(
                 "io.netty.allocator.cacheTrimInterval", 8192);
 
+<<<<<<< HEAD
         DEFAULT_CACHE_TRIM_INTERVAL_MILLIS = SystemPropertyUtil.getLong(
                 "io.netty.allocator.cacheTrimIntervalMillis", 0);
+=======
+        if (SystemPropertyUtil.contains("io.netty.allocation.cacheTrimIntervalMillis")) {
+            logger.warn("-Dio.netty.allocation.cacheTrimIntervalMillis is deprecated," +
+                    " use -Dio.netty.allocator.cacheTrimIntervalMillis");
+
+            if (SystemPropertyUtil.contains("io.netty.allocator.cacheTrimIntervalMillis")) {
+                // Both system properties are specified. Use the non-deprecated one.
+                DEFAULT_CACHE_TRIM_INTERVAL_MILLIS = SystemPropertyUtil.getLong(
+                        "io.netty.allocator.cacheTrimIntervalMillis", 0);
+            } else {
+                DEFAULT_CACHE_TRIM_INTERVAL_MILLIS = SystemPropertyUtil.getLong(
+                        "io.netty.allocation.cacheTrimIntervalMillis", 0);
+            }
+        } else {
+            DEFAULT_CACHE_TRIM_INTERVAL_MILLIS = SystemPropertyUtil.getLong(
+                    "io.netty.allocator.cacheTrimIntervalMillis", 0);
+        }
+>>>>>>> dev
 
         DEFAULT_USE_CACHE_FOR_ALL_THREADS = SystemPropertyUtil.getBoolean(
                 "io.netty.allocator.useCacheForAllThreads", false);

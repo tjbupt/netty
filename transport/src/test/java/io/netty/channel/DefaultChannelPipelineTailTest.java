@@ -24,10 +24,18 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
+<<<<<<< HEAD
 import io.netty.channel.local.LocalHandler;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+=======
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import io.netty.bootstrap.Bootstrap;
+>>>>>>> dev
 
 public class DefaultChannelPipelineTailTest {
 
@@ -175,7 +183,24 @@ public class DefaultChannelPipelineTailTest {
             myChannel.pipeline().fireChannelWritabilityChanged();
             assertTrue(latch.await(1L, TimeUnit.SECONDS));
         } finally {
+<<<<<<< HEAD
             myChannel.close();
+=======
+            channel.close();
+        }
+    }
+
+    private static class MyChannelFactory implements ChannelFactory<MyChannel> {
+        private final MyChannel channel;
+
+        MyChannelFactory(MyChannel channel) {
+            this.channel = channel;
+        }
+
+        @Override
+        public MyChannel newChannel() {
+            return channel;
+>>>>>>> dev
         }
     }
 
@@ -232,20 +257,20 @@ public class DefaultChannelPipelineTailTest {
         }
 
         @Override
-        protected void doBind(SocketAddress localAddress) throws Exception {
+        protected void doBind(SocketAddress localAddress) {
         }
 
         @Override
-        protected void doDisconnect() throws Exception {
+        protected void doDisconnect() {
         }
 
         @Override
-        protected void doClose() throws Exception {
+        protected void doClose() {
             closed = true;
         }
 
         @Override
-        protected void doBeginRead() throws Exception {
+        protected void doBeginRead() {
         }
 
         @Override

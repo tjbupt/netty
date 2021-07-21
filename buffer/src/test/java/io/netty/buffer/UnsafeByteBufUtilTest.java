@@ -19,6 +19,10 @@ import io.netty.util.internal.PlatformDependent;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.nio.ByteBuffer;
 
@@ -143,8 +147,18 @@ public class UnsafeByteBufUtilTest {
         final UnpooledDirectByteBuf targetBuffer = new UnpooledDirectByteBuf(alloc, 8, 8);
 
         try {
+<<<<<<< HEAD
             assertThrows(NullPointerException.class, () -> UnsafeByteBufUtil.setBytes(targetBuffer,
                     directBufferAddress(targetBuffer.nioBuffer()), 0, (byte[]) null, 0, 8));
+=======
+            assertThrows(NullPointerException.class, new Executable() {
+                @Override
+                public void execute() {
+                    UnsafeByteBufUtil.setBytes(targetBuffer,
+                            directBufferAddress(targetBuffer.nioBuffer()), 0, (byte[]) null, 0, 8);
+                }
+            });
+>>>>>>> dev
         } finally {
             targetBuffer.release();
         }
@@ -152,57 +166,120 @@ public class UnsafeByteBufUtilTest {
 
     @Test
     public void testSetBytesOutOfBounds() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> {
             // negative index
             testSetBytesOutOfBounds0(4, 4, -1, 0, 4);
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                // negative index
+                testSetBytesOutOfBounds0(4, 4, -1, 0, 4);
+            }
+>>>>>>> dev
         });
     }
 
     @Test
     public void testSetBytesOutOfBounds2() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> {
             // negative length
             testSetBytesOutOfBounds0(4, 4, 0, 0, -1);
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                // negative length
+                testSetBytesOutOfBounds0(4, 4, 0, 0, -1);
+            }
+>>>>>>> dev
         });
     }
 
     @Test
     public void testSetBytesOutOfBounds3() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> {
             // buffer length oversize
             testSetBytesOutOfBounds0(4, 8, 0, 0, 5);
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                // buffer length oversize
+                testSetBytesOutOfBounds0(4, 8, 0, 0, 5);
+            }
+>>>>>>> dev
         });
     }
 
     @Test
     public void testSetBytesOutOfBounds4() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> {
             // buffer length oversize
             testSetBytesOutOfBounds0(4, 4, 3, 0, 3);
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                // buffer length oversize
+                testSetBytesOutOfBounds0(4, 4, 3, 0, 3);
+            }
+>>>>>>> dev
         });
     }
 
     @Test
     public void testSetBytesOutOfBounds5() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> {
             // negative srcIndex
             testSetBytesOutOfBounds0(4, 4, 0, -1, 4);
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                // negative srcIndex
+                testSetBytesOutOfBounds0(4, 4, 0, -1, 4);
+            }
+>>>>>>> dev
         });
     }
 
     @Test
     public void testSetBytesOutOfBounds6() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> {
             // src length oversize
             testSetBytesOutOfBounds0(8, 4, 0, 0, 5);
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                // src length oversize
+                testSetBytesOutOfBounds0(8, 4, 0, 0, 5);
+            }
+>>>>>>> dev
         });
     }
 
     @Test
     public void testSetBytesOutOfBounds7() {
+<<<<<<< HEAD
         assertThrows(IndexOutOfBoundsException.class, () -> {
             // src length oversize
             testSetBytesOutOfBounds0(4, 4, 0, 1, 4);
+=======
+        assertThrows(IndexOutOfBoundsException.class, new Executable() {
+            @Override
+            public void execute() {
+                // src length oversize
+                testSetBytesOutOfBounds0(4, 4, 0, 1, 4);
+            }
+>>>>>>> dev
         });
     }
 

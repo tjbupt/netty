@@ -19,11 +19,20 @@ import io.netty.buffer.ByteBufConvertible;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
 import io.netty.buffer.Unpooled;
+<<<<<<< HEAD
+=======
+import io.netty.channel.socket.nio.NioSocketChannel;
+>>>>>>> dev
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.concurrent.FastThreadLocal;
 import io.netty.util.internal.InternalThreadLocalMap;
 import io.netty.util.internal.ObjectPool;
 import io.netty.util.internal.ObjectPool.Handle;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectPool.ObjectCreator;
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.PromiseNotificationUtil;
 import io.netty.util.internal.SystemPropertyUtil;
 import io.netty.util.internal.logging.InternalLogger;
@@ -242,6 +251,12 @@ public final class ChannelOutboundBuffer {
         ChannelPromise p = e.promise;
         long progress = e.progress + amount;
         e.progress = progress;
+<<<<<<< HEAD
+=======
+        if (p instanceof ChannelProgressivePromise) {
+            ((ChannelProgressivePromise) p).tryProgress(progress, e.total);
+        }
+>>>>>>> dev
     }
 
     /**
@@ -748,7 +763,11 @@ public final class ChannelOutboundBuffer {
      * returns {@code false} or there are no more flushed messages to process.
      */
     public void forEachFlushedMessage(MessageProcessor processor) throws Exception {
+<<<<<<< HEAD
         requireNonNull(processor, "processor");
+=======
+        ObjectUtil.checkNotNull(processor, "processor");
+>>>>>>> dev
 
         Entry entry = flushedEntry;
         if (entry == null) {
@@ -778,7 +797,16 @@ public final class ChannelOutboundBuffer {
     }
 
     static final class Entry {
+<<<<<<< HEAD
         private static final ObjectPool<Entry> RECYCLER = ObjectPool.newPool(Entry::new);
+=======
+        private static final ObjectPool<Entry> RECYCLER = ObjectPool.newPool(new ObjectCreator<Entry>() {
+            @Override
+            public Entry newObject(Handle<Entry> handle) {
+                return new Entry(handle);
+            }
+        });
+>>>>>>> dev
 
         private final Handle<Entry> handle;
         Entry next;

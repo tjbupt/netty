@@ -46,10 +46,16 @@ public final class Http2ClientFrameInitializer extends ChannelInitializer<Channe
             .initialSettings(Http2Settings.defaultSettings()) // this is the default, but shows it can be changed.
             .build();
         ch.pipeline().addLast(http2FrameCodec);
+<<<<<<< HEAD
         ch.pipeline().addLast(new Http2MultiplexHandler(new SimpleChannelInboundHandler<Object>() {
 
             @Override
             protected void messageReceived(ChannelHandlerContext ctx, Object msg) {
+=======
+        ch.pipeline().addLast(new Http2MultiplexHandler(new SimpleChannelInboundHandler() {
+            @Override
+            protected void channelRead0(ChannelHandlerContext ctx, Object msg) {
+>>>>>>> dev
                 // NOOP (this is the handler for 'inbound' streams, which is not relevant in this example)
             }
         }));

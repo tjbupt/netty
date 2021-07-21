@@ -187,7 +187,11 @@ public class LzfDecoder extends ByteToMessageDecoder {
                         } else {
                             uncompressed.writeBytes(outputArray);
                         }
+<<<<<<< HEAD
                         ctx.fireChannelRead(uncompressed);
+=======
+                        out.add(uncompressed);
+>>>>>>> dev
                         in.skipBytes(chunkLength);
                         success = true;
                     } finally {

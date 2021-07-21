@@ -17,6 +17,7 @@ package io.netty.util;
 
 import io.netty.util.internal.EmptyArrays;
 import io.netty.util.internal.InternalThreadLocalMap;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.PlatformDependent;
 
 import java.nio.ByteBuffer;
@@ -589,7 +590,11 @@ public final class AsciiString implements CharSequence, Comparable<CharSequence>
      * @param length the number of characters to copy.
      */
     public void copy(int srcIdx, char[] dst, int dstIdx, int length) {
+<<<<<<< HEAD
         requireNonNull(dst, "dst");
+=======
+        ObjectUtil.checkNotNull(dst, "dst");
+>>>>>>> dev
 
         if (isOutOfBounds(srcIdx, length, length())) {
             throw new IndexOutOfBoundsException("expected: " + "0 <= srcIdx(" + srcIdx + ") <= srcIdx + length("
@@ -798,7 +803,11 @@ public final class AsciiString implements CharSequence, Comparable<CharSequence>
      * @throws NullPointerException if {@code string} is {@code null}.
      */
     public boolean regionMatches(int thisStart, CharSequence string, int start, int length) {
+<<<<<<< HEAD
         requireNonNull(string, "string");
+=======
+        ObjectUtil.checkNotNull(string, "string");
+>>>>>>> dev
 
         if (start < 0 || string.length() - start < length) {
             return false;
@@ -839,7 +848,11 @@ public final class AsciiString implements CharSequence, Comparable<CharSequence>
             return regionMatches(thisStart, string, start, length);
         }
 
+<<<<<<< HEAD
         requireNonNull(string, "string");
+=======
+        ObjectUtil.checkNotNull(string, "string");
+>>>>>>> dev
 
         final int thisLen = length();
         if (thisStart < 0 || length > thisLen - thisStart) {

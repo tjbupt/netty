@@ -125,8 +125,17 @@ public class DefaultHttp2ConnectionEncoderTest {
         when(channel.unsafe()).thenReturn(unsafe);
         ChannelConfig config = new DefaultChannelConfig(channel);
         when(channel.config()).thenReturn(config);
+<<<<<<< HEAD
         doAnswer(in -> newPromise()
                 .setFailure((Throwable) in.getArgument(0))).when(channel).newFailedFuture(any(Throwable.class));
+=======
+        doAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock in) {
+                return newPromise().setFailure((Throwable) in.getArgument(0));
+            }
+        }).when(channel).newFailedFuture(any(Throwable.class));
+>>>>>>> dev
 
         when(writer.configuration()).thenReturn(writerConfig);
         when(writerConfig.frameSizePolicy()).thenReturn(frameSizePolicy);
@@ -159,6 +168,7 @@ public class DefaultHttp2ConnectionEncoderTest {
                 });
         when(writer.writeHeaders(eq(ctx), anyInt(), any(Http2Headers.class), anyInt(), anyShort(), anyBoolean(),
                 anyInt(), anyBoolean(), any(ChannelPromise.class)))
+<<<<<<< HEAD
                 .then((Answer<ChannelFuture>) invocationOnMock -> {
                     ChannelPromise promise = invocationOnMock.getArgument(8);
                     if (streamClosed) {
@@ -176,6 +186,32 @@ public class DefaultHttp2ConnectionEncoderTest {
                         fail("Stream already closed");
                     } else {
                         streamClosed = invocationOnMock.getArgument(4);
+=======
+                .then(new Answer<ChannelFuture>() {
+                    @Override
+                    public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                        ChannelPromise promise = invocationOnMock.getArgument(8);
+                        if (streamClosed) {
+                            fail("Stream already closed");
+                        } else {
+                            streamClosed = invocationOnMock.getArgument(5);
+                        }
+                        return promise.setSuccess();
+                    }
+                });
+        when(writer.writeHeaders(eq(ctx), anyInt(), any(Http2Headers.class),
+                anyInt(), anyBoolean(), any(ChannelPromise.class)))
+                .then(new Answer<ChannelFuture>() {
+                    @Override
+                    public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                        ChannelPromise promise = invocationOnMock.getArgument(5);
+                        if (streamClosed) {
+                            fail("Stream already closed");
+                        } else {
+                            streamClosed = invocationOnMock.getArgument(4);
+                        }
+                        return promise.setSuccess();
+>>>>>>> dev
                     }
                     return promise.setSuccess();
                 });
@@ -285,6 +321,32 @@ public class DefaultHttp2ConnectionEncoderTest {
         assertEquals(0, data.refCnt());
     }
 
+<<<<<<< HEAD
+=======
+    @Test
+    public void writeHeadersUsingVoidPromise() throws Exception {
+        final Throwable cause = new RuntimeException("fake exception");
+        when(writer.writeHeaders(eq(ctx), eq(STREAM_ID), any(Http2Headers.class),
+                                 anyInt(), anyBoolean(), any(ChannelPromise.class)))
+                .then(new Answer<ChannelFuture>() {
+                    @Override
+                    public ChannelFuture answer(InvocationOnMock invocationOnMock) throws Throwable {
+                        ChannelPromise promise = invocationOnMock.getArgument(5);
+                        assertFalse(promise.isVoid());
+                        return promise.setFailure(cause);
+                    }
+                });
+        createStream(STREAM_ID, false);
+        // END_STREAM flag, so that a listener is added to the future.
+        encoder.writeHeaders(ctx, STREAM_ID, EmptyHttp2Headers.INSTANCE, 0, true, newVoidPromise(channel));
+
+        verify(writer).writeHeaders(eq(ctx), eq(STREAM_ID), any(Http2Headers.class),
+                                    anyInt(), anyBoolean(), any(ChannelPromise.class));
+        // When using a void promise, the error should be propagated via the channel pipeline.
+        verify(pipeline).fireExceptionCaught(cause);
+    }
+
+>>>>>>> dev
     private void assertSplitPaddingOnEmptyBuffer(ByteBuf data) throws Exception {
         createStream(STREAM_ID, false);
         when(frameSizePolicy.maxFrameSize()).thenReturn(5);
@@ -683,9 +745,18 @@ public class DefaultHttp2ConnectionEncoderTest {
         final Throwable ex = new RuntimeException();
         // Fake an encoding error, like HPACK's HeaderListSizeException
         when(writer.writeHeaders(eq(ctx), eq(STREAM_ID), eq(EmptyHttp2Headers.INSTANCE), eq(0), eq(true), eq(promise)))
+<<<<<<< HEAD
             .thenAnswer((Answer<ChannelFuture>) invocation -> {
                 promise.setFailure(ex);
                 return promise;
+=======
+            .thenAnswer(new Answer<ChannelFuture>() {
+                @Override
+                public ChannelFuture answer(InvocationOnMock invocation) {
+                    promise.setFailure(ex);
+                    return promise;
+                }
+>>>>>>> dev
             });
 
         writeAllFlowControlledFrames();
@@ -706,9 +777,18 @@ public class DefaultHttp2ConnectionEncoderTest {
         final Throwable ex = new RuntimeException();
         // Fake an encoding error, like HPACK's HeaderListSizeException
         when(writer.writeHeaders(eq(ctx), eq(STREAM_ID), eq(EmptyHttp2Headers.INSTANCE), eq(0), eq(true), eq(promise)))
+<<<<<<< HEAD
             .thenAnswer((Answer<ChannelFuture>) invocation -> {
                 promise.setFailure(ex);
                 return promise;
+=======
+            .thenAnswer(new Answer<ChannelFuture>() {
+                @Override
+                public ChannelFuture answer(InvocationOnMock invocation) {
+                    promise.setFailure(ex);
+                    return promise;
+                }
+>>>>>>> dev
             });
 
         writeAllFlowControlledFrames();

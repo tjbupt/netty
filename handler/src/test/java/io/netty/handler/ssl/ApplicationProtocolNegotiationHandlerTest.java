@@ -18,6 +18,10 @@ package io.netty.handler.ssl;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.channel.socket.ChannelInputShutdownEvent;
 import io.netty.handler.codec.DecoderException;
@@ -141,7 +145,11 @@ public class ApplicationProtocolNegotiationHandlerTest {
             @Override
             protected void configurePipeline(ChannelHandlerContext ctx, String protocol) {
                 assertEquals(ApplicationProtocolNames.HTTP_1_1, protocol);
+<<<<<<< HEAD
                 ctx.pipeline().addLast(new ChannelHandler() {
+=======
+                ctx.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
                     @Override
                     public void channelRead(ChannelHandlerContext ctx, Object msg) {
                         channelReadData.set((byte[]) msg);
@@ -165,7 +173,11 @@ public class ApplicationProtocolNegotiationHandlerTest {
 
         final byte[] someBytes = new byte[1024];
 
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(new SslHandler(engine), new ChannelHandler() {
+=======
+        EmbeddedChannel channel = new EmbeddedChannel(new SslHandler(engine), new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
             @Override
             public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
                 if (evt == SslHandshakeCompletionEvent.SUCCESS) {

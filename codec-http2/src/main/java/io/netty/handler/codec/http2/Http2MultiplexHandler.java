@@ -27,11 +27,18 @@ import io.netty.channel.EventLoop;
 import io.netty.channel.ServerChannel;
 import io.netty.handler.codec.http2.Http2FrameCodec.DefaultHttp2FrameStream;
 import io.netty.util.ReferenceCounted;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.UnstableApi;
 
 import javax.net.ssl.SSLException;
 import java.util.ArrayDeque;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+>>>>>>> dev
 import java.util.Queue;
 
 import static io.netty.handler.codec.http2.Http2Error.INTERNAL_ERROR;
@@ -86,7 +93,16 @@ import static io.netty.handler.codec.http2.Http2Exception.connectionError;
 @UnstableApi
 public final class Http2MultiplexHandler extends Http2ChannelDuplexHandler {
 
+<<<<<<< HEAD
     static final ChannelFutureListener CHILD_CHANNEL_REGISTRATION_LISTENER = Http2MultiplexHandler::registerDone;
+=======
+    static final ChannelFutureListener CHILD_CHANNEL_REGISTRATION_LISTENER = new ChannelFutureListener() {
+        @Override
+        public void operationComplete(ChannelFuture future) {
+            registerDone(future);
+        }
+    };
+>>>>>>> dev
 
     private final ChannelHandler inboundStreamHandler;
     private final ChannelHandler upgradeStreamHandler;
@@ -120,7 +136,11 @@ public final class Http2MultiplexHandler extends Http2ChannelDuplexHandler {
      *                             upgraded {@link Channel}.
      */
     public Http2MultiplexHandler(ChannelHandler inboundStreamHandler, ChannelHandler upgradeStreamHandler) {
+<<<<<<< HEAD
         this.inboundStreamHandler = Objects.requireNonNull(inboundStreamHandler, "inboundStreamHandler");
+=======
+        this.inboundStreamHandler = ObjectUtil.checkNotNull(inboundStreamHandler, "inboundStreamHandler");
+>>>>>>> dev
         this.upgradeStreamHandler = upgradeStreamHandler;
     }
 
@@ -231,7 +251,11 @@ public final class Http2MultiplexHandler extends Http2ChannelDuplexHandler {
                         } else {
                             ch = new Http2MultiplexHandlerStreamChannel(stream, inboundStreamHandler);
                         }
+<<<<<<< HEAD
                         ChannelFuture future = ch.register();
+=======
+                        ChannelFuture future = ctx.channel().eventLoop().register(ch);
+>>>>>>> dev
                         if (future.isDone()) {
                             registerDone(future);
                         } else {
@@ -299,6 +323,7 @@ public final class Http2MultiplexHandler extends Http2ChannelDuplexHandler {
         // Notify which streams were not processed by the remote peer and are safe to retry on another connection:
         try {
             final boolean server = isServer(ctx);
+<<<<<<< HEAD
             forEachActiveStream(stream -> {
                 final int streamId = stream.id();
                 if (streamId > goAwayFrame.lastStreamId() && Http2CodecUtil.isStreamIdValid(streamId, server)) {
@@ -307,6 +332,19 @@ public final class Http2MultiplexHandler extends Http2ChannelDuplexHandler {
                     childChannel.pipeline().fireUserEventTriggered(goAwayFrame.retainedDuplicate());
                 }
                 return true;
+=======
+            forEachActiveStream(new Http2FrameStreamVisitor() {
+                @Override
+                public boolean visit(Http2FrameStream stream) {
+                    final int streamId = stream.id();
+                    if (streamId > goAwayFrame.lastStreamId() && Http2CodecUtil.isStreamIdValid(streamId, server)) {
+                        final AbstractHttp2StreamChannel childChannel = (AbstractHttp2StreamChannel)
+                                ((DefaultHttp2FrameStream) stream).attachment;
+                        childChannel.pipeline().fireUserEventTriggered(goAwayFrame.retainedDuplicate());
+                    }
+                    return true;
+                }
+>>>>>>> dev
             });
         } catch (Http2Exception e) {
             ctx.fireExceptionCaught(e);

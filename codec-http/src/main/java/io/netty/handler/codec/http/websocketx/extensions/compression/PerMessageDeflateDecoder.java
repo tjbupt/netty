@@ -22,6 +22,11 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.extensions.WebSocketExtension;
 import io.netty.handler.codec.http.websocketx.extensions.WebSocketExtensionFilter;
+<<<<<<< HEAD
+=======
+
+import java.util.List;
+>>>>>>> dev
 
 /**
  * Per-message implementation of deflate decompressor.
@@ -33,8 +38,23 @@ class PerMessageDeflateDecoder extends DeflateDecoder {
     /**
      * Constructor
      *
+<<<<<<< HEAD
      * @param noContext true to disable context takeover.
      */
+    PerMessageDeflateDecoder(boolean noContext) {
+        super(noContext, WebSocketExtensionFilter.NEVER_SKIP);
+    }
+
+    /**
+     * Constructor
+     *
+=======
+>>>>>>> dev
+     * @param noContext true to disable context takeover.
+     * @param extensionDecoderFilter extension decoder for per message deflate decoder.
+     */
+<<<<<<< HEAD
+=======
     PerMessageDeflateDecoder(boolean noContext) {
         super(noContext, WebSocketExtensionFilter.NEVER_SKIP);
     }
@@ -45,6 +65,7 @@ class PerMessageDeflateDecoder extends DeflateDecoder {
      * @param noContext true to disable context takeover.
      * @param extensionDecoderFilter extension decoder for per message deflate decoder.
      */
+>>>>>>> dev
     PerMessageDeflateDecoder(boolean noContext, WebSocketExtensionFilter extensionDecoderFilter) {
         super(noContext, extensionDecoderFilter);
     }
@@ -80,9 +101,15 @@ class PerMessageDeflateDecoder extends DeflateDecoder {
     }
 
     @Override
+<<<<<<< HEAD
     protected void decode(ChannelHandlerContext ctx, WebSocketFrame msg) throws Exception {
         boolean isFinal = msg.isFinalFragment();
         super.decode(ctx, msg);
+=======
+    protected void decode(ChannelHandlerContext ctx, WebSocketFrame msg,
+                          List<Object> out) throws Exception {
+        super.decode(ctx, msg, out);
+>>>>>>> dev
 
         if (isFinal) {
             compressing = false;

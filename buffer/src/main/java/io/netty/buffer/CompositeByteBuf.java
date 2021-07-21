@@ -21,6 +21,7 @@ import io.netty.util.ByteProcessor;
 import io.netty.util.IllegalReferenceCountException;
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.internal.EmptyArrays;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.RecyclableArrayList;
 
 import java.io.IOException;
@@ -62,12 +63,17 @@ public class CompositeByteBuf extends AbstractReferenceCountedByteBuf implements
 
     private CompositeByteBuf(ByteBufAllocator alloc, boolean direct, int maxNumComponents, int initSize) {
         super(AbstractByteBufAllocator.DEFAULT_MAX_CAPACITY);
+<<<<<<< HEAD
         requireNonNull(alloc, "alloc");
+=======
+
+        this.alloc = ObjectUtil.checkNotNull(alloc, "alloc");
+>>>>>>> dev
         if (maxNumComponents < 1) {
             throw new IllegalArgumentException(
                     "maxNumComponents: " + maxNumComponents + " (expected: >= 1)");
         }
-        this.alloc = alloc;
+
         this.direct = direct;
         this.maxNumComponents = maxNumComponents;
         components = newCompArray(initSize, maxNumComponents);
@@ -463,7 +469,11 @@ public class CompositeByteBuf extends AbstractReferenceCountedByteBuf implements
      * {@link CompositeByteBuf}.
      */
     public CompositeByteBuf addFlattenedComponents(boolean increaseWriterIndex, ByteBuf buffer) {
+<<<<<<< HEAD
         requireNonNull(buffer, "buffer");
+=======
+        checkNotNull(buffer, "buffer");
+>>>>>>> dev
         final int ridx = buffer.readerIndex();
         final int widx = buffer.writerIndex();
         if (ridx == widx) {

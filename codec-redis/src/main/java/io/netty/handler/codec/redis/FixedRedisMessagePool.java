@@ -56,7 +56,11 @@ public final class FixedRedisMessagePool implements RedisMessagePool {
         WRONGTYPE("WRONGTYPE Operation against a key holding the wrong kind of value"),
         NOT_AUTH("NOAUTH Authentication required.");
 
+<<<<<<< HEAD
         private final String msg;
+=======
+        private String msg;
+>>>>>>> dev
 
         RedisErrorKey(String msg) {
             this.msg = msg;
@@ -94,9 +98,15 @@ public final class FixedRedisMessagePool implements RedisMessagePool {
      * Creates a {@link FixedRedisMessagePool} instance.
      */
     private FixedRedisMessagePool() {
+<<<<<<< HEAD
         keyToSimpleStrings = new HashMap<>(RedisReplyKey.values().length, 1.0f);
         stringToSimpleStrings = new HashMap<>(RedisReplyKey.values().length, 1.0f);
         byteBufToSimpleStrings = new HashMap<>(RedisReplyKey.values().length, 1.0f);
+=======
+        keyToSimpleStrings = new HashMap<RedisReplyKey, SimpleStringRedisMessage>(RedisReplyKey.values().length, 1.0f);
+        stringToSimpleStrings = new HashMap<String, SimpleStringRedisMessage>(RedisReplyKey.values().length, 1.0f);
+        byteBufToSimpleStrings = new HashMap<ByteBuf, SimpleStringRedisMessage>(RedisReplyKey.values().length, 1.0f);
+>>>>>>> dev
         for (RedisReplyKey value : RedisReplyKey.values()) {
             ByteBuf key = Unpooled.unreleasableBuffer(Unpooled.wrappedBuffer(
                 value.name().getBytes(CharsetUtil.UTF_8))).asReadOnly();
@@ -107,9 +117,15 @@ public final class FixedRedisMessagePool implements RedisMessagePool {
             byteBufToSimpleStrings.put(key, message);
         }
 
+<<<<<<< HEAD
         keyToErrors = new HashMap<>(RedisErrorKey.values().length, 1.0f);
         stringToErrors = new HashMap<>(RedisErrorKey.values().length, 1.0f);
         byteBufToErrors = new HashMap<>(RedisErrorKey.values().length, 1.0f);
+=======
+        keyToErrors = new HashMap<RedisErrorKey, ErrorRedisMessage>(RedisErrorKey.values().length, 1.0f);
+        stringToErrors = new HashMap<String, ErrorRedisMessage>(RedisErrorKey.values().length, 1.0f);
+        byteBufToErrors = new HashMap<ByteBuf, ErrorRedisMessage>(RedisErrorKey.values().length, 1.0f);
+>>>>>>> dev
         for (RedisErrorKey value : RedisErrorKey.values()) {
             ByteBuf key = Unpooled.unreleasableBuffer(Unpooled.wrappedBuffer(
                 value.toString().getBytes(CharsetUtil.UTF_8))).asReadOnly();

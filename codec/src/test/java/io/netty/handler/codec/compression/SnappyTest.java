@@ -20,6 +20,10 @@ import io.netty.buffer.Unpooled;
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static io.netty.handler.codec.compression.Snappy.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -81,16 +85,29 @@ public class SnappyTest {
 
     @Test
     public void testDecodeCopyWithTinyOffset() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+>>>>>>> dev
             0x0b, // preamble length
             0x04 << 2, // literal tag + length
             0x6e, 0x65, 0x74, 0x74, 0x79, // "netty"
             0x05 << 2 | 0x01, // copy with 1-byte offset + length
             0x00 // INVALID offset (< 1)
         });
-        ByteBuf out = Unpooled.buffer(10);
+        final ByteBuf out = Unpooled.buffer(10);
         try {
+<<<<<<< HEAD
             assertThrows(DecompressionException.class, () -> snappy.decode(in, out));
+=======
+            assertThrows(DecompressionException.class, new Executable() {
+                @Override
+                public void execute() {
+                    snappy.decode(in, out);
+                }
+            });
+>>>>>>> dev
         } finally {
             in.release();
             out.release();
@@ -99,16 +116,29 @@ public class SnappyTest {
 
     @Test
     public void testDecodeCopyWithOffsetBeforeChunk() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+>>>>>>> dev
             0x0a, // preamble length
             0x04 << 2, // literal tag + length
             0x6e, 0x65, 0x74, 0x74, 0x79, // "netty"
             0x05 << 2 | 0x01, // copy with 1-byte offset + length
             0x0b // INVALID offset (greater than chunk size)
         });
-        ByteBuf out = Unpooled.buffer(10);
+        final ByteBuf out = Unpooled.buffer(10);
         try {
+<<<<<<< HEAD
             assertThrows(DecompressionException.class, () -> snappy.decode(in, out));
+=======
+            assertThrows(DecompressionException.class, new Executable() {
+                @Override
+                public void execute() {
+                    snappy.decode(in, out);
+                }
+            });
+>>>>>>> dev
         } finally {
             in.release();
             out.release();
@@ -117,14 +147,27 @@ public class SnappyTest {
 
     @Test
     public void testDecodeWithOverlyLongPreamble() {
+<<<<<<< HEAD
         ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+=======
+        final ByteBuf in = Unpooled.wrappedBuffer(new byte[] {
+>>>>>>> dev
             -0x80, -0x80, -0x80, -0x80, 0x7f, // preamble length
             0x04 << 2, // literal tag + length
             0x6e, 0x65, 0x74, 0x74, 0x79, // "netty"
         });
-        ByteBuf out = Unpooled.buffer(10);
+        final ByteBuf out = Unpooled.buffer(10);
         try {
+<<<<<<< HEAD
             assertThrows(DecompressionException.class, () -> snappy.decode(in, out));
+=======
+            assertThrows(DecompressionException.class, new Executable() {
+                @Override
+                public void execute() {
+                    snappy.decode(in, out);
+                }
+            });
+>>>>>>> dev
         } finally {
             in.release();
             out.release();
@@ -263,11 +306,20 @@ public class SnappyTest {
 
     @Test
     public void testValidateChecksumFails() {
-        ByteBuf input = Unpooled.wrappedBuffer(new byte[] {
+        final ByteBuf input = Unpooled.wrappedBuffer(new byte[] {
                 'y', 't', 't', 'e', 'n'
         });
         try {
+<<<<<<< HEAD
             assertThrows(DecompressionException.class, () -> validateChecksum(maskChecksum(0xd6cb8b55), input));
+=======
+            assertThrows(DecompressionException.class, new Executable() {
+                @Override
+                public void execute() {
+                    validateChecksum(maskChecksum(0xd6cb8b55), input);
+                }
+            });
+>>>>>>> dev
         } finally {
             input.release();
         }

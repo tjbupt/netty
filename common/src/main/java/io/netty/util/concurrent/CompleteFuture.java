@@ -16,7 +16,11 @@
 
 package io.netty.util.concurrent;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import java.util.concurrent.TimeUnit;
 
@@ -50,8 +54,37 @@ public abstract class CompleteFuture<V> implements Future<V> {
 
     @Override
     public Future<V> addListener(GenericFutureListener<? extends Future<? super V>> listener) {
+<<<<<<< HEAD
         requireNonNull(listener, "listener");
         DefaultPromise.safeExecute(executor(), () -> DefaultPromise.notifyListener0(this, listener));
+=======
+        DefaultPromise.notifyListener(executor(), this, ObjectUtil.checkNotNull(listener, "listener"));
+        return this;
+    }
+
+    @Override
+    public Future<V> addListeners(GenericFutureListener<? extends Future<? super V>>... listeners) {
+        for (GenericFutureListener<? extends Future<? super V>> l:
+                ObjectUtil.checkNotNull(listeners, "listeners")) {
+
+            if (l == null) {
+                break;
+            }
+            DefaultPromise.notifyListener(executor(), this, l);
+        }
+        return this;
+    }
+
+    @Override
+    public Future<V> removeListener(GenericFutureListener<? extends Future<? super V>> listener) {
+        // NOOP
+        return this;
+    }
+
+    @Override
+    public Future<V> removeListeners(GenericFutureListener<? extends Future<? super V>>... listeners) {
+        // NOOP
+>>>>>>> dev
         return this;
     }
 

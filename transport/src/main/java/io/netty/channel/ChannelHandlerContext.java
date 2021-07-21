@@ -63,16 +63,17 @@ import io.netty.util.concurrent.EventExecutor;
  * <h3>Storing stateful information</h3>
  *
  * {@link #attr(AttributeKey)} allow you to
- * store and access stateful information that is related with a handler and its
- * context.  Please refer to {@link ChannelHandler} to learn various recommended
+ * store and access stateful information that is related with a {@link ChannelHandler} / {@link Channel} and its
+ * context. Please refer to {@link ChannelHandler} to learn various recommended
  * ways to manage stateful information.
  *
- * <h3>A handler can have more than one context</h3>
+ * <h3>A handler can have more than one {@link ChannelHandlerContext}</h3>
  *
  * Please note that a {@link ChannelHandler} instance can be added to more than
  * one {@link ChannelPipeline}.  It means a single {@link ChannelHandler}
  * instance can have more than one {@link ChannelHandlerContext} and therefore
  * the single instance can be invoked with different
+<<<<<<< HEAD
  * {@link ChannelHandlerContext}s if it is added to one or more
  * {@link ChannelPipeline}s more than once.
  * <p>
@@ -112,6 +113,11 @@ import io.netty.util.concurrent.EventExecutor;
  * p2.addLast("f3", fh);
  * p2.addLast("f4", fh);
  * </pre>
+=======
+ * {@link ChannelHandlerContext}s if it is added to one or more {@link ChannelPipeline}s more than once.
+ * Also note that a {@link ChannelHandler} that is supposed to be added to multiple {@link ChannelPipeline}s should
+ * be marked as {@link io.netty.channel.ChannelHandler.Sharable}.
+>>>>>>> dev
  *
  * <h3>Additional resources worth reading</h3>
  * <p>

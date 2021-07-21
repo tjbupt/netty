@@ -28,7 +28,16 @@ public class SocketCloseForciblyTest extends AbstractSocketTest {
 
     @Test
     public void testCloseForcibly(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testCloseForcibly);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testCloseForcibly(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testCloseForcibly(ServerBootstrap sb, Bootstrap cb) throws Throwable {

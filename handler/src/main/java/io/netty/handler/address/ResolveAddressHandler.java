@@ -15,24 +15,43 @@
  */
 package io.netty.handler.address;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import io.netty.resolver.AddressResolver;
 import io.netty.resolver.AddressResolverGroup;
+=======
+import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+import io.netty.channel.ChannelPromise;
+import io.netty.resolver.AddressResolver;
+import io.netty.resolver.AddressResolverGroup;
+import io.netty.util.concurrent.Future;
+>>>>>>> dev
 import io.netty.util.concurrent.FutureListener;
 import io.netty.util.internal.ObjectUtil;
 
 import java.net.SocketAddress;
 
 /**
+<<<<<<< HEAD
  * {@link ChannelHandler} which will resolve the {@link SocketAddress} that is passed to
  * {@link ChannelHandler#connect(ChannelHandlerContext, SocketAddress, SocketAddress, ChannelPromise)} if it is not
  * already resolved and the {@link AddressResolver} supports the type of {@link SocketAddress}.
  */
 @Sharable
 public class ResolveAddressHandler implements ChannelHandler {
+=======
+ * {@link ChannelOutboundHandlerAdapter} which will resolve the {@link SocketAddress} that is passed to
+ * {@link #connect(ChannelHandlerContext, SocketAddress, SocketAddress, ChannelPromise)} if it is not already resolved
+ * and the {@link AddressResolver} supports the type of {@link SocketAddress}.
+ */
+@Sharable
+public class ResolveAddressHandler extends ChannelOutboundHandlerAdapter {
+>>>>>>> dev
 
     private final AddressResolverGroup<? extends SocketAddress> resolverGroup;
 
@@ -42,6 +61,7 @@ public class ResolveAddressHandler implements ChannelHandler {
 
     @Override
     public void connect(final ChannelHandlerContext ctx, SocketAddress remoteAddress,
+<<<<<<< HEAD
                         final SocketAddress localAddress, final ChannelPromise promise) {
         AddressResolver<? extends SocketAddress> resolver = resolverGroup.getResolver(ctx.executor());
         if (resolver.isSupported(remoteAddress) && !resolver.isResolved(remoteAddress)) {
@@ -53,6 +73,22 @@ public class ResolveAddressHandler implements ChannelHandler {
                     ctx.connect(future.getNow(), localAddress, promise);
                 }
                 ctx.pipeline().remove(ResolveAddressHandler.this);
+=======
+                        final SocketAddress localAddress, final ChannelPromise promise)  {
+        AddressResolver<? extends SocketAddress> resolver = resolverGroup.getResolver(ctx.executor());
+        if (resolver.isSupported(remoteAddress) && !resolver.isResolved(remoteAddress)) {
+            resolver.resolve(remoteAddress).addListener(new FutureListener<SocketAddress>() {
+                @Override
+                public void operationComplete(Future<SocketAddress> future) {
+                    Throwable cause = future.cause();
+                    if (cause != null) {
+                        promise.setFailure(cause);
+                    } else {
+                        ctx.connect(future.getNow(), localAddress, promise);
+                    }
+                    ctx.pipeline().remove(ResolveAddressHandler.this);
+                }
+>>>>>>> dev
             });
         } else {
             ctx.connect(remoteAddress, localAddress, promise);

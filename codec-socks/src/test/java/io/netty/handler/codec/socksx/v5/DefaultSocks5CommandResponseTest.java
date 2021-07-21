@@ -17,6 +17,10 @@ package io.netty.handler.codec.socksx.v5;
 
 import io.netty.buffer.ByteBuf;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -119,8 +123,18 @@ public class DefaultSocks5CommandResponseTest {
      */
     @Test
     public void testInvalidBoundAddress() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> new DefaultSocks5CommandResponse(
                 Socks5CommandStatus.SUCCESS, Socks5AddressType.IPv4, "127.0.0", 1000));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DefaultSocks5CommandResponse(
+                        Socks5CommandStatus.SUCCESS, Socks5AddressType.IPv4, "127.0.0", 1000);
+            }
+        });
+>>>>>>> dev
     }
 
     private static void assertByteBufEquals(byte[] expected, ByteBuf actual) {

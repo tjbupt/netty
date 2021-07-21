@@ -21,7 +21,14 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.embedded.EmbeddedChannel;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
 
+=======
+import org.junit.jupiter.api.function.Executable;
+
+import java.util.List;
+
+>>>>>>> dev
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -31,24 +38,46 @@ public class ByteToMessageCodecTest {
 
     @Test
     public void testSharable() {
+<<<<<<< HEAD
         assertThrows(IllegalStateException.class, InvalidByteToMessageCodec::new);
+=======
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                new InvalidByteToMessageCodec();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSharable2() {
+<<<<<<< HEAD
         assertThrows(IllegalStateException.class, InvalidByteToMessageCodec2::new);
+=======
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                new InvalidByteToMessageCodec2();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testForwardPendingData() {
         ByteToMessageCodec<Integer> codec = new ByteToMessageCodec<Integer>() {
             @Override
-            protected void encode(ChannelHandlerContext ctx, Integer msg, ByteBuf out) throws Exception {
+            protected void encode(ChannelHandlerContext ctx, Integer msg, ByteBuf out) {
                 out.writeInt(msg);
             }
 
             @Override
+<<<<<<< HEAD
             protected void decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+=======
+            protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+>>>>>>> dev
                 if (in.readableBytes() >= 4) {
                     ctx.fireChannelRead(in.readInt());
                 }

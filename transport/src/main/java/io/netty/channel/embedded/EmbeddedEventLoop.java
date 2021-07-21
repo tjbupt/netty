@@ -64,11 +64,15 @@ final class EmbeddedEventLoop extends AbstractScheduledEventExecutor implements 
 
     @Override
     public void execute(Runnable command) {
+<<<<<<< HEAD
         requireNonNull(command, "command");
         tasks.add(command);
         if (!running) {
             runTasks();
         }
+=======
+        tasks.add(ObjectUtil.checkNotNull(command, "command"));
+>>>>>>> dev
     }
 
     void runTasks() {

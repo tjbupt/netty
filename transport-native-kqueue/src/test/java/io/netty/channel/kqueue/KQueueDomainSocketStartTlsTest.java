@@ -24,6 +24,10 @@ import java.net.SocketAddress;
 import java.util.List;
 
 public class KQueueDomainSocketStartTlsTest extends SocketStartTlsTest {
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
     @Override
     protected SocketAddress newSocketAddress() {
         return KQueueSocketTestPermutation.newSocketAddress();

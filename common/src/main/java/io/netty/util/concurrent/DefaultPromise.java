@@ -21,7 +21,10 @@ import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
 import java.util.concurrent.CancellationException;
+<<<<<<< HEAD
 import java.util.concurrent.CompletionException;
+=======
+>>>>>>> dev
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -127,6 +130,45 @@ public class DefaultPromise<V> implements Promise<V> {
 
     private static final class LeanCancellationException extends CancellationException {
         private static final long serialVersionUID = 2794674970981187807L;
+<<<<<<< HEAD
+=======
+
+        // Suppress a warning since the method doesn't need synchronization
+        @Override
+        public Throwable fillInStackTrace() {   // lgtm[java/non-sync-override]
+            setStackTrace(CANCELLATION_STACK);
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            return CancellationException.class.getName();
+        }
+    }
+
+    @Override
+    public Throwable cause() {
+        return cause0(result);
+    }
+
+    private Throwable cause0(Object result) {
+        if (!(result instanceof CauseHolder)) {
+            return null;
+        }
+        if (result == CANCELLATION_CAUSE_HOLDER) {
+            CancellationException ce = new LeanCancellationException();
+            if (RESULT_UPDATER.compareAndSet(this, CANCELLATION_CAUSE_HOLDER, new CauseHolder(ce))) {
+                return ce;
+            }
+            result = this.result;
+        }
+        return ((CauseHolder) result).cause;
+    }
+
+    @Override
+    public Promise<V> addListener(GenericFutureListener<? extends Future<? super V>> listener) {
+        checkNotNull(listener, "listener");
+>>>>>>> dev
 
         // Suppress a warning since the method doesn't need synchronization
         @Override
@@ -399,7 +441,31 @@ public class DefaultPromise<V> implements Promise<V> {
     }
 
     protected void checkDeadLock() {
+<<<<<<< HEAD
         checkDeadLock(executor);
+=======
+        EventExecutor e = executor();
+        if (e != null && e.inEventLoop()) {
+            throw new BlockingOperationException(toString());
+        }
+    }
+
+    /**
+     * Notify a listener that a future has completed.
+     * <p>
+     * This method has a fixed depth of {@link #MAX_LISTENER_STACK_DEPTH} that will limit recursion to prevent
+     * {@link StackOverflowError} and will stop notifying listeners added after this threshold is exceeded.
+     * @param eventExecutor the executor to use to notify the listener {@code listener}.
+     * @param future the future that is complete.
+     * @param listener the listener to notify.
+     */
+    protected static void notifyListener(
+            EventExecutor eventExecutor, final Future<?> future, final GenericFutureListener<?> listener) {
+        notifyListenerWithStackOverFlowProtection(
+                checkNotNull(eventExecutor, "eventExecutor"),
+                checkNotNull(future, "future"),
+                checkNotNull(listener, "listener"));
+>>>>>>> dev
     }
 
     protected final void checkDeadLock(EventExecutor executor) {
@@ -603,6 +669,7 @@ public class DefaultPromise<V> implements Promise<V> {
         }
     }
 
+<<<<<<< HEAD
     @Override
     public FutureCompletionStage<V> asStage() {
         DefaultFutureCompletionStage<V> stageAdapter = stage;
@@ -612,6 +679,8 @@ public class DefaultPromise<V> implements Promise<V> {
         return stageAdapter;
     }
 
+=======
+>>>>>>> dev
     private static final class StacklessCancellationException extends CancellationException {
 
         private static final long serialVersionUID = -2974906711413716191L;

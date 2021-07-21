@@ -114,7 +114,16 @@ public class DefaultThreadFactoryTest {
     public void testDefaultThreadFactoryStickyThreadGroupConstructor() throws InterruptedException {
         final ThreadGroup sticky = new ThreadGroup("sticky");
         runStickyThreadGroupTest(
+<<<<<<< HEAD
                 () -> new DefaultThreadFactory("test", false, Thread.NORM_PRIORITY, sticky),
+=======
+                new Callable<DefaultThreadFactory>() {
+                    @Override
+                    public DefaultThreadFactory call() throws Exception {
+                        return new DefaultThreadFactory("test", false, Thread.NORM_PRIORITY, sticky);
+                    }
+                },
+>>>>>>> dev
                 sticky);
     }
 
@@ -212,6 +221,7 @@ public class DefaultThreadFactoryTest {
     @Test
     @Timeout(value = 2000, unit = TimeUnit.MILLISECONDS)
     public void testCurrentThreadGroupIsUsed() throws InterruptedException {
+<<<<<<< HEAD
         final AtomicReference<DefaultThreadFactory> factory = new AtomicReference<>();
         final AtomicReference<ThreadGroup> firstCaptured = new AtomicReference<>();
 
@@ -221,6 +231,20 @@ public class DefaultThreadFactoryTest {
             final Thread current = Thread.currentThread();
             firstCaptured.set(current.getThreadGroup());
             factory.set(new DefaultThreadFactory("sticky", false));
+=======
+        final AtomicReference<DefaultThreadFactory> factory = new AtomicReference<DefaultThreadFactory>();
+        final AtomicReference<ThreadGroup> firstCaptured = new AtomicReference<ThreadGroup>();
+
+        final ThreadGroup group = new ThreadGroup("first");
+        assertFalse(group.isDestroyed());
+        final Thread first = new Thread(group, new Runnable() {
+            @Override
+            public void run() {
+                final Thread current = Thread.currentThread();
+                firstCaptured.set(current.getThreadGroup());
+                factory.set(new DefaultThreadFactory("sticky", false));
+            }
+>>>>>>> dev
         });
         first.start();
         first.join();
@@ -230,8 +254,16 @@ public class DefaultThreadFactoryTest {
         assertEquals(group, firstCaptured.get());
 
         ThreadGroup currentThreadGroup = Thread.currentThread().getThreadGroup();
+<<<<<<< HEAD
         Thread second = factory.get().newThread(() -> {
             // NOOP.
+=======
+        Thread second = factory.get().newThread(new Runnable() {
+            @Override
+            public void run() {
+                // NOOP.
+            }
+>>>>>>> dev
         });
         second.join();
         assertEquals(currentThreadGroup, currentThreadGroup);

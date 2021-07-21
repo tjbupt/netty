@@ -23,6 +23,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.InternetProtocolFamily;
+<<<<<<< HEAD
+=======
+import io.netty.channel.socket.oio.OioDatagramChannel;
+>>>>>>> dev
 import io.netty.testsuite.transport.TestsuitePermutation;
 import io.netty.util.internal.SocketUtils;
 import org.junit.jupiter.api.Test;
@@ -49,7 +53,16 @@ public class DatagramMulticastTest extends AbstractDatagramTest {
 
     @Test
     public void testMulticast(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testMulticast);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testMulticast(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testMulticast(Bootstrap sb, Bootstrap cb) throws Throwable {

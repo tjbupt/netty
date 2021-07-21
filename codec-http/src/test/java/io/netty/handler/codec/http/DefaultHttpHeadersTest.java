@@ -19,6 +19,10 @@ import io.netty.handler.codec.http.HttpHeadersTestUtils.HeaderValue;
 import io.netty.util.AsciiString;
 import io.netty.util.internal.StringUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -42,13 +46,31 @@ public class DefaultHttpHeadersTest {
 
     @Test
     public void nullHeaderNameNotAllowed() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> new DefaultHttpHeaders().add(null, "foo"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DefaultHttpHeaders().add(null, "foo");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void emptyHeaderNameNotAllowed() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class,
             () -> new DefaultHttpHeaders().add(StringUtil.EMPTY_STRING, "foo"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DefaultHttpHeaders().add(StringUtil.EMPTY_STRING, "foo");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -154,14 +176,34 @@ public class DefaultHttpHeadersTest {
 
     @Test
     public void testSetNullHeaderValueValidate() {
+<<<<<<< HEAD
         HttpHeaders headers = new DefaultHttpHeaders(true);
         assertThrows(NullPointerException.class, () -> headers.set(of("test"), (CharSequence) null));
+=======
+        final HttpHeaders headers = new DefaultHttpHeaders(true);
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                headers.set(of("test"), (CharSequence) null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetNullHeaderValueNotValidate() {
+<<<<<<< HEAD
         HttpHeaders headers = new DefaultHttpHeaders(false);
         assertThrows(NullPointerException.class, () -> headers.set(of("test"), (CharSequence) null));
+=======
+        final HttpHeaders headers = new DefaultHttpHeaders(false);
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                headers.set(of("test"), (CharSequence) null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

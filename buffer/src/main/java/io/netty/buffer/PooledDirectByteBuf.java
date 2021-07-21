@@ -18,6 +18,10 @@ package io.netty.buffer;
 
 import io.netty.util.internal.ObjectPool;
 import io.netty.util.internal.ObjectPool.Handle;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectPool.ObjectCreator;
+>>>>>>> dev
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +31,16 @@ import java.nio.ByteBuffer;
 final class PooledDirectByteBuf extends PooledByteBuf<ByteBuffer> {
 
     private static final ObjectPool<PooledDirectByteBuf> RECYCLER = ObjectPool.newPool(
+<<<<<<< HEAD
             handle -> new PooledDirectByteBuf(handle, 0));
+=======
+            new ObjectCreator<PooledDirectByteBuf>() {
+        @Override
+        public PooledDirectByteBuf newObject(Handle<PooledDirectByteBuf> handle) {
+            return new PooledDirectByteBuf(handle, 0);
+        }
+    });
+>>>>>>> dev
 
     static PooledDirectByteBuf newInstance(int maxCapacity) {
         PooledDirectByteBuf buf = RECYCLER.get();

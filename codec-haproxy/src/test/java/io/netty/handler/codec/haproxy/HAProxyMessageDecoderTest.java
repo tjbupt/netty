@@ -25,6 +25,10 @@ import io.netty.handler.codec.haproxy.HAProxyProxiedProtocol.TransportProtocol;
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.List;
 
@@ -110,78 +114,182 @@ public class HAProxyMessageDecoderTest {
 
     @Test
     public void testV1NoUDP() {
+<<<<<<< HEAD
         String header = "PROXY UDP4 192.168.0.1 192.168.0.11 56324 443\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header = "PROXY UDP4 192.168.0.1 192.168.0.11 56324 443\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInvalidPort() {
+<<<<<<< HEAD
         String header = "PROXY TCP4 192.168.0.1 192.168.0.11 80000 443\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header = "PROXY TCP4 192.168.0.1 192.168.0.11 80000 443\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInvalidIPV4Address() {
+<<<<<<< HEAD
         String header = "PROXY TCP4 299.168.0.1 192.168.0.11 56324 443\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header = "PROXY TCP4 299.168.0.1 192.168.0.11 56324 443\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInvalidIPV6Address() {
+<<<<<<< HEAD
         String header = "PROXY TCP6 r001:0db8:85a3:0000:0000:8a2e:0370:7334 1050:0:0:0:5:600:300c:326b 56324 443\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header =
+                "PROXY TCP6 r001:0db8:85a3:0000:0000:8a2e:0370:7334 1050:0:0:0:5:600:300c:326b 56324 443\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInvalidProtocol() {
+<<<<<<< HEAD
         String header = "PROXY TCP7 192.168.0.1 192.168.0.11 56324 443\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header = "PROXY TCP7 192.168.0.1 192.168.0.11 56324 443\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testMissingParams() {
+<<<<<<< HEAD
         String header = "PROXY TCP4 192.168.0.1 192.168.0.11 56324\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header = "PROXY TCP4 192.168.0.1 192.168.0.11 56324\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testTooManyParams() {
+<<<<<<< HEAD
         String header = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 443 123\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 443 123\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInvalidCommand() {
+<<<<<<< HEAD
         String header = "PING TCP4 192.168.0.1 192.168.0.11 56324 443\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header = "PING TCP4 192.168.0.1 192.168.0.11 56324 443\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testInvalidEOL() {
+<<<<<<< HEAD
         String header = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 443\nGET / HTTP/1.1\r\n";
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        final String header = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 443\nGET / HTTP/1.1\r\n";
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testHeaderTooLong() {
-        String header = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 " +
+        final String header = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 " +
                         "00000000000000000000000000000000000000000000000000000000000000000443\r\n";
+<<<<<<< HEAD
         assertThrows(HAProxyProtocolException.class,
             () -> ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII)));
+=======
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header, CharsetUtil.US_ASCII));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testFailSlowHeaderTooLong() {
+<<<<<<< HEAD
         EmbeddedChannel slowFailCh = new EmbeddedChannel(new HAProxyMessageDecoder(false));
+=======
+        final EmbeddedChannel slowFailCh = new EmbeddedChannel(new HAProxyMessageDecoder(false));
+>>>>>>> dev
         try {
             String headerPart1 = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 " +
                                  "000000000000000000000000000000000000000000000000000000000000000000000443";
@@ -190,11 +298,23 @@ public class HAProxyMessageDecoderTest {
             String headerPart2 = "more header data";
             // Should not throw exception
             assertFalse(slowFailCh.writeInbound(copiedBuffer(headerPart2, CharsetUtil.US_ASCII)));
+<<<<<<< HEAD
             String headerPart3 = "end of header\r\n";
 
             int discarded = headerPart1.length() + headerPart2.length() + headerPart3.length() - 2;
             assertThrows(HAProxyProtocolException.class,
                 () -> slowFailCh.writeInbound(copiedBuffer(headerPart3, CharsetUtil.US_ASCII)), "over " + discarded);
+=======
+            final String headerPart3 = "end of header\r\n";
+
+            int discarded = headerPart1.length() + headerPart2.length() + headerPart3.length() - 2;
+            assertThrows(HAProxyProtocolException.class, new Executable() {
+                @Override
+                public void execute() {
+                    slowFailCh.writeInbound(copiedBuffer(headerPart3, CharsetUtil.US_ASCII));
+                }
+            }, "over " + discarded);
+>>>>>>> dev
         } finally {
             assertFalse(slowFailCh.finishAndReleaseAll());
         }
@@ -202,6 +322,7 @@ public class HAProxyMessageDecoderTest {
 
     @Test
     public void testFailFastHeaderTooLong() {
+<<<<<<< HEAD
         EmbeddedChannel fastFailCh = new EmbeddedChannel(new HAProxyMessageDecoder(true));
         try {
             String headerPart1 = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 " +
@@ -209,6 +330,18 @@ public class HAProxyMessageDecoderTest {
             assertThrows(HAProxyProtocolException.class,
                 () -> fastFailCh.writeInbound(copiedBuffer(headerPart1, CharsetUtil.US_ASCII)),
                 "over " + headerPart1.length());
+=======
+        final EmbeddedChannel fastFailCh = new EmbeddedChannel(new HAProxyMessageDecoder(true));
+        try {
+            final String headerPart1 = "PROXY TCP4 192.168.0.1 192.168.0.11 56324 " +
+                                 "000000000000000000000000000000000000000000000000000000000000000000000443";
+            assertThrows(HAProxyProtocolException.class, new Executable() {
+                        @Override
+                        public void execute() {
+                            fastFailCh.writeInbound(copiedBuffer(headerPart1, CharsetUtil.US_ASCII));
+                        }
+                    }, "over " + headerPart1.length());
+>>>>>>> dev
         } finally {
             assertFalse(fastFailCh.finishAndReleaseAll());
         }
@@ -648,7 +781,7 @@ public class HAProxyMessageDecoderTest {
     }
 
     @Test
-    public void testV2WithSslTLVs() throws Exception {
+    public void testV2WithSslTLVs() {
         ch = new EmbeddedChannel(new HAProxyMessageDecoder());
 
         final byte[] bytes = {
@@ -845,7 +978,7 @@ public class HAProxyMessageDecoderTest {
 
     @Test
     public void testV2InvalidProtocol() {
-        byte[] header = new byte[28];
+        final byte[] header = new byte[28];
         header[0] = 0x0D; // Binary Prefix
         header[1] = 0x0A; // -----
         header[2] = 0x0D; // -----
@@ -881,12 +1014,21 @@ public class HAProxyMessageDecoderTest {
         header[26] = 0x01; // Destination Port
         header[27] = (byte) 0xbb; // -----
 
+<<<<<<< HEAD
         assertThrows(HAProxyProtocolException.class, () -> ch.writeInbound(copiedBuffer(header)));
+=======
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testV2MissingParams() {
-        byte[] header = new byte[26];
+        final byte[] header = new byte[26];
         header[0] = 0x0D; // Binary Prefix
         header[1] = 0x0A; // -----
         header[2] = 0x0D; // -----
@@ -919,12 +1061,21 @@ public class HAProxyMessageDecoderTest {
         header[24] = (byte) 0xdc; // Source Port
         header[25] = 0x04; // -----
 
+<<<<<<< HEAD
         assertThrows(HAProxyProtocolException.class, () -> ch.writeInbound(copiedBuffer(header)));
+=======
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testV2InvalidCommand() {
-        byte[] header = new byte[28];
+        final byte[] header = new byte[28];
         header[0] = 0x0D; // Binary Prefix
         header[1] = 0x0A; // -----
         header[2] = 0x0D; // -----
@@ -960,12 +1111,21 @@ public class HAProxyMessageDecoderTest {
         header[26] = 0x01; // Destination Port
         header[27] = (byte) 0xbb; // -----
 
+<<<<<<< HEAD
         assertThrows(HAProxyProtocolException.class, () -> ch.writeInbound(copiedBuffer(header)));
+=======
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testV2InvalidVersion() {
-        byte[] header = new byte[28];
+        final byte[] header = new byte[28];
         header[0] = 0x0D; // Binary Prefix
         header[1] = 0x0A; // -----
         header[2] = 0x0D; // -----
@@ -1001,14 +1161,23 @@ public class HAProxyMessageDecoderTest {
         header[26] = 0x01; // Destination Port
         header[27] = (byte) 0xbb; // -----
 
+<<<<<<< HEAD
         assertThrows(HAProxyProtocolException.class, () -> ch.writeInbound(copiedBuffer(header)));
+=======
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testV2HeaderTooLong() {
         ch = new EmbeddedChannel(new HAProxyMessageDecoder(0));
 
-        byte[] header = new byte[248];
+        final byte[] header = new byte[248];
         header[0] = 0x0D; // Binary Prefix
         header[1] = 0x0A; // -----
         header[2] = 0x0D; // -----
@@ -1044,7 +1213,16 @@ public class HAProxyMessageDecoderTest {
         header[26] = 0x01; // Destination Port
         header[27] = (byte) 0xbb; // -----
 
+<<<<<<< HEAD
         assertThrows(HAProxyProtocolException.class, () -> ch.writeInbound(copiedBuffer(header)));
+=======
+        assertThrows(HAProxyProtocolException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(copiedBuffer(header));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

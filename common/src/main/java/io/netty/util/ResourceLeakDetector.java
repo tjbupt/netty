@@ -17,6 +17,11 @@
 package io.netty.util;
 
 import io.netty.util.internal.EmptyArrays;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 import io.netty.util.internal.SystemPropertyUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -29,7 +34,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
@@ -132,8 +140,12 @@ public class ResourceLeakDetector<T> {
      * Sets the resource leak detection level.
      */
     public static void setLevel(Level level) {
+<<<<<<< HEAD
         requireNonNull(level, "level");
         ResourceLeakDetector.level = level;
+=======
+        ResourceLeakDetector.level = ObjectUtil.checkNotNull(level, "level");
+>>>>>>> dev
     }
 
     /**
@@ -144,7 +156,16 @@ public class ResourceLeakDetector<T> {
     }
 
     /** the collection of active resources */
+<<<<<<< HEAD
     private final Set<DefaultResourceLeak<?>> allLeaks = ConcurrentHashMap.newKeySet();
+=======
+    private final Set<DefaultResourceLeak<?>> allLeaks =
+            Collections.newSetFromMap(new ConcurrentHashMap<DefaultResourceLeak<?>, Boolean>());
+
+    private final ReferenceQueue<Object> refQueue = new ReferenceQueue<Object>();
+    private final Set<String> reportedLeaks =
+            Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+>>>>>>> dev
 
     private final ReferenceQueue<Object> refQueue = new ReferenceQueue<>();
     private final Set<String> reportedLeaks =
@@ -199,9 +220,13 @@ public class ResourceLeakDetector<T> {
      */
     @Deprecated
     public ResourceLeakDetector(String resourceType, int samplingInterval, long maxActive) {
+<<<<<<< HEAD
         requireNonNull(resourceType, "resourceType");
 
         this.resourceType = resourceType;
+=======
+        this.resourceType = ObjectUtil.checkNotNull(resourceType, "resourceType");
+>>>>>>> dev
         this.samplingInterval = samplingInterval;
     }
 
@@ -506,7 +531,11 @@ public class ResourceLeakDetector<T> {
             buf.append("Recent access records: ").append(NEWLINE);
 
             int i = 1;
+<<<<<<< HEAD
             Set<String> seen = new HashSet<>(present);
+=======
+            Set<String> seen = new HashSet<String>(present);
+>>>>>>> dev
             for (; oldHead != TraceRecord.BOTTOM; oldHead = oldHead.next) {
                 String s = oldHead.toString();
                 if (seen.add(s)) {

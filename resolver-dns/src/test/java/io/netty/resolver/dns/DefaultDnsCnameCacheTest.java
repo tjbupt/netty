@@ -18,8 +18,12 @@ package io.netty.resolver.dns;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
+<<<<<<< HEAD
 import io.netty.channel.local.LocalHandler;
 import io.netty.channel.nio.NioHandler;
+=======
+
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Callable;

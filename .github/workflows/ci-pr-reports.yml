@@ -28,6 +28,10 @@ jobs:
     strategy:
       matrix:
         include:
+<<<<<<< HEAD
+=======
+          - setup: linux-x86_64-java8
+>>>>>>> dev
           - setup: linux-x86_64-java11
           - setup: linux-x86_64-java16
           - setup: linux-x86_64-java11-boringssl

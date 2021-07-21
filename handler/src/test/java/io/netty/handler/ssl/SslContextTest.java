@@ -103,7 +103,11 @@ public abstract class SslContextTest {
         final File keyFile = ResourcesUtil.getFile(getClass(), "test_unencrypted.pem");
         final File crtFile = ResourcesUtil.getFile(getClass(), "test.crt");
 
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, new Executable() {
+=======
+        assertThrows(SSLException.class, new Executable() {
+>>>>>>> dev
             @Override
             public void execute() throws Throwable {
                 newSslContext(crtFile, keyFile, "");

@@ -18,6 +18,7 @@ package io.netty.handler.codec.http.multipart;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.CompositeByteBuf;
 import io.netty.handler.codec.http.HttpConstants;
+import io.netty.util.internal.ObjectUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +49,11 @@ public abstract class AbstractMemoryHttpData extends AbstractHttpData {
 
     @Override
     public void setContent(ByteBuf buffer) throws IOException {
+<<<<<<< HEAD
         requireNonNull(buffer, "buffer");
+=======
+        ObjectUtil.checkNotNull(buffer, "buffer");
+>>>>>>> dev
         long localsize = buffer.readableBytes();
         checkSize(localsize);
         if (definedSize > 0 && definedSize < localsize) {
@@ -65,7 +70,12 @@ public abstract class AbstractMemoryHttpData extends AbstractHttpData {
 
     @Override
     public void setContent(InputStream inputStream) throws IOException {
+<<<<<<< HEAD
         requireNonNull(inputStream, "inputStream");
+=======
+        ObjectUtil.checkNotNull(inputStream, "inputStream");
+
+>>>>>>> dev
         byte[] bytes = new byte[4096 * 4];
         ByteBuf buffer = buffer();
         int written = 0;
@@ -125,13 +135,22 @@ public abstract class AbstractMemoryHttpData extends AbstractHttpData {
         if (last) {
             setCompleted();
         } else {
+<<<<<<< HEAD
             requireNonNull(buffer, "buffer");
+=======
+            ObjectUtil.checkNotNull(buffer, "buffer");
+>>>>>>> dev
         }
     }
 
     @Override
     public void setContent(File file) throws IOException {
+<<<<<<< HEAD
         requireNonNull(file, "file");
+=======
+        ObjectUtil.checkNotNull(file, "file");
+
+>>>>>>> dev
         long newsize = file.length();
         if (newsize > Integer.MAX_VALUE) {
             throw new IllegalArgumentException("File too big to be loaded in memory");
@@ -234,7 +253,11 @@ public abstract class AbstractMemoryHttpData extends AbstractHttpData {
 
     @Override
     public boolean renameTo(File dest) throws IOException {
+<<<<<<< HEAD
         requireNonNull(dest, "dest");
+=======
+        ObjectUtil.checkNotNull(dest, "dest");
+>>>>>>> dev
         if (byteBuf == null) {
             // empty file
             if (!dest.createNewFile()) {

@@ -32,6 +32,7 @@ import io.netty.resolver.NameResolver;
 import io.netty.resolver.AddressResolverGroup;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.FutureListener;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -166,8 +167,12 @@ public class Bootstrap extends AbstractBootstrap<Bootstrap, Channel, ChannelFact
      * Connect a {@link Channel} to the remote peer.
      */
     public ChannelFuture connect(SocketAddress remoteAddress) {
+<<<<<<< HEAD
         requireNonNull(remoteAddress, "remoteAddress");
 
+=======
+        ObjectUtil.checkNotNull(remoteAddress, "remoteAddress");
+>>>>>>> dev
         validate();
         return doResolveAndConnect(remoteAddress, config.localAddress());
     }
@@ -176,7 +181,11 @@ public class Bootstrap extends AbstractBootstrap<Bootstrap, Channel, ChannelFact
      * Connect a {@link Channel} to the remote peer.
      */
     public ChannelFuture connect(SocketAddress remoteAddress, SocketAddress localAddress) {
+<<<<<<< HEAD
         requireNonNull(remoteAddress, "remoteAddress");
+=======
+        ObjectUtil.checkNotNull(remoteAddress, "remoteAddress");
+>>>>>>> dev
         validate();
         return doResolveAndConnect(remoteAddress, localAddress);
     }
@@ -216,7 +225,13 @@ public class Bootstrap extends AbstractBootstrap<Bootstrap, Channel, ChannelFact
                                                final SocketAddress localAddress, final ChannelPromise promise) {
         try {
             final EventLoop eventLoop = channel.eventLoop();
-            final AddressResolver<SocketAddress> resolver = this.resolver.getResolver(eventLoop);
+            AddressResolver<SocketAddress> resolver;
+            try {
+                resolver = this.resolver.getResolver(eventLoop);
+            } catch (Throwable cause) {
+                channel.close();
+                return promise.setFailure(cause);
+            }
 
             if (!resolver.isSupported(remoteAddress) || resolver.isResolved(remoteAddress)) {
                 // Resolver has no idea about what to do with the specified remote address or it's resolved already.
@@ -272,8 +287,12 @@ public class Bootstrap extends AbstractBootstrap<Bootstrap, Channel, ChannelFact
     }
 
     @Override
+<<<<<<< HEAD
     ChannelFuture init(Channel channel) {
         ChannelPromise promise = channel.newPromise();
+=======
+    void init(Channel channel) {
+>>>>>>> dev
         ChannelPipeline p = channel.pipeline();
 
         setChannelOptions(channel, newOptionsArray(), logger);
@@ -281,12 +300,17 @@ public class Bootstrap extends AbstractBootstrap<Bootstrap, Channel, ChannelFact
 
         p.addLast(config.handler());
 
+<<<<<<< HEAD
         return promise.setSuccess();
     }
 
     @Override
     Channel newChannel(EventLoop eventLoop) throws Exception {
         return channelFactory.newChannel(eventLoop);
+=======
+        setChannelOptions(channel, newOptionsArray(), logger);
+        setAttributes(channel, newAttributesArray());
+>>>>>>> dev
     }
 
     @Override

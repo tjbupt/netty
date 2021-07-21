@@ -64,8 +64,13 @@ import java.util.concurrent.TimeUnit;
 public class SslErrorTest {
 
     static Collection<Object[]> data() {
+<<<<<<< HEAD
         List<SslProvider> serverProviders = new ArrayList<>(2);
         List<SslProvider> clientProviders = new ArrayList<>(3);
+=======
+        List<SslProvider> serverProviders = new ArrayList<SslProvider>(2);
+        List<SslProvider> clientProviders = new ArrayList<SslProvider>(3);
+>>>>>>> dev
 
         if (OpenSsl.isAvailable()) {
             serverProviders.add(SslProvider.OPENSSL);
@@ -140,7 +145,11 @@ public class SslErrorTest {
 
         Channel serverChannel = null;
         Channel clientChannel = null;
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(NioHandler.newFactory());
+=======
+        EventLoopGroup group = new NioEventLoopGroup();
+>>>>>>> dev
         final Promise<Void> promise = group.next().newPromise();
         try {
             serverChannel = new ServerBootstrap().group(group)
@@ -154,7 +163,11 @@ public class SslErrorTest {
                                 ch.pipeline().addLast(new AlertValidationHandler(clientProvider, serverProduceError,
                                         exception, promise));
                             }
+<<<<<<< HEAD
                             ch.pipeline().addLast(new ChannelHandler() {
+=======
+                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
 
                                 @Override
                                 public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
@@ -170,12 +183,19 @@ public class SslErrorTest {
                         @Override
                         protected void initChannel(Channel ch) {
                             ch.pipeline().addLast(sslClientCtx.newHandler(ch.alloc()));
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
                             if (serverProduceError) {
                                 ch.pipeline().addLast(new AlertValidationHandler(clientProvider, serverProduceError,
                                         exception, promise));
                             }
+<<<<<<< HEAD
                             ch.pipeline().addLast(new ChannelHandler() {
+=======
+                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
 
                                 @Override
                                 public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
@@ -236,7 +256,11 @@ public class SslErrorTest {
         }
     }
 
+<<<<<<< HEAD
     private static final class AlertValidationHandler implements ChannelHandler {
+=======
+    private static final class AlertValidationHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         private final SslProvider clientProvider;
         private final boolean serverProduceError;
         private final CertificateException exception;

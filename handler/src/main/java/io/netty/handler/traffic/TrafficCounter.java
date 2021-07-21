@@ -15,9 +15,14 @@
  */
 package io.netty.handler.traffic;
 
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkNotNullWithIAE;
 import static java.util.Objects.requireNonNull;
 
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+import static io.netty.util.internal.ObjectUtil.checkNotNullWithIAE;
+>>>>>>> dev
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -253,11 +258,14 @@ public class TrafficCounter {
      *            the checkInterval in millisecond between two computations.
      */
     public TrafficCounter(ScheduledExecutorService executor, String name, long checkInterval) {
+<<<<<<< HEAD
         requireNonNull(name, "name");
+=======
+>>>>>>> dev
 
+        this.name = checkNotNull(name, "name");
         trafficShapingHandler = null;
         this.executor = executor;
-        this.name = name;
 
         init(checkInterval);
     }
@@ -279,7 +287,11 @@ public class TrafficCounter {
     public TrafficCounter(
             AbstractTrafficShapingHandler trafficShapingHandler, ScheduledExecutorService executor,
             String name, long checkInterval) {
+<<<<<<< HEAD
         this.name = requireNonNull(name, "name");
+=======
+        this.name = checkNotNull(name, "name");
+>>>>>>> dev
         this.trafficShapingHandler = checkNotNullWithIAE(trafficShapingHandler, "trafficShapingHandler");
         this.executor = executor;
 

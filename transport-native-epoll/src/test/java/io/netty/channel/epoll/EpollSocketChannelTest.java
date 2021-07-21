@@ -19,7 +19,11 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
+<<<<<<< HEAD
 import io.netty.channel.MultithreadEventLoopGroup;
+=======
+
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 
 import java.net.InetSocketAddress;

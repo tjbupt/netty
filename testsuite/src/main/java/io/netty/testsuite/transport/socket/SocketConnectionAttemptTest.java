@@ -49,7 +49,16 @@ public class SocketConnectionAttemptTest extends AbstractClientSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testConnectTimeout(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testConnectTimeout);
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) throws Throwable {
+                testConnectTimeout(bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testConnectTimeout(Bootstrap cb) throws Throwable {
@@ -65,7 +74,16 @@ public class SocketConnectionAttemptTest extends AbstractClientSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testConnectRefused(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testConnectRefused);
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) throws Throwable {
+                testConnectRefused(bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testConnectRefused(Bootstrap cb) throws Throwable {
@@ -75,7 +93,16 @@ public class SocketConnectionAttemptTest extends AbstractClientSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testConnectRefusedHalfClosure(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testConnectRefusedHalfClosure);
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) throws Throwable {
+                testConnectRefusedHalfClosure(bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testConnectRefusedHalfClosure(Bootstrap cb) throws Throwable {
@@ -121,7 +148,16 @@ public class SocketConnectionAttemptTest extends AbstractClientSocketTest {
 
         assumeTrue(badHostTimedOut, "The connection attempt to " + BAD_HOST + " does not time out.");
 
+<<<<<<< HEAD
         run(testInfo, this::testConnectCancellation);
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) throws Throwable {
+                testConnectCancellation(bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testConnectCancellation(Bootstrap cb) throws Throwable {

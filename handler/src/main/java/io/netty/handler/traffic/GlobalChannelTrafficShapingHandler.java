@@ -19,7 +19,11 @@ import static io.netty.util.internal.ObjectUtil.checkNotNullWithIAE;
 import static io.netty.util.internal.ObjectUtil.checkPositive;
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 
+<<<<<<< HEAD
 import io.netty.buffer.ByteBufConvertible;
+=======
+import io.netty.buffer.ByteBuf;
+>>>>>>> dev
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelConfig;

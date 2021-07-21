@@ -16,6 +16,7 @@
 package io.netty.testsuite.transport;
 
 import io.netty.bootstrap.ServerBootstrap;
+<<<<<<< HEAD
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.EventLoop;
@@ -23,6 +24,15 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.IoHandlerFactory;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.ServerChannel;
+=======
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.EventLoop;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.ServerChannel;
+import io.netty.channel.SingleThreadEventLoop;
+>>>>>>> dev
 import io.netty.channel.local.LocalAddress;
 import io.netty.channel.local.LocalServerChannel;
 import io.netty.util.concurrent.EventExecutor;
@@ -30,20 +40,83 @@ import io.netty.util.concurrent.Future;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
+<<<<<<< HEAD
+=======
+import java.util.concurrent.Callable;
+>>>>>>> dev
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
+<<<<<<< HEAD
+=======
+import static org.junit.jupiter.api.Assertions.assertEquals;
+>>>>>>> dev
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class AbstractSingleThreadEventLoopTest {
 
+<<<<<<< HEAD
     @Test
     @SuppressWarnings("deprecation")
     public void shutdownBeforeStart() throws Exception {
         EventLoopGroup group = new MultithreadEventLoopGroup(newIoHandlerFactory());
+=======
+    @Timeout(value = 5000, unit = TimeUnit.MILLISECONDS)
+    public void testChannelsRegistered() throws Exception {
+        EventLoopGroup group = newEventLoopGroup();
+        final SingleThreadEventLoop loop = (SingleThreadEventLoop) group.next();
+
+        try {
+            final Channel ch1 = newChannel();
+            final Channel ch2 = newChannel();
+
+            int rc = registeredChannels(loop);
+            boolean channelCountSupported = rc != -1;
+
+            if (channelCountSupported) {
+                assertEquals(0, registeredChannels(loop));
+            }
+
+            assertTrue(loop.register(ch1).syncUninterruptibly().isSuccess());
+            assertTrue(loop.register(ch2).syncUninterruptibly().isSuccess());
+            if (channelCountSupported) {
+                checkNumRegisteredChannels(loop, 2);
+            }
+
+            assertTrue(ch1.deregister().syncUninterruptibly().isSuccess());
+            if (channelCountSupported) {
+                checkNumRegisteredChannels(loop, 1);
+            }
+        } finally {
+            group.shutdownGracefully();
+        }
+    }
+
+    private static void checkNumRegisteredChannels(SingleThreadEventLoop loop, int numChannels) throws Exception {
+        // We need to loop as some EventLoop implementations may need some time to update the counter correctly.
+        while (registeredChannels(loop) != numChannels) {
+            Thread.sleep(50);
+        }
+    }
+
+    // Only reliable if run from event loop
+    private static int registeredChannels(final SingleThreadEventLoop loop) throws Exception {
+        return loop.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() {
+                return loop.registeredChannels();
+            }
+        }).get(1, TimeUnit.SECONDS);
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    public void shutdownBeforeStart() throws Exception {
+        EventLoopGroup group = newEventLoopGroup();
+>>>>>>> dev
         assertFalse(group.awaitTermination(2, TimeUnit.MILLISECONDS));
         group.shutdown();
         assertTrue(group.awaitTermination(200, TimeUnit.MILLISECONDS));
@@ -51,7 +124,11 @@ public abstract class AbstractSingleThreadEventLoopTest {
 
     @Test
     public void shutdownGracefullyZeroQuietBeforeStart() throws Exception {
+<<<<<<< HEAD
         EventLoopGroup group =  new MultithreadEventLoopGroup(newIoHandlerFactory());
+=======
+        EventLoopGroup group = newEventLoopGroup();
+>>>>>>> dev
         assertTrue(group.shutdownGracefully(0L, 2L, TimeUnit.SECONDS).await(200L));
     }
 
@@ -59,11 +136,19 @@ public abstract class AbstractSingleThreadEventLoopTest {
     @Test
     @Timeout(value = 5000, unit = TimeUnit.MILLISECONDS)
     public void testShutdownGracefullyNoQuietPeriod() throws Exception {
+<<<<<<< HEAD
         EventLoopGroup loop = new MultithreadEventLoopGroup(newIoHandlerFactory());
         ServerBootstrap b = new ServerBootstrap();
         b.group(loop)
                 .channel(serverChannelClass())
                 .childHandler(new ChannelHandler() { });
+=======
+        EventLoopGroup loop = newEventLoopGroup();
+        ServerBootstrap b = new ServerBootstrap();
+        b.group(loop)
+        .channel(serverChannelClass())
+        .childHandler(new ChannelInboundHandlerAdapter());
+>>>>>>> dev
 
         // Not close the Channel to ensure the EventLoop is still shutdown in time.
         ChannelFuture cf = serverChannelClass() == LocalServerChannel.class
@@ -79,15 +164,30 @@ public abstract class AbstractSingleThreadEventLoopTest {
 
     @Test
     public void shutdownGracefullyBeforeStart() throws Exception {
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(newIoHandlerFactory());
+=======
+        EventLoopGroup group = newEventLoopGroup();
+>>>>>>> dev
         assertTrue(group.shutdownGracefully(200L, 1000L, TimeUnit.MILLISECONDS).await(500L));
     }
 
     @Test
     public void gracefulShutdownAfterStart() throws Exception {
+<<<<<<< HEAD
         EventLoop loop = new MultithreadEventLoopGroup(newIoHandlerFactory()).next();
         final CountDownLatch latch = new CountDownLatch(1);
         loop.execute(latch::countDown);
+=======
+        EventLoop loop = newEventLoopGroup().next();
+        final CountDownLatch latch = new CountDownLatch(1);
+        loop.execute(new Runnable() {
+            @Override
+            public void run() {
+                latch.countDown();
+            }
+        });
+>>>>>>> dev
 
         // Wait for the event loop thread to start.
         latch.await();
@@ -101,7 +201,14 @@ public abstract class AbstractSingleThreadEventLoopTest {
         assertRejection(loop);
     }
 
+<<<<<<< HEAD
     private static final Runnable NOOP = () -> { };
+=======
+    private static final Runnable NOOP = new Runnable() {
+        @Override
+        public void run() { }
+    };
+>>>>>>> dev
 
     private static void assertRejection(EventExecutor loop) {
         try {
@@ -112,6 +219,11 @@ public abstract class AbstractSingleThreadEventLoopTest {
         }
     }
 
+<<<<<<< HEAD
     protected abstract IoHandlerFactory newIoHandlerFactory();
+=======
+    protected abstract EventLoopGroup newEventLoopGroup();
+    protected abstract Channel newChannel();
+>>>>>>> dev
     protected abstract Class<? extends ServerChannel> serverChannelClass();
 }

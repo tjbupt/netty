@@ -40,10 +40,22 @@ public class DatagramUnicastInetTest extends DatagramUnicastTest {
 
     @Test
     public void testBindWithPortOnly(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, DatagramUnicastInetTest::testBindWithPortOnly);
     }
 
     private static void testBindWithPortOnly(Bootstrap sb, Bootstrap cb) throws Throwable {
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testBindWithPortOnly(bootstrap2);
+            }
+        });
+    }
+
+    private static void testBindWithPortOnly(Bootstrap cb) throws Throwable {
+>>>>>>> dev
         Channel channel = null;
         try {
             cb.handler(new ChannelHandlerAdapter() { });
@@ -64,7 +76,11 @@ public class DatagramUnicastInetTest extends DatagramUnicastTest {
         cb.handler(new SimpleChannelInboundHandler<DatagramPacket>() {
 
             @Override
+<<<<<<< HEAD
             public void messageReceived(ChannelHandlerContext ctx, DatagramPacket msg) {
+=======
+            public void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) {
+>>>>>>> dev
                 try {
                     ByteBuf buf = msg.content();
                     assertEquals(bytes.length, buf.readableBytes());
@@ -97,13 +113,20 @@ public class DatagramUnicastInetTest extends DatagramUnicastTest {
                                          final CountDownLatch latch, final AtomicReference<Throwable> errorRef,
                                          final boolean echo) throws Throwable {
         sb.handler(new ChannelInitializer<Channel>() {
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
             @Override
             protected void initChannel(Channel ch) {
                 ch.pipeline().addLast(new SimpleChannelInboundHandler<DatagramPacket>() {
 
                     @Override
+<<<<<<< HEAD
                     public void messageReceived(ChannelHandlerContext ctx, DatagramPacket msg) {
+=======
+                    public void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) {
+>>>>>>> dev
                         try {
                             if (sender == null) {
                                 assertNotNull(msg.sender());

@@ -109,7 +109,17 @@ public abstract class MessageToMessageEncoder<I> extends ChannelHandlerAdapter {
                     if (sizeMinusOne == 0) {
                         ctx.write(out.getUnsafe(0), promise);
                     } else if (sizeMinusOne > 0) {
+<<<<<<< HEAD
                         writePromiseCombiner(ctx, out, promise);
+=======
+                        // Check if we can use a voidPromise for our extra writes to reduce GC-Pressure
+                        // See https://github.com/netty/netty/issues/2525
+                        if (promise == ctx.voidPromise()) {
+                            writeVoidPromise(ctx, out);
+                        } else {
+                            writePromiseCombiner(ctx, out, promise);
+                        }
+>>>>>>> dev
                     }
                 } finally {
                     out.recycle();

@@ -17,6 +17,10 @@ package io.netty.util;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
@@ -92,9 +96,20 @@ public class RecyclerTest {
     @Test
     public void testMultipleRecycle() {
         Recycler<HandledObject> recycler = newRecycler(1024);
+<<<<<<< HEAD
         HandledObject object = recycler.get();
         object.recycle();
         assertThrows(IllegalStateException.class, object::recycle);
+=======
+        final HandledObject object = recycler.get();
+        object.recycle();
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                object.recycle();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -162,6 +177,57 @@ public class RecyclerTest {
             }
         });
         thread2.start();
+<<<<<<< HEAD
+=======
+        thread2.join();
+        HandledObject a = recycler.get();
+        HandledObject b = recycler.get();
+        assertNotSame(a, b);
+        IllegalStateException exception = exceptionStore.get();
+        assertNotNull(exception);
+    }
+
+    @Test
+    public void testMultipleRecycleAtDifferentThreadRacing() throws InterruptedException {
+        Recycler<HandledObject> recycler = newRecycler(1024);
+        final HandledObject object = recycler.get();
+        final AtomicReference<IllegalStateException> exceptionStore = new AtomicReference<IllegalStateException>();
+
+        final CountDownLatch countDownLatch = new CountDownLatch(2);
+        final Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    object.recycle();
+                } catch (IllegalStateException e) {
+                    Exception x = exceptionStore.getAndSet(e);
+                    if (x != null) {
+                        e.addSuppressed(x);
+                    }
+                } finally {
+                    countDownLatch.countDown();
+                }
+            }
+        });
+        thread1.start();
+
+        final Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    object.recycle();
+                } catch (IllegalStateException e) {
+                    Exception x = exceptionStore.getAndSet(e);
+                    if (x != null) {
+                        e.addSuppressed(x);
+                    }
+                } finally {
+                    countDownLatch.countDown();
+                }
+            }
+        });
+        thread2.start();
+>>>>>>> dev
 
         try {
             countDownLatch.await();

@@ -203,8 +203,14 @@ public abstract class MessageAggregator<I, S, C extends ByteBufHolder, O extends
     }
 
     @Override
+<<<<<<< HEAD
     protected void decode(final ChannelHandlerContext ctx, I msg) throws Exception {
         assert aggregating;
+=======
+    protected void decode(final ChannelHandlerContext ctx, I msg, List<Object> out) throws Exception {
+        assert aggregating;
+
+>>>>>>> dev
         if (isStartMessage(msg)) {
             handlingOversizedMessage = false;
             if (currentMessage != null) {
@@ -256,8 +262,13 @@ public abstract class MessageAggregator<I, S, C extends ByteBufHolder, O extends
                 } else {
                     aggregated = beginAggregation(m, EMPTY_BUFFER);
                 }
+<<<<<<< HEAD
                 finishAggregation(aggregated);
                 ctx.fireChannelRead(aggregated);
+=======
+                finishAggregation0(aggregated);
+                out.add(aggregated);
+>>>>>>> dev
                 return;
             }
 

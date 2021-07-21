@@ -22,9 +22,12 @@ import javax.net.ssl.SSLSession;
 import javax.security.cert.X509Certificate;
 
 import io.netty.buffer.Unpooled;
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.nio.NioHandler;
+=======
+>>>>>>> dev
 import org.bouncycastle.asn1.ocsp.OCSPResponseStatus;
 import org.bouncycastle.cert.ocsp.BasicOCSPResp;
 import org.bouncycastle.cert.ocsp.CertificateStatus;

@@ -31,13 +31,20 @@
  */
 package io.netty.handler.codec.http2;
 
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.ResourcesUtil;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
 import java.io.InputStream;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+>>>>>>> dev
 
 public class HpackTest {
 
@@ -46,7 +53,11 @@ public class HpackTest {
 
     public static File[] files() {
         File[] files = ResourcesUtil.getFile(HpackTest.class, TEST_DIR).listFiles();
+<<<<<<< HEAD
         Objects.requireNonNull(files, "files");
+=======
+        ObjectUtil.checkNotNull(files, "files");
+>>>>>>> dev
         return files;
     }
 

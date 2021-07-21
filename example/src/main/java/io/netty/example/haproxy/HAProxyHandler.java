@@ -33,7 +33,11 @@ public class HAProxyHandler extends ChannelOutboundHandlerAdapter {
     }
 
     @Override
+<<<<<<< HEAD
     public void write(final ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
+=======
+    public void write(final ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+>>>>>>> dev
         ChannelFuture future = ctx.write(msg, promise);
         if (msg instanceof HAProxyMessage) {
             future.addListener(new ChannelFutureListener() {

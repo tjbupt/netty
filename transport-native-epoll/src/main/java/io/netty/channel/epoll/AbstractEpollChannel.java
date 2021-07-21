@@ -80,26 +80,39 @@ abstract class AbstractEpollChannel extends AbstractChannel implements UnixChann
         this(null, eventLoop, fd, false);
     }
 
+<<<<<<< HEAD
     AbstractEpollChannel(Channel parent, EventLoop eventLoop, LinuxSocket fd, boolean active) {
         super(parent, eventLoop);
         socket = requireNonNull(fd, "fd");
+=======
+    AbstractEpollChannel(Channel parent, LinuxSocket fd, boolean active) {
+        super(parent);
+        this.socket = checkNotNull(fd, "fd");
+>>>>>>> dev
         this.active = active;
         if (active) {
             // Directly cache the remote and local addresses
             // See https://github.com/netty/netty/issues/2359
-            local = fd.localAddress();
-            remote = fd.remoteAddress();
+            this.local = fd.localAddress();
+            this.remote = fd.remoteAddress();
         }
     }
 
+<<<<<<< HEAD
     AbstractEpollChannel(Channel parent, EventLoop eventLoop, LinuxSocket fd, SocketAddress remote) {
         super(parent, eventLoop);
         socket = requireNonNull(fd, "fd");
         active = true;
+=======
+    AbstractEpollChannel(Channel parent, LinuxSocket fd, SocketAddress remote) {
+        super(parent);
+        this.socket = checkNotNull(fd, "fd");
+        this.active = true;
+>>>>>>> dev
         // Directly cache the remote and local addresses
         // See https://github.com/netty/netty/issues/2359
         this.remote = remote;
-        local = fd.localAddress();
+        this.local = fd.localAddress();
     }
 
     static boolean isSoErrorZero(Socket fd) {
@@ -197,6 +210,14 @@ abstract class AbstractEpollChannel extends AbstractChannel implements UnixChann
     void resetCachedAddresses() {
         local = socket.localAddress();
         remote = socket.remoteAddress();
+<<<<<<< HEAD
+=======
+    }
+
+    @Override
+    protected void doDisconnect() throws Exception {
+        doClose();
+>>>>>>> dev
     }
 
     @Override
@@ -388,7 +409,11 @@ abstract class AbstractEpollChannel extends AbstractChannel implements UnixChann
         }
 
         if (data.nioBufferCount() > 1) {
+<<<<<<< HEAD
             IovArray array = registration().cleanIovArray();
+=======
+            IovArray array = ((EpollEventLoop) eventLoop()).cleanIovArray();
+>>>>>>> dev
             array.add(data, data.readerIndex(), data.readableBytes());
             int cnt = array.count();
             assert cnt != 0;
@@ -600,12 +625,24 @@ abstract class AbstractEpollChannel extends AbstractChannel implements UnixChann
                     // Schedule connect timeout.
                     int connectTimeoutMillis = config().getConnectTimeoutMillis();
                     if (connectTimeoutMillis > 0) {
+<<<<<<< HEAD
                         connectTimeoutFuture = eventLoop().schedule(() -> {
                             ChannelPromise connectPromise = AbstractEpollChannel.this.connectPromise;
                             if (connectPromise != null && !connectPromise.isDone()
                                     && connectPromise.tryFailure(new ConnectTimeoutException(
                                     "connection timed out: " + remoteAddress))) {
                                 close(newPromise());
+=======
+                        connectTimeoutFuture = eventLoop().schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                ChannelPromise connectPromise = AbstractEpollChannel.this.connectPromise;
+                                if (connectPromise != null && !connectPromise.isDone()
+                                        && connectPromise.tryFailure(new ConnectTimeoutException(
+                                        "connection timed out: " + remoteAddress))) {
+                                    close(voidPromise());
+                                }
+>>>>>>> dev
                             }
                         }, connectTimeoutMillis, TimeUnit.MILLISECONDS);
                     }

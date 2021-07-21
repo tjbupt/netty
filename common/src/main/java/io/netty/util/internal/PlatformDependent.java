@@ -49,7 +49,13 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
+<<<<<<< HEAD
 import java.util.Set;
+=======
+import java.util.Random;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+>>>>>>> dev
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
@@ -124,6 +130,26 @@ public final class PlatformDependent {
     };
 
     static {
+<<<<<<< HEAD
+=======
+        if (javaVersion() >= 7) {
+            RANDOM_PROVIDER = new ThreadLocalRandomProvider() {
+                @Override
+                @SuppressJava6Requirement(reason = "Usage guarded by java version check")
+                public Random current() {
+                    return java.util.concurrent.ThreadLocalRandom.current();
+                }
+            };
+        } else {
+            RANDOM_PROVIDER = new ThreadLocalRandomProvider() {
+                @Override
+                public Random current() {
+                    return ThreadLocalRandom.current();
+                }
+            };
+        }
+
+>>>>>>> dev
         // Here is how the system property is used:
         //
         // * <  0  - Don't use cleaner, and inherit max direct memory from java. In this case the
@@ -191,6 +217,7 @@ public final class PlatformDependent {
         final Set<String> availableClassifiers = new LinkedHashSet<String>();
         for (final String osReleaseFileName : OS_RELEASE_FILES) {
             final File file = new File(osReleaseFileName);
+<<<<<<< HEAD
             boolean found = AccessController.doPrivileged((PrivilegedAction<Boolean>) () -> {
                 try {
                     if (file.exists()) {
@@ -232,6 +259,52 @@ public final class PlatformDependent {
                     logger.debug("Unable to check if {} exists", osReleaseFileName, e);
                 }
                 return false;
+=======
+            boolean found = AccessController.doPrivileged(new PrivilegedAction<Boolean>() {
+                @Override
+                public Boolean run() {
+                    try {
+                        if (file.exists()) {
+                            BufferedReader reader = null;
+                            try {
+                                reader = new BufferedReader(
+                                        new InputStreamReader(
+                                                new FileInputStream(file), CharsetUtil.UTF_8));
+
+                                String line;
+                                while ((line = reader.readLine()) != null) {
+                                    if (line.startsWith(LINUX_ID_PREFIX)) {
+                                        String id = normalizeOsReleaseVariableValue(
+                                                line.substring(LINUX_ID_PREFIX.length()));
+                                        addClassifier(allowedClassifiers, availableClassifiers, id);
+                                    } else if (line.startsWith(LINUX_ID_LIKE_PREFIX)) {
+                                        line = normalizeOsReleaseVariableValue(
+                                                line.substring(LINUX_ID_LIKE_PREFIX.length()));
+                                        addClassifier(allowedClassifiers, availableClassifiers, line.split("[ ]+"));
+                                    }
+                                }
+                            } catch (SecurityException e) {
+                                logger.debug("Unable to read {}", osReleaseFileName, e);
+                            } catch (IOException e) {
+                                logger.debug("Error while reading content of {}", osReleaseFileName, e);
+                            } finally {
+                                if (reader != null) {
+                                    try {
+                                        reader.close();
+                                    } catch (IOException ignored) {
+                                        // Ignore
+                                    }
+                                }
+                            }
+                            // specification states we should only fall back if /etc/os-release does not exist
+                            return true;
+                        }
+                    } catch (SecurityException e) {
+                        logger.debug("Unable to check if {} exists", osReleaseFileName, e);
+                    }
+                    return false;
+                }
+>>>>>>> dev
             });
 
             if (found) {
@@ -432,6 +505,7 @@ public final class PlatformDependent {
         return PlatformDependent0.getInt(object, fieldOffset);
     }
 
+<<<<<<< HEAD
     public static float getFloat(Object object, long fieldOffset) {
         return PlatformDependent0.getFloat(object, fieldOffset);
     }
@@ -444,6 +518,8 @@ public final class PlatformDependent {
         return PlatformDependent0.getDouble(object, fieldOffset);
     }
 
+=======
+>>>>>>> dev
     public static int getIntVolatile(long address) {
         return PlatformDependent0.getIntVolatile(address);
     }
@@ -616,6 +692,7 @@ public final class PlatformDependent {
         PlatformDependent0.putByte(data, offset, value);
     }
 
+<<<<<<< HEAD
     public static void putShort(Object data, long offset, short value) {
         PlatformDependent0.putShort(data, offset, value);
     }
@@ -640,6 +717,8 @@ public final class PlatformDependent {
         PlatformDependent0.putDouble(data, offset, value);
     }
 
+=======
+>>>>>>> dev
     public static void putShort(byte[] data, int index, short value) {
         PlatformDependent0.putShort(data, index, value);
     }
@@ -673,10 +752,13 @@ public final class PlatformDependent {
                                       dst, BYTE_ARRAY_BASE_OFFSET + dstIndex, length);
     }
 
+<<<<<<< HEAD
     public static void copyMemory(Object src, long srcOffset, Object dst, long dstOffset, long length) {
         PlatformDependent0.copyMemory(src, srcOffset, dst, dstOffset, length);
     }
 
+=======
+>>>>>>> dev
     public static void copyMemory(long srcAddr, byte[] dst, int dstIndex, long length) {
         PlatformDependent0.copyMemory(null, srcAddr, dst, BYTE_ARRAY_BASE_OFFSET + dstIndex, length);
     }
@@ -764,10 +846,13 @@ public final class PlatformDependent {
         return Pow2.align(value, alignment);
     }
 
+<<<<<<< HEAD
     public static int roundToPowerOfTwo(final int value) {
         return Pow2.roundToPowerOfTwo(value);
     }
 
+=======
+>>>>>>> dev
     private static void incrementMemoryCounter(int capacity) {
         if (DIRECT_MEMORY_COUNTER != null) {
             long newUsedMemory = DIRECT_MEMORY_COUNTER.addAndGet(capacity);
@@ -945,8 +1030,13 @@ public final class PlatformDependent {
             // This is forced by the MpscChunkedArrayQueue implementation as will try to round it
             // up to the next power of two and so will overflow otherwise.
             final int capacity = max(min(maxCapacity, MAX_ALLOWED_MPSC_CAPACITY), MIN_MAX_MPSC_CAPACITY);
+<<<<<<< HEAD
             return USE_MPSC_CHUNKED_ARRAY_QUEUE ? new MpscChunkedArrayQueue<>(MPSC_CHUNK_SIZE, capacity)
                                                 : new MpscChunkedAtomicArrayQueue<>(MPSC_CHUNK_SIZE, capacity);
+=======
+            return USE_MPSC_CHUNKED_ARRAY_QUEUE ? new MpscChunkedArrayQueue<T>(MPSC_CHUNK_SIZE, capacity)
+                                                : new MpscChunkedAtomicArrayQueue<T>(MPSC_CHUNK_SIZE, capacity);
+>>>>>>> dev
         }
 
         static <T> Queue<T> newMpscQueue() {
@@ -1012,6 +1102,7 @@ public final class PlatformDependent {
     /**
      * Returns a new concurrent {@link Deque}.
      */
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     public static <C> Deque<C> newConcurrentDeque() {
         return new ConcurrentLinkedDeque<>();
     }

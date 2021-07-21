@@ -23,6 +23,10 @@ import io.netty.handler.codec.CorruptedFrameException;
 import io.netty.handler.codec.TooLongFrameException;
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -53,36 +57,84 @@ public class XmlFrameDecoderTest {
 
     @Test
     public void testConstructorWithIllegalArgs01() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> new XmlFrameDecoder(0));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new XmlFrameDecoder(0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testConstructorWithIllegalArgs02() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> new XmlFrameDecoder(-23));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new XmlFrameDecoder(-23);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testDecodeWithFrameExceedingMaxLength() {
         XmlFrameDecoder decoder = new XmlFrameDecoder(3);
+<<<<<<< HEAD
         EmbeddedChannel ch = new EmbeddedChannel(decoder);
         assertThrows(TooLongFrameException.class,
             () -> ch.writeInbound(Unpooled.copiedBuffer("<v/>", CharsetUtil.UTF_8)));
+=======
+        final EmbeddedChannel ch = new EmbeddedChannel(decoder);
+        assertThrows(TooLongFrameException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(Unpooled.copiedBuffer("<v/>", CharsetUtil.UTF_8));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testDecodeWithInvalidInput() {
         XmlFrameDecoder decoder = new XmlFrameDecoder(1048576);
+<<<<<<< HEAD
         EmbeddedChannel ch = new EmbeddedChannel(decoder);
         assertThrows(CorruptedFrameException.class,
             () -> ch.writeInbound(Unpooled.copiedBuffer("invalid XML", CharsetUtil.UTF_8)));
+=======
+        final EmbeddedChannel ch = new EmbeddedChannel(decoder);
+        assertThrows(CorruptedFrameException.class, new Executable() {
+            @Override
+            public void execute() {
+                ch.writeInbound(Unpooled.copiedBuffer("invalid XML", CharsetUtil.UTF_8));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testDecodeWithInvalidContentBeforeXml() {
         XmlFrameDecoder decoder = new XmlFrameDecoder(1048576);
+<<<<<<< HEAD
         EmbeddedChannel ch = new EmbeddedChannel(decoder);
         assertThrows(CorruptedFrameException.class,
             () -> ch.writeInbound(Unpooled.copiedBuffer("invalid XML<foo/>", CharsetUtil.UTF_8)));
+=======
+        final EmbeddedChannel ch = new EmbeddedChannel(decoder);
+        assertThrows(CorruptedFrameException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                ch.writeInbound(Unpooled.copiedBuffer("invalid XML<foo/>", CharsetUtil.UTF_8));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

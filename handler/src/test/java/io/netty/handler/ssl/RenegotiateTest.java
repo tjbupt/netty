@@ -57,12 +57,20 @@ public abstract class RenegotiateTest {
             sb.group(group).channel(LocalServerChannel.class)
                     .childHandler(new ChannelInitializer<>() {
                         @Override
+<<<<<<< HEAD
                         protected void initChannel(Channel ch) {
                             SslHandler handler = context.newHandler(ch.alloc());
                             handler.setHandshakeTimeoutMillis(0);
                             ch.pipeline().addLast(handler);
                             ch.pipeline().addLast(new ChannelHandler() {
 
+=======
+                        protected void initChannel(Channel ch) throws Exception {
+                            SslHandler handler = context.newHandler(ch.alloc());
+                            handler.setHandshakeTimeoutMillis(0);
+                            ch.pipeline().addLast(handler);
+                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
                                 private boolean renegotiate;
 
                                 @Override
@@ -80,10 +88,21 @@ public abstract class RenegotiateTest {
                                             final SslHandler handler = ctx.pipeline().get(SslHandler.class);
 
                                             renegotiate = true;
+<<<<<<< HEAD
                                             handler.renegotiate().addListener((FutureListener<Channel>) future -> {
                                                 if (!future.isSuccess()) {
                                                     error.compareAndSet(null, future.cause());
                                                     ctx.close();
+=======
+                                            handler.renegotiate().addListener(new FutureListener<Channel>() {
+                                                @Override
+                                                public void operationComplete(Future<Channel> future) throws Exception {
+                                                    if (!future.isSuccess()) {
+                                                        error.compareAndSet(null, future.cause());
+                                                        ctx.close();
+                                                    }
+                                                    latch.countDown();
+>>>>>>> dev
                                                 }
                                                 latch.countDown();
                                             });
@@ -110,11 +129,19 @@ public abstract class RenegotiateTest {
             bootstrap.group(group).channel(LocalChannel.class)
                     .handler(new ChannelInitializer<>() {
                         @Override
+<<<<<<< HEAD
                         protected void initChannel(Channel ch) {
                             SslHandler handler = clientContext.newHandler(ch.alloc());
                             handler.setHandshakeTimeoutMillis(0);
                             ch.pipeline().addLast(handler);
                             ch.pipeline().addLast(new ChannelHandler() {
+=======
+                        protected void initChannel(Channel ch) throws Exception {
+                            SslHandler handler = clientContext.newHandler(ch.alloc());
+                            handler.setHandshakeTimeoutMillis(0);
+                            ch.pipeline().addLast(handler);
+                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
                                 @Override
                                 public void userEventTriggered(
                                         ChannelHandlerContext ctx, Object evt) {

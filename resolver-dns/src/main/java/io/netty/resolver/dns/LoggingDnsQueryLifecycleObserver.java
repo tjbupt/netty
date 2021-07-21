@@ -33,9 +33,15 @@ final class LoggingDnsQueryLifecycleObserver implements DnsQueryLifecycleObserve
     private InetSocketAddress dnsServerAddress;
 
     LoggingDnsQueryLifecycleObserver(DnsQuestion question, InternalLogger logger, InternalLogLevel level) {
+<<<<<<< HEAD:resolver-dns/src/main/java/io/netty/resolver/dns/LoggingDnsQueryLifecycleObserver.java
         this.question = requireNonNull(question, "question");
         this.logger = requireNonNull(logger, "logger");
         this.level = requireNonNull(level, "level");
+=======
+        this.question = checkNotNull(question, "question");
+        this.logger = checkNotNull(logger, "logger");
+        this.level = checkNotNull(level, "level");
+>>>>>>> dev:resolver-dns/src/main/java/io/netty/resolver/dns/TraceDnsQueryLifecycleObserver.java
     }
 
     @Override

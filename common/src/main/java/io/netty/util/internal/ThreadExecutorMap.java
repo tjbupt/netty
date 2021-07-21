@@ -18,7 +18,10 @@ package io.netty.util.internal;
 import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.FastThreadLocal;
 
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+>>>>>>> dev
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
 
@@ -50,9 +53,20 @@ public final class ThreadExecutorMap {
      * when called from within the {@link Runnable} during execution.
      */
     public static Executor apply(final Executor executor, final EventExecutor eventExecutor) {
+<<<<<<< HEAD
         Objects.requireNonNull(executor, "executor");
         Objects.requireNonNull(eventExecutor, "eventExecutor");
         return command -> executor.execute(apply(command, eventExecutor));
+=======
+        ObjectUtil.checkNotNull(executor, "executor");
+        ObjectUtil.checkNotNull(eventExecutor, "eventExecutor");
+        return new Executor() {
+            @Override
+            public void execute(final Runnable command) {
+                executor.execute(apply(command, eventExecutor));
+            }
+        };
+>>>>>>> dev
     }
 
     /**
@@ -60,6 +74,7 @@ public final class ThreadExecutorMap {
      * when called from within the {@link Runnable} during execution.
      */
     public static Runnable apply(final Runnable command, final EventExecutor eventExecutor) {
+<<<<<<< HEAD
         Objects.requireNonNull(command, "command");
         Objects.requireNonNull(eventExecutor, "eventExecutor");
         return () -> {
@@ -68,6 +83,19 @@ public final class ThreadExecutorMap {
                 command.run();
             } finally {
                 setCurrentEventExecutor(null);
+=======
+        ObjectUtil.checkNotNull(command, "command");
+        ObjectUtil.checkNotNull(eventExecutor, "eventExecutor");
+        return new Runnable() {
+            @Override
+            public void run() {
+                setCurrentEventExecutor(eventExecutor);
+                try {
+                    command.run();
+                } finally {
+                    setCurrentEventExecutor(null);
+                }
+>>>>>>> dev
             }
         };
     }
@@ -77,8 +105,19 @@ public final class ThreadExecutorMap {
      * when called from within the {@link Runnable} during execution.
      */
     public static ThreadFactory apply(final ThreadFactory threadFactory, final EventExecutor eventExecutor) {
+<<<<<<< HEAD
         Objects.requireNonNull(threadFactory, "command");
         Objects.requireNonNull(eventExecutor, "eventExecutor");
         return r -> threadFactory.newThread(apply(r, eventExecutor));
+=======
+        ObjectUtil.checkNotNull(threadFactory, "command");
+        ObjectUtil.checkNotNull(eventExecutor, "eventExecutor");
+        return new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                return threadFactory.newThread(apply(r, eventExecutor));
+            }
+        };
+>>>>>>> dev
     }
 }

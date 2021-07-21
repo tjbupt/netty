@@ -24,6 +24,11 @@ import io.netty.channel.sctp.SctpMessage;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.util.collection.IntObjectHashMap;
 import io.netty.util.collection.IntObjectMap;
+<<<<<<< HEAD
+=======
+
+import java.util.List;
+>>>>>>> dev
 
 /**
  * {@link MessageToMessageDecoder} which will take care of handle fragmented {@link SctpMessage}s, so

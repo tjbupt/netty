@@ -15,6 +15,7 @@
  */
 package io.netty.util.concurrent;
 
+import io.netty.util.internal.UnstableApi;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -127,6 +128,7 @@ public abstract class AbstractEventExecutor extends AbstractExecutorService impl
     }
 
     /**
+<<<<<<< HEAD
      * Returns a new {@link RunnableFuture} build on top of the given {@link Promise} and {@link Callable}.
      *
      * This can be used if you want to override {@link #newTaskFor(Callable)} and return a different
@@ -146,4 +148,25 @@ public abstract class AbstractEventExecutor extends AbstractExecutorService impl
     private static <V> RunnableFuture<V> newRunnableFuture(Promise<V> promise, Runnable task, V value) {
         return new RunnableFutureAdapter<>(promise, Executors.callable(task, value));
     }
+=======
+     * Like {@link #execute(Runnable)} but does not guarantee the task will be run until either
+     * a non-lazy task is executed or the executor is shut down.
+     *
+     * This is equivalent to submitting a {@link AbstractEventExecutor.LazyRunnable} to
+     * {@link #execute(Runnable)} but for an arbitrary {@link Runnable}.
+     *
+     * The default implementation just delegates to {@link #execute(Runnable)}.
+     */
+    @UnstableApi
+    public void lazyExecute(Runnable task) {
+        execute(task);
+    }
+
+    /**
+     * Marker interface for {@link Runnable} to indicate that it should be queued for execution
+     * but does not need to run immediately.
+     */
+    @UnstableApi
+    public interface LazyRunnable extends Runnable { }
+>>>>>>> dev
 }

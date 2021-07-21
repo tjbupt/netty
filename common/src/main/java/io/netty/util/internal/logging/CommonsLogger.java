@@ -39,8 +39,12 @@
  */
 package io.netty.util.internal.logging;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
 
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import org.apache.commons.logging.Log;
 
 /**
@@ -59,8 +63,12 @@ class CommonsLogger extends AbstractInternalLogger {
 
     CommonsLogger(Log logger, String name) {
         super(name);
+<<<<<<< HEAD
         requireNonNull(logger, "logger");
         this.logger = logger;
+=======
+        this.logger = ObjectUtil.checkNotNull(logger, "logger");
+>>>>>>> dev
     }
 
     /**

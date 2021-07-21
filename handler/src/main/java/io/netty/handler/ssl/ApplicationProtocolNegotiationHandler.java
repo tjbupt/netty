@@ -24,6 +24,10 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.ChannelInputShutdownEvent;
 import io.netty.handler.codec.DecoderException;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.RecyclableArrayList;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -115,11 +119,46 @@ public abstract class ApplicationProtocolNegotiationHandler implements ChannelHa
     }
 
     @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        this.ctx = ctx;
+        super.handlerAdded(ctx);
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        fireBufferedMessages();
+        bufferedMessages.recycle();
+        super.handlerRemoved(ctx);
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        // Let's buffer all data until this handler will be removed from the pipeline.
+        bufferedMessages.add(msg);
+    }
+
+    /**
+     * Process all backlog into pipeline from List.
+     */
+    private void fireBufferedMessages() {
+        if (!bufferedMessages.isEmpty()) {
+            for (int i = 0; i < bufferedMessages.size(); i++) {
+                ctx.fireChannelRead(bufferedMessages.get(i));
+            }
+            ctx.fireChannelReadComplete();
+            bufferedMessages.clear();
+        }
+    }
+
+    @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof SslHandshakeCompletionEvent) {
+<<<<<<< HEAD
             // Let's first fire the event before we try to modify the pipeline.
             ctx.fireUserEventTriggered(evt);
 
+=======
+>>>>>>> dev
             SslHandshakeCompletionEvent handshakeEvent = (SslHandshakeCompletionEvent) evt;
             try {
                 if (handshakeEvent.isSuccess()) {
@@ -154,10 +193,31 @@ public abstract class ApplicationProtocolNegotiationHandler implements ChannelHa
         }
     }
 
+<<<<<<< HEAD
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         fireBufferedMessages();
         ctx.fireChannelInactive();
+    }
+
+    private void removeSelfIfPresent(ChannelHandlerContext ctx) {
+        ChannelPipeline pipeline = ctx.pipeline();
+        if (pipeline.context(this) != null) {
+            pipeline.remove(this);
+        }
+=======
+        if (evt instanceof ChannelInputShutdownEvent) {
+            fireBufferedMessages();
+        }
+
+        ctx.fireUserEventTriggered(evt);
+>>>>>>> dev
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        fireBufferedMessages();
+        super.channelInactive(ctx);
     }
 
     private void removeSelfIfPresent(ChannelHandlerContext ctx) {

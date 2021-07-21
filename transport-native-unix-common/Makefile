@@ -23,7 +23,10 @@
 # LIB_NAME - the name of the native library
 
 SRC_DIR = src/main/c
+<<<<<<< HEAD
 SRC_INTERNAL_DIR = src/main/c/internal
+=======
+>>>>>>> dev
 UTIL_SRC_DIR = target/netty-jni-util
 JNI_INCLUDE_DIR = $(JAVA_HOME)/include
 JNI_INCLUDES = -I$(JNI_INCLUDE_DIR) -I$(JNI_INCLUDE_DIR)/$(JNI_PLATFORM)

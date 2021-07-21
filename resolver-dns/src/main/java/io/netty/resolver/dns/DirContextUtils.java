@@ -41,7 +41,11 @@ final class DirContextUtils {
         // See:
         // - https://docs.oracle.com/javase/8/docs/technotes/guides/jndi/jndi-dns.html
         // - https://mail.openjdk.java.net/pipermail/net-dev/2017-March/010695.html
+<<<<<<< HEAD
         Hashtable<String, String> env = new Hashtable<>();
+=======
+        Hashtable<String, String> env = new Hashtable<String, String>();
+>>>>>>> dev
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.dns.DnsContextFactory");
         env.put("java.naming.provider.url", "dns://");
 

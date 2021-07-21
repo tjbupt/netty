@@ -69,8 +69,13 @@ public class IdleStateHandlerTest {
     private static void anyIdle(TestableIdleStateHandler idleStateHandler, Object... expected) throws Exception {
         assertThat(expected.length,  greaterThanOrEqualTo(1));
 
+<<<<<<< HEAD
         final List<Object> events = new ArrayList<>();
         ChannelHandler handler = new ChannelHandler() {
+=======
+        final List<Object> events = new ArrayList<Object>();
+        ChannelInboundHandlerAdapter handler = new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
             @Override
             public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
                 events.add(evt);

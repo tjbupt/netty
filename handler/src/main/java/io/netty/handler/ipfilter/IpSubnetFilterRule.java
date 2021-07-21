@@ -15,9 +15,14 @@
  */
 package io.netty.handler.ipfilter;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
 
 import io.netty.util.NetUtil;
+=======
+import io.netty.util.NetUtil;
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.SocketUtils;
 
 import java.math.BigInteger;
@@ -51,8 +56,13 @@ public final class IpSubnetFilterRule implements IpFilterRule, Comparable<IpSubn
     }
 
     private static IpFilterRule selectFilterRule(InetAddress ipAddress, int cidrPrefix, IpFilterRuleType ruleType) {
+<<<<<<< HEAD
         requireNonNull(ipAddress, "ipAddress");
         requireNonNull(ruleType, "ruleType");
+=======
+        ObjectUtil.checkNotNull(ipAddress, "ipAddress");
+        ObjectUtil.checkNotNull(ruleType, "ruleType");
+>>>>>>> dev
 
         if (ipAddress instanceof Inet4Address) {
             return new Ip4SubnetFilterRule((Inet4Address) ipAddress, cidrPrefix, ruleType);

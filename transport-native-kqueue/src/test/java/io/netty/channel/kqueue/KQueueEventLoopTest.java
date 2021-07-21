@@ -17,9 +17,14 @@ package io.netty.channel.kqueue;
 
 import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
+<<<<<<< HEAD
 import io.netty.channel.IoHandlerFactory;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.ServerChannel;
+=======
+import io.netty.channel.ServerChannel;
+import io.netty.channel.socket.ServerSocketChannel;
+>>>>>>> dev
 import io.netty.testsuite.transport.AbstractSingleThreadEventLoopTest;
 import io.netty.util.concurrent.Future;
 import org.junit.jupiter.api.Test;
@@ -30,6 +35,24 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class KQueueEventLoopTest extends AbstractSingleThreadEventLoopTest {
+<<<<<<< HEAD
+=======
+
+    @Override
+    protected EventLoopGroup newEventLoopGroup() {
+        return new KQueueEventLoopGroup();
+    }
+
+    @Override
+    protected ServerSocketChannel newChannel() {
+        return new KQueueServerSocketChannel();
+    }
+
+    @Override
+    protected Class<? extends ServerChannel> serverChannelClass() {
+        return KQueueServerSocketChannel.class;
+    }
+>>>>>>> dev
 
     @Test
     public void testScheduleBigDelayNotOverflow() {

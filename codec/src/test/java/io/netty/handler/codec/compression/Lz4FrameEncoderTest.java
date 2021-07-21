@@ -40,6 +40,10 @@ import net.jpountz.xxhash.XXHashFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -164,12 +168,21 @@ public class Lz4FrameEncoderTest extends AbstractEncoderTest {
     @Test
     public void testAllocateDirectBufferExceedMaxEncodeSize() {
         final int maxEncodeSize = 1024;
-        Lz4FrameEncoder encoder = newEncoder(Lz4Constants.DEFAULT_BLOCK_SIZE, maxEncodeSize);
+        final Lz4FrameEncoder encoder = newEncoder(Lz4Constants.DEFAULT_BLOCK_SIZE, maxEncodeSize);
         int inputBufferSize = maxEncodeSize * 10;
-        ByteBuf buf = ByteBufAllocator.DEFAULT.buffer(inputBufferSize, inputBufferSize);
+        final ByteBuf buf = ByteBufAllocator.DEFAULT.buffer(inputBufferSize, inputBufferSize);
         try {
             buf.writerIndex(inputBufferSize);
+<<<<<<< HEAD
             assertThrows(EncoderException.class, () -> encoder.allocateBuffer(ctx, buf, false));
+=======
+            assertThrows(EncoderException.class, new Executable() {
+                @Override
+                public void execute() {
+                    encoder.allocateBuffer(ctx, buf, false);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -193,10 +206,19 @@ public class Lz4FrameEncoderTest extends AbstractEncoderTest {
     @Test
     public void testAllocateOnHeapBufferOverflowsOutputSize() {
         final int maxEncodeSize = Integer.MAX_VALUE;
-        Lz4FrameEncoder encoder = newEncoder(Lz4Constants.DEFAULT_BLOCK_SIZE, maxEncodeSize);
+        final Lz4FrameEncoder encoder = newEncoder(Lz4Constants.DEFAULT_BLOCK_SIZE, maxEncodeSize);
         when(buffer.readableBytes()).thenReturn(maxEncodeSize);
         buffer.writerIndex(maxEncodeSize);
+<<<<<<< HEAD
         assertThrows(EncoderException.class, () -> encoder.allocateBuffer(ctx, buffer, false));
+=======
+        assertThrows(EncoderException.class, new Executable() {
+            @Override
+            public void execute() {
+                encoder.allocateBuffer(ctx, buffer, false);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

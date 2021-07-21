@@ -26,8 +26,17 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
+<<<<<<< HEAD
 import io.netty.util.internal.SocketUtils;
 import io.netty.util.AttributeKey;
+=======
+import io.netty.channel.ReflectiveChannelFactory;
+import io.netty.util.AttributeKey;
+import io.netty.util.concurrent.EventExecutor;
+import io.netty.util.concurrent.GlobalEventExecutor;
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.SocketUtils;
+>>>>>>> dev
 import io.netty.util.internal.StringUtil;
 import io.netty.util.internal.logging.InternalLogger;
 
@@ -47,8 +56,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>When not used in a {@link ServerBootstrap} context, the {@link #bind()} methods are useful for connectionless
  * transports such as datagram (UDP).</p>
  */
+<<<<<<< HEAD
 public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C extends Channel, F>
         implements Cloneable {
+=======
+public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C>, C extends Channel> implements Cloneable {
+>>>>>>> dev
     @SuppressWarnings("unchecked")
     private static final Map.Entry<ChannelOption<?>, Object>[] EMPTY_OPTION_ARRAY = new Map.Entry[0];
     @SuppressWarnings("unchecked")
@@ -59,9 +72,14 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
 
     // The order in which ChannelOptions are applied is important they may depend on each other for validation
     // purposes.
+<<<<<<< HEAD
     private final Map<ChannelOption<?>, Object> options = new LinkedHashMap<>();
     private final Map<AttributeKey<?>, Object> attrs = new ConcurrentHashMap<>();
 
+=======
+    private final Map<ChannelOption<?>, Object> options = new LinkedHashMap<ChannelOption<?>, Object>();
+    private final Map<AttributeKey<?>, Object> attrs = new ConcurrentHashMap<AttributeKey<?>, Object>();
+>>>>>>> dev
     private volatile ChannelHandler handler;
 
     AbstractBootstrap() {
@@ -83,7 +101,11 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
      * {@link Channel}
      */
     public B group(EventLoopGroup group) {
+<<<<<<< HEAD
         requireNonNull(group, "group");
+=======
+        ObjectUtil.checkNotNull(group, "group");
+>>>>>>> dev
         if (this.group != null) {
             throw new IllegalStateException("group set already");
         }
@@ -97,6 +119,46 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * The {@link Class} which is used to create {@link Channel} instances from.
+     * You either use this or {@link #channelFactory(io.netty.channel.ChannelFactory)} if your
+     * {@link Channel} implementation has no no-args constructor.
+     */
+    public B channel(Class<? extends C> channelClass) {
+        return channelFactory(new ReflectiveChannelFactory<C>(
+                ObjectUtil.checkNotNull(channelClass, "channelClass")
+        ));
+    }
+
+    /**
+     * @deprecated Use {@link #channelFactory(io.netty.channel.ChannelFactory)} instead.
+     */
+    @Deprecated
+    public B channelFactory(ChannelFactory<? extends C> channelFactory) {
+        ObjectUtil.checkNotNull(channelFactory, "channelFactory");
+        if (this.channelFactory != null) {
+            throw new IllegalStateException("channelFactory set already");
+        }
+
+        this.channelFactory = channelFactory;
+        return self();
+    }
+
+    /**
+     * {@link io.netty.channel.ChannelFactory} which is used to create {@link Channel} instances from
+     * when calling {@link #bind()}. This method is usually only used if {@link #channel(Class)}
+     * is not working for you because of some more complex needs. If your {@link Channel} implementation
+     * has a no-args constructor, its highly recommend to just use {@link #channel(Class)} to
+     * simplify your code.
+     */
+    @SuppressWarnings({ "unchecked", "deprecation" })
+    public B channelFactory(io.netty.channel.ChannelFactory<? extends C> channelFactory) {
+        return channelFactory((ChannelFactory<C>) channelFactory);
+    }
+
+    /**
+>>>>>>> dev
      * The {@link SocketAddress} which is used to bind the local "end" to.
      */
     public B localAddress(SocketAddress localAddress) {
@@ -130,7 +192,11 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
      * created. Use a value of {@code null} to remove a previous set {@link ChannelOption}.
      */
     public <T> B option(ChannelOption<T> option, T value) {
+<<<<<<< HEAD
         requireNonNull(option, "option");
+=======
+        ObjectUtil.checkNotNull(option, "option");
+>>>>>>> dev
         synchronized (options) {
             if (value == null) {
                 options.remove(option);
@@ -146,7 +212,11 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
      * {@code null}, the attribute of the specified {@code key} is removed.
      */
     public <T> B attr(AttributeKey<T> key, T value) {
+<<<<<<< HEAD
         requireNonNull(key, "key");
+=======
+        ObjectUtil.checkNotNull(key, "key");
+>>>>>>> dev
         if (value == null) {
             attrs.remove(key);
         } else {
@@ -219,8 +289,12 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
      */
     public ChannelFuture bind(SocketAddress localAddress) {
         validate();
+<<<<<<< HEAD
         requireNonNull(localAddress, "localAddress");
         return doBind(localAddress);
+=======
+        return doBind(ObjectUtil.checkNotNull(localAddress, "localAddress"));
+>>>>>>> dev
     }
 
     private ChannelFuture doBind(final SocketAddress localAddress) {
@@ -297,8 +371,12 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
      * the {@link ChannelHandler} to use for serving the requests.
      */
     public B handler(ChannelHandler handler) {
+<<<<<<< HEAD
         requireNonNull(handler, "handler");
         this.handler = handler;
+=======
+        this.handler = ObjectUtil.checkNotNull(handler, "handler");
+>>>>>>> dev
         return self();
     }
 
@@ -366,7 +444,11 @@ public abstract class AbstractBootstrap<B extends AbstractBootstrap<B, C, F>, C 
         if (map.isEmpty()) {
             return Collections.emptyMap();
         }
+<<<<<<< HEAD
         return Collections.unmodifiableMap(new HashMap<>(map));
+=======
+        return Collections.unmodifiableMap(new HashMap<K, V>(map));
+>>>>>>> dev
     }
 
     static void setAttributes(Channel channel, Map.Entry<AttributeKey<?>, Object>[] attrs) {

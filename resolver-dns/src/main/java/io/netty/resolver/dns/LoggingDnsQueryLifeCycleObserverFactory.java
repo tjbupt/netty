@@ -21,7 +21,11 @@ import io.netty.util.internal.logging.InternalLogLevel;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 
 /**
  * A {@link DnsQueryLifecycleObserverFactory} that enables detailed logging in the {@link DnsNameResolver}.
@@ -60,7 +64,11 @@ public final class LoggingDnsQueryLifeCycleObserverFactory implements DnsQueryLi
      */
     public LoggingDnsQueryLifeCycleObserverFactory(Class<?> classContext, LogLevel level) {
         this.level = checkAndConvertLevel(level);
+<<<<<<< HEAD
         logger = InternalLoggerFactory.getInstance(requireNonNull(classContext, "classContext"));
+=======
+        logger = InternalLoggerFactory.getInstance(checkNotNull(classContext, "classContext"));
+>>>>>>> dev
     }
 
     /**
@@ -71,11 +79,19 @@ public final class LoggingDnsQueryLifeCycleObserverFactory implements DnsQueryLi
      */
     public LoggingDnsQueryLifeCycleObserverFactory(String name, LogLevel level) {
         this.level = checkAndConvertLevel(level);
+<<<<<<< HEAD
         logger = InternalLoggerFactory.getInstance(requireNonNull(name, "name"));
     }
 
     private static InternalLogLevel checkAndConvertLevel(LogLevel level) {
         return requireNonNull(level, "level").toInternalLevel();
+=======
+        logger = InternalLoggerFactory.getInstance(checkNotNull(name, "name"));
+    }
+
+    private static InternalLogLevel checkAndConvertLevel(LogLevel level) {
+        return checkNotNull(level, "level").toInternalLevel();
+>>>>>>> dev
     }
 
     @Override

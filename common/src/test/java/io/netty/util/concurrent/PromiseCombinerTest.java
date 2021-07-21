@@ -17,6 +17,10 @@ package io.netty.util.concurrent;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
@@ -81,32 +85,77 @@ public class PromiseCombinerTest {
 
     @Test
     public void testAddNullPromise() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> combiner.add(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                combiner.add(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddAllNullPromise() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> combiner.addAll(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                combiner.addAll(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddAfterFinish() {
         combiner.finish(p1);
+<<<<<<< HEAD
         assertThrows(IllegalStateException.class, () -> combiner.add(p2));
+=======
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                combiner.add(p2);
+            }
+        });
+>>>>>>> dev
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void testAddAllAfterFinish() {
         combiner.finish(p1);
+<<<<<<< HEAD
         assertThrows(IllegalStateException.class, () -> combiner.addAll(p2));
+=======
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                combiner.addAll(p2);
+            }
+        });
+>>>>>>> dev
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void testFinishCalledTwiceThrows() {
         combiner.finish(p1);
+<<<<<<< HEAD
         assertThrows(IllegalStateException.class, () -> combiner.finish(p1));
+=======
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                combiner.finish(p1);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

@@ -30,7 +30,16 @@ final class KQueueRecvByteAllocatorHandle extends DelegatingHandle implements Ex
     private final PreferredDirectByteBufAllocator preferredDirectByteBufAllocator =
             new PreferredDirectByteBufAllocator();
 
+<<<<<<< HEAD
     private final UncheckedBooleanSupplier defaultMaybeMoreDataSupplier = this::maybeMoreDataToRead;
+=======
+    private final UncheckedBooleanSupplier defaultMaybeMoreDataSupplier = new UncheckedBooleanSupplier() {
+        @Override
+        public boolean get() {
+            return maybeMoreDataToRead();
+        }
+    };
+>>>>>>> dev
     private boolean overrideGuess;
     private boolean readEOF;
     private long numberBytesPending;

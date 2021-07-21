@@ -21,9 +21,14 @@ import java.io.File;
 public class JdkSslClientContextTest extends SslContextTest {
     @Override
     protected SslContext newSslContext(File crtFile, File keyFile, String pass) throws SSLException {
+<<<<<<< HEAD
         return SslContextBuilder.forClient()
           .sslProvider(SslProvider.JDK)
           .keyManager(crtFile, keyFile, pass)
           .build();
+=======
+        return new JdkSslClientContext(crtFile, InsecureTrustManagerFactory.INSTANCE, crtFile, keyFile, pass,
+                null, null, IdentityCipherSuiteFilter.INSTANCE, ApplicationProtocolConfig.DISABLED, 0, 0);
+>>>>>>> dev
     }
 }

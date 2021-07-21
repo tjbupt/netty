@@ -53,7 +53,16 @@ public class SocketObjectEchoTest extends AbstractSocketTest {
 
     @Test
     public void testObjectEcho(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testObjectEcho);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testObjectEcho(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testObjectEcho(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -62,7 +71,16 @@ public class SocketObjectEchoTest extends AbstractSocketTest {
 
     @Test
     public void testObjectEchoNotAutoRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testObjectEchoNotAutoRead);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testObjectEchoNotAutoRead(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testObjectEchoNotAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {

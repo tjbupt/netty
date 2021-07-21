@@ -27,7 +27,16 @@ import java.nio.ByteBuffer;
 class PooledHeapByteBuf extends PooledByteBuf<byte[]> {
 
     private static final ObjectPool<PooledHeapByteBuf> RECYCLER = ObjectPool.newPool(
+<<<<<<< HEAD
             handle -> new PooledHeapByteBuf(handle, 0));
+=======
+            new ObjectCreator<PooledHeapByteBuf>() {
+        @Override
+        public PooledHeapByteBuf newObject(Handle<PooledHeapByteBuf> handle) {
+            return new PooledHeapByteBuf(handle, 0);
+        }
+    });
+>>>>>>> dev
 
     static PooledHeapByteBuf newInstance(int maxCapacity) {
         PooledHeapByteBuf buf = RECYCLER.get();

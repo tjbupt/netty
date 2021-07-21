@@ -17,6 +17,10 @@ package io.netty.buffer;
 
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -42,9 +46,18 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetBoolean() {
-        ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setBoolean(0, true));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setBoolean(0, true);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -52,9 +65,18 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetByte() {
-        ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setByte(0, 1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setByte(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -62,10 +84,19 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetBytesWithByteBuf() {
-        ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
-        ByteBuf src = wrappedBuffer(new byte[4]);
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        final ByteBuf src = wrappedBuffer(new byte[4]);
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setBytes(0, src));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setBytes(0, src);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
             src.release();
@@ -74,9 +105,18 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetBytesWithByteBuffer() {
-        ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setBytes(0, ByteBuffer.wrap(new byte[4])));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setBytes(0, ByteBuffer.wrap(new byte[4]));
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -84,10 +124,21 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetBytesWithInputStream() {
+<<<<<<< HEAD
         ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
             assertThrows(ReadOnlyBufferException.class,
                 () -> buf.setBytes(0, new ByteArrayInputStream(new byte[4]), 4));
+=======
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        try {
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() throws IOException {
+                    buf.setBytes(0, new ByteArrayInputStream(new byte[4]), 4);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -95,13 +146,44 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetBytesWithChannel() {
+<<<<<<< HEAD
         ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
             assertThrows(ReadOnlyBufferException.class, () -> buf.setBytes(0, new ScatteringByteChannel() {
+=======
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        try {
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+>>>>>>> dev
                 @Override
-                public long read(ByteBuffer[] dsts, int offset, int length) {
-                    return 0;
+                public void execute() throws IOException {
+                    buf.setBytes(0, new ScatteringByteChannel() {
+                        @Override
+                        public long read(ByteBuffer[] dsts, int offset, int length) {
+                            return 0;
+                        }
+
+                        @Override
+                        public long read(ByteBuffer[] dsts) {
+                            return 0;
+                        }
+
+                        @Override
+                        public int read(ByteBuffer dst) {
+                            return 0;
+                        }
+
+                        @Override
+                        public boolean isOpen() {
+                            return true;
+                        }
+
+                        @Override
+                        public void close() {
+                        }
+                    }, 4);
                 }
+<<<<<<< HEAD
 
                 @Override
                 public long read(ByteBuffer[] dsts) {
@@ -122,6 +204,9 @@ public class FixedCompositeByteBufTest {
                 public void close() {
                 }
             }, 4));
+=======
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -129,9 +214,20 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetChar() {
+<<<<<<< HEAD
         ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
             assertThrows(ReadOnlyBufferException.class, () -> buf.setChar(0, 'b'));
+=======
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        try {
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setChar(0, 'b');
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -139,9 +235,20 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetDouble() {
+<<<<<<< HEAD
         ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
             assertThrows(ReadOnlyBufferException.class, () -> buf.setDouble(0, 1));
+=======
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        try {
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setDouble(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -149,9 +256,20 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetFloat() {
+<<<<<<< HEAD
         ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
             assertThrows(ReadOnlyBufferException.class, () -> buf.setFloat(0, 1));
+=======
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        try {
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setFloat(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -159,9 +277,18 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetInt() throws IOException {
-        ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setInt(0, 1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setInt(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -169,9 +296,18 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetLong() {
-        ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
+<<<<<<< HEAD
             assertThrows(ReadOnlyBufferException.class, () -> buf.setLong(0, 1));
+=======
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setLong(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -179,9 +315,20 @@ public class FixedCompositeByteBufTest {
 
     @Test
     public void testSetMedium() {
+<<<<<<< HEAD
         ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
         try {
             assertThrows(ReadOnlyBufferException.class, () -> buf.setMedium(0, 1));
+=======
+        final ByteBuf buf = newBuffer(wrappedBuffer(new byte[8]));
+        try {
+            assertThrows(ReadOnlyBufferException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.setMedium(0, 1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -450,10 +597,19 @@ public class FixedCompositeByteBufTest {
     public void testHasNoArrayWhenMultipleBuffers() {
         ByteBuf buf1 = buffer(10);
         ByteBuf buf2 = buffer(10);
-        ByteBuf buf = newBuffer(buf1, buf2);
+        final ByteBuf buf = newBuffer(buf1, buf2);
         assertFalse(buf.hasArray());
         try {
+<<<<<<< HEAD
             assertThrows(UnsupportedOperationException.class, buf::array);
+=======
+            assertThrows(UnsupportedOperationException.class, new Executable() {
+                @Override
+                public void execute() {
+                    buf.array();
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }

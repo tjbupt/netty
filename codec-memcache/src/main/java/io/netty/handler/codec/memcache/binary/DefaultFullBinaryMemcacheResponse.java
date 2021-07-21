@@ -19,6 +19,7 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.UnstableApi;
 
 /**
@@ -50,9 +51,13 @@ public class DefaultFullBinaryMemcacheResponse extends DefaultBinaryMemcacheResp
     public DefaultFullBinaryMemcacheResponse(ByteBuf key, ByteBuf extras,
         ByteBuf content) {
         super(key, extras);
+<<<<<<< HEAD
         requireNonNull(content, "content");
 
         this.content = content;
+=======
+        this.content = ObjectUtil.checkNotNull(content, "content");
+>>>>>>> dev
         setTotalBodyLength(keyLength() + extrasLength() + content.readableBytes());
     }
 

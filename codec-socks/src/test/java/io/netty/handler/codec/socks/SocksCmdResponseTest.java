@@ -19,6 +19,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.net.IDN;
 import java.nio.CharBuffer;
@@ -168,8 +172,17 @@ public class SocksCmdResponseTest {
      */
     @Test
     public void testInvalidBoundAddress() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class,
             () -> new SocksCmdResponse(SocksCmdStatus.SUCCESS, SocksAddressType.IPv4, "127.0.0", 1000));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new SocksCmdResponse(SocksCmdStatus.SUCCESS, SocksAddressType.IPv4, "127.0.0", 1000);
+            }
+        });
+>>>>>>> dev
     }
 
     private static void assertByteBufEquals(byte[] expected, ByteBuf actual) {

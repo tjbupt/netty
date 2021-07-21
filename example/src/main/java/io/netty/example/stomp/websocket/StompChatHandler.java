@@ -43,7 +43,11 @@ public class StompChatHandler extends SimpleChannelInboundHandler<StompFrame> {
             new ConcurrentHashMap<String, Set<StompSubscription>>();
 
     @Override
+<<<<<<< HEAD
     protected void messageReceived(ChannelHandlerContext ctx, StompFrame inboundFrame) throws Exception {
+=======
+    protected void channelRead0(ChannelHandlerContext ctx, StompFrame inboundFrame) throws Exception {
+>>>>>>> dev
         DecoderResult decoderResult = inboundFrame.decoderResult();
         if (decoderResult.isFailure()) {
             sendErrorFrame("rejected frame", decoderResult.toString(), ctx);

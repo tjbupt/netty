@@ -23,6 +23,11 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import io.netty.util.concurrent.EventExecutor;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 
 import java.util.ArrayDeque;
 import java.util.concurrent.ConcurrentHashMap;
@@ -105,8 +110,16 @@ public class GlobalTrafficShapingHandler extends AbstractTrafficShapingHandler {
      * Create the global TrafficCounter.
      */
     void createGlobalTrafficCounter(ScheduledExecutorService executor) {
+<<<<<<< HEAD
         requireNonNull(executor, "executor");
         TrafficCounter tc = new TrafficCounter(this, executor, "GlobalTC", checkInterval);
+=======
+        TrafficCounter tc = new TrafficCounter(this,
+                ObjectUtil.checkNotNull(executor, "executor"),
+                "GlobalTC",
+                checkInterval);
+
+>>>>>>> dev
         setTrafficCounter(tc);
         tc.start();
     }

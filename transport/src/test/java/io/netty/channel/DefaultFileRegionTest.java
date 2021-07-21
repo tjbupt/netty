@@ -25,7 +25,10 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,7 +39,11 @@ public class DefaultFileRegionTest {
     private static final byte[] data = new byte[1048576 * 10];
 
     static {
+<<<<<<< HEAD
        ThreadLocalRandom.current().nextBytes(data);
+=======
+        PlatformDependent.threadLocalRandom().nextBytes(data);
+>>>>>>> dev
     }
 
     private static File newFile() throws IOException {
@@ -62,24 +69,43 @@ public class DefaultFileRegionTest {
     @Test
     public void testCreateFromFileChannel() throws IOException  {
         File file = newFile();
+<<<<<<< HEAD
 
         try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r")) {
             testFileRegion(new DefaultFileRegion(randomAccessFile.getChannel(), 0, data.length));
         } finally {
+=======
+        RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
+        try {
+            testFileRegion(new DefaultFileRegion(randomAccessFile.getChannel(), 0, data.length));
+        } finally {
+            randomAccessFile.close();
+>>>>>>> dev
             file.delete();
         }
     }
 
     private static void testFileRegion(FileRegion region) throws IOException  {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+<<<<<<< HEAD
 
         try (WritableByteChannel channel = Channels.newChannel(outputStream)) {
+=======
+        WritableByteChannel channel = Channels.newChannel(outputStream);
+
+        try {
+>>>>>>> dev
             assertEquals(data.length, region.count());
             assertEquals(0, region.transferred());
             assertEquals(data.length, region.transferTo(channel, 0));
             assertEquals(data.length, region.count());
             assertEquals(data.length, region.transferred());
             assertArrayEquals(data, outputStream.toByteArray());
+<<<<<<< HEAD
+=======
+        } finally {
+            channel.close();
+>>>>>>> dev
         }
     }
 
@@ -87,9 +113,16 @@ public class DefaultFileRegionTest {
     public void testTruncated() throws IOException  {
         File file = newFile();
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+<<<<<<< HEAD
 
         try (WritableByteChannel channel = Channels.newChannel(outputStream);
              RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw")) {
+=======
+        WritableByteChannel channel = Channels.newChannel(outputStream);
+        RandomAccessFile randomAccessFile = new RandomAccessFile(file, "rw");
+
+        try {
+>>>>>>> dev
             FileRegion region = new DefaultFileRegion(randomAccessFile.getChannel(), 0, data.length);
 
             randomAccessFile.getChannel().truncate(data.length - 1024);
@@ -107,6 +140,12 @@ public class DefaultFileRegionTest {
                 // expected
             }
         } finally {
+<<<<<<< HEAD
+=======
+            channel.close();
+
+            randomAccessFile.close();
+>>>>>>> dev
             file.delete();
         }
     }

@@ -19,6 +19,7 @@ package io.netty.util;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.util.concurrent.DefaultThreadFactory;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 import io.netty.util.internal.SystemPropertyUtil;
 import io.netty.util.internal.logging.InternalLogger;
@@ -79,8 +80,14 @@ public final class ThreadDeathWatcher {
      * @throws IllegalArgumentException if the specified {@code thread} is not alive
      */
     public static void watch(Thread thread, Runnable task) {
+<<<<<<< HEAD
         requireNonNull(thread, "thread");
         requireNonNull(task, "task");
+=======
+        ObjectUtil.checkNotNull(thread, "thread");
+        ObjectUtil.checkNotNull(task, "task");
+
+>>>>>>> dev
         if (!thread.isAlive()) {
             throw new IllegalArgumentException("thread must be alive.");
         }
@@ -92,10 +99,16 @@ public final class ThreadDeathWatcher {
      * Cancels the task scheduled via {@link #watch(Thread, Runnable)}.
      */
     public static void unwatch(Thread thread, Runnable task) {
+<<<<<<< HEAD
         requireNonNull(thread, "thread");
         requireNonNull(task, "taks");
 
         schedule(thread, task, false);
+=======
+        schedule(ObjectUtil.checkNotNull(thread, "thread"),
+                ObjectUtil.checkNotNull(task, "task"),
+                false);
+>>>>>>> dev
     }
 
     private static void schedule(Thread thread, Runnable task, boolean isWatch) {
@@ -128,7 +141,11 @@ public final class ThreadDeathWatcher {
      * @return {@code true} if and only if the watcher thread has been terminated
      */
     public static boolean awaitInactivity(long timeout, TimeUnit unit) throws InterruptedException {
+<<<<<<< HEAD
         requireNonNull(unit, "unit");
+=======
+        ObjectUtil.checkNotNull(unit, "unit");
+>>>>>>> dev
 
         Thread watcherThread = ThreadDeathWatcher.watcherThread;
         if (watcherThread != null) {

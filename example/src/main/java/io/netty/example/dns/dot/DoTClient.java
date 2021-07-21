@@ -89,8 +89,12 @@ public final class DoTClient {
                                     .addLast(new TcpDnsResponseDecoder())
                                     .addLast(new SimpleChannelInboundHandler<DefaultDnsResponse>() {
                                         @Override
+<<<<<<< HEAD
                                         protected void messageReceived(
                                                 ChannelHandlerContext ctx, DefaultDnsResponse msg) {
+=======
+                                        protected void channelRead0(ChannelHandlerContext ctx, DefaultDnsResponse msg) {
+>>>>>>> dev
                                             try {
                                                 handleQueryResp(msg);
                                             } finally {

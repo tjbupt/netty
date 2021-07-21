@@ -17,6 +17,10 @@
 package io.netty.util.concurrent;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -25,13 +29,31 @@ public class PromiseNotifierTest {
 
     @Test
     public void testNullPromisesArray() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new PromiseNotifier<>((Promise<Void>[]) null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new PromiseNotifier<Void, Future<Void>>((Promise<Void>[]) null);
+            }
+        });
+>>>>>>> dev
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void testNullPromiseInArray() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> new PromiseNotifier<>((Promise<Void>) null));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new PromiseNotifier<Void, Future<Void>>((Promise<Void>) null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

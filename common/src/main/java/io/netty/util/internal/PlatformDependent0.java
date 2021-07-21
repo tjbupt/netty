@@ -34,6 +34,7 @@ import java.security.PrivilegedAction;
 /**
  * The {@link PlatformDependent} operations which requires access to {@code sun.misc.*}.
  */
+@SuppressJava6Requirement(reason = "Unsafe access is guarded")
 final class PlatformDependent0 {
 
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(PlatformDependent0.class);
@@ -43,9 +44,15 @@ final class PlatformDependent0 {
     private static final long INT_ARRAY_INDEX_SCALE;
     private static final long LONG_ARRAY_BASE_OFFSET;
     private static final long LONG_ARRAY_INDEX_SCALE;
+<<<<<<< HEAD
     private static final MethodHandle DIRECT_BUFFER_CONSTRUCTOR_HANDLE;
     private static final Throwable EXPLICIT_NO_UNSAFE_CAUSE = explicitNoUnsafeCause0();
     private static final MethodHandle ALLOCATE_ARRAY_HANDLE;
+=======
+    private static final Constructor<?> DIRECT_BUFFER_CONSTRUCTOR;
+    private static final Throwable EXPLICIT_NO_UNSAFE_CAUSE = explicitNoUnsafeCause0();
+    private static final Method ALLOCATE_ARRAY_METHOD;
+>>>>>>> dev
     private static final Method ALIGN_SLICE;
     private static final int JAVA_VERSION = javaVersion0();
     private static final boolean IS_ANDROID = isAndroid0();
@@ -249,12 +256,21 @@ final class PlatformDependent0 {
                 } else {
                     if (logger.isTraceEnabled()) {
                         logger.debug("direct buffer constructor: unavailable",
+<<<<<<< HEAD
                                 (Throwable) maybeDirectBufferConstructorHandle);
                     } else {
                         logger.debug("direct buffer constructor: unavailable: {}",
                                 ((Throwable) maybeDirectBufferConstructorHandle).getMessage());
                     }
                     directBufferConstructorHandle = null;
+=======
+                                (Throwable) maybeDirectBufferConstructor);
+                    } else {
+                        logger.debug("direct buffer constructor: unavailable: {}",
+                                ((Throwable) maybeDirectBufferConstructor).getMessage());
+                    }
+                    directBufferConstructor = null;
+>>>>>>> dev
                 }
             } finally {
                 if (address != -1) {
@@ -393,9 +409,18 @@ final class PlatformDependent0 {
         } else {
             ALIGN_SLICE = null;
         }
+<<<<<<< HEAD
+=======
+
+        INTERNAL_UNSAFE = internalUnsafe;
+>>>>>>> dev
 
         logger.debug("java.nio.DirectByteBuffer.<init>(long, int): {}",
                 DIRECT_BUFFER_CONSTRUCTOR_HANDLE != null ? "available" : "unavailable");
+    }
+
+    private static boolean unsafeStaticFieldOffsetSupported() {
+        return !RUNNING_IN_NATIVE_IMAGE;
     }
 
     private static boolean unsafeStaticFieldOffsetSupported() {
@@ -459,6 +484,23 @@ final class PlatformDependent0 {
 
     static boolean hasAlignSliceMethod() {
         return ALIGN_SLICE != null;
+<<<<<<< HEAD
+=======
+    }
+
+    static ByteBuffer alignSlice(ByteBuffer buffer, int alignment) {
+        try {
+            return (ByteBuffer) ALIGN_SLICE.invoke(buffer, alignment);
+        } catch (IllegalAccessException e) {
+            throw new Error(e);
+        } catch (InvocationTargetException e) {
+            throw new Error(e);
+        }
+    }
+
+    static boolean hasAllocateArrayMethod() {
+        return ALLOCATE_ARRAY_METHOD != null;
+>>>>>>> dev
     }
 
     static ByteBuffer alignSlice(ByteBuffer buffer, int alignment) {
@@ -750,6 +792,7 @@ final class PlatformDependent0 {
         if (remainingBytes >= 4) {
             result |= UNSAFE.getInt(bytes1, baseOffset1) ^ UNSAFE.getInt(bytes2, baseOffset1 + diff);
             remainingBytes -= 4;
+<<<<<<< HEAD
         }
         if (remainingBytes >= 2) {
             long pos = end - remainingBytes;
@@ -760,6 +803,18 @@ final class PlatformDependent0 {
             long pos = end - 1;
             result |= UNSAFE.getByte(bytes1, pos) ^ UNSAFE.getByte(bytes2, pos + diff);
         }
+=======
+        }
+        if (remainingBytes >= 2) {
+            long pos = end - remainingBytes;
+            result |= UNSAFE.getChar(bytes1, pos) ^ UNSAFE.getChar(bytes2, pos + diff);
+            remainingBytes -= 2;
+        }
+        if (remainingBytes == 1) {
+            long pos = end - 1;
+            result |= UNSAFE.getByte(bytes1, pos) ^ UNSAFE.getByte(bytes2, pos + diff);
+        }
+>>>>>>> dev
         return ConstantTimeUtils.equalsConstantTime(result, 0);
     }
 

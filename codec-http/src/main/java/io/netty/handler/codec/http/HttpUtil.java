@@ -29,6 +29,10 @@ import java.util.List;
 import io.netty.util.AsciiString;
 import io.netty.util.CharsetUtil;
 import io.netty.util.NetUtil;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.UnstableApi;
 
 import static io.netty.util.internal.StringUtil.COMMA;
@@ -404,16 +408,20 @@ public final class HttpUtil {
                 }
                 try {
                     return Charset.forName(charsetRaw.toString());
+<<<<<<< HEAD
                 } catch (UnsupportedCharsetException | IllegalCharsetNameException ignored) {
                     // just return the default charset
                     return defaultCharset;
+=======
+                } catch (IllegalCharsetNameException ignored) {
+                    // just return the default charset
+                } catch (UnsupportedCharsetException ignored) {
+                    // just return the default charset
+>>>>>>> dev
                 }
-            } else {
-                return defaultCharset;
             }
-        } else {
-            return defaultCharset;
         }
+        return defaultCharset;
     }
 
     /**
@@ -462,7 +470,11 @@ public final class HttpUtil {
      * @throws NullPointerException in case if {@code contentTypeValue == null}
      */
     public static CharSequence getCharsetAsSequence(CharSequence contentTypeValue) {
+<<<<<<< HEAD
         requireNonNull(contentTypeValue, "contentTypeValue");
+=======
+        ObjectUtil.checkNotNull(contentTypeValue, "contentTypeValue");
+>>>>>>> dev
 
         int indexOfCharset = AsciiString.indexOfIgnoreCaseAscii(contentTypeValue, CHARSET_EQUALS, 0);
         if (indexOfCharset == AsciiString.INDEX_NOT_FOUND) {
@@ -516,7 +528,11 @@ public final class HttpUtil {
      * @throws NullPointerException in case if {@code contentTypeValue == null}
      */
     public static CharSequence getMimeType(CharSequence contentTypeValue) {
+<<<<<<< HEAD
         requireNonNull(contentTypeValue, "contentTypeValue");
+=======
+        ObjectUtil.checkNotNull(contentTypeValue, "contentTypeValue");
+>>>>>>> dev
 
         int indexOfSemicolon = AsciiString.indexOfIgnoreCaseAscii(contentTypeValue, SEMICOLON, 0);
         if (indexOfSemicolon != AsciiString.INDEX_NOT_FOUND) {

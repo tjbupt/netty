@@ -46,7 +46,11 @@ public final class DefaultDnsServerAddressStreamProvider implements DnsServerAdd
     static final int DNS_PORT = 53;
 
     static {
+<<<<<<< HEAD
         final List<InetSocketAddress> defaultNameServers = new ArrayList<>(2);
+=======
+        final List<InetSocketAddress> defaultNameServers = new ArrayList<InetSocketAddress>(2);
+>>>>>>> dev
         if (!PlatformDependent.isAndroid()) {
             // Only try to use when not on Android as the classes not exists there:
             // See https://github.com/netty/netty/issues/8654

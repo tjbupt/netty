@@ -15,6 +15,12 @@
  */
 package io.netty.channel;
 
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+import io.netty.util.internal.SuppressJava6Requirement;
+import io.netty.util.internal.ThrowableUtil;
+>>>>>>> dev
 import io.netty.util.internal.UnstableApi;
 
 /**
@@ -52,8 +58,46 @@ public class ChannelException extends RuntimeException {
     }
 
     @UnstableApi
+<<<<<<< HEAD
+=======
+    @SuppressJava6Requirement(reason = "uses Java 7+ RuntimeException.<init>(String, Throwable, boolean, boolean)" +
+            " but is guarded by version checks")
+>>>>>>> dev
     protected ChannelException(String message, Throwable cause, boolean shared) {
         super(message, cause, false, true);
         assert shared;
     }
+<<<<<<< HEAD
+=======
+
+    static ChannelException newStatic(String message, Class<?> clazz, String method) {
+        ChannelException exception;
+        if (PlatformDependent.javaVersion() >= 7) {
+            exception = new StacklessChannelException(message, null, true);
+        } else {
+            exception = new StacklessChannelException(message, null);
+        }
+        return ThrowableUtil.unknownStackTrace(exception, clazz, method);
+    }
+
+    private static final class StacklessChannelException extends ChannelException {
+        private static final long serialVersionUID = -6384642137753538579L;
+
+        StacklessChannelException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+        StacklessChannelException(String message, Throwable cause, boolean shared) {
+            super(message, cause, shared);
+        }
+
+        // Override fillInStackTrace() so we not populate the backtrace via a native call and so leak the
+        // Classloader.
+
+        @Override
+        public Throwable fillInStackTrace() {
+            return this;
+        }
+    }
+>>>>>>> dev
 }

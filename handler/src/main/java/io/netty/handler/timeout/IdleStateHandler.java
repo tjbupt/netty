@@ -27,6 +27,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOutboundBuffer;
 import io.netty.channel.ChannelPromise;
+import io.netty.util.internal.ObjectUtil;
 
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -192,7 +193,11 @@ public class IdleStateHandler implements ChannelHandler {
     public IdleStateHandler(boolean observeOutput,
             long readerIdleTime, long writerIdleTime, long allIdleTime,
             TimeUnit unit) {
+<<<<<<< HEAD
         requireNonNull(unit, "unit");
+=======
+        ObjectUtil.checkNotNull(unit, "unit");
+>>>>>>> dev
 
         this.observeOutput = observeOutput;
 

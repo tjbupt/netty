@@ -21,6 +21,10 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.NetUtil;
@@ -99,14 +103,22 @@ public class EpollReuseAddrTest {
         testMultipleBindDatagramChannelWithoutReusePortFails0(createBootstrap());
     }
 
+<<<<<<< HEAD
     private static void testMultipleBindDatagramChannelWithoutReusePortFails0(AbstractBootstrap<?, ?, ?> bootstrap) {
+=======
+    private static void testMultipleBindDatagramChannelWithoutReusePortFails0(AbstractBootstrap<?, ?> bootstrap) {
+>>>>>>> dev
         bootstrap.handler(new LoggingHandler(LogLevel.ERROR));
         ChannelFuture future = bootstrap.bind().syncUninterruptibly();
         try {
             bootstrap.bind(future.channel().localAddress()).syncUninterruptibly();
             fail();
         } catch (Exception e) {
+<<<<<<< HEAD
             assertTrue(e.getCause() instanceof IOException);
+=======
+            assertTrue(e instanceof IOException);
+>>>>>>> dev
         }
         future.channel().close().syncUninterruptibly();
     }

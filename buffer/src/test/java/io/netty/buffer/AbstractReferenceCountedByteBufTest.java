@@ -17,6 +17,10 @@ package io.netty.buffer;
 
 import io.netty.util.IllegalReferenceCountException;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,25 +40,52 @@ public class AbstractReferenceCountedByteBufTest {
 
     @Test
     public void testRetainOverflow() {
-        AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
+        final AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
         referenceCounted.setRefCnt(Integer.MAX_VALUE);
         assertEquals(Integer.MAX_VALUE, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, referenceCounted::retain);
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute()  {
+                referenceCounted.retain();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testRetainOverflow2() {
-        AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
+        final AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
         assertEquals(1, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> referenceCounted.retain(Integer.MAX_VALUE));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.retain(Integer.MAX_VALUE);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testReleaseOverflow() {
-        AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
+        final AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
         referenceCounted.setRefCnt(0);
         assertEquals(0, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> referenceCounted.release(Integer.MAX_VALUE));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.release(Integer.MAX_VALUE);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -71,18 +102,36 @@ public class AbstractReferenceCountedByteBufTest {
 
     @Test
     public void testRetainResurrect() {
-        AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
+        final AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
         assertTrue(referenceCounted.release());
         assertEquals(0, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, referenceCounted::retain);
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.retain();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testRetainResurrect2() {
-        AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
+        final AbstractReferenceCountedByteBuf referenceCounted = newReferenceCounted();
         assertTrue(referenceCounted.release());
         assertEquals(0, referenceCounted.refCnt());
+<<<<<<< HEAD
         assertThrows(IllegalReferenceCountException.class, () -> referenceCounted.retain(2));
+=======
+        assertThrows(IllegalReferenceCountException.class, new Executable() {
+            @Override
+            public void execute() {
+                referenceCounted.retain(2);
+            }
+        });
+>>>>>>> dev
     }
 
     private static AbstractReferenceCountedByteBuf newReferenceCounted() {

@@ -23,6 +23,10 @@ import io.netty.testsuite.transport.socket.SocketStartTlsTest;
 import java.util.List;
 
 public class KQueueSocketStartTlsTest extends SocketStartTlsTest {
+<<<<<<< HEAD
+=======
+
+>>>>>>> dev
     @Override
     protected List<TestsuitePermutation.BootstrapComboFactory<ServerBootstrap, Bootstrap>> newFactories() {
         return KQueueSocketTestPermutation.INSTANCE.socket();

@@ -30,6 +30,7 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.ImmediateEventExecutor;
 import io.netty.util.concurrent.Promise;
 import io.netty.util.concurrent.ScheduledFuture;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -69,8 +70,12 @@ public abstract class ProxyHandler implements ChannelHandler {
     };
 
     protected ProxyHandler(SocketAddress proxyAddress) {
+<<<<<<< HEAD
         requireNonNull(proxyAddress, "proxyAddress");
         this.proxyAddress = proxyAddress;
+=======
+        this.proxyAddress = ObjectUtil.checkNotNull(proxyAddress, "proxyAddress");
+>>>>>>> dev
     }
 
     /**

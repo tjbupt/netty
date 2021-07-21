@@ -18,6 +18,7 @@ package io.netty.buffer;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.util.CharsetUtil;
+import io.netty.util.internal.ObjectUtil;
 
 import java.io.DataOutput;
 import java.io.DataOutputStream;
@@ -48,8 +49,12 @@ public class ByteBufOutputStream extends OutputStream implements DataOutput {
      * Creates a new stream which writes data to the specified {@code buffer}.
      */
     public ByteBufOutputStream(ByteBuf buffer) {
+<<<<<<< HEAD
         requireNonNull(buffer, "buffer");
         this.buffer = buffer;
+=======
+        this.buffer = ObjectUtil.checkNotNull(buffer, "buffer");
+>>>>>>> dev
         startIndex = buffer.writerIndex();
     }
 

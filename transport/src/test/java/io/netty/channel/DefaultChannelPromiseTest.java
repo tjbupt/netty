@@ -18,6 +18,10 @@ package io.netty.channel;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.concurrent.ImmediateEventExecutor;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -25,17 +29,44 @@ public class DefaultChannelPromiseTest {
 
     @Test
     public void testNullChannel() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new DefaultChannelPromise(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DefaultChannelPromise(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testChannelWithNullExecutor() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new DefaultChannelPromise(new EmbeddedChannel(), null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DefaultChannelPromise(new EmbeddedChannel(), null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNullChannelWithExecutor() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class,
             () -> new DefaultChannelPromise(null, ImmediateEventExecutor.INSTANCE));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new DefaultChannelPromise(null, ImmediateEventExecutor.INSTANCE);
+            }
+        });
+>>>>>>> dev
     }
 }

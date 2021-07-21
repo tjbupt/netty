@@ -15,14 +15,21 @@
  */
 package io.netty.channel.epoll;
 
+import io.netty.testsuite.transport.AbstractSingleThreadEventLoopTest;
 import io.netty.channel.DefaultSelectStrategyFactory;
 import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
+<<<<<<< HEAD
 import io.netty.channel.IoHandlerFactory;
 import io.netty.channel.ServerChannel;
 import io.netty.channel.SingleThreadEventLoop;
 import io.netty.channel.unix.FileDescriptor;
 import io.netty.testsuite.transport.AbstractSingleThreadEventLoopTest;
+=======
+import io.netty.channel.ServerChannel;
+import io.netty.channel.socket.ServerSocketChannel;
+import io.netty.channel.unix.FileDescriptor;
+>>>>>>> dev
 import io.netty.util.concurrent.DefaultThreadFactory;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.ThreadPerTaskExecutor;
@@ -39,11 +46,30 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class EpollEventLoopTest extends AbstractSingleThreadEventLoopTest {
+<<<<<<< HEAD
+=======
+
+    @Override
+    protected EventLoopGroup newEventLoopGroup() {
+        return new EpollEventLoopGroup();
+    }
+
+    @Override
+    protected ServerSocketChannel newChannel() {
+        return new EpollServerSocketChannel();
+    }
+
+    @Override
+    protected Class<? extends ServerChannel> serverChannelClass() {
+        return EpollServerSocketChannel.class;
+    }
+>>>>>>> dev
 
     @Test
     public void testScheduleBigDelayNotOverflow() {
         final AtomicReference<Throwable> capture = new AtomicReference<>();
 
+<<<<<<< HEAD
         final EventLoopGroup group = new SingleThreadEventLoop(
                 new ThreadPerTaskExecutor(new DefaultThreadFactory(getClass())),
                 new EpollHandler(0, DefaultSelectStrategyFactory.INSTANCE.newSelectStrategy()) {
@@ -53,6 +79,18 @@ public class EpollEventLoopTest extends AbstractSingleThreadEventLoopTest {
                         super.handleLoopException(t);
                     }
                 });
+=======
+        final EventLoopGroup group = new EpollEventLoop(null,
+                new ThreadPerTaskExecutor(new DefaultThreadFactory(getClass())), 0,
+                DefaultSelectStrategyFactory.INSTANCE.newSelectStrategy(), RejectedExecutionHandlers.reject(),
+                null, null) {
+            @Override
+            void handleLoopException(Throwable t) {
+                capture.set(t);
+                super.handleLoopException(t);
+            }
+        };
+>>>>>>> dev
 
         try {
             final EventLoop eventLoop = group.next();
@@ -76,6 +114,7 @@ public class EpollEventLoopTest extends AbstractSingleThreadEventLoopTest {
         final EpollEventArray array = new EpollEventArray(1024);
         try {
             Native.epollCtlAdd(epoll.intValue(), eventFd.intValue(), Native.EPOLLIN | Native.EPOLLET);
+<<<<<<< HEAD
             final AtomicReference<Throwable> causeRef = new AtomicReference<>();
             final AtomicInteger integer = new AtomicInteger();
             final Thread t = new Thread(() -> {
@@ -88,6 +127,23 @@ public class EpollEventLoopTest extends AbstractSingleThreadEventLoopTest {
                     }
                 } catch (IOException e) {
                     causeRef.set(e);
+=======
+            final AtomicReference<Throwable> causeRef = new AtomicReference<Throwable>();
+            final AtomicInteger integer = new AtomicInteger();
+            final Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        for (int i = 0; i < 2; i++) {
+                            int ready = Native.epollWait(epoll, array, timerFd, -1, -1);
+                            assertEquals(1, ready);
+                            assertEquals(eventFd.intValue(), array.fd(0));
+                            integer.incrementAndGet();
+                        }
+                    } catch (IOException e) {
+                        causeRef.set(e);
+                    }
+>>>>>>> dev
                 }
             });
             t.start();
@@ -114,6 +170,7 @@ public class EpollEventLoopTest extends AbstractSingleThreadEventLoopTest {
             timerFd.close();
         }
     }
+<<<<<<< HEAD
 
     @Override
     protected IoHandlerFactory newIoHandlerFactory() {
@@ -124,4 +181,6 @@ public class EpollEventLoopTest extends AbstractSingleThreadEventLoopTest {
     protected Class<? extends ServerChannel> serverChannelClass() {
         return EpollServerSocketChannel.class;
     }
+=======
+>>>>>>> dev
 }

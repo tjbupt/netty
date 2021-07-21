@@ -22,6 +22,10 @@ import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.FutureListener;
 import io.netty.util.concurrent.GenericFutureListener;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -46,6 +50,9 @@ public abstract class AddressResolverGroup<T extends SocketAddress> implements C
     private final Map<EventExecutor, GenericFutureListener<Future<Object>>> executorTerminationListeners =
             new IdentityHashMap<>();
 
+    private final Map<EventExecutor, GenericFutureListener<Future<Object>>> executorTerminationListeners =
+            new IdentityHashMap<EventExecutor, GenericFutureListener<Future<Object>>>();
+
     protected AddressResolverGroup() { }
 
     /**
@@ -55,7 +62,11 @@ public abstract class AddressResolverGroup<T extends SocketAddress> implements C
      * {@code #getResolver(EventExecutor)} call with the same {@link EventExecutor}.
      */
     public AddressResolver<T> getResolver(final EventExecutor executor) {
+<<<<<<< HEAD
         requireNonNull(executor, "executor");
+=======
+        ObjectUtil.checkNotNull(executor, "executor");
+>>>>>>> dev
 
         if (executor.isShuttingDown()) {
             throw new IllegalStateException("executor not accepting a task");
@@ -73,6 +84,7 @@ public abstract class AddressResolverGroup<T extends SocketAddress> implements C
                 }
 
                 resolvers.put(executor, newResolver);
+<<<<<<< HEAD
                 FutureListener<Object> terminationListener = future -> {
                     synchronized (resolvers) {
                         resolvers.remove(executor);
@@ -80,6 +92,20 @@ public abstract class AddressResolverGroup<T extends SocketAddress> implements C
                     }
                     newResolver.close();
                 };
+=======
+
+                final FutureListener<Object> terminationListener = new FutureListener<Object>() {
+                    @Override
+                    public void operationComplete(Future<Object> future) {
+                        synchronized (resolvers) {
+                            resolvers.remove(executor);
+                            executorTerminationListeners.remove(executor);
+                        }
+                        newResolver.close();
+                    }
+                };
+
+>>>>>>> dev
                 executorTerminationListeners.put(executor, terminationListener);
                 executor.terminationFuture().addListener(terminationListener);
 
@@ -109,6 +135,13 @@ public abstract class AddressResolverGroup<T extends SocketAddress> implements C
             resolvers.clear();
             listeners = executorTerminationListeners.entrySet().toArray(new Map.Entry[0]);
             executorTerminationListeners.clear();
+<<<<<<< HEAD
+=======
+        }
+
+        for (final Map.Entry<EventExecutor, GenericFutureListener<Future<Object>>> entry : listeners) {
+            entry.getKey().terminationFuture().removeListener(entry.getValue());
+>>>>>>> dev
         }
 
         for (final AddressResolver<T> r: rArray) {

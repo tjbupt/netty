@@ -22,7 +22,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
+<<<<<<< HEAD
 import io.netty.channel.MultithreadEventLoopGroup;
+=======
+import io.netty.channel.DefaultEventLoopGroup;
+>>>>>>> dev
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.local.LocalAddress;
 import io.netty.channel.local.LocalChannel;
@@ -149,7 +153,11 @@ public class ServerBootstrapTest {
 
     @Test
     public void optionsAndAttributesMustBeAvailableOnChildChannelInit() throws InterruptedException {
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(1, LocalHandler.newFactory());
+=======
+        EventLoopGroup group = new DefaultEventLoopGroup(1);
+>>>>>>> dev
         LocalAddress addr = new LocalAddress(UUID.randomUUID().toString());
         final AttributeKey<String> key = AttributeKey.valueOf(UUID.randomUUID().toString());
         final AtomicBoolean requestServed = new AtomicBoolean();
@@ -172,7 +180,11 @@ public class ServerBootstrapTest {
         Bootstrap cb = new Bootstrap();
         cb.group(group)
                 .channel(LocalChannel.class)
+<<<<<<< HEAD
                 .handler(new ChannelHandler() { });
+=======
+                .handler(new ChannelInboundHandlerAdapter());
+>>>>>>> dev
         Channel clientChannel = cb.connect(addr).syncUninterruptibly().channel();
         serverChannel.close().syncUninterruptibly();
         clientChannel.close().syncUninterruptibly();

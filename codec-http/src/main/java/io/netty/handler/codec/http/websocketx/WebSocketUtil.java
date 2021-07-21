@@ -16,6 +16,11 @@
 package io.netty.handler.codec.http.websocketx;
 
 import io.netty.util.concurrent.FastThreadLocal;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+import io.netty.util.internal.SuppressJava6Requirement;
+>>>>>>> dev
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -91,8 +96,28 @@ final class WebSocketUtil {
      * @param data The data to encode
      * @return An encoded string containing the data
      */
+    @SuppressJava6Requirement(reason = "Guarded with java version check")
     static String base64(byte[] data) {
+<<<<<<< HEAD
         return Base64.getEncoder().encodeToString(data);
+=======
+        if (PlatformDependent.javaVersion() >= 8) {
+            return java.util.Base64.getEncoder().encodeToString(data);
+        }
+        String encodedString;
+        ByteBuf encodedData = Unpooled.wrappedBuffer(data);
+        try {
+            ByteBuf encoded = Base64.encode(encodedData);
+            try {
+                encodedString = encoded.toString(CharsetUtil.UTF_8);
+            } finally {
+                encoded.release();
+            }
+        } finally {
+            encodedData.release();
+        }
+        return encodedString;
+>>>>>>> dev
     }
     /**
      * Creates an arbitrary number of random bytes

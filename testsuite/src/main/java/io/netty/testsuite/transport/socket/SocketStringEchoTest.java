@@ -58,7 +58,16 @@ public class SocketStringEchoTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 60000, unit = TimeUnit.MILLISECONDS)
     public void testStringEcho(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testStringEcho);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testStringEcho(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testStringEcho(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -68,7 +77,16 @@ public class SocketStringEchoTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 60000, unit = TimeUnit.MILLISECONDS)
     public void testStringEchoNotAutoRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testStringEchoNotAutoRead);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testStringEchoNotAutoRead(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testStringEchoNotAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {

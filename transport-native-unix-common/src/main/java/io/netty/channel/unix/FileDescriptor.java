@@ -24,6 +24,10 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import static io.netty.channel.unix.Errors.ioResult;
 import static io.netty.channel.unix.Errors.newIOException;
 import static io.netty.channel.unix.Limits.IOV_MAX;
+<<<<<<< HEAD
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static java.lang.Math.min;
 import static java.util.Objects.requireNonNull;
@@ -176,8 +180,12 @@ public class FileDescriptor {
      * Open a new {@link FileDescriptor} for the given path.
      */
     public static FileDescriptor from(String path) throws IOException {
+<<<<<<< HEAD
         requireNonNull(path, "path");
         int res = open(path);
+=======
+        int res = open(checkNotNull(path, "path"));
+>>>>>>> dev
         if (res < 0) {
             throw newIOException("open", res);
         }

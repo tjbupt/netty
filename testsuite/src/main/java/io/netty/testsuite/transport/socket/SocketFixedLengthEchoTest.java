@@ -45,12 +45,30 @@ public class SocketFixedLengthEchoTest extends AbstractSocketTest {
 
     @Test
     public void testFixedLengthEcho(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testFixedLengthEcho);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testFixedLengthEcho(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testFixedLengthEchoNotAutoRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testFixedLengthEchoNotAutoRead);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testFixedLengthEchoNotAutoRead(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testFixedLengthEcho(ServerBootstrap sb, Bootstrap cb) throws Throwable {

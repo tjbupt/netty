@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Random;
 import static io.netty.handler.codec.http.HttpHeadersTestUtils.of;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
@@ -49,7 +49,11 @@ public class HttpResponseDecoderTest {
     public void testMaxHeaderSize1() {
         final int maxHeaderSize = 8192;
 
+<<<<<<< HEAD
         final EmbeddedChannel ch = new EmbeddedChannel(new HttpResponseDecoder(4096, maxHeaderSize));
+=======
+        final EmbeddedChannel ch = new EmbeddedChannel(new HttpResponseDecoder(4096, maxHeaderSize, 8192));
+>>>>>>> dev
         final char[] bytes = new char[maxHeaderSize / 2 - 4];
         Arrays.fill(bytes, 'a');
 
@@ -147,6 +151,110 @@ public class HttpResponseDecoderTest {
     }
 
     @Test
+<<<<<<< HEAD
+=======
+    public void testResponseDisallowPartialChunks() {
+        HttpResponseDecoder decoder = new HttpResponseDecoder(
+            HttpObjectDecoder.DEFAULT_MAX_INITIAL_LINE_LENGTH,
+            HttpObjectDecoder.DEFAULT_MAX_HEADER_SIZE,
+            HttpObjectDecoder.DEFAULT_MAX_CHUNK_SIZE,
+            HttpObjectDecoder.DEFAULT_VALIDATE_HEADERS,
+            HttpObjectDecoder.DEFAULT_INITIAL_BUFFER_SIZE,
+            HttpObjectDecoder.DEFAULT_ALLOW_DUPLICATE_CONTENT_LENGTHS,
+            false);
+        EmbeddedChannel ch = new EmbeddedChannel(decoder);
+
+        String headers = "HTTP/1.1 200 OK\r\n"
+            + "Transfer-Encoding: chunked\r\n"
+            + "\r\n";
+       assertTrue(ch.writeInbound(Unpooled.copiedBuffer(headers, CharsetUtil.US_ASCII)));
+
+        HttpResponse res = ch.readInbound();
+        assertThat(res.protocolVersion(), sameInstance(HttpVersion.HTTP_1_1));
+        assertThat(res.status(), is(HttpResponseStatus.OK));
+
+        byte[] chunkBytes = new byte[10];
+        Random random = new Random();
+        random.nextBytes(chunkBytes);
+        final ByteBuf chunk = ch.alloc().buffer().writeBytes(chunkBytes);
+        final int chunkSize = chunk.readableBytes();
+        ByteBuf partialChunk1 = chunk.retainedSlice(0, 5);
+        ByteBuf partialChunk2 = chunk.retainedSlice(5, 5);
+
+        assertFalse(ch.writeInbound(Unpooled.copiedBuffer(Integer.toHexString(chunkSize)
+                                                          + "\r\n", CharsetUtil.US_ASCII)));
+        assertFalse(ch.writeInbound(partialChunk1));
+        assertTrue(ch.writeInbound(partialChunk2));
+
+        HttpContent content = ch.readInbound();
+        assertEquals(chunk, content.content());
+        content.release();
+        chunk.release();
+
+        assertFalse(ch.writeInbound(Unpooled.copiedBuffer("\r\n", CharsetUtil.US_ASCII)));
+
+        // Write the last chunk.
+        assertTrue(ch.writeInbound(Unpooled.copiedBuffer("0\r\n\r\n", CharsetUtil.US_ASCII)));
+
+        // Ensure the last chunk was decoded.
+        HttpContent lastContent = ch.readInbound();
+        assertFalse(lastContent.content().isReadable());
+        lastContent.release();
+
+        assertFalse(ch.finish());
+    }
+
+    @Test
+    public void testResponseChunkedExceedMaxChunkSize() {
+        EmbeddedChannel ch = new EmbeddedChannel(new HttpResponseDecoder(4096, 8192, 32));
+        ch.writeInbound(
+                Unpooled.copiedBuffer("HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n", CharsetUtil.US_ASCII));
+
+        HttpResponse res = ch.readInbound();
+        assertThat(res.protocolVersion(), sameInstance(HttpVersion.HTTP_1_1));
+        assertThat(res.status(), is(HttpResponseStatus.OK));
+
+        byte[] data = new byte[64];
+        for (int i = 0; i < data.length; i++) {
+            data[i] = (byte) i;
+        }
+
+        for (int i = 0; i < 10; i++) {
+            assertFalse(ch.writeInbound(Unpooled.copiedBuffer(Integer.toHexString(data.length) + "\r\n",
+                    CharsetUtil.US_ASCII)));
+            assertTrue(ch.writeInbound(Unpooled.copiedBuffer(data)));
+
+            byte[] decodedData = new byte[data.length];
+            HttpContent content = ch.readInbound();
+            assertEquals(32, content.content().readableBytes());
+            content.content().readBytes(decodedData, 0, 32);
+            content.release();
+
+            content = ch.readInbound();
+            assertEquals(32, content.content().readableBytes());
+
+            content.content().readBytes(decodedData, 32, 32);
+
+            assertArrayEquals(data, decodedData);
+            content.release();
+
+            assertFalse(ch.writeInbound(Unpooled.copiedBuffer("\r\n", CharsetUtil.US_ASCII)));
+        }
+
+        // Write the last chunk.
+        ch.writeInbound(Unpooled.copiedBuffer("0\r\n\r\n", CharsetUtil.US_ASCII));
+
+        // Ensure the last chunk was decoded.
+        LastHttpContent content = ch.readInbound();
+        assertFalse(content.content().isReadable());
+        content.release();
+
+        ch.finish();
+        assertNull(ch.readInbound());
+    }
+
+    @Test
+>>>>>>> dev
     public void testClosureWithoutContentLength1() throws Exception {
         EmbeddedChannel ch = new EmbeddedChannel(new HttpResponseDecoder());
         ch.writeInbound(Unpooled.copiedBuffer("HTTP/1.1 200 OK\r\n\r\n", CharsetUtil.US_ASCII));

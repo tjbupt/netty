@@ -21,6 +21,13 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.EventExecutor;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.ThrowableUtil;
+import io.netty.util.internal.logging.InternalLogger;
+import io.netty.util.internal.logging.InternalLoggerFactory;
+>>>>>>> dev
 
 import java.net.SocketAddress;
 
@@ -76,9 +83,16 @@ public class CombinedChannelDuplexHandler<I extends ChannelHandler, O extends Ch
                             " was constructed with non-default constructor.");
         }
 
+<<<<<<< HEAD
         requireNonNull(inboundHandler, "inboundHandler");
         requireNonNull(outboundHandler, "outboundHandler");
         if (ChannelHandlerMask.isOutbound(inboundHandler.getClass())) {
+=======
+        ObjectUtil.checkNotNull(inboundHandler, "inboundHandler");
+        ObjectUtil.checkNotNull(outboundHandler, "outboundHandler");
+
+        if (inboundHandler instanceof ChannelOutboundHandler) {
+>>>>>>> dev
             throw new IllegalArgumentException(
                     "inboundHandler must not implement any outbound method to get combined.");
         }

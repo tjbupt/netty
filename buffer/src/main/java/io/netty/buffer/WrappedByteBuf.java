@@ -19,6 +19,7 @@ package io.netty.buffer;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.util.ByteProcessor;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.io.IOException;
@@ -43,8 +44,12 @@ class WrappedByteBuf extends ByteBuf {
     protected final ByteBuf buf;
 
     protected WrappedByteBuf(ByteBuf buf) {
+<<<<<<< HEAD
         requireNonNull(buf, "buf");
         this.buf = buf;
+=======
+        this.buf = ObjectUtil.checkNotNull(buf, "buf");
+>>>>>>> dev
     }
 
     @Override

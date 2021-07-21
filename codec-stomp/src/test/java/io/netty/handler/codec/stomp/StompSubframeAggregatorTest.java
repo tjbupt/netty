@@ -23,6 +23,10 @@ import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -35,12 +39,20 @@ public class StompSubframeAggregatorTest {
     private EmbeddedChannel channel;
 
     @BeforeEach
+<<<<<<< HEAD
     public void setup() throws Exception {
+=======
+    public void setup() {
+>>>>>>> dev
         channel = new EmbeddedChannel(new StompSubframeDecoder(), new StompSubframeAggregator(100000));
     }
 
     @AfterEach
+<<<<<<< HEAD
     public void teardown() throws Exception {
+=======
+    public void teardown() {
+>>>>>>> dev
         assertFalse(channel.finish());
     }
 
@@ -145,8 +157,19 @@ public class StompSubframeAggregatorTest {
 
     @Test
     public void testTooLongFrameException() {
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(new StompSubframeDecoder(), new StompSubframeAggregator(10));
         assertThrows(TooLongFrameException.class,
             () -> channel.writeInbound(Unpooled.wrappedBuffer(StompTestConstants.SEND_FRAME_1.getBytes())));
+=======
+        final EmbeddedChannel channel = new EmbeddedChannel(new StompSubframeDecoder(),
+                new StompSubframeAggregator(10));
+        assertThrows(TooLongFrameException.class, new Executable() {
+            @Override
+            public void execute() {
+                channel.writeInbound(Unpooled.wrappedBuffer(StompTestConstants.SEND_FRAME_1.getBytes()));
+            }
+        });
+>>>>>>> dev
     }
 }

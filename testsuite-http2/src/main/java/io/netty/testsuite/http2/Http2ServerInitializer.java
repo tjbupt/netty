@@ -18,7 +18,10 @@ package io.netty.testsuite.http2;
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
+=======
+>>>>>>> dev
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

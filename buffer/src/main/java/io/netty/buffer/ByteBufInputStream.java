@@ -15,10 +15,14 @@
  */
 package io.netty.buffer;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 
 import io.netty.util.ReferenceCounted;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.io.DataInput;
@@ -107,7 +111,11 @@ public class ByteBufInputStream extends InputStream implements DataInput {
      *            {@code writerIndex}
      */
     public ByteBufInputStream(ByteBuf buffer, int length, boolean releaseOnClose) {
+<<<<<<< HEAD
         requireNonNull(buffer, "buffer");
+=======
+        ObjectUtil.checkNotNull(buffer, "buffer");
+>>>>>>> dev
         if (length < 0) {
             if (releaseOnClose) {
                 buffer.release();
@@ -156,8 +164,13 @@ public class ByteBufInputStream extends InputStream implements DataInput {
 
     // Suppress a warning since the class is not thread-safe
     @Override
+<<<<<<< HEAD
     public void mark(int readlimit) { // lgtm[java/non-sync-override]
         markReaderIndex = buffer.readerIndex();
+=======
+    public void mark(int readlimit) {   // lgtm[java/non-sync-override]
+        buffer.markReaderIndex();
+>>>>>>> dev
     }
 
     @Override
@@ -188,8 +201,13 @@ public class ByteBufInputStream extends InputStream implements DataInput {
 
     // Suppress a warning since the class is not thread-safe
     @Override
+<<<<<<< HEAD
     public void reset() throws IOException { // lgtm[java/non-sync-override]
         buffer.readerIndex(markReaderIndex);
+=======
+    public void reset() throws IOException {    // lgtm[java/non-sync-override]
+        buffer.resetReaderIndex();
+>>>>>>> dev
     }
 
     @Override

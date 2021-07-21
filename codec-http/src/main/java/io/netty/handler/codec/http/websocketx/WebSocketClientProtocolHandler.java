@@ -29,6 +29,13 @@ import static io.netty.handler.codec.http.websocketx.WebSocketClientProtocolConf
 import static io.netty.handler.codec.http.websocketx.WebSocketClientProtocolConfig.DEFAULT_PERFORM_MASKING;
 import static io.netty.handler.codec.http.websocketx.WebSocketServerProtocolConfig.DEFAULT_HANDSHAKE_TIMEOUT_MILLIS;
 
+import static io.netty.handler.codec.http.websocketx.WebSocketClientProtocolConfig.DEFAULT_ALLOW_MASK_MISMATCH;
+import static io.netty.handler.codec.http.websocketx.WebSocketClientProtocolConfig.DEFAULT_DROP_PONG_FRAMES;
+import static io.netty.handler.codec.http.websocketx.WebSocketClientProtocolConfig.DEFAULT_HANDLE_CLOSE_FRAMES;
+import static io.netty.handler.codec.http.websocketx.WebSocketClientProtocolConfig.DEFAULT_PERFORM_MASKING;
+import static io.netty.handler.codec.http.websocketx.WebSocketServerProtocolConfig.DEFAULT_HANDSHAKE_TIMEOUT_MILLIS;
+import static io.netty.util.internal.ObjectUtil.*;
+
 /**
  * This handler does all the heavy lifting for you to run a websocket client.
  *
@@ -81,7 +88,11 @@ public class WebSocketClientProtocolHandler extends WebSocketProtocolHandler {
      *            Client protocol configuration.
      */
     public WebSocketClientProtocolHandler(WebSocketClientProtocolConfig clientConfig) {
+<<<<<<< HEAD
         super(Objects.requireNonNull(clientConfig, "clientConfig").dropPongFrames(),
+=======
+        super(checkNotNull(clientConfig, "clientConfig").dropPongFrames(),
+>>>>>>> dev
               clientConfig.sendCloseFrame(), clientConfig.forceCloseTimeoutMillis());
         this.handshaker = WebSocketClientHandshakerFactory.newHandshaker(
             clientConfig.webSocketUri(),
@@ -361,12 +372,21 @@ public class WebSocketClientProtocolHandler extends WebSocketProtocolHandler {
     }
 
     @Override
+<<<<<<< HEAD
     protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
+=======
+    protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> out) throws Exception {
+>>>>>>> dev
         if (clientConfig.handleCloseFrames() && frame instanceof CloseWebSocketFrame) {
             ctx.close();
             return;
         }
         super.decode(ctx, frame);
+    }
+
+    @Override
+    protected WebSocketClientHandshakeException buildHandshakeException(String message) {
+        return new WebSocketClientHandshakeException(message);
     }
 
     @Override

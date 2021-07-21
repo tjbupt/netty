@@ -15,9 +15,15 @@
  */
 package io.netty.example.mqtt.heartBeat;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
+=======
+import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.handler.codec.mqtt.MqttConnAckMessage;
 import io.netty.handler.codec.mqtt.MqttConnAckVariableHeader;
 import io.netty.handler.codec.mqtt.MqttConnectReturnCode;
@@ -30,7 +36,11 @@ import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.ReferenceCountUtil;
 
 @Sharable
+<<<<<<< HEAD
 public final class MqttHeartBeatBrokerHandler implements ChannelHandler {
+=======
+public final class MqttHeartBeatBrokerHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
 
     public static final MqttHeartBeatBrokerHandler INSTANCE = new MqttHeartBeatBrokerHandler();
 
@@ -38,7 +48,11 @@ public final class MqttHeartBeatBrokerHandler implements ChannelHandler {
     }
 
     @Override
+<<<<<<< HEAD
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+=======
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+>>>>>>> dev
         MqttMessage mqttMessage = (MqttMessage) msg;
         System.out.println("Received MQTT message: " + mqttMessage);
         switch (mqttMessage.fixedHeader().messageType()) {
@@ -67,7 +81,11 @@ public final class MqttHeartBeatBrokerHandler implements ChannelHandler {
     }
 
     @Override
+<<<<<<< HEAD
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
+=======
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+>>>>>>> dev
         System.out.println("Channel heartBeat lost");
         if (evt instanceof IdleStateEvent && IdleState.READER_IDLE == ((IdleStateEvent) evt).state()) {
             ctx.close();
@@ -75,7 +93,11 @@ public final class MqttHeartBeatBrokerHandler implements ChannelHandler {
     }
 
     @Override
+<<<<<<< HEAD
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+=======
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+>>>>>>> dev
         cause.printStackTrace();
         ctx.close();
     }

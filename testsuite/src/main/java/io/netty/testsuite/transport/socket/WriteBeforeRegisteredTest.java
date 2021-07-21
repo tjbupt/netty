@@ -31,7 +31,16 @@ public class WriteBeforeRegisteredTest extends AbstractClientSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testWriteBeforeConnect(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testWriteBeforeConnect);
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) throws Throwable {
+                testWriteBeforeConnect(bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testWriteBeforeConnect(Bootstrap cb) throws Throwable {

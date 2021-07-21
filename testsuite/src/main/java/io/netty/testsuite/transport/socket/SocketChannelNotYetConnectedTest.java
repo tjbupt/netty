@@ -20,6 +20,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
@@ -29,12 +30,24 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.util.concurrent.DefaultThreadFactory;
+=======
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.ByteToMessageDecoder;
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.Timeout;
 
 import java.net.SocketException;
 import java.nio.channels.NotYetConnectedException;
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> dev
 import java.util.concurrent.CountDownLatch;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -45,7 +58,16 @@ public class SocketChannelNotYetConnectedTest extends AbstractClientSocketTest {
     @Test
     @Timeout(30)
     public void testShutdownNotYetConnected(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testShutdownNotYetConnected);
+=======
+        run(testInfo, new Runner<Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap) throws Throwable {
+                testShutdownNotYetConnected(bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testShutdownNotYetConnected(Bootstrap cb) throws Throwable {
@@ -83,10 +105,16 @@ public class SocketChannelNotYetConnectedTest extends AbstractClientSocketTest {
         run(info, new Runner<Bootstrap>() {
             @Override
             public void run(Bootstrap bootstrap) throws Throwable {
+<<<<<<< HEAD
                 SingleThreadEventLoop group = new SingleThreadEventLoop(
                         new DefaultThreadFactory(getClass()), NioHandler.newFactory().newHandler());
                 ServerBootstrap sb = new ServerBootstrap().group(group);
                 Channel serverChannel = sb.childHandler(new ChannelHandlerAdapter() {
+=======
+                NioEventLoopGroup group = new NioEventLoopGroup(1);
+                ServerBootstrap sb = new ServerBootstrap().group(group);
+                Channel serverChannel = sb.childHandler(new ChannelInboundHandlerAdapter() {
+>>>>>>> dev
                     @Override
                     public void channelActive(ChannelHandlerContext ctx) throws Exception {
                         ctx.writeAndFlush(Unpooled.copyInt(42));
@@ -96,13 +124,21 @@ public class SocketChannelNotYetConnectedTest extends AbstractClientSocketTest {
                 final CountDownLatch readLatch = new CountDownLatch(1);
                 bootstrap.handler(new ByteToMessageDecoder() {
                     @Override
+<<<<<<< HEAD
                     public void handlerAdded0(ChannelHandlerContext ctx) throws Exception {
+=======
+                    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+>>>>>>> dev
                         assertFalse(ctx.channel().isActive());
                         ctx.read();
                     }
 
                     @Override
+<<<<<<< HEAD
                     protected void decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+=======
+                    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+>>>>>>> dev
                         assertThat(in.readableBytes()).isLessThanOrEqualTo(Integer.BYTES);
                         if (in.readableBytes() == Integer.BYTES) {
                             assertThat(in.readInt()).isEqualTo(42);

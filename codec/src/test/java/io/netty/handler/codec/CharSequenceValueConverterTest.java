@@ -16,6 +16,10 @@ package io.netty.handler.codec;
 
 import io.netty.util.AsciiString;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -39,7 +43,16 @@ public class CharSequenceValueConverterTest {
 
     @Test
     public void testByteFromEmptyAsciiString() {
+<<<<<<< HEAD
         assertThrows(NumberFormatException.class, () ->converter.convertToByte(AsciiString.EMPTY_STRING));
+=======
+        assertThrows(NumberFormatException.class, new Executable() {
+            @Override
+            public void execute() {
+                converter.convertToByte(AsciiString.EMPTY_STRING);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

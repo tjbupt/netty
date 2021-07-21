@@ -15,9 +15,12 @@
  */
 package io.netty.buffer;
 
+<<<<<<< HEAD
 import io.netty.util.internal.LongLongHashMap;
 import io.netty.util.internal.LongPriorityQueue;
 
+=======
+>>>>>>> dev
 import java.nio.ByteBuffer;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -44,6 +47,7 @@ import java.util.PriorityQueue;
  *
  *
  *  A chunk has the following layout:
+<<<<<<< HEAD
  *
  *     /-----------------\
  *     | run             |
@@ -89,6 +93,53 @@ import java.util.PriorityQueue;
  * key: runOffset
  * value: handle
  *
+=======
+ *
+ *     /-----------------\
+ *     | run             |
+ *     |                 |
+ *     |                 |
+ *     |-----------------|
+ *     | run             |
+ *     |                 |
+ *     |-----------------|
+ *     | unalloctated    |
+ *     | (freed)         |
+ *     |                 |
+ *     |-----------------|
+ *     | subpage         |
+ *     |-----------------|
+ *     | unallocated     |
+ *     | (freed)         |
+ *     | ...             |
+ *     | ...             |
+ *     | ...             |
+ *     |                 |
+ *     |                 |
+ *     |                 |
+ *     \-----------------/
+ *
+ *
+ * handle:
+ * -------
+ * a handle is a long number, the bit layout of a run looks like:
+ *
+ * oooooooo ooooooos ssssssss ssssssue bbbbbbbb bbbbbbbb bbbbbbbb bbbbbbbb
+ *
+ * o: runOffset (page offset in the chunk), 15bit
+ * s: size (number of pages) of this run, 15bit
+ * u: isUsed?, 1bit
+ * e: isSubpage?, 1bit
+ * b: bitmapIdx of subpage, zero if it's not subpage, 32bit
+ *
+ * runsAvailMap:
+ * ------
+ * a map which manages all runs (used and not in used).
+ * For each run, the first runOffset and last runOffset are stored in runsAvailMap.
+ * key: runOffset
+ * value: handle
+ *
+>>>>>>> dev
  * runsAvail:
  * ----------
  * an array of {@link PriorityQueue}.
@@ -197,6 +248,7 @@ final class PoolChunk<T> implements PoolChunkMetric {
         runsAvail = newRunsAvailqueueArray(maxPageIdx);
         runsAvailMap = new LongLongHashMap(-1);
         subpages = new PoolSubpage[chunkSize >> pageShifts];
+<<<<<<< HEAD
 
         //insert initial run, offset = 0, pages = chunkSize / pageSize
         int pages = chunkSize >> pageShifts;
@@ -204,6 +256,15 @@ final class PoolChunk<T> implements PoolChunkMetric {
         insertAvailRun(0, pages, initHandle);
 
         cachedNioBuffers = new ArrayDeque<>(8);
+=======
+
+        //insert initial run, offset = 0, pages = chunkSize / pageSize
+        int pages = chunkSize >> pageShifts;
+        long initHandle = (long) pages << SIZE_SHIFT;
+        insertAvailRun(0, pages, initHandle);
+
+        cachedNioBuffers = new ArrayDeque<ByteBuffer>(8);
+>>>>>>> dev
     }
 
     /** Creates a special chunk that is not pooled. */

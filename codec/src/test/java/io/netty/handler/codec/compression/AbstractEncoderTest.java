@@ -40,9 +40,15 @@ public abstract class AbstractEncoderTest extends AbstractCompressionTest {
     public final void initChannel() {
         channel = createChannel();
     }
+<<<<<<< HEAD
 
     protected abstract EmbeddedChannel createChannel();
 
+=======
+
+    protected abstract EmbeddedChannel createChannel();
+
+>>>>>>> dev
     @AfterEach
     public void destroyChannel() {
         if (channel != null) {

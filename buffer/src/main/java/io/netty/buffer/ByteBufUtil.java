@@ -23,6 +23,10 @@ import io.netty.util.concurrent.FastThreadLocal;
 import io.netty.util.internal.MathUtil;
 import io.netty.util.internal.ObjectPool;
 import io.netty.util.internal.ObjectPool.Handle;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectPool.ObjectCreator;
+>>>>>>> dev
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.StringUtil;
 import io.netty.util.internal.SystemPropertyUtil;
@@ -44,6 +48,10 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import static io.netty.util.internal.MathUtil.isOutOfBounds;
+<<<<<<< HEAD
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static io.netty.util.internal.StringUtil.NEWLINE;
 import static io.netty.util.internal.StringUtil.isSurrogate;
@@ -354,8 +362,13 @@ public final class ByteBufUtil {
      * {@code a[aStartIndex : aStartIndex + length] == b[bStartIndex : bStartIndex + length]}
      */
     public static boolean equals(ByteBuf a, int aStartIndex, ByteBuf b, int bStartIndex, int length) {
+<<<<<<< HEAD
         requireNonNull(a, "a");
         requireNonNull(b, "b");
+=======
+        checkNotNull(a, "a");
+        checkNotNull(b, "b");
+>>>>>>> dev
         // All indexes and lengths must be non-negative
         checkPositiveOrZero(aStartIndex, "aStartIndex");
         checkPositiveOrZero(bStartIndex, "bStartIndex");
@@ -1600,7 +1613,16 @@ public final class ByteBufUtil {
     static final class ThreadLocalUnsafeDirectByteBuf extends UnpooledUnsafeDirectByteBuf {
 
         private static final ObjectPool<ThreadLocalUnsafeDirectByteBuf> RECYCLER =
+<<<<<<< HEAD
                 ObjectPool.newPool(ThreadLocalUnsafeDirectByteBuf::new);
+=======
+                ObjectPool.newPool(new ObjectCreator<ThreadLocalUnsafeDirectByteBuf>() {
+                    @Override
+                    public ThreadLocalUnsafeDirectByteBuf newObject(Handle<ThreadLocalUnsafeDirectByteBuf> handle) {
+                        return new ThreadLocalUnsafeDirectByteBuf(handle);
+                    }
+                });
+>>>>>>> dev
 
         static ThreadLocalUnsafeDirectByteBuf newInstance() {
             ThreadLocalUnsafeDirectByteBuf buf = RECYCLER.get();
@@ -1629,7 +1651,16 @@ public final class ByteBufUtil {
     static final class ThreadLocalDirectByteBuf extends UnpooledDirectByteBuf {
 
         private static final ObjectPool<ThreadLocalDirectByteBuf> RECYCLER = ObjectPool.newPool(
+<<<<<<< HEAD
                 ThreadLocalDirectByteBuf::new);
+=======
+                new ObjectCreator<ThreadLocalDirectByteBuf>() {
+            @Override
+            public ThreadLocalDirectByteBuf newObject(Handle<ThreadLocalDirectByteBuf> handle) {
+                return new ThreadLocalDirectByteBuf(handle);
+            }
+        });
+>>>>>>> dev
 
         static ThreadLocalDirectByteBuf newInstance() {
             ThreadLocalDirectByteBuf buf = RECYCLER.get();

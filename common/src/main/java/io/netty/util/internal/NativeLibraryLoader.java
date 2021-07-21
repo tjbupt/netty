@@ -338,6 +338,11 @@ public final class NativeLibraryLoader {
                 return;
             } catch (UnsatisfiedLinkError | Exception e) { // Should by pass the UnsatisfiedLinkError here!
                 suppressed = e;
+<<<<<<< HEAD
+=======
+            } catch (Exception e) {
+                suppressed = e;
+>>>>>>> dev
             }
             NativeLibraryUtil.loadLibrary(name, absolute);  // Fallback to local helper class.
             logger.debug("Successfully loaded the library {}", name);
@@ -477,6 +482,7 @@ public final class NativeLibraryLoader {
 
     private static final class NoexecVolumeDetector {
 
+        @SuppressJava6Requirement(reason = "Usage guarded by java version check")
         private static boolean canExecuteExecutable(File file) throws IOException {
             // If we can already execute, there is nothing to do.
             if (file.canExecute()) {

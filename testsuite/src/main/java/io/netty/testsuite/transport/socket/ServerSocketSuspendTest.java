@@ -40,7 +40,16 @@ public class ServerSocketSuspendTest extends AbstractServerSocketTest {
     @Test
     @Disabled("Need to investigate why it fails on osx")
     public void testSuspendAndResumeAccept(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSuspendAndResumeAccept);
+=======
+        run(testInfo, new Runner<ServerBootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap) throws Throwable {
+                testSuspendAndResumeAccept(serverBootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSuspendAndResumeAccept(ServerBootstrap sb) throws Throwable {

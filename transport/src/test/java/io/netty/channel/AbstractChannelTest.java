@@ -22,6 +22,11 @@ import java.nio.channels.ClosedChannelException;
 
 import io.netty.util.NetUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -75,6 +80,7 @@ public class AbstractChannelTest {
             return null;
         }).when(eventLoop).execute(any(Runnable.class));
 
+<<<<<<< HEAD
         final TestChannel channel = new TestChannel(eventLoop);
         // Using spy as otherwise intelliJ will not be able to understand that we dont want to skip the handler
         ChannelHandler handler = spy(new ChannelHandler() {
@@ -86,6 +92,13 @@ public class AbstractChannelTest {
             @Override
             public void channelUnregistered(ChannelHandlerContext ctx) {
                 ctx.fireChannelUnregistered();
+=======
+        doAnswer(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) {
+                ((Runnable) invocationOnMock.getArgument(0)).run();
+                return null;
+>>>>>>> dev
             }
 
             @Override
@@ -120,6 +133,7 @@ public class AbstractChannelTest {
     @Test
     public void testClosedChannelExceptionCarryIOException() throws Exception {
         final IOException ioException = new IOException();
+<<<<<<< HEAD
         final EventLoop eventLoop = mock(EventLoop.class);
         // This allows us to have a single-threaded test
         when(eventLoop.inEventLoop()).thenReturn(true);
@@ -131,6 +145,9 @@ public class AbstractChannelTest {
         }).when(eventLoop).execute(any(Runnable.class));
 
         final Channel channel = new TestChannel(eventLoop) {
+=======
+        final Channel channel = new TestChannel() {
+>>>>>>> dev
             private boolean open = true;
             private boolean active;
 
@@ -168,8 +185,14 @@ public class AbstractChannelTest {
             }
         };
 
+<<<<<<< HEAD
         try {
             registerChannel(channel);
+=======
+        EventLoop loop = new DefaultEventLoop();
+        try {
+            registerChannel(loop, channel);
+>>>>>>> dev
             channel.connect(new InetSocketAddress(NetUtil.LOCALHOST, 8888)).sync();
             assertSame(ioException, channel.writeAndFlush("").await().cause());
 
@@ -178,6 +201,10 @@ public class AbstractChannelTest {
             assertClosedChannelException(channel.bind(new InetSocketAddress(NetUtil.LOCALHOST, 8888)), ioException);
         } finally {
             channel.close();
+<<<<<<< HEAD
+=======
+            loop.shutdownGracefully();
+>>>>>>> dev
         }
     }
 
@@ -188,7 +215,11 @@ public class AbstractChannelTest {
         assertSame(expected, cause.getCause());
     }
 
+<<<<<<< HEAD
     private static void registerChannel(Channel channel) throws Exception {
+=======
+    private static void registerChannel(EventLoop eventLoop, Channel channel) throws Exception {
+>>>>>>> dev
         DefaultChannelPromise future = new DefaultChannelPromise(channel);
         channel.register(future);
         future.sync(); // Cause any exceptions to be thrown
@@ -199,8 +230,13 @@ public class AbstractChannelTest {
 
         private final ChannelConfig config = new DefaultChannelConfig(this);
 
+<<<<<<< HEAD
         TestChannel(EventLoop eventLoop) {
             super(null, eventLoop);
+=======
+        TestChannel() {
+            super(null);
+>>>>>>> dev
         }
 
         @Override
@@ -231,6 +267,14 @@ public class AbstractChannelTest {
                     promise.setFailure(new UnsupportedOperationException());
                 }
             };
+<<<<<<< HEAD
+=======
+        }
+
+        @Override
+        protected boolean isCompatible(EventLoop loop) {
+            return true;
+>>>>>>> dev
         }
 
         @Override

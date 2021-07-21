@@ -44,7 +44,16 @@ public abstract class AbstractSocketShutdownOutputByPeerTest<Socket> extends Abs
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testShutdownOutput(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testShutdownOutput);
+=======
+        run(testInfo, new Runner<ServerBootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap) throws Throwable {
+                testShutdownOutput(serverBootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testShutdownOutput(ServerBootstrap sb) throws Throwable {
@@ -87,7 +96,16 @@ public abstract class AbstractSocketShutdownOutputByPeerTest<Socket> extends Abs
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testShutdownOutputWithoutOption(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testShutdownOutputWithoutOption);
+=======
+        run(testInfo, new Runner<ServerBootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap) throws Throwable {
+                testShutdownOutputWithoutOption(serverBootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testShutdownOutputWithoutOption(ServerBootstrap sb) throws Throwable {
@@ -155,7 +173,11 @@ public abstract class AbstractSocketShutdownOutputByPeerTest<Socket> extends Abs
         }
 
         @Override
+<<<<<<< HEAD
         public void messageReceived(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
+=======
+        public void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
+>>>>>>> dev
             queue.offer(msg.readByte());
         }
 

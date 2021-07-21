@@ -17,7 +17,10 @@ package io.netty.handler.ssl;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.Future;
 
@@ -132,10 +135,14 @@ public abstract class AbstractSniHandler<T> extends SslClientHelloHandler<T> {
         try {
             onLookupComplete(ctx, hostname, future);
         } finally {
+<<<<<<< HEAD
             fireSniCompletionEvent(
                     // If this handler was removed as part of onLookupComplete(...) we should fire the
                     // event from the beginning of the pipeline as otherwise this will fail.
                     ctx.isRemoved() ? ctx.pipeline().firstContext() : ctx, hostname, future);
+=======
+            fireSniCompletionEvent(ctx, hostname, future);
+>>>>>>> dev
         }
     }
 

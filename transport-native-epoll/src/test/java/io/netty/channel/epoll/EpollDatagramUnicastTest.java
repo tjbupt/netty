@@ -56,7 +56,16 @@ public class EpollDatagramUnicastTest extends DatagramUnicastInetTest {
 
     @Test
     public void testSendSegmentedDatagramPacket(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSendSegmentedDatagramPacket);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSendSegmentedDatagramPacket(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSendSegmentedDatagramPacket(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -65,7 +74,16 @@ public class EpollDatagramUnicastTest extends DatagramUnicastInetTest {
 
     @Test
     public void testSendSegmentedDatagramPacketComposite(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSendSegmentedDatagramPacketComposite);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSendSegmentedDatagramPacketComposite(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSendSegmentedDatagramPacketComposite(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -74,7 +92,16 @@ public class EpollDatagramUnicastTest extends DatagramUnicastInetTest {
 
     @Test
     public void testSendAndReceiveSegmentedDatagramPacket(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSendAndReceiveSegmentedDatagramPacket);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSendAndReceiveSegmentedDatagramPacket(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSendAndReceiveSegmentedDatagramPacket(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -83,7 +110,16 @@ public class EpollDatagramUnicastTest extends DatagramUnicastInetTest {
 
     @Test
     public void testSendAndReceiveSegmentedDatagramPacketComposite(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSendAndReceiveSegmentedDatagramPacketComposite);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testSendAndReceiveSegmentedDatagramPacketComposite(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSendAndReceiveSegmentedDatagramPacketComposite(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -107,7 +143,11 @@ public class EpollDatagramUnicastTest extends DatagramUnicastInetTest {
         try {
             cb.handler(new SimpleChannelInboundHandler<Object>() {
                 @Override
+<<<<<<< HEAD
                 public void messageReceived(ChannelHandlerContext ctx, Object msgs) {
+=======
+                public void channelRead0(ChannelHandlerContext ctx, Object msgs) {
+>>>>>>> dev
                     // Nothing will be sent.
                 }
             });
@@ -127,7 +167,11 @@ public class EpollDatagramUnicastTest extends DatagramUnicastInetTest {
             }
             sc = sb.handler(new SimpleChannelInboundHandler<DatagramPacket>() {
                 @Override
+<<<<<<< HEAD
                 public void messageReceived(ChannelHandlerContext ctx, DatagramPacket packet) {
+=======
+                public void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) {
+>>>>>>> dev
                     if (packet.content().readableBytes() == segmentSize) {
                         latch.countDown();
                     }

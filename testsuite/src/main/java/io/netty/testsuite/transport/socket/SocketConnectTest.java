@@ -24,6 +24,10 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.socket.SocketChannel;
@@ -57,7 +61,16 @@ public class SocketConnectTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testLocalAddressAfterConnect(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testLocalAddressAfterConnect);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testLocalAddressAfterConnect(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testLocalAddressAfterConnect(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -95,7 +108,16 @@ public class SocketConnectTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
     public void testChannelEventsFiredWhenClosedDirectly(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testChannelEventsFiredWhenClosedDirectly);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testChannelEventsFiredWhenClosedDirectly(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testChannelEventsFiredWhenClosedDirectly(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -136,7 +158,16 @@ public class SocketConnectTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
     public void testWriteWithFastOpenBeforeConnect(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testWriteWithFastOpenBeforeConnect);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testWriteWithFastOpenBeforeConnect(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testWriteWithFastOpenBeforeConnect(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -184,7 +215,11 @@ public class SocketConnectTest extends AbstractSocketTest {
         assertFalse(address.getAddress().isAnyLocalAddress());
     }
 
+<<<<<<< HEAD
     private static class BufferingClientHandler extends ChannelHandlerAdapter {
+=======
+    private static class BufferingClientHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         private final Semaphore semaphore = new Semaphore(0);
         private final ByteArrayOutputStream streamBuffer = new ByteArrayOutputStream();
 
@@ -203,6 +238,7 @@ public class SocketConnectTest extends AbstractSocketTest {
 
         String collectBuffer(int expectedBytes) throws InterruptedException {
             semaphore.acquire(expectedBytes);
+<<<<<<< HEAD
             String result = streamBuffer.toString(US_ASCII);
             streamBuffer.reset();
             return result;
@@ -210,6 +246,15 @@ public class SocketConnectTest extends AbstractSocketTest {
     }
 
     private static final class EchoServerHandler extends ChannelHandlerAdapter {
+=======
+            byte[] bytes = streamBuffer.toByteArray();
+            streamBuffer.reset();
+            return new String(bytes, US_ASCII);
+        }
+    }
+
+    private static final class EchoServerHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
             if (msg instanceof ByteBuf) {

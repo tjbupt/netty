@@ -27,9 +27,13 @@ import io.netty.util.ReferenceCountUtil;
 import io.netty.util.internal.EmptyArrays;
 import org.apache.commons.compress.utils.IOUtils;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -43,6 +47,7 @@ import java.util.zip.DeflaterOutputStream;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -50,6 +55,12 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
+=======
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+>>>>>>> dev
 
 public class JdkZlibTest {
     private static final byte[] BYTES_SMALL = new byte[128];
@@ -128,6 +139,7 @@ public class JdkZlibTest {
         }
     }
 
+<<<<<<< HEAD
     protected ZlibDecoder createDecoder(ZlibWrapper wrapper) {
         return createDecoder(wrapper, 0);
     }
@@ -522,6 +534,22 @@ public class JdkZlibTest {
             assertTrue(decoder.isClosed());
             assertFalse(chDecoder.finish());
         }
+=======
+    @Override
+    protected ZlibDecoder createDecoder(ZlibWrapper wrapper, int maxAllocation) {
+        return new JdkZlibDecoder(wrapper, maxAllocation);
+    }
+
+    @Test
+    @Override
+    public void testZLIB_OR_NONE3() throws Exception {
+        assertThrows(DecompressionException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                JdkZlibTest.super.testZLIB_OR_NONE3();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -596,6 +624,7 @@ public class JdkZlibTest {
             chDecoderGZip.close();
         }
     }
+<<<<<<< HEAD
 
     private static byte[] gzip(byte[] bytes) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -642,4 +671,6 @@ public class JdkZlibTest {
             return wrapped.directBuffer(initialCapacity, maxCapacity);
         }
     }
+=======
+>>>>>>> dev
 }

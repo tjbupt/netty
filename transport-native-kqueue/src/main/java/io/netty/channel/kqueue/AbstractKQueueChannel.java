@@ -30,6 +30,7 @@ import io.netty.channel.ChannelPromise;
 import io.netty.channel.ConnectTimeoutException;
 import io.netty.channel.EventLoop;
 import io.netty.channel.RecvByteBufAllocator;
+import io.netty.channel.nio.AbstractNioChannel;
 import io.netty.channel.socket.ChannelInputShutdownEvent;
 import io.netty.channel.socket.ChannelInputShutdownReadComplete;
 import io.netty.channel.socket.SocketChannelConfig;
@@ -69,7 +70,10 @@ abstract class AbstractKQueueChannel extends AbstractChannel implements UnixChan
     private boolean writeFilterEnabled;
     boolean readReadyRunnablePending;
     boolean inputClosedSeenErrorOnRead;
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
     protected volatile boolean active;
     private volatile SocketAddress local;
     private volatile SocketAddress remote;
@@ -141,6 +145,14 @@ abstract class AbstractKQueueChannel extends AbstractChannel implements UnixChan
     void resetCachedAddresses() {
         local = socket.localAddress();
         remote = socket.remoteAddress();
+<<<<<<< HEAD
+=======
+    }
+
+    @Override
+    protected boolean isCompatible(EventLoop loop) {
+        return loop instanceof KQueueEventLoop;
+>>>>>>> dev
     }
 
     @Override
@@ -149,6 +161,26 @@ abstract class AbstractKQueueChannel extends AbstractChannel implements UnixChan
     }
 
     @Override
+<<<<<<< HEAD
+=======
+    protected void doDeregister() throws Exception {
+        ((KQueueEventLoop) eventLoop()).remove(this);
+
+        // As unregisteredFilters() may have not been called because isOpen() returned false we just set both filters
+        // to false to ensure a consistent state in all cases.
+        readFilterEnabled = false;
+        writeFilterEnabled = false;
+    }
+
+    void unregisterFilters() throws Exception {
+        // Make sure we unregister our filters from kqueue!
+        readFilter(false);
+        writeFilter(false);
+        evSet0(Native.EVFILT_SOCK, Native.EV_DELETE, 0);
+    }
+
+    @Override
+>>>>>>> dev
     protected final void doBeginRead() throws Exception {
         // Channel.read() or ChannelHandlerContext.read() was called
         final AbstractKQueueUnsafe unsafe = (AbstractKQueueUnsafe) unsafe();
@@ -173,6 +205,11 @@ abstract class AbstractKQueueChannel extends AbstractChannel implements UnixChan
         // new EventLoop.
         readReadyRunnablePending = false;
 
+<<<<<<< HEAD
+=======
+        ((KQueueEventLoop) eventLoop()).add(this);
+
+>>>>>>> dev
         // Add the write event first so we get notified of connection refused on the client side!
         if (writeFilterEnabled) {
             evSet0(registration, Native.EVFILT_WRITE, Native.EV_ADD_CLEAR_ENABLE);
@@ -345,7 +382,11 @@ abstract class AbstractKQueueChannel extends AbstractChannel implements UnixChan
 
     private void evSet(short filter, short flags) {
         if (isRegistered()) {
+<<<<<<< HEAD
             evSet0(registration, filter, flags);
+=======
+            evSet0(filter, flags);
+>>>>>>> dev
         }
     }
 
@@ -353,10 +394,17 @@ abstract class AbstractKQueueChannel extends AbstractChannel implements UnixChan
         evSet0(registration, filter, flags, 0);
     }
 
+<<<<<<< HEAD
     private void evSet0(KQueueRegistration registration, short filter, short flags, int fflags) {
         // Only try to add to changeList if the FD is still open, if not we already closed it in the meantime.
         if (isOpen()) {
             registration.evSet(filter, flags, fflags);
+=======
+    private void evSet0(short filter, short flags, int fflags) {
+        // Only try to add to changeList if the FD is still open, if not we already closed it in the meantime.
+        if (isOpen()) {
+            ((KQueueEventLoop) eventLoop()).evSet(this, filter, flags, fflags);
+>>>>>>> dev
         }
     }
 
@@ -551,12 +599,24 @@ abstract class AbstractKQueueChannel extends AbstractChannel implements UnixChan
                     // Schedule connect timeout.
                     int connectTimeoutMillis = config().getConnectTimeoutMillis();
                     if (connectTimeoutMillis > 0) {
+<<<<<<< HEAD
                         connectTimeoutFuture = eventLoop().schedule(() -> {
                             ChannelPromise connectPromise = AbstractKQueueChannel.this.connectPromise;
                             if (connectPromise != null && !connectPromise.isDone()
                                     && connectPromise.tryFailure(new ConnectTimeoutException(
                                     "connection timed out: " + remoteAddress))) {
                                 close(newPromise());
+=======
+                        connectTimeoutFuture = eventLoop().schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                ChannelPromise connectPromise = AbstractKQueueChannel.this.connectPromise;
+                                if (connectPromise != null && !connectPromise.isDone()
+                                        && connectPromise.tryFailure(new ConnectTimeoutException(
+                                        "connection timed out: " + remoteAddress))) {
+                                    close(voidPromise());
+                                }
+>>>>>>> dev
                             }
                         }, connectTimeoutMillis, TimeUnit.MILLISECONDS);
                     }

@@ -17,11 +17,17 @@ package io.netty.channel.kqueue;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+<<<<<<< HEAD
 import io.netty.buffer.ByteBufConvertible;
 import io.netty.channel.AddressedEnvelope;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.DefaultAddressedEnvelope;
 import io.netty.channel.EventLoop;
+=======
+import io.netty.channel.AddressedEnvelope;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.DefaultAddressedEnvelope;
+>>>>>>> dev
 import io.netty.channel.unix.DomainDatagramChannel;
 import io.netty.channel.unix.DomainDatagramChannelConfig;
 import io.netty.channel.unix.DomainDatagramPacket;
@@ -58,6 +64,7 @@ public final class KQueueDomainDatagramChannel extends AbstractKQueueDatagramCha
 
     private final KQueueDomainDatagramChannelConfig config;
 
+<<<<<<< HEAD
     public KQueueDomainDatagramChannel(EventLoop eventLoop) {
         this(eventLoop, newSocketDomainDgram(), false);
     }
@@ -68,6 +75,18 @@ public final class KQueueDomainDatagramChannel extends AbstractKQueueDatagramCha
 
     private KQueueDomainDatagramChannel(EventLoop eventLoop, BsdSocket socket, boolean active) {
         super(null, eventLoop, socket, active);
+=======
+    public KQueueDomainDatagramChannel() {
+        this(newSocketDomainDgram(), false);
+    }
+
+    public KQueueDomainDatagramChannel(int fd) {
+        this(new BsdSocket(fd), true);
+    }
+
+    private KQueueDomainDatagramChannel(BsdSocket socket, boolean active) {
+        super(null, socket, active);
+>>>>>>> dev
         config = new KQueueDomainDatagramChannelConfig(this);
     }
 
@@ -120,7 +139,11 @@ public final class KQueueDomainDatagramChannel extends AbstractKQueueDatagramCha
             data = envelope.content();
             remoteAddress = envelope.recipient();
         } else {
+<<<<<<< HEAD
             data = ((ByteBufConvertible) msg).asByteBuf();
+=======
+            data = (ByteBuf) msg;
+>>>>>>> dev
             remoteAddress = null;
         }
 
@@ -139,7 +162,11 @@ public final class KQueueDomainDatagramChannel extends AbstractKQueueDatagramCha
                         remoteAddress.path().getBytes(CharsetUtil.UTF_8));
             }
         } else if (data.nioBufferCount() > 1) {
+<<<<<<< HEAD
             IovArray array = registration().cleanArray();
+=======
+            IovArray array = ((KQueueEventLoop) eventLoop()).cleanArray();
+>>>>>>> dev
             array.add(data, data.readerIndex(), data.readableBytes());
             int cnt = array.count();
             assert cnt != 0;
@@ -172,20 +199,34 @@ public final class KQueueDomainDatagramChannel extends AbstractKQueueDatagramCha
                     new DomainDatagramPacket(newDirectBuffer(packet, content), packet.recipient()) : msg;
         }
 
+<<<<<<< HEAD
         if (msg instanceof ByteBufConvertible) {
             ByteBuf buf = ((ByteBufConvertible) msg).asByteBuf();
+=======
+        if (msg instanceof ByteBuf) {
+            ByteBuf buf = (ByteBuf) msg;
+>>>>>>> dev
             return UnixChannelUtil.isBufferCopyNeededForWrite(buf) ? newDirectBuffer(buf) : buf;
         }
 
         if (msg instanceof AddressedEnvelope) {
             @SuppressWarnings("unchecked")
             AddressedEnvelope<Object, SocketAddress> e = (AddressedEnvelope<Object, SocketAddress>) msg;
+<<<<<<< HEAD
             if (e.content() instanceof ByteBufConvertible &&
                     (e.recipient() == null || e.recipient() instanceof DomainSocketAddress)) {
 
                 ByteBuf content = ((ByteBufConvertible) e.content()).asByteBuf();
                 return UnixChannelUtil.isBufferCopyNeededForWrite(content) ?
                         new DefaultAddressedEnvelope<>(
+=======
+            if (e.content() instanceof ByteBuf &&
+                    (e.recipient() == null || e.recipient() instanceof DomainSocketAddress)) {
+
+                ByteBuf content = (ByteBuf) e.content();
+                return UnixChannelUtil.isBufferCopyNeededForWrite(content) ?
+                        new DefaultAddressedEnvelope<ByteBuf, DomainSocketAddress>(
+>>>>>>> dev
                                 newDirectBuffer(e, content), (DomainSocketAddress) e.recipient()) : e;
             }
         }
@@ -321,8 +362,11 @@ public final class KQueueDomainDatagramChannel extends AbstractKQueueDatagramCha
 
                 if (exception != null) {
                     pipeline.fireExceptionCaught(exception);
+<<<<<<< HEAD
                 } else {
                     readIfIsAutoRead();
+=======
+>>>>>>> dev
                 }
             } finally {
                 readReadyFinally(config);

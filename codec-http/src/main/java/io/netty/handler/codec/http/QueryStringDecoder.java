@@ -27,11 +27,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+<<<<<<< HEAD
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkPositive;
 import static io.netty.util.internal.StringUtil.EMPTY_STRING;
 import static io.netty.util.internal.StringUtil.SPACE;
 import static io.netty.util.internal.StringUtil.decodeHexByte;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 
 /**
  * Splits an HTTP query string into a path string and key-value parameter pairs.
@@ -118,8 +125,13 @@ public class QueryStringDecoder {
      */
     public QueryStringDecoder(String uri, Charset charset, boolean hasPath,
                               int maxParams, boolean semicolonIsNormalChar) {
+<<<<<<< HEAD
         this.uri = requireNonNull(uri, "uri");
         this.charset = requireNonNull(charset, "charset");
+=======
+        this.uri = checkNotNull(uri, "uri");
+        this.charset = checkNotNull(charset, "charset");
+>>>>>>> dev
         this.maxParams = checkPositive(maxParams, "maxParams");
         this.semicolonIsNormalChar = semicolonIsNormalChar;
 

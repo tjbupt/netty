@@ -16,8 +16,15 @@
 
 package io.netty.util;
 
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
+
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -39,8 +46,14 @@ public abstract class ConstantPool<T extends Constant<T>> {
      */
     public T valueOf(Class<?> firstNameComponent, String secondNameComponent) {
         return valueOf(
+<<<<<<< HEAD
                 requireNonNull(firstNameComponent, "firstNameComponent").getName() + '#' +
                         requireNonNull(secondNameComponent, "secondNameComponent"));
+=======
+                checkNotNull(firstNameComponent, "firstNameComponent").getName() +
+                '#' +
+                checkNotNull(secondNameComponent, "secondNameComponent"));
+>>>>>>> dev
     }
 
     /**

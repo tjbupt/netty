@@ -17,7 +17,10 @@ package io.netty.channel;
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 
+<<<<<<< HEAD
 import io.netty.buffer.ByteBufConvertible;
+=======
+>>>>>>> dev
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufHolder;
 

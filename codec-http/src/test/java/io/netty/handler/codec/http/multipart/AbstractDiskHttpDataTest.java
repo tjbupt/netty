@@ -25,7 +25,10 @@ import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.UUID;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 
 import static io.netty.util.CharsetUtil.UTF_8;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -44,7 +47,11 @@ public class AbstractDiskHttpDataTest {
             tmpFile.deleteOnExit();
             FileOutputStream fos = new FileOutputStream(tmpFile);
             byte[] bytes = new byte[4096];
+<<<<<<< HEAD
             ThreadLocalRandom.current().nextBytes(bytes);
+=======
+            PlatformDependent.threadLocalRandom().nextBytes(bytes);
+>>>>>>> dev
             try {
                 fos.write(bytes);
                 fos.flush();

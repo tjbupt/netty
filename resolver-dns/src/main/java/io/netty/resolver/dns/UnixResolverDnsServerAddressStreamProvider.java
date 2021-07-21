@@ -36,8 +36,11 @@ import java.util.regex.Pattern;
 import static io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider.DNS_PORT;
 import static io.netty.util.internal.StringUtil.indexOfNonWhiteSpace;
 import static io.netty.util.internal.StringUtil.indexOfWhiteSpace;
+<<<<<<< HEAD
 
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 
 /**
  * Able to parse files such as <a href="https://linux.die.net/man/5/resolver">/etc/resolv.conf</a> and
@@ -158,7 +161,11 @@ public final class UnixResolverDnsServerAddressStreamProvider implements DnsServ
 
     private static Map<String, DnsServerAddresses> parse(File... etcResolverFiles) throws IOException {
         Map<String, DnsServerAddresses> domainToNameServerStreamMap =
+<<<<<<< HEAD
                 new HashMap<>(etcResolverFiles.length << 1);
+=======
+                new HashMap<String, DnsServerAddresses>(etcResolverFiles.length << 1);
+>>>>>>> dev
         boolean rotateGlobal = RES_OPTIONS != null && RES_OPTIONS.contains(OPTIONS_ROTATE_FLAG);
         for (File etcResolverFile : etcResolverFiles) {
             if (!etcResolverFile.isFile()) {
@@ -188,7 +195,10 @@ public final class UnixResolverDnsServerAddressStreamProvider implements DnsServ
                                 throw new IllegalArgumentException("error parsing label " + NAMESERVER_ROW_LABEL +
                                         " in file " + etcResolverFile + ". value: " + line);
                             }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
                             String maybeIP;
                             int x = indexOfWhiteSpace(line, i);
                             if (x == -1) {
@@ -224,7 +234,11 @@ public final class UnixResolverDnsServerAddressStreamProvider implements DnsServ
                             if (!addresses.isEmpty()) {
                                 putIfAbsent(domainToNameServerStreamMap, domainName, addresses, rotate);
                             }
+<<<<<<< HEAD
                             addresses = new ArrayList<>(2);
+=======
+                            addresses = new ArrayList<InetSocketAddress>(2);
+>>>>>>> dev
                         } else if (line.startsWith(PORT_ROW_LABEL)) {
                             int i = indexOfNonWhiteSpace(line, PORT_ROW_LABEL.length());
                             if (i < 0) {

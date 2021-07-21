@@ -15,8 +15,14 @@
  */
 package io.netty.channel;
 
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+
+import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+>>>>>>> dev
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -64,7 +70,11 @@ public final class ChannelFlushPromiseNotifier {
      * {@code pendingDataSize} was reached.
      */
     public ChannelFlushPromiseNotifier add(ChannelPromise promise, long pendingDataSize) {
+<<<<<<< HEAD
         requireNonNull(promise, "promise");
+=======
+        ObjectUtil.checkNotNull(promise, "promise");
+>>>>>>> dev
         checkPositiveOrZero(pendingDataSize, "pendingDataSize");
         long checkpoint = writeCounter + pendingDataSize;
         if (promise instanceof FlushCheckpoint) {

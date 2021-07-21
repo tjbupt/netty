@@ -130,11 +130,19 @@ public class DefaultHttp2ConnectionDecoder implements Http2ConnectionDecoder {
             }
             settingsReceivedConsumer = (Http2SettingsReceivedConsumer) encoder;
         }
+<<<<<<< HEAD
         this.connection = requireNonNull(connection, "connection");
         contentLengthKey = this.connection.newKey();
         this.frameReader = requireNonNull(frameReader, "frameReader");
         this.encoder = requireNonNull(encoder, "encoder");
         this.requestVerifier = requireNonNull(requestVerifier, "requestVerifier");
+=======
+        this.connection = checkNotNull(connection, "connection");
+        contentLengthKey = this.connection.newKey();
+        this.frameReader = checkNotNull(frameReader, "frameReader");
+        this.encoder = checkNotNull(encoder, "encoder");
+        this.requestVerifier = checkNotNull(requestVerifier, "requestVerifier");
+>>>>>>> dev
         if (connection.local().flowController() == null) {
             connection.local().flowController(new DefaultHttp2LocalFlowController(connection));
         }

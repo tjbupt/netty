@@ -15,11 +15,17 @@
  */
 package io.netty.channel.epoll;
 
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
 import io.netty.channel.Channel;
 import io.netty.channel.DefaultSelectStrategyFactory;
 import io.netty.channel.IoExecutionContext;
 import io.netty.channel.IoHandler;
 import io.netty.channel.IoHandlerFactory;
+=======
+import io.netty.channel.EventLoop;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.EventLoopTaskQueueFactory;
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
 import io.netty.channel.SelectStrategy;
 
 import io.netty.channel.SelectStrategyFactory;
@@ -36,8 +42,14 @@ import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
 import java.io.IOException;
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
 import java.util.concurrent.atomic.AtomicInteger;
 
+=======
+import java.util.Queue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.atomic.AtomicLong;
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
 
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static java.lang.Math.min;
@@ -46,8 +58,13 @@ import static java.util.Objects.requireNonNull;
 /**
  * {@link IoHandler} which uses epoll under the covers. Only works on Linux!
  */
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
 public class EpollHandler implements IoHandler {
     private static final InternalLogger logger = InternalLoggerFactory.getInstance(EpollHandler.class);
+=======
+class EpollEventLoop extends SingleThreadEventLoop {
+    private static final InternalLogger logger = InternalLoggerFactory.getInstance(EpollEventLoop.class);
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
 
     static {
         // Ensure JNI is initialized by the time this class is loaded by this time!
@@ -55,8 +72,11 @@ public class EpollHandler implements IoHandler {
         Epoll.ensureAvailability();
     }
 
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
     // Pick a number that no task could have previously used.
     private long prevDeadlineNanos = SingleThreadEventLoop.nanoTime() - 1;
+=======
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
     private final FileDescriptor epollFd;
     private final FileDescriptor eventFd;
     private final FileDescriptor timerFd;
@@ -69,13 +89,34 @@ public class EpollHandler implements IoHandler {
     private NativeDatagramPacketArray datagramPacketArray;
 
     private final SelectStrategy selectStrategy;
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
     private final IntSupplier selectNowSupplier = this::epollWaitNow;
     private final AtomicInteger wakenUp = new AtomicInteger(1);
     private boolean pendingWakeup;
+=======
+    private final IntSupplier selectNowSupplier = new IntSupplier() {
+        @Override
+        public int get() throws Exception {
+            return epollWaitNow();
+        }
+    };
+
+    private static final long AWAKE = -1L;
+    private static final long NONE = Long.MAX_VALUE;
+
+    // nextWakeupNanos is:
+    //    AWAKE            when EL is awake
+    //    NONE             when EL is waiting with no wakeup scheduled
+    //    other value T    when EL is waiting with wakeup scheduled at time T
+    private final AtomicLong nextWakeupNanos = new AtomicLong(AWAKE);
+    private boolean pendingWakeup;
+    private volatile int ioRatio = 50;
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
 
     // See https://man7.org/linux/man-pages/man2/timerfd_create.2.html.
     private static final long MAX_SCHEDULED_TIMERFD_NS = 999999999;
 
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
     private static AbstractEpollChannel cast(Channel channel) {
         if (channel instanceof AbstractEpollChannel) {
             return (AbstractEpollChannel) channel;
@@ -90,6 +131,14 @@ public class EpollHandler implements IoHandler {
     // Package-private for tests.
     EpollHandler(int maxEvents, SelectStrategy strategy) {
         selectStrategy = strategy;
+=======
+    EpollEventLoop(EventLoopGroup parent, Executor executor, int maxEvents,
+                   SelectStrategy strategy, RejectedExecutionHandler rejectedExecutionHandler,
+                   EventLoopTaskQueueFactory taskQueueFactory, EventLoopTaskQueueFactory tailTaskQueueFactory) {
+        super(parent, executor, false, newTaskQueue(taskQueueFactory), newTaskQueue(tailTaskQueueFactory),
+                rejectedExecutionHandler);
+        selectStrategy = ObjectUtil.checkNotNull(strategy, "strategy");
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
         if (maxEvents == 0) {
             allowGrowing = true;
             events = new EpollEventArray(4096);
@@ -147,6 +196,14 @@ public class EpollHandler implements IoHandler {
         }
     }
 
+    private static Queue<Runnable> newTaskQueue(
+            EventLoopTaskQueueFactory queueFactory) {
+        if (queueFactory == null) {
+            return newTaskQueue0(DEFAULT_MAX_PENDING_TASKS);
+        }
+        return queueFactory.newTaskQueue(DEFAULT_MAX_PENDING_TASKS);
+    }
+
     /**
      * Returns a new {@link IoHandlerFactory} that creates {@link EpollHandler} instances.
      */
@@ -183,6 +240,7 @@ public class EpollHandler implements IoHandler {
     }
 
     @Override
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
     public final void register(Channel channel) throws Exception {
         final AbstractEpollChannel epollChannel = cast(channel);
         epollChannel.register0(new EpollRegistration() {
@@ -217,9 +275,25 @@ public class EpollHandler implements IoHandler {
     @Override
     public final void wakeup(boolean inEventLoop) {
         if (!inEventLoop && wakenUp.getAndSet(1) == 0) {
+=======
+    protected void wakeup(boolean inEventLoop) {
+        if (!inEventLoop && nextWakeupNanos.getAndSet(AWAKE) != AWAKE) {
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
             // write to the evfd which will then wake-up epoll_wait(...)
             Native.eventFdWrite(eventFd.intValue(), 1L);
         }
+    }
+
+    @Override
+    protected boolean beforeScheduledTaskSubmitted(long deadlineNanos) {
+        // Note this is also correct for the nextWakeupNanos == -1 (AWAKE) case
+        return deadlineNanos < nextWakeupNanos.get();
+    }
+
+    @Override
+    protected boolean afterScheduledTaskSubmitted(long deadlineNanos) {
+        // Note this is also correct for the nextWakeupNanos == -1 (AWAKE) case
+        return deadlineNanos < nextWakeupNanos.get();
     }
 
     /**
@@ -245,7 +319,12 @@ public class EpollHandler implements IoHandler {
     /**
      * Deregister the given channel from this {@link EpollHandler}.
      */
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
     private void remove(AbstractEpollChannel ch) throws IOException {
+        int fd = ch.socket.intValue();
+=======
+    void remove(AbstractEpollChannel ch) throws IOException {
+        assert inEventLoop();
         int fd = ch.socket.intValue();
 
         AbstractEpollChannel old = channels.remove(fd);
@@ -262,6 +341,40 @@ public class EpollHandler implements IoHandler {
         }
     }
 
+    @Override
+    protected Queue<Runnable> newTaskQueue(int maxPendingTasks) {
+        return newTaskQueue0(maxPendingTasks);
+    }
+
+    private static Queue<Runnable> newTaskQueue0(int maxPendingTasks) {
+        // This event loop never calls takeTask()
+        return maxPendingTasks == Integer.MAX_VALUE ? PlatformDependent.<Runnable>newMpscQueue()
+                : PlatformDependent.<Runnable>newMpscQueue(maxPendingTasks);
+    }
+
+    /**
+     * Returns the percentage of the desired amount of time spent for I/O in the event loop.
+     */
+    public int getIoRatio() {
+        return ioRatio;
+    }
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
+
+        AbstractEpollChannel old = channels.remove(fd);
+        if (old != null && old != ch) {
+            // The Channel mapping was already replaced due FD reuse, put back the stored Channel.
+            channels.put(fd, old);
+
+            // If we found another Channel in the map that is mapped to the same FD the given Channel MUST be closed.
+            assert !ch.isOpen();
+        } else if (ch.isOpen()) {
+            // Remove the epoll. This is only needed if it's still open as otherwise it will be automatically
+            // removed once the file-descriptor is closed.
+            Native.epollCtlDel(epollFd.intValue(), fd);
+        }
+    }
+
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
     private int epollWait(IoExecutionContext context) throws IOException {
         int delaySeconds;
         int delayNanos;
@@ -274,8 +387,25 @@ public class EpollHandler implements IoHandler {
             prevDeadlineNanos = curDeadlineNanos;
             delaySeconds = (int) min(totalDelay / 1000000000L, Integer.MAX_VALUE);
             delayNanos = (int) min(totalDelay - delaySeconds * 1000000000L, MAX_SCHEDULED_TIMERFD_NS);
+=======
+    @Override
+    public int registeredChannels() {
+        return channels.size();
+    }
+
+    private int epollWait(long deadlineNanos) throws IOException {
+        if (deadlineNanos == NONE) {
+            return Native.epollWait(epollFd, events, timerFd, Integer.MAX_VALUE, 0); // disarm timer
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
         }
+        long totalDelay = deadlineToDelayNanos(deadlineNanos);
+        int delaySeconds = (int) min(totalDelay / 1000000000L, Integer.MAX_VALUE);
+        int delayNanos = (int) min(totalDelay - delaySeconds * 1000000000L, MAX_SCHEDULED_TIMERFD_NS);
         return Native.epollWait(epollFd, events, timerFd, delaySeconds, delayNanos);
+    }
+
+    private int epollWaitNoTimerChange() throws IOException {
+        return Native.epollWait(epollFd, events, false);
     }
 
     private int epollWaitNow() throws IOException {
@@ -290,6 +420,7 @@ public class EpollHandler implements IoHandler {
         // Wait with 1 second "safeguard" timeout
         return Native.epollWait(epollFd, events, 1000);
     }
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
 
     @Override
     public final int run(IoExecutionContext context) {
@@ -318,14 +449,89 @@ public class EpollHandler implements IoHandler {
                         pendingWakeup = false;
                         if (!context.canBlock()) {
                             break;
+=======
+
+    @Override
+    protected void run() {
+        long prevDeadlineNanos = NONE;
+        for (;;) {
+            try {
+                int strategy = selectStrategy.calculateStrategy(selectNowSupplier, hasTasks());
+                switch (strategy) {
+                    case SelectStrategy.CONTINUE:
+                        continue;
+
+                    case SelectStrategy.BUSY_WAIT:
+                        strategy = epollBusyWait();
+                        break;
+
+                    case SelectStrategy.SELECT:
+                        if (pendingWakeup) {
+                            // We are going to be immediately woken so no need to reset wakenUp
+                            // or check for timerfd adjustment.
+                            strategy = epollWaitTimeboxed();
+                            if (strategy != 0) {
+                                break;
+                            }
+                            // We timed out so assume that we missed the write event due to an
+                            // abnormally failed syscall (the write itself or a prior epoll_wait)
+                            logger.warn("Missed eventfd write (not seen after > 1 second)");
+                            pendingWakeup = false;
+                            if (hasTasks()) {
+                                break;
+                            }
+                            // fall-through
+                        }
+
+                        long curDeadlineNanos = nextScheduledTaskDeadlineNanos();
+                        if (curDeadlineNanos == -1L) {
+                            curDeadlineNanos = NONE; // nothing on the calendar
+                        }
+                        nextWakeupNanos.set(curDeadlineNanos);
+                        try {
+                            if (!hasTasks()) {
+                                if (curDeadlineNanos == prevDeadlineNanos) {
+                                    // No timer activity needed
+                                    strategy = epollWaitNoTimerChange();
+                                } else {
+                                    // Timerfd needs to be re-armed or disarmed
+                                    prevDeadlineNanos = curDeadlineNanos;
+                                    strategy = epollWait(curDeadlineNanos);
+                                }
+                            }
+                        } finally {
+                            // Try get() first to avoid much more expensive CAS in the case we
+                            // were woken via the wakeup() method (submitted task)
+                            if (nextWakeupNanos.get() == AWAKE || nextWakeupNanos.getAndSet(AWAKE) == AWAKE) {
+                                pendingWakeup = true;
+                            }
+                        }
+                        // fallthrough
+                    default:
+                }
+
+                final int ioRatio = this.ioRatio;
+                if (ioRatio == 100) {
+                    try {
+                        if (strategy > 0 && processReady(events, strategy)) {
+                            prevDeadlineNanos = NONE;
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
                         }
                         // fall-through
                     }
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
 
                     wakenUp.set(0);
                     try {
                         if (context.canBlock()) {
                             strategy = epollWait(context);
+=======
+                } else if (strategy > 0) {
+                    final long ioStartTime = System.nanoTime();
+                    try {
+                        if (processReady(events, strategy)) {
+                            prevDeadlineNanos = NONE;
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
                         }
                     } finally {
                         // Try get() first to avoid much more expensive CAS in the case we
@@ -334,6 +540,7 @@ public class EpollHandler implements IoHandler {
                             pendingWakeup = true;
                         }
                     }
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
                     // fall-through
                 default:
             }
@@ -344,6 +551,33 @@ public class EpollHandler implements IoHandler {
             if (allowGrowing && strategy == events.length()) {
                 //increase the size of the array as we needed the whole space for the events
                 events.increase();
+=======
+                } else {
+                    runAllTasks(0); // This will run the minimum number of tasks
+                }
+                if (allowGrowing && strategy == events.length()) {
+                    //increase the size of the array as we needed the whole space for the events
+                    events.increase();
+                }
+            } catch (Error e) {
+                throw (Error) e;
+            } catch (Throwable t) {
+                handleLoopException(t);
+            } finally {
+                // Always handle shutdown even if the loop processing threw an exception.
+                try {
+                    if (isShuttingDown()) {
+                        closeAll();
+                        if (confirmShutdown()) {
+                            break;
+                        }
+                    }
+                } catch (Error e) {
+                    throw (Error) e;
+                } catch (Throwable t) {
+                    handleLoopException(t);
+                }
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
             }
         } catch (Error error) {
             throw error;
@@ -368,26 +602,40 @@ public class EpollHandler implements IoHandler {
         }
     }
 
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
     @Override
     public void prepareToDestroy() {
+=======
+    private void closeAll() {
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
         // Using the intermediate collection to prevent ConcurrentModificationException.
         // In the `close()` method, the channel is deleted from `channels` map.
         AbstractEpollChannel[] localChannels = channels.values().toArray(new AbstractEpollChannel[0]);
 
         for (AbstractEpollChannel ch: localChannels) {
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
             ch.unsafe().close(ch.newPromise());
+=======
+            ch.unsafe().close(ch.unsafe().voidPromise());
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
         }
     }
 
-    private void processReady(EpollEventArray events, int ready) {
+    // Returns true if a timerFd event was encountered
+    private boolean processReady(EpollEventArray events, int ready) {
+        boolean timerFired = false;
         for (int i = 0; i < ready; i ++) {
             final int fd = events.fd(i);
             if (fd == eventFd.intValue()) {
                 pendingWakeup = false;
             } else if (fd == timerFd.intValue()) {
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
                 // Just ignore as we use ET mode for the eventfd and timerfd.
                 //
                 // See also https://stackoverflow.com/a/12492308/1074097
+=======
+                timerFired = true;
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
             } else {
                 final long ev = events.events(i);
 
@@ -441,6 +689,7 @@ public class EpollHandler implements IoHandler {
                 }
             }
         }
+        return timerFired;
     }
 
     @Override
@@ -474,6 +723,10 @@ public class EpollHandler implements IoHandler {
             } catch (IOException e) {
                 logger.warn("Failed to close the timer fd.", e);
             }
+<<<<<<< HEAD:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollHandler.java
+=======
+
+>>>>>>> dev:transport-native-epoll/src/main/java/io/netty/channel/epoll/EpollEventLoop.java
             try {
                 epollFd.close();
             } catch (IOException e) {

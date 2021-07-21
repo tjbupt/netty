@@ -22,6 +22,10 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelOutboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.ChannelPromise;
 import io.netty.channel.embedded.EmbeddedChannel;
 import io.netty.util.CharsetUtil;
@@ -322,7 +326,11 @@ public class ChunkedWriteHandlerTest {
     // See https://github.com/netty/netty/issues/8700.
     @Test
     public void testFailureWhenLastChunkFailed() throws IOException {
+<<<<<<< HEAD
         ChannelHandler failLast = new ChannelHandler() {
+=======
+        ChannelOutboundHandlerAdapter failLast = new ChannelOutboundHandlerAdapter() {
+>>>>>>> dev
             private int passedWrites;
 
             @Override
@@ -458,7 +466,11 @@ public class ChunkedWriteHandlerTest {
             }
         };
 
+<<<<<<< HEAD
         ChannelHandler noOpWrites = new ChannelHandler() {
+=======
+        ChannelOutboundHandlerAdapter noOpWrites = new ChannelOutboundHandlerAdapter() {
+>>>>>>> dev
             @Override
             public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
                 ReferenceCountUtil.release(msg);
@@ -523,9 +535,18 @@ public class ChunkedWriteHandlerTest {
         final CountDownLatch listenerInvoked = new CountDownLatch(1);
 
         ChannelFuture writeFuture = ch.write(input);
+<<<<<<< HEAD
         writeFuture.addListener((ChannelFutureListener) future -> {
             inputClosedWhenListenerInvoked.set(input.isClosed());
             listenerInvoked.countDown();
+=======
+        writeFuture.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                inputClosedWhenListenerInvoked.set(input.isClosed());
+                listenerInvoked.countDown();
+            }
+>>>>>>> dev
         });
         ch.flush();
 
@@ -544,9 +565,18 @@ public class ChunkedWriteHandlerTest {
         final CountDownLatch listenerInvoked = new CountDownLatch(1);
 
         ChannelFuture writeFuture = ch.write(input);
+<<<<<<< HEAD
         writeFuture.addListener((ChannelFutureListener) future -> {
             inputClosedWhenListenerInvoked.set(input.isClosed());
             listenerInvoked.countDown();
+=======
+        writeFuture.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                inputClosedWhenListenerInvoked.set(input.isClosed());
+                listenerInvoked.countDown();
+            }
+>>>>>>> dev
         });
         ch.flush();
 
@@ -566,9 +596,18 @@ public class ChunkedWriteHandlerTest {
         final CountDownLatch listenerInvoked = new CountDownLatch(1);
 
         ChannelFuture writeFuture = ch.write(input);
+<<<<<<< HEAD
         writeFuture.addListener((ChannelFutureListener) future -> {
             inputClosedWhenListenerInvoked.set(input.isClosed());
             listenerInvoked.countDown();
+=======
+        writeFuture.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                inputClosedWhenListenerInvoked.set(input.isClosed());
+                listenerInvoked.countDown();
+            }
+>>>>>>> dev
         });
         ch.close(); // close channel to make handler discard the input on subsequent flush
         ch.flush();
@@ -614,9 +653,15 @@ public class ChunkedWriteHandlerTest {
             }
         };
 
+<<<<<<< HEAD
         EmbeddedChannel ch = new EmbeddedChannel(new ChannelHandler() {
             @Override
             public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
+=======
+        EmbeddedChannel ch = new EmbeddedChannel(new ChannelOutboundHandlerAdapter() {
+            @Override
+            public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+>>>>>>> dev
                 ReferenceCountUtil.release(msg);
                 // Calling close so we will drop all queued messages in the ChunkedWriteHandler.
                 ctx.close();
@@ -638,9 +683,18 @@ public class ChunkedWriteHandlerTest {
         final CountDownLatch listenerInvoked = new CountDownLatch(1);
 
         ChannelFuture writeFuture = ch.write(input);
+<<<<<<< HEAD
         writeFuture.addListener((ChannelFutureListener) future -> {
             inputClosedWhenListenerInvoked.set(input.isClosed());
             listenerInvoked.countDown();
+=======
+        writeFuture.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                inputClosedWhenListenerInvoked.set(input.isClosed());
+                listenerInvoked.countDown();
+            }
+>>>>>>> dev
         });
         ch.close(); // close channel to make handler discard the input on subsequent flush
         ch.flush();
@@ -681,7 +735,11 @@ public class ChunkedWriteHandlerTest {
     }
 
     private static void checkFirstFailed(Object input) {
+<<<<<<< HEAD
         ChannelHandler noOpWrites = new ChannelHandler() {
+=======
+        ChannelOutboundHandlerAdapter noOpWrites = new ChannelOutboundHandlerAdapter() {
+>>>>>>> dev
             @Override
             public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
                 ReferenceCountUtil.release(msg);
@@ -698,7 +756,11 @@ public class ChunkedWriteHandlerTest {
     }
 
     private static void checkSkipFailed(Object input1, Object input2) {
+<<<<<<< HEAD
         ChannelHandler failFirst = new ChannelHandler() {
+=======
+        ChannelOutboundHandlerAdapter failFirst = new ChannelOutboundHandlerAdapter() {
+>>>>>>> dev
             private boolean alreadyFailed;
 
             @Override

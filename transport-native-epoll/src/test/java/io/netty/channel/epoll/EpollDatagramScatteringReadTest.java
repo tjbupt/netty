@@ -25,6 +25,10 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.testsuite.transport.TestsuitePermutation;
 import io.netty.testsuite.transport.socket.AbstractDatagramTest;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -34,7 +38,10 @@ import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -58,7 +65,16 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
 
     @Test
     public void testScatteringReadPartial(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testScatteringReadPartial);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testScatteringReadPartial(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testScatteringReadPartial(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -67,7 +83,16 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
 
     @Test
     public void testScatteringRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testScatteringRead);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testScatteringRead(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testScatteringRead(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -76,7 +101,16 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
 
     @Test
     public void testScatteringReadConnectedPartial(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testScatteringReadConnectedPartial);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testScatteringReadConnectedPartial(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testScatteringReadConnectedPartial(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -85,7 +119,16 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
 
     @Test
     public void testScatteringConnectedRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testScatteringConnectedRead);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testScatteringConnectedRead(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testScatteringConnectedRead(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -106,7 +149,11 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
         try {
             cb.handler(new SimpleChannelInboundHandler<Object>() {
                 @Override
+<<<<<<< HEAD
                 public void messageReceived(ChannelHandlerContext ctx, Object msgs) throws Exception {
+=======
+                public void channelRead0(ChannelHandlerContext ctx, Object msgs) throws Exception {
+>>>>>>> dev
                     // Nothing will be sent.
                 }
             });
@@ -115,7 +162,11 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
 
             final AtomicReference<Throwable> errorRef = new AtomicReference<Throwable>();
             final byte[] bytes = new byte[packetSize];
+<<<<<<< HEAD
             ThreadLocalRandom.current().nextBytes(bytes);
+=======
+            PlatformDependent.threadLocalRandom().nextBytes(bytes);
+>>>>>>> dev
 
             final CountDownLatch latch = new CountDownLatch(numPackets);
             sb.handler(new SimpleChannelInboundHandler<DatagramPacket>() {
@@ -128,7 +179,11 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
                 }
 
                 @Override
+<<<<<<< HEAD
                 protected void messageReceived(ChannelHandlerContext ctx, DatagramPacket msg) {
+=======
+                protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) {
+>>>>>>> dev
                     assertEquals(ccAddress, msg.sender());
 
                     assertEquals(bytes.length, msg.content().readableBytes());
@@ -188,7 +243,16 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
 
     @Test
     public void testScatteringReadWithSmallBuffer(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testScatteringReadWithSmallBuffer);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testScatteringReadWithSmallBuffer(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testScatteringReadWithSmallBuffer(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -197,7 +261,16 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
 
     @Test
     public void testScatteringConnectedReadWithSmallBuffer(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testScatteringConnectedReadWithSmallBuffer);
+=======
+        run(testInfo, new Runner<Bootstrap, Bootstrap>() {
+            @Override
+            public void run(Bootstrap bootstrap, Bootstrap bootstrap2) throws Throwable {
+                testScatteringConnectedReadWithSmallBuffer(bootstrap, bootstrap2);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testScatteringConnectedReadWithSmallBuffer(Bootstrap sb, Bootstrap cb) throws Throwable {
@@ -216,7 +289,11 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
         try {
             cb.handler(new SimpleChannelInboundHandler<Object>() {
                 @Override
+<<<<<<< HEAD
                 public void messageReceived(ChannelHandlerContext ctx, Object msgs) {
+=======
+                public void channelRead0(ChannelHandlerContext ctx, Object msgs) {
+>>>>>>> dev
                     // Nothing will be sent.
                 }
             });
@@ -225,13 +302,21 @@ public class EpollDatagramScatteringReadTest extends AbstractDatagramTest  {
 
             final AtomicReference<Throwable> errorRef = new AtomicReference<Throwable>();
             final byte[] bytes = new byte[packetSize];
+<<<<<<< HEAD
             ThreadLocalRandom.current().nextBytes(bytes);
+=======
+            PlatformDependent.threadLocalRandom().nextBytes(bytes);
+>>>>>>> dev
 
             final CountDownLatch latch = new CountDownLatch(1);
             sb.handler(new SimpleChannelInboundHandler<DatagramPacket>() {
 
                 @Override
+<<<<<<< HEAD
                 protected void messageReceived(ChannelHandlerContext ctx, DatagramPacket msg) {
+=======
+                protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) {
+>>>>>>> dev
                     assertEquals(ccAddress, msg.sender());
 
                     assertEquals(bytes.length, msg.content().readableBytes());

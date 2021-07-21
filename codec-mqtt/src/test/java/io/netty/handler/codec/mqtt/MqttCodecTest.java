@@ -26,12 +26,18 @@ import io.netty.handler.codec.EncoderException;
 import io.netty.util.Attribute;
 import io.netty.util.CharsetUtil;
 import io.netty.util.ReferenceCountUtil;
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+<<<<<<< HEAD
 import org.mockito.ArgumentCaptor;
+=======
+>>>>>>> dev
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
@@ -47,6 +53,10 @@ import static io.netty.handler.codec.mqtt.MqttTestUtils.validateUnsubscribePaylo
 import static io.netty.handler.codec.mqtt.MqttProperties.MqttPropertyType.*;
 import static io.netty.handler.codec.mqtt.MqttQoS.AT_LEAST_ONCE;
 import static io.netty.handler.codec.mqtt.MqttSubscriptionOption.RetainedHandlingPolicy.SEND_AT_SUBSCRIBE_IF_NOT_YET_EXISTS;
+<<<<<<< HEAD
+=======
+import static org.hamcrest.CoreMatchers.not;
+>>>>>>> dev
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -96,8 +106,14 @@ public class MqttCodecTest {
      * MqttDecoder with an unrealistic max payload size of 1 byte.
      */
     private final MqttDecoder mqttDecoderLimitedMessageSize = new MqttDecoder(1);
+<<<<<<< HEAD
     @BeforeEach
     public void setup() throws Exception {
+=======
+
+    @BeforeEach
+    public void setup() {
+>>>>>>> dev
         MockitoAnnotations.initMocks(this);
         when(ctx.channel()).thenReturn(channel);
         when(ctx.alloc()).thenReturn(ALLOCATOR);
@@ -109,8 +125,11 @@ public class MqttCodecTest {
             }
         });
         when(channel.attr(MqttCodecUtil.MQTT_VERSION_KEY)).thenReturn(versionAttrMock);
+<<<<<<< HEAD
         mqttDecoder.handlerAdded(ctx);
         mqttDecoderLimitedMessageSize.handlerAdded(ctx);
+=======
+>>>>>>> dev
     }
 
     @AfterEach
@@ -126,11 +145,19 @@ public class MqttCodecTest {
         final MqttConnectMessage message = createConnectMessage(MqttVersion.MQTT_3_1);
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
 
+<<<<<<< HEAD
         ArgumentCaptor<MqttConnectMessage> captor = ArgumentCaptor.forClass(MqttConnectMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
 
         final MqttConnectMessage decodedMessage = captor.getValue();
+=======
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttConnectMessage decodedMessage = (MqttConnectMessage) out.get(0);
+>>>>>>> dev
 
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateConnectVariableHeader(message.variableHeader(), decodedMessage.variableHeader());
@@ -141,10 +168,17 @@ public class MqttCodecTest {
     public void testConnectMessageForMqtt311() throws Exception {
         final MqttConnectMessage message = createConnectMessage(MqttVersion.MQTT_3_1_1);
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
 
         ArgumentCaptor<MqttConnectMessage> captor = ArgumentCaptor.forClass(MqttConnectMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
+=======
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+>>>>>>> dev
 
         final MqttConnectMessage decodedMessage = captor.getValue();
 
@@ -157,6 +191,7 @@ public class MqttCodecTest {
     public void testConnectMessageWithNonZeroReservedFlagForMqtt311() throws Exception {
         final MqttConnectMessage message = createConnectMessage(MqttVersion.MQTT_3_1_1);
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
         // Set the reserved flag in the CONNECT Packet to 1
         byteBuf.setByte(9, byteBuf.getByte(9) | 0x1);
 
@@ -165,6 +200,16 @@ public class MqttCodecTest {
         verify(ctx).fireChannelRead(captor.capture());
 
         final MqttMessage decodedMessage = captor.getValue();
+=======
+
+        // Set the reserved flag in the CONNECT Packet to 1
+        byteBuf.setByte(9, byteBuf.getByte(9) | 0x1);
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+>>>>>>> dev
         assertTrue(decodedMessage.decoderResult().isFailure());
         Throwable cause = decodedMessage.decoderResult().cause();
         assertThat(cause, instanceOf(DecoderException.class));
@@ -177,10 +222,16 @@ public class MqttCodecTest {
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
         byte firstByte = byteBuf.getByte(0);
         byteBuf.setByte(0, (byte) (firstByte | 1)); // set bit 0 to 1
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
         checkForSingleDecoderException(captor);
+=======
+        final List<Object> out = new LinkedList<Object>();
+        mqttDecoder.decode(ctx, byteBuf, out);
+        checkForSingleDecoderException(out);
+>>>>>>> dev
     }
 
     @Test
@@ -189,6 +240,7 @@ public class MqttCodecTest {
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
         byte firstByte = byteBuf.getByte(0);
         byteBuf.setByte(0, (byte) (firstByte | 2)); // set bit 1 to 1
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
@@ -275,6 +327,91 @@ public class MqttCodecTest {
         verify(ctx).fireChannelRead(captor.capture());
 
         final MqttConnAckMessage decodedMessage = captor.getValue();
+=======
+        final List<Object> out = new LinkedList<Object>();
+        mqttDecoder.decode(ctx, byteBuf, out);
+        checkForSingleDecoderException(out);
+    }
+
+    @Test
+    public void testConnectMessageNonZeroReservedBit2Mqtt311() throws Exception {
+        final MqttConnectMessage message = createConnectMessage(MqttVersion.MQTT_3_1_1);
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+        byte firstByte = byteBuf.getByte(0);
+        byteBuf.setByte(0, (byte) (firstByte | 4)); // set bit 2 to 1
+        final List<Object> out = new LinkedList<Object>();
+        mqttDecoder.decode(ctx, byteBuf, out);
+        checkForSingleDecoderException(out);
+    }
+
+    @Test
+    public void testConnectMessageNonZeroReservedBit3Mqtt311() throws Exception {
+        final MqttConnectMessage message = createConnectMessage(MqttVersion.MQTT_3_1_1);
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+        byte firstByte = byteBuf.getByte(0);
+        byteBuf.setByte(0, (byte) (firstByte | 8)); // set bit 3 to 1
+        final List<Object> out = new LinkedList<Object>();
+        mqttDecoder.decode(ctx, byteBuf, out);
+        checkForSingleDecoderException(out);
+    }
+
+    @Test
+    public void testSubscribeMessageNonZeroReservedBit0Mqtt311() throws Exception {
+        final MqttSubscribeMessage message = createSubscribeMessage();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+        byte firstByte = byteBuf.getByte(0);
+        byteBuf.setByte(0, (byte) (firstByte | 1)); // set bit 1 to 0
+        final List<Object> out = new LinkedList<Object>();
+        mqttDecoder.decode(ctx, byteBuf, out);
+        checkForSingleDecoderException(out);
+    }
+
+    @Test
+    public void testSubscribeMessageZeroReservedBit1Mqtt311() throws Exception {
+        final MqttSubscribeMessage message = createSubscribeMessage();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+        byte firstByte = byteBuf.getByte(0);
+        byteBuf.setByte(0, (byte) (firstByte & ~2)); // set bit 1 to 0
+        final List<Object> out = new LinkedList<Object>();
+        mqttDecoder.decode(ctx, byteBuf, out);
+        checkForSingleDecoderException(out);
+    }
+
+    private void checkForSingleDecoderException(final List<Object> out) {
+        assertEquals(1, out.size());
+        assertThat(out.get(0), not(instanceOf(MqttConnectMessage.class)));
+        MqttMessage result = (MqttMessage) out.get(0);
+        assertThat(result.decoderResult().cause(), instanceOf(DecoderException.class));
+    }
+
+    @Test
+    public void testConnectMessageNoPassword() throws Exception {
+        final MqttConnectMessage message = createConnectMessage(
+                MqttVersion.MQTT_3_1_1,
+                null,
+                PASSWORD,
+                MqttProperties.NO_PROPERTIES,
+                MqttProperties.NO_PROPERTIES);
+
+        assertThrows(EncoderException.class, new Executable() {
+            @Override
+            public void execute() {
+                MqttEncoder.doEncode(ctx, message);
+            }
+        });
+    }
+
+    @Test
+    public void testConnAckMessage() throws Exception {
+        final MqttConnAckMessage message = createConnAckMessage();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttConnAckMessage decodedMessage = (MqttConnAckMessage) out.get(0);
+>>>>>>> dev
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateConnAckVariableHeader(message.variableHeader(), decodedMessage.variableHeader());
     }
@@ -283,10 +420,17 @@ public class MqttCodecTest {
     public void testPublishMessage() throws Exception {
         final MqttPublishMessage message = createPublishMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
 
         ArgumentCaptor<MqttPublishMessage> captor = ArgumentCaptor.forClass(MqttPublishMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
+=======
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+>>>>>>> dev
 
         final MqttPublishMessage decodedMessage = captor.getValue();
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
@@ -319,11 +463,19 @@ public class MqttCodecTest {
         final MqttSubscribeMessage message = createSubscribeMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
 
+<<<<<<< HEAD
         ArgumentCaptor<MqttSubscribeMessage> captor = ArgumentCaptor.forClass(MqttSubscribeMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
 
         final MqttSubscribeMessage decodedMessage = captor.getValue();
+=======
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttSubscribeMessage decodedMessage = (MqttSubscribeMessage) out.get(0);
+>>>>>>> dev
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateMessageIdVariableHeader(message.variableHeader(), decodedMessage.variableHeader());
         validateSubscribePayload(message.payload(), decodedMessage.payload());
@@ -333,10 +485,17 @@ public class MqttCodecTest {
     public void testSubAckMessage() throws Exception {
         final MqttSubAckMessage message = createSubAckMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
 
         ArgumentCaptor<MqttSubAckMessage> captor = ArgumentCaptor.forClass(MqttSubAckMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
+=======
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+>>>>>>> dev
 
         final MqttSubAckMessage decodedMessage = captor.getValue();
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
@@ -354,10 +513,17 @@ public class MqttCodecTest {
                 new MqttSubAckMessage(mqttFixedHeader, mqttMessageIdVariableHeader, mqttSubAckPayload);
 
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
 
         ArgumentCaptor<MqttSubAckMessage> captor = ArgumentCaptor.forClass(MqttSubAckMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
+=======
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+>>>>>>> dev
 
         MqttSubAckMessage decodedMessage = captor.getValue();
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
@@ -372,11 +538,19 @@ public class MqttCodecTest {
         final MqttUnsubscribeMessage message = createUnsubscribeMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
 
+<<<<<<< HEAD
         ArgumentCaptor<MqttUnsubscribeMessage> captor = ArgumentCaptor.forClass(MqttUnsubscribeMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
 
         final MqttUnsubscribeMessage decodedMessage = captor.getValue();
+=======
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttUnsubscribeMessage decodedMessage = (MqttUnsubscribeMessage) out.get(0);
+>>>>>>> dev
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateMessageIdVariableHeader(message.variableHeader(), decodedMessage.variableHeader());
         validateUnsubscribePayload(message.payload(), decodedMessage.payload());
@@ -408,6 +582,7 @@ public class MqttCodecTest {
 
         final MqttMessage message = createMessageWithFixedHeader(MqttMessageType.PINGREQ);
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
         // setting an invalid message type (15, reserved and forbidden by MQTT 3.1.1 spec)
         byteBuf.setByte(0, 0xF0);
 
@@ -416,6 +591,16 @@ public class MqttCodecTest {
         verify(ctx).fireChannelRead(captor.capture());
 
         final MqttMessage decodedMessage = captor.getValue();
+=======
+
+        // setting an invalid message type (15, reserved and forbidden by MQTT 3.1.1 spec)
+        byteBuf.setByte(0, 0xF0);
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+>>>>>>> dev
         assertTrue(decodedMessage.decoderResult().isFailure());
         Throwable cause = decodedMessage.decoderResult().cause();
         assertThat(cause, instanceOf(DecoderException.class));
@@ -426,6 +611,7 @@ public class MqttCodecTest {
     public void testConnectMessageForMqtt31TooLarge() throws Exception {
         final MqttConnectMessage message = createConnectMessage(MqttVersion.MQTT_3_1);
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
@@ -436,6 +622,20 @@ public class MqttCodecTest {
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateConnectVariableHeader(message.variableHeader(),
                 (MqttConnectVariableHeader) decodedMessage.variableHeader());
+=======
+
+        mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        assertEquals(0, byteBuf.readableBytes());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateConnectVariableHeader(message.variableHeader(),
+            (MqttConnectVariableHeader) decodedMessage.variableHeader());
+>>>>>>> dev
         validateDecoderExceptionTooLargeMessage(decodedMessage);
     }
 
@@ -444,6 +644,7 @@ public class MqttCodecTest {
         final MqttConnectMessage message = createConnectMessage(MqttVersion.MQTT_3_1_1);
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
 
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
@@ -454,6 +655,19 @@ public class MqttCodecTest {
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateConnectVariableHeader(message.variableHeader(),
                 (MqttConnectVariableHeader) decodedMessage.variableHeader());
+=======
+        mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        assertEquals(0, byteBuf.readableBytes());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateConnectVariableHeader(message.variableHeader(),
+            (MqttConnectVariableHeader) decodedMessage.variableHeader());
+>>>>>>> dev
         validateDecoderExceptionTooLargeMessage(decodedMessage);
     }
 
@@ -461,6 +675,7 @@ public class MqttCodecTest {
     public void testConnAckMessageTooLarge() throws Exception {
         final MqttConnAckMessage message = createConnAckMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
@@ -468,6 +683,16 @@ public class MqttCodecTest {
         final MqttMessage decodedMessage = captor.getValue();
         assertEquals(0, byteBuf.readableBytes());
 
+=======
+
+        mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        assertEquals(0, byteBuf.readableBytes());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+>>>>>>> dev
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateDecoderExceptionTooLargeMessage(decodedMessage);
     }
@@ -476,6 +701,7 @@ public class MqttCodecTest {
     public void testPublishMessageTooLarge() throws Exception {
         final MqttPublishMessage message = createPublishMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
@@ -486,6 +712,20 @@ public class MqttCodecTest {
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validatePublishVariableHeader(message.variableHeader(),
                 (MqttPublishVariableHeader) decodedMessage.variableHeader());
+=======
+
+        mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        assertEquals(0, byteBuf.readableBytes());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validatePublishVariableHeader(message.variableHeader(),
+            (MqttPublishVariableHeader) decodedMessage.variableHeader());
+>>>>>>> dev
         validateDecoderExceptionTooLargeMessage(decodedMessage);
     }
 
@@ -494,6 +734,7 @@ public class MqttCodecTest {
         final MqttSubscribeMessage message = createSubscribeMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
 
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
@@ -504,6 +745,18 @@ public class MqttCodecTest {
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateMessageIdVariableHeader(message.variableHeader(),
                 (MqttMessageIdVariableHeader) decodedMessage.variableHeader());
+=======
+        mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        assertEquals(0, byteBuf.readableBytes());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateMessageIdVariableHeader(message.variableHeader(),
+            (MqttMessageIdVariableHeader) decodedMessage.variableHeader());
+>>>>>>> dev
         validateDecoderExceptionTooLargeMessage(decodedMessage);
     }
 
@@ -512,6 +765,7 @@ public class MqttCodecTest {
         final MqttSubAckMessage message = createSubAckMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
 
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
@@ -522,6 +776,18 @@ public class MqttCodecTest {
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
         validateMessageIdVariableHeader(message.variableHeader(),
                 (MqttMessageIdVariableHeader) decodedMessage.variableHeader());
+=======
+        mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        assertEquals(0, byteBuf.readableBytes());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateMessageIdVariableHeader(message.variableHeader(),
+            (MqttMessageIdVariableHeader) decodedMessage.variableHeader());
+>>>>>>> dev
         validateDecoderExceptionTooLargeMessage(decodedMessage);
     }
 
@@ -530,6 +796,7 @@ public class MqttCodecTest {
         final MqttUnsubscribeMessage message = createUnsubscribeMessage();
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
 
+<<<<<<< HEAD
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
@@ -853,6 +1120,330 @@ public class MqttCodecTest {
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
+=======
+        mqttDecoderLimitedMessageSize.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        assertEquals(0, byteBuf.readableBytes());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateMessageIdVariableHeader(message.variableHeader(),
+            (MqttMessageIdVariableHeader) decodedMessage.variableHeader());
+        validateDecoderExceptionTooLargeMessage(decodedMessage);
+    }
+
+    @Test
+    public void testConnectMessageForMqtt5() throws Exception {
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(SESSION_EXPIRY_INTERVAL.value(), 10));
+        props.add(new MqttProperties.StringProperty(AUTHENTICATION_METHOD.value(), "Plain"));
+        MqttProperties willProps = new MqttProperties();
+        willProps.add(new MqttProperties.IntegerProperty(WILL_DELAY_INTERVAL.value(), 100));
+        final MqttConnectMessage message =
+                createConnectMessage(MqttVersion.MQTT_5, USER_NAME, PASSWORD, props, willProps);
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttConnectMessage decodedMessage = (MqttConnectMessage) out.get(0);
+
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateConnectVariableHeader(message.variableHeader(), decodedMessage.variableHeader());
+        validateConnectPayload(message.payload(), decodedMessage.payload());
+    }
+
+    @Test
+    public void testConnAckMessageForMqtt5() throws Exception {
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(SESSION_EXPIRY_INTERVAL.value(), 10));
+        props.add(new MqttProperties.IntegerProperty(MAXIMUM_QOS.value(), 1));
+        props.add(new MqttProperties.IntegerProperty(MAXIMUM_PACKET_SIZE.value(), 1000));
+        final MqttConnAckMessage message = createConnAckMessage(props);
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttConnAckMessage decodedMessage = (MqttConnAckMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateConnAckVariableHeader(message.variableHeader(), decodedMessage.variableHeader());
+    }
+
+    @Test
+    public void testPublishMessageForMqtt5() throws Exception {
+        when(versionAttrMock.get()).thenReturn(MqttVersion.MQTT_5);
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(SUBSCRIPTION_IDENTIFIER.value(), 10));
+        props.add(new MqttProperties.IntegerProperty(SUBSCRIPTION_IDENTIFIER.value(), 20));
+        props.add(new MqttProperties.IntegerProperty(PAYLOAD_FORMAT_INDICATOR.value(), 6));
+        props.add(new MqttProperties.UserProperty("isSecret", "true"));
+        props.add(new MqttProperties.UserProperty("tag", "firstTag"));
+        props.add(new MqttProperties.UserProperty("tag", "secondTag"));
+        assertEquals(2,
+                props.getProperties(SUBSCRIPTION_IDENTIFIER.value()).size());
+        assertEquals(3,
+                props.getProperties(USER_PROPERTY.value()).size());
+        assertEquals(3,
+                ((MqttProperties.UserProperties) props.getProperty(USER_PROPERTY.value())).value.size());
+        final MqttPublishMessage message = createPublishMessage(props);
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttPublishMessage decodedMessage = (MqttPublishMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validatePublishVariableHeader(message.variableHeader(), decodedMessage.variableHeader());
+        validatePublishPayload(message.payload(), decodedMessage.payload());
+    }
+
+    @Test
+    public void testPubAckMessageForMqtt5() throws Exception {
+        when(versionAttrMock.get()).thenReturn(MqttVersion.MQTT_5);
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(PAYLOAD_FORMAT_INDICATOR.value(), 6));
+        //0x87 - Not Authorized
+        final MqttMessage message = createPubAckMessage((byte) 0x87, props);
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validatePubReplyVariableHeader((MqttPubReplyMessageVariableHeader) message.variableHeader(),
+                (MqttPubReplyMessageVariableHeader) decodedMessage.variableHeader());
+    }
+
+    @Test
+    public void testPubAckMessageSkipCodeForMqtt5() throws Exception {
+        //Code 0 (Success) and no properties - skip encoding code and properties
+        final MqttMessage message = createPubAckMessage((byte) 0, MqttProperties.NO_PROPERTIES);
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validatePubReplyVariableHeader((MqttPubReplyMessageVariableHeader) message.variableHeader(),
+                (MqttPubReplyMessageVariableHeader) decodedMessage.variableHeader());
+    }
+
+    @Test
+    public void testSubAckMessageForMqtt5() throws Exception {
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(PAYLOAD_FORMAT_INDICATOR.value(), 6));
+        final MqttSubAckMessage message = createSubAckMessage(props, new int[] {1, 2, 0, 0x87 /* not authorized */});
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttSubAckMessage decodedMessage = (MqttSubAckMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validatePacketIdAndPropertiesVariableHeader(
+                (MqttMessageIdAndPropertiesVariableHeader) message.variableHeader(),
+                (MqttMessageIdAndPropertiesVariableHeader) decodedMessage.variableHeader());
+        validateSubAckPayload(message.payload(), decodedMessage.payload());
+        assertArrayEquals(new Integer[] {1, 2, 0, 0x80},
+                decodedMessage.payload().grantedQoSLevels().toArray());
+    }
+
+    @Test
+    public void testSubscribeMessageForMqtt5() throws Exception {
+        when(versionAttrMock.get()).thenReturn(MqttVersion.MQTT_5);
+
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(PAYLOAD_FORMAT_INDICATOR.value(), 6));
+        final MqttSubscribeMessage message = MqttMessageBuilders.subscribe()
+                .messageId((short) 1)
+                .properties(props)
+                .addSubscription("/topic", new MqttSubscriptionOption(AT_LEAST_ONCE,
+                        true,
+                        true,
+                        SEND_AT_SUBSCRIBE_IF_NOT_YET_EXISTS))
+                .build();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+        final MqttSubscribeMessage decodedMessage = (MqttSubscribeMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        final MqttMessageIdAndPropertiesVariableHeader expectedHeader =
+                (MqttMessageIdAndPropertiesVariableHeader) message.variableHeader();
+        final MqttMessageIdAndPropertiesVariableHeader actualHeader =
+                (MqttMessageIdAndPropertiesVariableHeader) decodedMessage.variableHeader();
+        validatePacketIdAndPropertiesVariableHeader(expectedHeader, actualHeader);
+        validateSubscribePayload(message.payload(), decodedMessage.payload());
+    }
+
+    @Test
+    public void testSubscribeMessageMqtt5EncodeAsMqtt3() throws Exception {
+        when(versionAttrMock.get()).thenReturn(MqttVersion.MQTT_3_1_1);
+
+        //Set parameters only available in MQTT5 to see if they're dropped when encoding as MQTT3
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(PAYLOAD_FORMAT_INDICATOR.value(), 6));
+        final MqttSubscribeMessage message = MqttMessageBuilders.subscribe()
+                .messageId((short) 1)
+                .properties(props)
+                .addSubscription("/topic", new MqttSubscriptionOption(AT_LEAST_ONCE,
+                        true,
+                        true,
+                        SEND_AT_SUBSCRIBE_IF_NOT_YET_EXISTS))
+                .build();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+        final MqttSubscribeMessage decodedMessage = (MqttSubscribeMessage) out.get(0);
+
+        final MqttSubscribeMessage expectedMessage = MqttMessageBuilders.subscribe()
+                .messageId((short) 1)
+                .addSubscription("/topic", MqttSubscriptionOption.onlyFromQos(AT_LEAST_ONCE))
+                .build();
+        validateFixedHeaders(expectedMessage.fixedHeader(), decodedMessage.fixedHeader());
+        final MqttMessageIdAndPropertiesVariableHeader expectedHeader =
+                (MqttMessageIdAndPropertiesVariableHeader) expectedMessage.variableHeader();
+        final MqttMessageIdAndPropertiesVariableHeader actualHeader =
+                (MqttMessageIdAndPropertiesVariableHeader) decodedMessage.variableHeader();
+        validatePacketIdAndPropertiesVariableHeader(expectedHeader, actualHeader);
+        validateSubscribePayload(expectedMessage.payload(), decodedMessage.payload());
+    }
+
+    @Test
+    public void testUnsubAckMessageForMqtt5() throws Exception {
+        when(versionAttrMock.get()).thenReturn(MqttVersion.MQTT_5);
+
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(PAYLOAD_FORMAT_INDICATOR.value(), 6));
+        final MqttUnsubAckMessage message = MqttMessageBuilders.unsubAck()
+                .packetId((short) 1)
+                .properties(props)
+                .addReasonCode((short) 0x83)
+                .build();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+
+        final MqttUnsubAckMessage decodedMessage = (MqttUnsubAckMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validatePacketIdAndPropertiesVariableHeader(
+                (MqttMessageIdAndPropertiesVariableHeader) message.variableHeader(),
+                (MqttMessageIdAndPropertiesVariableHeader) decodedMessage.variableHeader());
+        assertEquals(message.payload().unsubscribeReasonCodes(),
+                decodedMessage.payload().unsubscribeReasonCodes());
+    }
+
+    @Test
+    public void testDisconnectMessageForMqtt5() throws Exception {
+        when(versionAttrMock.get()).thenReturn(MqttVersion.MQTT_5);
+
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.IntegerProperty(SESSION_EXPIRY_INTERVAL.value(), 6));
+        final MqttMessage message = MqttMessageBuilders.disconnect()
+                .reasonCode((byte) 0x96) // Message rate too high
+                .properties(props)
+                .build();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateReasonCodeAndPropertiesVariableHeader(
+                (MqttReasonCodeAndPropertiesVariableHeader) message.variableHeader(),
+                (MqttReasonCodeAndPropertiesVariableHeader) decodedMessage.variableHeader());
+    }
+
+    @Test
+    public void testDisconnectMessageSkipCodeForMqtt5() throws Exception {
+        //code 0 and no properties - skip encoding code and properties
+        final MqttMessage message = MqttMessageBuilders.disconnect()
+                .reasonCode((byte) 0) // ok
+                .properties(MqttProperties.NO_PROPERTIES)
+                .build();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateReasonCodeAndPropertiesVariableHeader(
+                (MqttReasonCodeAndPropertiesVariableHeader) message.variableHeader(),
+                (MqttReasonCodeAndPropertiesVariableHeader) decodedMessage.variableHeader());
+    }
+
+    @Test
+    public void testAuthMessageForMqtt5() throws Exception {
+        when(versionAttrMock.get()).thenReturn(MqttVersion.MQTT_5);
+
+        MqttProperties props = new MqttProperties();
+        props.add(new MqttProperties.BinaryProperty(AUTHENTICATION_DATA.value(), "secret".getBytes(CharsetUtil.UTF_8)));
+        final MqttMessage message = MqttMessageBuilders.auth()
+                .reasonCode((byte) 0x18) // Continue authentication
+                .properties(props)
+                .build();
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+        final MqttMessage decodedMessage = (MqttMessage) out.get(0);
+        validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
+        validateReasonCodeAndPropertiesVariableHeader(
+                (MqttReasonCodeAndPropertiesVariableHeader) message.variableHeader(),
+                (MqttReasonCodeAndPropertiesVariableHeader) decodedMessage.variableHeader());
+    }
+
+    @Test
+    public void testMqttVersionDetection() throws Exception {
+        clearInvocations(versionAttrMock);
+        //Encode CONNECT message so that encoder would initialize its version
+        final MqttConnectMessage connectMessage = createConnectMessage(MqttVersion.MQTT_5);
+        ByteBuf connectByteBuf = MqttEncoder.doEncode(ctx, connectMessage);
+
+        verify(versionAttrMock, times(1)).set(MqttVersion.MQTT_5);
+        clearInvocations(versionAttrMock);
+
+        mqttDecoder.channelRead(ctx, connectByteBuf);
+
+        verify(versionAttrMock, times(1)).set(MqttVersion.MQTT_5);
+
+        assertEquals(out.size(), 1, out.size());
+
+        final MqttConnectMessage decodedConnectMessage = (MqttConnectMessage) out.get(0);
+
+        validateFixedHeaders(connectMessage.fixedHeader(), decodedConnectMessage.fixedHeader());
+        validateConnectVariableHeader(connectMessage.variableHeader(), decodedConnectMessage.variableHeader());
+        validateConnectPayload(connectMessage.payload(), decodedConnectMessage.payload());
+
+        verifyNoMoreInteractions(versionAttrMock);
+    }
+
+    private void testMessageWithOnlyFixedHeader(MqttMessage message) throws Exception {
+        ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(1, out.size());
+>>>>>>> dev
 
         final MqttMessage decodedMessage = captor.getValue();
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());
@@ -863,10 +1454,17 @@ public class MqttCodecTest {
         MqttMessage message = createMessageWithFixedHeaderAndMessageIdVariableHeader(messageType);
 
         ByteBuf byteBuf = MqttEncoder.doEncode(ctx, message);
+<<<<<<< HEAD
 
         ArgumentCaptor<MqttMessage> captor = ArgumentCaptor.forClass(MqttMessage.class);
         mqttDecoder.channelRead(ctx, byteBuf);
         verify(ctx).fireChannelRead(captor.capture());
+=======
+
+        mqttDecoder.channelRead(ctx, byteBuf);
+
+        assertEquals(out.size(), 1, out.size());
+>>>>>>> dev
 
         final MqttMessage decodedMessage = captor.getValue();
         validateFixedHeaders(message.fixedHeader(), decodedMessage.fixedHeader());

@@ -17,6 +17,10 @@ package io.netty.handler.codec;
 import io.netty.util.AsciiString;
 import io.netty.util.HashingStrategy;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -127,7 +131,11 @@ public class DefaultHeadersTest {
         headers.add(of("name1"), of("value3"));
         assertEquals(4, headers.size());
 
+<<<<<<< HEAD
         List<CharSequence> values = new ArrayList<>();
+=======
+        List<CharSequence> values = new ArrayList<CharSequence>();
+>>>>>>> dev
         Iterator<CharSequence> itr = headers.valueIterator(of("name1"));
         while (itr.hasNext()) {
             values.add(itr.next());
@@ -171,8 +179,18 @@ public class DefaultHeadersTest {
         TestDefaultHeaders headers = newInstance();
         assertEquals(0, headers.size());
         assertTrue(headers.isEmpty());
+<<<<<<< HEAD
         Iterator<CharSequence> itr = headers.valueIterator(of("name"));
         assertThrows(IllegalStateException.class, itr::remove);
+=======
+        final Iterator<CharSequence> itr = headers.valueIterator(of("name"));
+        assertThrows(IllegalStateException.class, new Executable() {
+            @Override
+            public void execute() {
+                itr.remove();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -465,9 +483,18 @@ public class DefaultHeadersTest {
 
     @Test
     public void iterateEmptyHeadersShouldThrow() {
-        Iterator<Map.Entry<CharSequence, CharSequence>> iterator = newInstance().iterator();
+        final Iterator<Map.Entry<CharSequence, CharSequence>> iterator = newInstance().iterator();
         assertFalse(iterator.hasNext());
+<<<<<<< HEAD
         assertThrows(NoSuchElementException.class, iterator::next);
+=======
+        assertThrows(NoSuchElementException.class, new Executable() {
+            @Override
+            public void execute() {
+                iterator.next();
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -572,8 +599,18 @@ public class DefaultHeadersTest {
 
     @Test
     public void testAddSelf() {
+<<<<<<< HEAD
         TestDefaultHeaders headers = newInstance();
         assertThrows(IllegalArgumentException.class, () -> headers.add(headers));
+=======
+        final TestDefaultHeaders headers = newInstance();
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                headers.add(headers);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

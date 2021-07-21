@@ -18,8 +18,11 @@ package io.netty.handler.codec.http.websocketx;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelInboundHandler;
+>>>>>>> dev
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
@@ -32,6 +35,10 @@ import java.util.Objects;
 
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 import static io.netty.handler.codec.http.websocketx.WebSocketServerProtocolConfig.DEFAULT_HANDSHAKE_TIMEOUT_MILLIS;
+<<<<<<< HEAD
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 
 /**
  * This handler does all the heavy lifting for you to run a websocket server.
@@ -110,7 +117,11 @@ public class WebSocketServerProtocolHandler extends WebSocketProtocolHandler {
      *            Server protocol configuration.
      */
     public WebSocketServerProtocolHandler(WebSocketServerProtocolConfig serverConfig) {
+<<<<<<< HEAD
         super(Objects.requireNonNull(serverConfig, "serverConfig").dropPongFrames(),
+=======
+        super(checkNotNull(serverConfig, "serverConfig").dropPongFrames(),
+>>>>>>> dev
               serverConfig.sendCloseFrame(),
               serverConfig.forceCloseTimeoutMillis()
         );
@@ -232,7 +243,11 @@ public class WebSocketServerProtocolHandler extends WebSocketProtocolHandler {
     }
 
     @Override
+<<<<<<< HEAD
     protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
+=======
+    protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame, List<Object> out) throws Exception {
+>>>>>>> dev
         if (serverConfig.handleCloseFrames() && frame instanceof CloseWebSocketFrame) {
             WebSocketServerHandshaker handshaker = getHandshaker(ctx.channel());
             if (handshaker != null) {
@@ -246,6 +261,11 @@ public class WebSocketServerProtocolHandler extends WebSocketProtocolHandler {
             return;
         }
         super.decode(ctx, frame);
+    }
+
+    @Override
+    protected WebSocketServerHandshakeException buildHandshakeException(String message) {
+        return new WebSocketServerHandshakeException(message);
     }
 
     @Override

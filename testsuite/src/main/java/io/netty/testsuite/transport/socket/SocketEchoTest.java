@@ -24,7 +24,16 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.SimpleChannelInboundHandler;
+<<<<<<< HEAD
 import java.util.concurrent.TimeUnit;
+=======
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
+import io.netty.util.concurrent.EventExecutorGroup;
+import java.util.concurrent.TimeUnit;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -34,6 +43,10 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.Timeout;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+<<<<<<< HEAD
+=======
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+>>>>>>> dev
 
 public class SocketEchoTest extends AbstractSocketTest {
 
@@ -44,10 +57,32 @@ public class SocketEchoTest extends AbstractSocketTest {
         random.nextBytes(data);
     }
 
+<<<<<<< HEAD
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testSimpleEcho(TestInfo testInfo) throws Throwable {
         run(testInfo, this::testSimpleEcho);
+=======
+    @BeforeAll
+    public static void createGroup() {
+        group = new DefaultEventExecutorGroup(2);
+    }
+
+    @AfterAll
+    public static void destroyGroup() throws Exception {
+        group.shutdownGracefully().sync();
+    }
+
+    @Test
+    @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
+    public void testSimpleEcho(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testSimpleEcho(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testSimpleEcho(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -57,11 +92,95 @@ public class SocketEchoTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
     public void testSimpleEchoNotAutoRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testSimpleEchoNotAutoRead);
     }
 
     public void testSimpleEchoNotAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {
         testSimpleEcho0(sb, cb, false);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap sb1, Bootstrap cb1) throws Throwable {
+                testSimpleEchoNotAutoRead(sb1, cb1);
+            }
+        });
+    }
+
+    public void testSimpleEchoNotAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {
+        testSimpleEcho0(sb, cb, false, false, false);
+    }
+
+    @Test
+    public void testSimpleEchoWithAdditionalExecutor(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap sb1, Bootstrap cb1) throws Throwable {
+                testSimpleEchoWithAdditionalExecutor(sb1, cb1);
+            }
+        });
+    }
+
+    public void testSimpleEchoWithAdditionalExecutor(ServerBootstrap sb, Bootstrap cb) throws Throwable {
+        testSimpleEcho0(sb, cb, true, false, true);
+    }
+
+    @Test
+    public void testSimpleEchoWithAdditionalExecutorNotAutoRead(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap sb1, Bootstrap cb1) throws Throwable {
+                testSimpleEchoWithAdditionalExecutorNotAutoRead(sb1, cb1);
+            }
+        });
+    }
+
+    public void testSimpleEchoWithAdditionalExecutorNotAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {
+        testSimpleEcho0(sb, cb, true, false, false);
+    }
+
+    @Test
+    public void testSimpleEchoWithVoidPromise(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap sb1, Bootstrap cb1) throws Throwable {
+                testSimpleEchoWithVoidPromise(sb1, cb1);
+            }
+        });
+    }
+
+    public void testSimpleEchoWithVoidPromise(ServerBootstrap sb, Bootstrap cb) throws Throwable {
+        testSimpleEcho0(sb, cb, false, true, true);
+    }
+
+    @Test
+    public void testSimpleEchoWithVoidPromiseNotAutoRead(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap sb1, Bootstrap cb1) throws Throwable {
+                testSimpleEchoWithVoidPromiseNotAutoRead(sb1, cb1);
+            }
+        });
+    }
+
+    public void testSimpleEchoWithVoidPromiseNotAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {
+        testSimpleEcho0(sb, cb, false, true, false);
+    }
+
+    @Test
+    @Timeout(value = 30000, unit = TimeUnit.MILLISECONDS)
+    public void testSimpleEchoWithAdditionalExecutorAndVoidPromise(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap sb1, Bootstrap cb1) throws Throwable {
+                testSimpleEchoWithAdditionalExecutorAndVoidPromise(sb1, cb1);
+            }
+        });
+    }
+
+    public void testSimpleEchoWithAdditionalExecutorAndVoidPromise(ServerBootstrap sb, Bootstrap cb) throws Throwable {
+        testSimpleEcho0(sb, cb, true, true, true);
+>>>>>>> dev
     }
 
     private static void testSimpleEcho0(

@@ -24,8 +24,13 @@ import io.netty.util.internal.UnstableApi;
 import static io.netty.handler.codec.http2.Http2CodecUtil.DEFAULT_HEADER_LIST_SIZE;
 import static io.netty.handler.codec.http2.Http2CodecUtil.DEFAULT_MAX_RESERVED_STREAMS;
 import static io.netty.handler.codec.http2.Http2PromisedRequestVerifier.ALWAYS_VERIFY;
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+>>>>>>> dev
 
 /**
  * Abstract base class which defines commonly used features required to build {@link Http2ConnectionHandler} instances.
@@ -396,7 +401,11 @@ public abstract class AbstractHttp2ConnectionHandlerBuilder<T extends Http2Conne
      */
     protected B promisedRequestVerifier(Http2PromisedRequestVerifier promisedRequestVerifier) {
         enforceNonCodecConstraints("promisedRequestVerifier");
+<<<<<<< HEAD
         this.promisedRequestVerifier = requireNonNull(promisedRequestVerifier, "promisedRequestVerifier");
+=======
+        this.promisedRequestVerifier = checkNotNull(promisedRequestVerifier, "promisedRequestVerifier");
+>>>>>>> dev
         return self();
     }
 

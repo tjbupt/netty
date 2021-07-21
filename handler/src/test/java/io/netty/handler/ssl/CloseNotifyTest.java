@@ -162,7 +162,11 @@ public class CloseNotifyTest {
                 new SimpleChannelInboundHandler<ByteBuf>() {
 
                     @Override
+<<<<<<< HEAD
                     protected void messageReceived(ChannelHandlerContext ctx, ByteBuf msg) {
+=======
+                    protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) {
+>>>>>>> dev
                         eventQueue.add(msg.toString(US_ASCII));
                     }
 

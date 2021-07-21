@@ -16,6 +16,10 @@
 package io.netty.buffer;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,12 +38,30 @@ public class BigEndianHeapByteBufTest extends AbstractByteBufTest {
 
     @Test
     public void shouldNotAllowNullInConstructor1() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> new UnpooledHeapByteBuf(null, new byte[1], 0));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new UnpooledHeapByteBuf(null, new byte[1], 0);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void shouldNotAllowNullInConstructor2() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class,
             () -> new UnpooledHeapByteBuf(UnpooledByteBufAllocator.DEFAULT, null, 0));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new UnpooledHeapByteBuf(UnpooledByteBufAllocator.DEFAULT, null, 0);
+            }
+        });
+>>>>>>> dev
     }
 }

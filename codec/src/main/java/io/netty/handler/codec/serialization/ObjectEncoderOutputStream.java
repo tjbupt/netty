@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.buffer.Unpooled;
+import io.netty.util.internal.ObjectUtil;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -65,10 +66,15 @@ public class ObjectEncoderOutputStream extends OutputStream implements
      *        cost, please specify the properly estimated value.
      */
     public ObjectEncoderOutputStream(OutputStream out, int estimatedLength) {
+<<<<<<< HEAD
         requireNonNull(out, "out");
         if (estimatedLength < 0) {
             throw new IllegalArgumentException("estimatedLength: " + estimatedLength);
         }
+=======
+        ObjectUtil.checkNotNull(out, "out");
+        ObjectUtil.checkPositiveOrZero(estimatedLength, "estimatedLength");
+>>>>>>> dev
 
         if (out instanceof DataOutputStream) {
             this.out = (DataOutputStream) out;
@@ -82,7 +88,14 @@ public class ObjectEncoderOutputStream extends OutputStream implements
     public void writeObject(Object obj) throws IOException {
         ByteBuf buf = Unpooled.buffer(estimatedLength);
         try {
+<<<<<<< HEAD
             try (ObjectOutputStream oout = new CompactObjectOutputStream(new ByteBufOutputStream(buf))) {
+=======
+            // Suppress a warning about resource leak since oout is closed below
+            ObjectOutputStream oout = new CompactObjectOutputStream(
+                    new ByteBufOutputStream(buf));  // lgtm[java/output-resource-leak]
+            try {
+>>>>>>> dev
                 oout.writeObject(obj);
                 oout.flush();
             }

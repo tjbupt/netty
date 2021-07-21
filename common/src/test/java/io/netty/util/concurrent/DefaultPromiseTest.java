@@ -22,6 +22,10 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 import org.mockito.Mockito;
 
 import java.util.HashMap;
@@ -109,6 +113,7 @@ public class DefaultPromiseTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void testCancellationExceptionIsThrownWhenBlockingGet() throws InterruptedException, ExecutionException {
         final Promise<Void> promise = new DefaultPromise<>(ImmediateEventExecutor.INSTANCE);
         assertTrue(promise.cancel(false));
@@ -127,6 +132,34 @@ public class DefaultPromiseTest {
     public void testCancellationExceptionIsReturnedAsCause() throws InterruptedException,
     ExecutionException, TimeoutException {
         final Promise<Void> promise = new DefaultPromise<>(ImmediateEventExecutor.INSTANCE);
+=======
+    public void testCancellationExceptionIsThrownWhenBlockingGet() {
+        final Promise<Void> promise = new DefaultPromise<Void>(ImmediateEventExecutor.INSTANCE);
+        assertTrue(promise.cancel(false));
+        assertThrows(CancellationException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                promise.get();
+            }
+        });
+    }
+
+    @Test
+    public void testCancellationExceptionIsThrownWhenBlockingGetWithTimeout() {
+        final Promise<Void> promise = new DefaultPromise<Void>(ImmediateEventExecutor.INSTANCE);
+        assertTrue(promise.cancel(false));
+        assertThrows(CancellationException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                promise.get(1, TimeUnit.SECONDS);
+            }
+        });
+    }
+
+    @Test
+    public void testCancellationExceptionIsReturnedAsCause() {
+        final Promise<Void> promise = new DefaultPromise<Void>(ImmediateEventExecutor.INSTANCE);
+>>>>>>> dev
         assertTrue(promise.cancel(false));
         assertThat(promise.cause(), instanceOf(CancellationException.class));
     }

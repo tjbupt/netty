@@ -26,7 +26,11 @@
   <groupId>io.netty</groupId>
   <artifactId>netty-parent</artifactId>
   <packaging>pom</packaging>
+<<<<<<< HEAD
   <version>5.0.0.Final-SNAPSHOT</version>
+=======
+  <version>4.1.67.Final-SNAPSHOT</version>
+>>>>>>> dev
 
   <name>Netty</name>
   <url>https://netty.io/</url>
@@ -68,6 +72,8 @@
   </developers>
 
   <profiles>
+<<<<<<< HEAD
+=======
     <profile>
       <id>aggregate</id>
       <properties>
@@ -179,7 +185,7 @@
       <properties>
         <skipNativeImageTestsuite>false</skipNativeImageTestsuite>
         <forbiddenapis.skip>true</forbiddenapis.skip>
-        <testJvm/>
+        <testJvm />
       </properties>
     </profile>
     <!-- JDK16 -->
@@ -200,8 +206,8 @@
         <!-- 1.4.x does not work in Java10+ -->
         <jboss.marshalling.version>2.0.5.Final</jboss.marshalling.version>
         <!-- This is the minimum supported by Java12+ -->
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
         <!-- pax-exam does not work on latest Java12 EA 22 build -->
         <skipOsgiTestsuite>true</skipOsgiTestsuite>
         <!-- doesn't work with java16 -->
@@ -227,9 +233,242 @@
         <!-- 1.4.x does not work in Java10+ -->
         <jboss.marshalling.version>2.0.5.Final</jboss.marshalling.version>
         <!-- This is the minimum supported by Java12+ -->
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <!-- pax-exam does not work on latest Java12 EA 22 build -->
+        <skipOsgiTestsuite>true</skipOsgiTestsuite>
+      </properties>
+    </profile>
+    <!-- JDK14 -->
+    <profile>
+      <id>java14</id>
+      <activation>
+        <jdk>14</jdk>
+      </activation>
+      <properties>
+        <argLine.java9.extras />
+        <!-- Export some stuff which is used during our tests -->
+        <argLine.java9>--illegal-access=deny ${argLine.java9.extras}</argLine.java9>
+        <!-- Not use alpn agent as Java11+ supports alpn out of the box -->
+        <argLine.alpnAgent />
+        <forbiddenapis.skip>true</forbiddenapis.skip>
+        <!-- Needed because of https://issues.apache.org/jira/browse/MENFORCER-275 -->
+        <enforcer.plugin.version>3.0.0-M3</enforcer.plugin.version>
+        <!-- 1.4.x does not work in Java10+ -->
+        <jboss.marshalling.version>2.0.5.Final</jboss.marshalling.version>
+        <!-- This is the minimum supported by Java12+ -->
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <!-- pax-exam does not work on latest Java12 EA 22 build -->
+        <skipOsgiTestsuite>true</skipOsgiTestsuite>
+      </properties>
+    </profile>
+    <!-- JDK13 -->
+    <profile>
+      <id>java13</id>
+      <activation>
+        <jdk>13</jdk>
+      </activation>
+      <properties>
+        <argLine.java9.extras />
+        <!-- Export some stuff which is used during our tests -->
+        <argLine.java9>--illegal-access=deny ${argLine.java9.extras}</argLine.java9>
+        <!-- Not use alpn agent as Java11+ supports alpn out of the box -->
+        <argLine.alpnAgent />
+        <forbiddenapis.skip>true</forbiddenapis.skip>
+        <!-- Needed because of https://issues.apache.org/jira/browse/MENFORCER-275 -->
+        <enforcer.plugin.version>3.0.0-M3</enforcer.plugin.version>
+        <!-- 1.4.x does not work in Java10+ -->
+        <jboss.marshalling.version>2.0.5.Final</jboss.marshalling.version>
+        <!-- This is the minimum supported by Java12+ -->
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <!-- pax-exam does not work on latest Java12 EA 22 build -->
+        <skipOsgiTestsuite>true</skipOsgiTestsuite>
+      </properties>
+    </profile>
+
+    <!-- JDK12 -->
+>>>>>>> dev
+    <profile>
+      <id>aggregate</id>
+      <properties>
+        <checkstyle.skip>true</checkstyle.skip>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>3.2.0</version>
+            <executions>
+              <execution>
+                <id>aggregate</id>
+                <goals>
+                  <goal>aggregate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <sourceFileExcludes>
+                <exclude>**/com/sun/**/*.java</exclude>
+                <exclude>**/example/**/*.java</exclude>
+                <exclude>**/testsuite/**/*.java</exclude>
+                <exclude>**/microbench/**/*.java</exclude>
+                <exclude>**/microbenchmark/**/*.java</exclude>
+                <exclude>**/generated/**/*.java</exclude>
+                <exclude>**/*Benchmark.java</exclude>
+                <exclude>**/*Bench.java</exclude>
+                <exclude>**/*Test.java</exclude>
+              </sourceFileExcludes>
+              <docfilessubdirs>true</docfilessubdirs>
+              <outputDirectory>${project.build.directory}/api</outputDirectory>
+              <overview>${project.basedir}/src/javadoc/overview.html</overview>
+              <doctitle>Netty API Reference (${project.version})</doctitle>
+              <windowtitle>Netty API Reference (${project.version})</windowtitle>
+              <detectJavaApiLink>false</detectJavaApiLink>
+              <links>
+                <link>https://docs.oracle.com/javase/8/docs/api/</link>
+                <link>https://developers.google.com/protocol-buffers/docs/reference/java/</link>
+                <link>https://www.slf4j.org/apidocs/</link>
+              </links>
+              <groups>
+                <group>
+                  <title>Low-level data representation</title>
+                  <packages>io.netty.buffer*</packages>
+                </group>
+                <group>
+                  <title>Central interface for all I/O operations</title>
+                  <packages>io.netty.channel*</packages>
+                </group>
+                <group>
+                  <title>Client &amp; Server bootstrapping utilities</title>
+                  <packages>io.netty.bootstrap*</packages>
+                </group>
+                <group>
+                  <title>Reusable I/O event interceptors</title>
+                  <packages>io.netty.handler*</packages>
+                </group>
+                <group>
+                  <title>DNS / Host resolvers</title>
+                  <packages>io.netty.resolver*</packages>
+                </group>
+                <group>
+                  <title>Utils</title>
+                  <packages>io.netty.util*</packages>
+                </group>
+              </groups>
+              <locale>en_US</locale>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jxr-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>aggregate</id>
+                <goals>
+                  <goal>aggregate</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <linkJavadoc>true</linkJavadoc>
+              <destDir>${project.build.directory}/site/xref</destDir>
+              <javadocDir>${project.build.directory}/site/apidocs</javadocDir>
+              <docTitle>Netty Source Xref (${project.version})</docTitle>
+              <windowTitle>Netty Source Xref (${project.version})</windowTitle>
+              <excludes>
+                <exclude>**/com/sun/**/*.java</exclude>
+                <exclude>**/example/**/*.java</exclude>
+                <exclude>**/microbench/**/*.java</exclude>
+                <exclude>**/microbenchmark/**/*.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!-- Detect if we use GraalVM and if so enable the native image testsuite -->
+    <profile>
+      <id>graal</id>
+      <activation>
+        <file>
+          <!-- GraalVM Component Updater should exists when using GraalVM-->
+          <exists>${java.home}/bin/gu</exists>
+        </file>
+      </activation>
+      <properties>
+<<<<<<< HEAD
+        <skipNativeImageTestsuite>false</skipNativeImageTestsuite>
+        <forbiddenapis.skip>true</forbiddenapis.skip>
+        <testJvm/>
+      </properties>
+    </profile>
+    <!-- JDK16 -->
+    <profile>
+      <id>java16</id>
+      <activation>
+        <jdk>16</jdk>
+      </activation>
+      <properties>
+=======
+        <argLine.java9.extras />
+        <!-- Export some stuff which is used during our tests -->
+        <argLine.java9>--illegal-access=deny ${argLine.java9.extras}</argLine.java9>
+>>>>>>> dev
+        <!-- Not use alpn agent as Java11+ supports alpn out of the box -->
+        <argLine.alpnAgent />
+        <argLine.java9.extras />
+        <!-- Export some stuff which is used during our tests -->
+        <argLine.java9>--illegal-access=deny ${argLine.java9.extras}</argLine.java9>
+        <forbiddenapis.skip>true</forbiddenapis.skip>
+        <!-- Needed because of https://issues.apache.org/jira/browse/MENFORCER-275 -->
+        <enforcer.plugin.version>3.0.0-M3</enforcer.plugin.version>
+        <!-- 1.4.x does not work in Java10+ -->
+        <jboss.marshalling.version>2.0.5.Final</jboss.marshalling.version>
+        <!-- This is the minimum supported by Java12+ -->
+<<<<<<< HEAD
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <!-- pax-exam does not work on latest Java12 EA 22 build -->
+        <skipOsgiTestsuite>true</skipOsgiTestsuite>
+        <!-- doesn't work with java16 -->
+        <skipJapicmp>true</skipJapicmp>
+=======
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <!-- pax-exam does not work on latest Java12 EA 22 build -->
+        <skipOsgiTestsuite>true</skipOsgiTestsuite>
+>>>>>>> dev
+      </properties>
+    </profile>
+
+    <!-- JDK15 -->
+    <profile>
+      <id>java15</id>
+      <activation>
+        <jdk>15</jdk>
+      </activation>
+      <properties>
+        <argLine.java9.extras />
+        <!-- Export some stuff which is used during our tests -->
+        <argLine.java9>--illegal-access=deny ${argLine.java9.extras}</argLine.java9>
+        <!-- Not use alpn agent as Java11+ supports alpn out of the box -->
+        <argLine.alpnAgent />
+        <forbiddenapis.skip>true</forbiddenapis.skip>
+        <!-- Needed because of https://issues.apache.org/jira/browse/MENFORCER-275 -->
+        <enforcer.plugin.version>3.0.0-M3</enforcer.plugin.version>
+        <!-- 1.4.x does not work in Java10+ -->
+        <jboss.marshalling.version>2.0.5.Final</jboss.marshalling.version>
+<<<<<<< HEAD
+        <!-- This is the minimum supported by Java12+ -->
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <!-- pax-exam does not work on latest Java12 EA 22 build -->
+=======
+        <!-- pax-exam does not work on latest Java11 build -->
+>>>>>>> dev
         <skipOsgiTestsuite>true</skipOsgiTestsuite>
       </properties>
     </profile>
@@ -263,8 +502,13 @@
       <properties>
         <argLine.java9.extras />
         <!-- Export some stuff which is used during our tests -->
+<<<<<<< HEAD
         <argLine.java9>--illegal-access=deny ${argLine.java9.extras}</argLine.java9>
         <!-- Not use alpn agent as Java11+ supports alpn out of the box -->
+=======
+        <argLine.java9>--illegal-access=deny --add-modules java.xml.bind ${argLine.java9.extras}</argLine.java9>
+        <!-- Not use alpn agent as Java10 supports alpn out of the box -->
+>>>>>>> dev
         <argLine.alpnAgent />
         <forbiddenapis.skip>true</forbiddenapis.skip>
         <!-- Needed because of https://issues.apache.org/jira/browse/MENFORCER-275 -->
@@ -285,9 +529,16 @@
       <properties>
         <argLine.java9.extras />
         <!-- Export some stuff which is used during our tests -->
+<<<<<<< HEAD
         <argLine.java9>--illegal-access=deny ${argLine.java9.extras}</argLine.java9>
         <!-- Not use alpn agent as Java11+ supports alpn out of the box -->
         <argLine.alpnAgent />
+=======
+        <argLine.java9>--illegal-access=deny --add-modules java.xml.bind ${argLine.java9.extras}</argLine.java9>
+        <!-- Not use alpn agent as Java9 supports alpn out of the box -->
+        <argLine.alpnAgent />
+        <!-- Skip as maven plugin not works with Java9 yet -->
+>>>>>>> dev
         <forbiddenapis.skip>true</forbiddenapis.skip>
         <!-- Needed because of https://issues.apache.org/jira/browse/MENFORCER-275 -->
         <enforcer.plugin.version>3.0.0-M3</enforcer.plugin.version>
@@ -459,14 +710,23 @@
     <log4j2.version>2.6.2</log4j2.version>
     <enforcer.plugin.version>1.4.1</enforcer.plugin.version>
     <junit.version>5.7.0</junit.version>
+<<<<<<< HEAD
     <graalvm.version>19.3.6</graalvm.version>
     <brotli4j.version>1.4.2</brotli4j.version>
+=======
+>>>>>>> dev
     <testJavaHome>${java.home}</testJavaHome>
     <testJvm>${testJavaHome}/bin/java</testJvm>
     <skipOsgiTestsuite>false</skipOsgiTestsuite>
     <skipAutobahnTestsuite>false</skipAutobahnTestsuite>
     <skipHttp2Testsuite>false</skipHttp2Testsuite>
+<<<<<<< HEAD
     <skipJapicmp>true</skipJapicmp>
+=======
+    <skipJapicmp>false</skipJapicmp>
+    <graalvm.version>19.3.6</graalvm.version>
+    <brotli4j.version>1.4.2</brotli4j.version>
+>>>>>>> dev
     <!-- By default skip native testsuite as it requires a custom environment with graalvm installed -->
     <skipNativeImageTestsuite>true</skipNativeImageTestsuite>
     <skipShadingTestsuite>false</skipShadingTestsuite>
@@ -601,7 +861,11 @@
       <dependency>
         <groupId>org.bouncycastle</groupId>
         <artifactId>bcpkix-jdk15on</artifactId>
+<<<<<<< HEAD
         <version>${bouncycastle.version}</version>
+=======
+        <version>1.69</version>
+>>>>>>> dev
         <scope>compile</scope>
         <optional>true</optional>
       </dependency>
@@ -613,7 +877,11 @@
       <dependency>
         <groupId>org.bouncycastle</groupId>
         <artifactId>bcprov-jdk15on</artifactId>
+<<<<<<< HEAD
         <version>${bouncycastle.version}</version>
+=======
+        <version>1.69</version>
+>>>>>>> dev
         <scope>compile</scope>
         <optional>true</optional>
       </dependency>
@@ -644,6 +912,7 @@
         <artifactId>lzma-java</artifactId>
         <version>1.3</version>
       </dependency>
+<<<<<<< HEAD
       <dependency>
         <groupId>com.github.luben</groupId>
         <artifactId>zstd-jni</artifactId>
@@ -654,6 +923,40 @@
         <groupId>com.aayushatharva.brotli4j</groupId>
         <artifactId>brotli4j</artifactId>
         <version>${brotli4j.version}</version>
+=======
+      <dependency>
+        <groupId>com.github.luben</groupId>
+        <artifactId>zstd-jni</artifactId>
+        <version>1.5.0-2</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>com.aayushatharva.brotli4j</groupId>
+        <artifactId>brotli4j</artifactId>
+        <version>${brotli4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.aayushatharva.brotli4j</groupId>
+        <artifactId>native-linux-x86_64</artifactId>
+        <version>${brotli4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.aayushatharva.brotli4j</groupId>
+        <artifactId>native-osx-x86_64</artifactId>
+        <version>${brotli4j.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.aayushatharva.brotli4j</groupId>
+        <artifactId>native-windows-x86_64</artifactId>
+        <version>${brotli4j.version}</version>
+      </dependency>
+
+      <!-- Java concurrency tools for the JVM -->
+      <dependency>
+        <groupId>org.jctools</groupId>
+        <artifactId>jctools-core</artifactId>
+        <version>3.1.0</version>
+>>>>>>> dev
       </dependency>
       <dependency>
         <groupId>com.aayushatharva.brotli4j</groupId>
@@ -700,9 +1003,9 @@
         <version>${log4j2.version}</version>
       </dependency>
       <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.17</version>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-1.2-api</artifactId>
+        <version>2.14.1</version>
         <exclusions>
           <exclusion>
             <artifactId>mail</artifactId>
@@ -1022,6 +1325,37 @@
         </configuration>
       </plugin>
       <plugin>
+<<<<<<< HEAD
+=======
+        <!-- ensure that only methods available in java 1.6 can
+             be used even when compiling with java 1.7+ -->
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>animal-sniffer-maven-plugin</artifactId>
+        <version>1.16</version>
+        <configuration>
+          <signature>
+            <groupId>org.codehaus.mojo.signature</groupId>
+            <artifactId>java16</artifactId>
+            <version>1.1</version>
+          </signature>
+          <ignores>
+            <ignore>java.nio.ByteBuffer</ignore>
+          </ignores>
+          <annotations>
+            <annotation>io.netty.util.internal.SuppressJava6Requirement</annotation>
+          </annotations>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+>>>>>>> dev
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.1.0</version>
         <executions>
@@ -1352,7 +1686,11 @@
           <dependency>
             <groupId>org.apache.ant</groupId>
             <artifactId>ant</artifactId>
+<<<<<<< HEAD
             <version>1.9.15</version>
+=======
+            <version>1.10.9</version>
+>>>>>>> dev
           </dependency>
           <dependency>
             <groupId>org.apache.ant</groupId>

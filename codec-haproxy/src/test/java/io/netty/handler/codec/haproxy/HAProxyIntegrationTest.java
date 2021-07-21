@@ -21,12 +21,20 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
+<<<<<<< HEAD
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.local.LocalAddress;
 import io.netty.channel.local.LocalChannel;
 import io.netty.channel.local.LocalHandler;
+=======
+import io.netty.channel.DefaultEventLoopGroup;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.local.LocalAddress;
+import io.netty.channel.local.LocalChannel;
+>>>>>>> dev
 import io.netty.channel.local.LocalServerChannel;
 import org.junit.jupiter.api.Test;
 
@@ -42,6 +50,7 @@ public class HAProxyIntegrationTest {
     @Test
     public void testBasicCase() throws Exception {
         final CountDownLatch latch = new CountDownLatch(1);
+<<<<<<< HEAD
         final AtomicReference<HAProxyMessage> msgHolder = new AtomicReference<>();
         LocalAddress localAddress = new LocalAddress("HAProxyIntegrationTest");
 
@@ -56,6 +65,22 @@ public class HAProxyIntegrationTest {
                   ch.pipeline().addLast(new SimpleChannelInboundHandler<HAProxyMessage>() {
                       @Override
                       protected void messageReceived(ChannelHandlerContext ctx, HAProxyMessage msg) {
+=======
+        final AtomicReference<HAProxyMessage> msgHolder = new AtomicReference<HAProxyMessage>();
+        LocalAddress localAddress = new LocalAddress("HAProxyIntegrationTest");
+
+        EventLoopGroup group = new DefaultEventLoopGroup();
+        ServerBootstrap sb = new ServerBootstrap();
+        sb.channel(LocalServerChannel.class)
+          .group(group)
+          .childHandler(new ChannelInitializer() {
+              @Override
+              protected void initChannel(Channel ch) throws Exception {
+                  ch.pipeline().addLast(new HAProxyMessageDecoder());
+                  ch.pipeline().addLast(new SimpleChannelInboundHandler<HAProxyMessage>() {
+                      @Override
+                      protected void channelRead0(ChannelHandlerContext ctx, HAProxyMessage msg) throws Exception {
+>>>>>>> dev
                           msgHolder.set(msg.retain());
                           latch.countDown();
                       }

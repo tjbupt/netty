@@ -90,8 +90,23 @@ class KQueueSocketTestPermutation extends SocketTestPermutation {
         List<BootstrapFactory<Bootstrap>> bfs = Arrays.asList(
                 () -> new Bootstrap().group(nioWorkerGroup).channelFactory(new ChannelFactory<Channel>() {
                     @Override
+<<<<<<< HEAD
                     public Channel newChannel(EventLoop eventLoop) {
                         return new NioDatagramChannel(eventLoop, family);
+=======
+                    public Bootstrap newInstance() {
+                        return new Bootstrap().group(nioWorkerGroup).channelFactory(new ChannelFactory<Channel>() {
+                            @Override
+                            public Channel newChannel() {
+                                return new NioDatagramChannel(family);
+                            }
+
+                            @Override
+                            public String toString() {
+                                return NioDatagramChannel.class.getSimpleName() + ".class";
+                            }
+                        });
+>>>>>>> dev
                     }
 
                     @Override
@@ -130,6 +145,22 @@ class KQueueSocketTestPermutation extends SocketTestPermutation {
                 () -> new Bootstrap().group(KQUEUE_WORKER_GROUP).channel(KQueueDatagramChannel.class)
         );
     }
+
+    public List<TestsuitePermutation.BootstrapComboFactory<Bootstrap, Bootstrap>> domainDatagram() {
+        return combo(domainDatagramSocket(), domainDatagramSocket());
+    }
+
+    public List<BootstrapFactory<Bootstrap>> domainDatagramSocket() {
+        return Collections.<BootstrapFactory<Bootstrap>>singletonList(
+                new BootstrapFactory<Bootstrap>() {
+                    @Override
+                    public Bootstrap newInstance() {
+                        return new Bootstrap().group(KQUEUE_WORKER_GROUP).channel(KQueueDomainDatagramChannel.class);
+                    }
+                }
+        );
+    }
+
     public static DomainSocketAddress newSocketAddress() {
         return UnixTestUtils.newSocketAddress();
     }

@@ -15,7 +15,11 @@
  */
 package io.netty.util.concurrent;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
@@ -24,8 +28,12 @@ public final class ThreadPerTaskExecutor implements Executor {
     private final ThreadFactory threadFactory;
 
     public ThreadPerTaskExecutor(ThreadFactory threadFactory) {
+<<<<<<< HEAD
         requireNonNull(threadFactory, "threadFactory");
         this.threadFactory = threadFactory;
+=======
+        this.threadFactory = ObjectUtil.checkNotNull(threadFactory, "threadFactory");
+>>>>>>> dev
     }
 
     @Override

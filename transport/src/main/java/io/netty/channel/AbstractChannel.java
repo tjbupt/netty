@@ -22,7 +22,11 @@ import io.netty.channel.socket.ChannelOutputShutdownEvent;
 import io.netty.channel.socket.ChannelOutputShutdownException;
 import io.netty.util.DefaultAttributeMap;
 import io.netty.util.ReferenceCountUtil;
+<<<<<<< HEAD
 import io.netty.util.concurrent.EventExecutor;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.UnstableApi;
 import io.netty.util.internal.logging.InternalLogger;
@@ -60,7 +64,10 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
     private volatile boolean registered;
     private boolean closeInitiated;
     private Throwable initialCloseCause;
+<<<<<<< HEAD
     private boolean readBeforeActive;
+=======
+>>>>>>> dev
 
     /** Cache for the string representation of this channel */
     private boolean strValActive;
@@ -98,9 +105,12 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
         pipeline = newChannelPipeline();
     }
 
+<<<<<<< HEAD
     private EventLoop validateEventLoop(EventLoop eventLoop) {
         return requireNonNull(eventLoop, "eventLoop");
     }
+=======
+>>>>>>> dev
     protected final int maxMessagesPerWrite() {
         ChannelConfig config = config();
         if (config instanceof DefaultChannelConfig) {
@@ -481,9 +491,14 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
         }
 
         @Override
+<<<<<<< HEAD
         public final void register(final ChannelPromise promise) {
             assertEventLoop();
 
+=======
+        public final void register(EventLoop eventLoop, final ChannelPromise promise) {
+            ObjectUtil.checkNotNull(eventLoop, "eventLoop");
+>>>>>>> dev
             if (isRegistered()) {
                 promise.setFailure(new IllegalStateException("registered to an event loop already"));
                 return;
@@ -808,11 +823,14 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
         public final void beginRead() {
             assertEventLoop();
 
+<<<<<<< HEAD
             if (!isActive()) {
                 readBeforeActive = true;
                 return;
             }
 
+=======
+>>>>>>> dev
             try {
                 doBeginRead();
             } catch (final Exception e) {
@@ -928,6 +946,7 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
                  * may still return {@code true} even if the channel should be closed as result of the exception.
                  */
                 initialCloseCause = t;
+<<<<<<< HEAD
                 close(newPromise(), t, newClosedChannelException(t, "flush0()"), false);
             } else {
                 try {
@@ -938,6 +957,31 @@ public abstract class AbstractChannel extends DefaultAttributeMap implements Cha
                 }
             }
         }
+=======
+                close(voidPromise(), t, newClosedChannelException(t, "flush0()"), false);
+            } else {
+                try {
+                    shutdownOutput(voidPromise(), t);
+                } catch (Throwable t2) {
+                    initialCloseCause = t;
+                    close(voidPromise(), t2, newClosedChannelException(t, "flush0()"), false);
+                }
+            }
+        }
+
+        private ClosedChannelException newClosedChannelException(Throwable cause, String method) {
+            ClosedChannelException exception =
+                    StacklessClosedChannelException.newInstance(AbstractChannel.AbstractUnsafe.class, method);
+            if (cause != null) {
+                exception.initCause(cause);
+            }
+            return exception;
+        }
+
+        @Override
+        public final ChannelPromise voidPromise() {
+            assertEventLoop();
+>>>>>>> dev
 
         private ClosedChannelException newClosedChannelException(Throwable cause, String method) {
             ClosedChannelException exception =

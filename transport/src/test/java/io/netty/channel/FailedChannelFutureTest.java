@@ -16,6 +16,10 @@
 package io.netty.channel;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -35,7 +39,16 @@ public class FailedChannelFutureTest {
 
     @Test
     public void shouldDisallowNullException() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class,
             () -> new FailedChannelFuture(Mockito.mock(Channel.class), null, null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                new FailedChannelFuture(Mockito.mock(Channel.class), null, null);
+            }
+        });
+>>>>>>> dev
     }
 }

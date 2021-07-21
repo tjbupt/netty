@@ -19,8 +19,13 @@ import io.netty.handler.codec.http.cookie.CookieHeaderNames.SameSite;
 
 import static io.netty.handler.codec.http.cookie.CookieUtil.stringBuilder;
 import static io.netty.handler.codec.http.cookie.CookieUtil.validateAttributeValue;
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkNonEmptyAfterTrim;
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+import static io.netty.util.internal.ObjectUtil.checkNonEmptyAfterTrim;
+>>>>>>> dev
 
 /**
  * The default {@link Cookie} implementation.

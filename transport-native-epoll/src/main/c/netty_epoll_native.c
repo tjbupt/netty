@@ -103,6 +103,7 @@ struct mmsghdr {
 #define SYS_recvmmsg 337
 #else
 #define SYS_recvmmsg -1
+<<<<<<< HEAD
 #endif
 #endif // SYS_recvmmsg
 
@@ -117,6 +118,22 @@ struct mmsghdr {
 #else
 #define SYS_sendmmsg -1
 #endif
+=======
+#endif
+#endif // SYS_recvmmsg
+
+#ifndef SYS_sendmmsg
+// Only support SYS_sendmmsg for __x86_64__ / __i386__ for now
+#if defined(__x86_64__)
+// See https://github.com/torvalds/linux/blob/v5.4/arch/x86/entry/syscalls/syscall_64.tbl
+#define SYS_sendmmsg 307
+#elif defined(__i386__)
+// See https://github.com/torvalds/linux/blob/v5.4/arch/x86/entry/syscalls/syscall_32.tbl
+#define SYS_sendmmsg 345
+#else
+#define SYS_sendmmsg -1
+#endif
+>>>>>>> dev
 #endif // SYS_sendmmsg
 
 // Those are initialized in the init(...) method and cached for performance reasons
@@ -250,6 +267,19 @@ static jint netty_epoll_native_epollCreate(JNIEnv* env, jclass clazz) {
     return efd;
 }
 
+<<<<<<< HEAD
+=======
+static void netty_epoll_native_timerFdSetTime(JNIEnv* env, jclass clazz, jint timerFd, jint tvSec, jint tvNsec) {
+    struct itimerspec ts;
+    memset(&ts.it_interval, 0, sizeof(struct timespec));
+    ts.it_value.tv_sec = tvSec;
+    ts.it_value.tv_nsec = tvNsec;
+    if (timerfd_settime(timerFd, 0, &ts, NULL) < 0) {
+        netty_unix_errors_throwIOExceptionErrorNo(env, "timerfd_settime() failed: ", errno);
+    }
+}
+
+>>>>>>> dev
 static jint netty_epoll_native_epollWait(JNIEnv* env, jclass clazz, jint efd, jlong address, jint len, jint timeout) {
     struct epoll_event *ev = (struct epoll_event*) (intptr_t) address;
     int result, err;
@@ -261,6 +291,7 @@ static jint netty_epoll_native_epollWait(JNIEnv* env, jclass clazz, jint efd, jl
         }
     } while((err = errno) == EINTR);
     return -err;
+<<<<<<< HEAD
 }
 
 // This method is deprecated!
@@ -269,6 +300,25 @@ static jint netty_epoll_native_epollWait0(JNIEnv* env, jclass clazz, jint efd, j
         // Zeros = poll (aka return immediately).
     	return netty_epoll_native_epollWait(env, clazz, efd, address, len, 0);
     }
+    // only reschedule the timer if there is a newer event.
+    // -1 is a special value used by EpollEventLoop.
+    if (tvSec != ((jint) -1) && tvNsec != ((jint) -1)) {
+    	struct itimerspec ts;
+    	memset(&ts.it_interval, 0, sizeof(struct timespec));
+    	ts.it_value.tv_sec = tvSec;
+    	ts.it_value.tv_nsec = tvNsec;
+    	if (timerfd_settime(timerFd, 0, &ts, NULL) < 0) {
+    		netty_unix_errors_throwChannelExceptionErrorNo(env, "timerfd_settime() failed: ", errno);
+    		return -1;
+    	}
+    }
+    return netty_epoll_native_epollWait(env, clazz, efd, address, len, -1);
+=======
+>>>>>>> dev
+}
+
+// This method is deprecated!
+static jint netty_epoll_native_epollWait0(JNIEnv* env, jclass clazz, jint efd, jlong address, jint len, jint timerFd, jint tvSec, jint tvNsec) {
     // only reschedule the timer if there is a newer event.
     // -1 is a special value used by EpollEventLoop.
     if (tvSec != ((jint) -1) && tvNsec != ((jint) -1)) {
@@ -463,6 +513,7 @@ static jint netty_epoll_native_recvmsg0(JNIEnv* env, jclass clazz, jint fd, jboo
     init_packet(env, packet, &msg, res);
     return (jint) res;
 }
+<<<<<<< HEAD
 
 static jint netty_epoll_native_recvmmsg0(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jobjectArray packets, jint offset, jint len) {
     struct mmsghdr msg[len];
@@ -473,6 +524,18 @@ static jint netty_epoll_native_recvmmsg0(JNIEnv* env, jclass clazz, jint fd, jbo
     int storageSize = sizeof(struct sockaddr_storage);
     char* cntrlbuf = NULL;
 
+=======
+
+static jint netty_epoll_native_recvmmsg0(JNIEnv* env, jclass clazz, jint fd, jboolean ipv6, jobjectArray packets, jint offset, jint len) {
+    struct mmsghdr msg[len];
+    memset(msg, 0, sizeof(msg));
+    struct sockaddr_storage addr[len];
+    int addrSize = sizeof(addr);
+    memset(addr, 0, addrSize);
+    int storageSize = sizeof(struct sockaddr_storage);
+    char* cntrlbuf = NULL;
+
+>>>>>>> dev
 #ifdef IP_RECVORIGDSTADDR
     int readLocalAddr = 0;
     if (netty_unix_socket_getOption(env, fd, IPPROTO_IP, IP_RECVORIGDSTADDR,
@@ -480,9 +543,15 @@ static jint netty_epoll_native_recvmmsg0(JNIEnv* env, jclass clazz, jint fd, jbo
         cntrlbuf = malloc(sizeof(char) * storageSize * len);
     }
 #endif // IP_RECVORIGDSTADDR
+<<<<<<< HEAD
 
     int i;
 
+=======
+
+    int i;
+
+>>>>>>> dev
     for (i = 0; i < len; i++) {
         jobject packet = (*env)->GetObjectArrayElement(env, packets, i + offset);
         msg[i].msg_hdr.msg_iov = (struct iovec*) (intptr_t) (*env)->GetLongField(env, packet, packetMemoryAddressFieldId);
@@ -540,6 +609,7 @@ static jboolean netty_epoll_native_isSupportingSendmmsg(JNIEnv* env, jclass claz
         if (errno == ENOSYS) {
             return JNI_FALSE;
         }
+<<<<<<< HEAD
     }
     return JNI_TRUE;
 }
@@ -567,6 +637,35 @@ static jboolean netty_epoll_native_isSupportingRecvmmsg(JNIEnv* env, jclass claz
     return JNI_TRUE;
 }
 
+=======
+    }
+    return JNI_TRUE;
+}
+
+static jboolean netty_epoll_native_isSupportingUdpSegment(JNIEnv* env, jclass clazz) {
+    int fd = socket(AF_INET, SOCK_DGRAM, 0);
+    if (fd == -1) {
+        return JNI_FALSE;
+    }
+    int gso_size = 512;
+    int ret = setsockopt(fd, SOL_UDP, UDP_SEGMENT, &gso_size, sizeof(gso_size));
+    close(fd);
+    return ret == -1 ? JNI_FALSE : JNI_TRUE;
+}
+
+static jboolean netty_epoll_native_isSupportingRecvmmsg(JNIEnv* env, jclass clazz) {
+    if (SYS_recvmmsg == -1) {
+        return JNI_FALSE;
+    }
+    if (syscall(SYS_recvmmsg, -1, NULL, 0, 0, NULL) == -1) {
+        if (errno == ENOSYS) {
+            return JNI_FALSE;
+        }
+    }
+    return JNI_TRUE;
+}
+
+>>>>>>> dev
 static jint netty_epoll_native_tcpFastopenMode(JNIEnv* env, jclass clazz) {
     int fastopen = 0;
     getSysctlValue("/proc/sys/net/ipv4/tcp_fastopen", &fastopen);
@@ -601,6 +700,28 @@ static jint netty_epoll_native_offsetofEpollData(JNIEnv* env, jclass clazz) {
     return offsetof(struct epoll_event, data);
 }
 
+<<<<<<< HEAD
+=======
+static jint netty_epoll_native_splice0(JNIEnv* env, jclass clazz, jint fd, jlong offIn, jint fdOut, jlong offOut, jlong len) {
+    ssize_t res;
+    int err;
+    loff_t off_in = (loff_t) offIn;
+    loff_t off_out = (loff_t) offOut;
+
+    loff_t* p_off_in = off_in >= 0 ? &off_in : NULL;
+    loff_t* p_off_out = off_out >= 0 ? &off_out : NULL;
+
+    do {
+       res = splice(fd, p_off_in, fdOut, p_off_out, (size_t) len, SPLICE_F_NONBLOCK | SPLICE_F_MOVE);
+       // keep on splicing if it was interrupted
+    } while (res == -1 && ((err = errno) == EINTR));
+
+    if (res < 0) {
+        return -err;
+    }
+    return (jint) res;
+}
+>>>>>>> dev
 
 static jint netty_epoll_native_tcpMd5SigMaxKeyLen(JNIEnv* env, jclass clazz) {
     struct tcp_md5sig md5sig;
@@ -640,6 +761,7 @@ static const JNINativeMethod fixed_method_table[] = {
   { "eventFdWrite", "(IJ)V", (void *) netty_epoll_native_eventFdWrite },
   { "eventFdRead", "(I)V", (void *) netty_epoll_native_eventFdRead },
   { "timerFdRead", "(I)V", (void *) netty_epoll_native_timerFdRead },
+  { "timerFdSetTime", "(III)V", (void *) netty_epoll_native_timerFdSetTime },
   { "epollCreate", "()I", (void *) netty_epoll_native_epollCreate },
   { "epollWait0", "(IJIIII)I", (void *) netty_epoll_native_epollWait0 }, // This method is deprecated!
   { "epollWait", "(IJII)I", (void *) netty_epoll_native_epollWait },
@@ -650,8 +772,15 @@ static const JNINativeMethod fixed_method_table[] = {
   // "sendmmsg0" has a dynamic signature
   { "sizeofEpollEvent", "()I", (void *) netty_epoll_native_sizeofEpollEvent },
   { "offsetofEpollData", "()I", (void *) netty_epoll_native_offsetofEpollData },
+<<<<<<< HEAD
   { "isSupportingUdpSegment", "()Z", (void *) netty_epoll_native_isSupportingUdpSegment },
   { "registerUnix", "()I", (void *) netty_epoll_native_registerUnix }
+=======
+  { "splice0", "(IJIJJ)I", (void *) netty_epoll_native_splice0 },
+  { "isSupportingUdpSegment", "()Z", (void *) netty_epoll_native_isSupportingUdpSegment },
+  { "registerUnix", "()I", (void *) netty_epoll_native_registerUnix },
+
+>>>>>>> dev
 };
 static const jint fixed_method_table_size = sizeof(fixed_method_table) / sizeof(fixed_method_table[0]);
 

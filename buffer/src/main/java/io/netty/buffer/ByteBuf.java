@@ -236,7 +236,11 @@ import java.nio.charset.UnsupportedCharsetException;
  * Please refer to {@link ByteBufInputStream} and
  * {@link ByteBufOutputStream}.
  */
+<<<<<<< HEAD
 public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf>, ByteBufConvertible {
+=======
+public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf> {
+>>>>>>> dev
 
     /**
      * Returns the number of bytes (octets) this buffer can contain.
@@ -425,7 +429,13 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf>, 
     }
 
     /**
+<<<<<<< HEAD
      * Returns {@code true} if and only if {@link #readableBytes()} is greater than {@code 0}.
+=======
+     * Returns {@code true}
+     * if and only if {@code (this.writerIndex - this.readerIndex)} is greater
+     * than {@code 0}.
+>>>>>>> dev
      */
     public abstract boolean isReadable();
 
@@ -2351,6 +2361,7 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf>, 
     }
 
     /**
+<<<<<<< HEAD
      * A {@code ByteBuf} can turn into itself.
      * @return This {@code ByteBuf} instance.
      */
@@ -2360,6 +2371,8 @@ public abstract class ByteBuf implements ReferenceCounted, Comparable<ByteBuf>, 
     }
 
     /**
+=======
+>>>>>>> dev
      * Decodes this buffer's readable bytes into a string with the specified
      * character set name.  This method is identical to
      * {@code buf.toString(buf.readerIndex(), buf.readableBytes(), charsetName)}.

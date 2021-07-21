@@ -18,6 +18,10 @@ package io.netty.handler.codec.http;
 import io.netty.util.AsciiString;
 
 import static io.netty.util.internal.MathUtil.findNextPositivePowerOfTwo;
+<<<<<<< HEAD
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkNonEmptyAfterTrim;
 
 /**

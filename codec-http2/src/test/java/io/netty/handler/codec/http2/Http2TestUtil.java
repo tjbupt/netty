@@ -520,6 +520,7 @@ public final class Http2TestUtil {
             }
         };
 
+<<<<<<< HEAD
         final ConcurrentLinkedQueue<ByteBuf> buffers = new ConcurrentLinkedQueue<>();
 
         Http2FrameWriter frameWriter = Mockito.mock(Http2FrameWriter.class);
@@ -532,10 +533,28 @@ public final class Http2TestUtil {
                 buf.release();
             }
             return null;
+=======
+        final ConcurrentLinkedQueue<ByteBuf> buffers = new ConcurrentLinkedQueue<ByteBuf>();
+
+        Http2FrameWriter frameWriter = Mockito.mock(Http2FrameWriter.class);
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) {
+                for (;;) {
+                    ByteBuf buf = buffers.poll();
+                    if (buf == null) {
+                        break;
+                    }
+                    buf.release();
+                }
+                return null;
+            }
+>>>>>>> dev
         }).when(frameWriter).close();
 
         when(frameWriter.configuration()).thenReturn(configuration);
         when(frameWriter.writeSettings(any(ChannelHandlerContext.class), any(Http2Settings.class),
+<<<<<<< HEAD
                 any(ChannelPromise.class))).thenAnswer((Answer<ChannelFuture>) invocationOnMock ->
                 ((ChannelPromise) invocationOnMock.getArgument(2)).setSuccess());
 
@@ -580,6 +599,89 @@ public final class Http2TestUtil {
                     buffers.offer((ByteBuf) invocationOnMock.getArgument(4));
                     return ((ChannelPromise) invocationOnMock.getArgument(5)).setSuccess();
                 });
+=======
+                any(ChannelPromise.class))).thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                return ((ChannelPromise) invocationOnMock.getArgument(2)).setSuccess();
+            }
+        });
+
+        when(frameWriter.writeSettingsAck(any(ChannelHandlerContext.class), any(ChannelPromise.class)))
+                .thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                return ((ChannelPromise) invocationOnMock.getArgument(1)).setSuccess();
+            }
+        });
+
+        when(frameWriter.writeGoAway(any(ChannelHandlerContext.class), anyInt(),
+                anyLong(), any(ByteBuf.class), any(ChannelPromise.class))).thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                buffers.offer((ByteBuf) invocationOnMock.getArgument(3));
+                return ((ChannelPromise) invocationOnMock.getArgument(4)).setSuccess();
+            }
+        });
+        when(frameWriter.writeHeaders(any(ChannelHandlerContext.class), anyInt(), any(Http2Headers.class), anyInt(),
+                anyBoolean(), any(ChannelPromise.class))).thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                return ((ChannelPromise) invocationOnMock.getArgument(5)).setSuccess();
+            }
+        });
+
+        when(frameWriter.writeHeaders(any(ChannelHandlerContext.class), anyInt(),
+                any(Http2Headers.class), anyInt(), anyShort(), anyBoolean(), anyInt(), anyBoolean(),
+                any(ChannelPromise.class))).thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                return ((ChannelPromise) invocationOnMock.getArgument(8)).setSuccess();
+            }
+        });
+
+        when(frameWriter.writeData(any(ChannelHandlerContext.class), anyInt(), any(ByteBuf.class), anyInt(),
+                anyBoolean(), any(ChannelPromise.class))).thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                buffers.offer((ByteBuf) invocationOnMock.getArgument(2));
+                return ((ChannelPromise) invocationOnMock.getArgument(5)).setSuccess();
+            }
+        });
+
+        when(frameWriter.writeRstStream(any(ChannelHandlerContext.class), anyInt(),
+                anyLong(), any(ChannelPromise.class))).thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                return ((ChannelPromise) invocationOnMock.getArgument(3)).setSuccess();
+            }
+        });
+
+        when(frameWriter.writeWindowUpdate(any(ChannelHandlerContext.class), anyInt(), anyInt(),
+                any(ChannelPromise.class))).then(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                return ((ChannelPromise) invocationOnMock.getArgument(3)).setSuccess();
+            }
+        });
+
+        when(frameWriter.writePushPromise(any(ChannelHandlerContext.class), anyInt(), anyInt(), any(Http2Headers.class),
+                anyInt(), anyChannelPromise())).thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                return ((ChannelPromise) invocationOnMock.getArgument(5)).setSuccess();
+            }
+        });
+
+        when(frameWriter.writeFrame(any(ChannelHandlerContext.class), anyByte(), anyInt(), any(Http2Flags.class),
+                any(ByteBuf.class), anyChannelPromise())).thenAnswer(new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocationOnMock) {
+                buffers.offer((ByteBuf) invocationOnMock.getArgument(4));
+                return ((ChannelPromise) invocationOnMock.getArgument(5)).setSuccess();
+            }
+        });
+>>>>>>> dev
         return frameWriter;
     }
 

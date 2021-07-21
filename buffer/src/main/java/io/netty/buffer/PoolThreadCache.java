@@ -23,6 +23,10 @@ import io.netty.buffer.PoolArena.SizeClass;
 import io.netty.util.internal.MathUtil;
 import io.netty.util.internal.ObjectPool;
 import io.netty.util.internal.ObjectPool.Handle;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectPool.ObjectCreator;
+>>>>>>> dev
 import io.netty.util.internal.PlatformDependent;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
@@ -113,7 +117,11 @@ final class PoolThreadCache {
             MemoryRegionCache<T>[] cache = new MemoryRegionCache[numCaches];
             for (int i = 0; i < cache.length; i++) {
                 // TODO: maybe use cacheSize / cache.length
+<<<<<<< HEAD
                 cache[i] = new SubPageMemoryRegionCache<>(cacheSize);
+=======
+                cache[i] = new SubPageMemoryRegionCache<T>(cacheSize);
+>>>>>>> dev
             }
             return cache;
         } else {
@@ -126,10 +134,16 @@ final class PoolThreadCache {
             int cacheSize, int maxCachedBufferCapacity, PoolArena<T> area) {
         if (cacheSize > 0 && maxCachedBufferCapacity > 0) {
             int max = Math.min(area.chunkSize, maxCachedBufferCapacity);
+<<<<<<< HEAD
 
             // Create as many normal caches as we support based on how many sizeIdx we have and what the upper
             // bound is that we want to cache in general.
             List<MemoryRegionCache<T>> cache = new ArrayList<>() ;
+=======
+            // Create as many normal caches as we support based on how many sizeIdx we have and what the upper
+            // bound is that we want to cache in general.
+            List<MemoryRegionCache<T>> cache = new ArrayList<MemoryRegionCache<T>>() ;
+>>>>>>> dev
             for (int idx = area.numSmallSubpagePools; idx < area.nSizes && area.sizeIdx2size(idx) <= max ; idx++) {
                 cache.add(new NormalMemoryRegionCache<T>(cacheSize));
             }
@@ -278,6 +292,7 @@ final class PoolThreadCache {
     }
 
     private MemoryRegionCache<?> cacheForSmall(PoolArena<?> area, int sizeIdx) {
+<<<<<<< HEAD
         if (area.isDirect()) {
             return cache(smallSubPageDirectCaches, sizeIdx);
         }
@@ -288,6 +303,18 @@ final class PoolThreadCache {
         // We need to substract area.numSmallSubpagePools as sizeIdx is the overall index for all sizes.
         int idx = sizeIdx - area.numSmallSubpagePools;
         if (area.isDirect()) {
+=======
+        if (area.isDirect()) {
+            return cache(smallSubPageDirectCaches, sizeIdx);
+        }
+        return cache(smallSubPageHeapCaches, sizeIdx);
+    }
+
+    private MemoryRegionCache<?> cacheForNormal(PoolArena<?> area, int sizeIdx) {
+        // We need to substract area.numSmallSubpagePools as sizeIdx is the overall index for all sizes.
+        int idx = sizeIdx - area.numSmallSubpagePools;
+        if (area.isDirect()) {
+>>>>>>> dev
             return cache(normalDirectCaches, idx);
         }
         return cache(normalHeapCaches, idx);
@@ -460,6 +487,16 @@ final class PoolThreadCache {
         }
 
         @SuppressWarnings("rawtypes")
+<<<<<<< HEAD
         private static final ObjectPool<Entry> RECYCLER = ObjectPool.newPool(handle -> new Entry(handle));
+=======
+        private static final ObjectPool<Entry> RECYCLER = ObjectPool.newPool(new ObjectCreator<Entry>() {
+            @SuppressWarnings("unchecked")
+            @Override
+            public Entry newObject(Handle<Entry> handle) {
+                return new Entry(handle);
+            }
+        });
+>>>>>>> dev
     }
 }

@@ -17,6 +17,10 @@ package io.netty.handler.codec.http;
 
 import io.netty.util.AsciiString;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Iterator;
 import java.util.List;
@@ -116,20 +120,50 @@ public class ReadOnlyHttpHeadersTest {
 
     @Test
     public void validateNamesFail() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> new ReadOnlyHttpHeaders(true,
                 ACCEPT, APPLICATION_JSON, AsciiString.cached(" ")));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new ReadOnlyHttpHeaders(true,
+                        ACCEPT, APPLICATION_JSON, AsciiString.cached(" "));
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void emptyHeaderName() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> new ReadOnlyHttpHeaders(true,
                                 ACCEPT, APPLICATION_JSON, AsciiString.cached(" "), ZERO));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new ReadOnlyHttpHeaders(true,
+                        ACCEPT, APPLICATION_JSON, AsciiString.cached(" "), ZERO);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void headerWithoutValue() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> new ReadOnlyHttpHeaders(false,
                                 ACCEPT, APPLICATION_JSON, CONTENT_LENGTH));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                new ReadOnlyHttpHeaders(false,
+                        ACCEPT, APPLICATION_JSON, CONTENT_LENGTH);
+            }
+        });
+>>>>>>> dev
     }
 
     private static void assert3ParisEquals(Iterator<Entry<String, String>> itr) {

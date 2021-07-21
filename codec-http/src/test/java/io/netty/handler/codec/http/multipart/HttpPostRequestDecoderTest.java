@@ -33,6 +33,10 @@ import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.LastHttpContent;
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.net.URLEncoder;
 import java.nio.charset.UnsupportedCharsetException;
@@ -765,11 +769,23 @@ public class HttpPostRequestDecoderTest {
 
     @Test
     public void testNotLeak() {
+<<<<<<< HEAD
         FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, "/",
                 Unpooled.copiedBuffer("a=1&&b=2", CharsetUtil.US_ASCII));
         try {
             assertThrows(HttpPostRequestDecoder.ErrorDataDecoderException.class,
                 () -> new HttpPostStandardRequestDecoder(request).destroy());
+=======
+        final FullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, "/",
+                Unpooled.copiedBuffer("a=1&&b=2", CharsetUtil.US_ASCII));
+        try {
+            assertThrows(HttpPostRequestDecoder.ErrorDataDecoderException.class, new Executable() {
+                @Override
+                public void execute() {
+                    new HttpPostStandardRequestDecoder(request).destroy();
+                }
+            });
+>>>>>>> dev
         } finally {
             assertTrue(request.release());
         }
@@ -777,14 +793,32 @@ public class HttpPostRequestDecoderTest {
 
     @Test
     public void testNotLeakDirectBufferWhenWrapIllegalArgumentException() {
+<<<<<<< HEAD
         assertThrows(HttpPostRequestDecoder.ErrorDataDecoderException.class,
             () -> testNotLeakWhenWrapIllegalArgumentException(Unpooled.directBuffer()));
+=======
+        assertThrows(HttpPostRequestDecoder.ErrorDataDecoderException.class, new Executable() {
+            @Override
+            public void execute() {
+                testNotLeakWhenWrapIllegalArgumentException(Unpooled.directBuffer());
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testNotLeakHeapBufferWhenWrapIllegalArgumentException() {
+<<<<<<< HEAD
         assertThrows(HttpPostRequestDecoder.ErrorDataDecoderException.class,
             () -> testNotLeakWhenWrapIllegalArgumentException(Unpooled.buffer()));
+=======
+        assertThrows(HttpPostRequestDecoder.ErrorDataDecoderException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                testNotLeakWhenWrapIllegalArgumentException(Unpooled.buffer());
+            }
+        });
+>>>>>>> dev
     }
 
     private static void testNotLeakWhenWrapIllegalArgumentException(ByteBuf buf) {

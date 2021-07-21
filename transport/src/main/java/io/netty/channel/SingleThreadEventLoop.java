@@ -124,6 +124,7 @@ public class SingleThreadEventLoop extends SingleThreadEventExecutor implements 
         this(executor, ioHandler, maxPendingTasks, rejectedHandler, DEFAULT_MAX_TASKS_PER_RUN);
     }
 
+<<<<<<< HEAD
     /**
      * Create a new instance
      *
@@ -140,6 +141,18 @@ public class SingleThreadEventLoop extends SingleThreadEventExecutor implements 
         super(threadFactory, maxPendingTasks, rejectedHandler);
         this.ioHandler = requireNonNull(ioHandler, "ioHandler");
         this.maxTasksPerRun = checkPositive(maxTasksPerRun, "maxTasksPerRun");
+=======
+    protected SingleThreadEventLoop(EventLoopGroup parent, Executor executor,
+                                    boolean addTaskWakesUp, Queue<Runnable> taskQueue, Queue<Runnable> tailTaskQueue,
+                                    RejectedExecutionHandler rejectedExecutionHandler) {
+        super(parent, executor, addTaskWakesUp, taskQueue, rejectedExecutionHandler);
+        tailTasks = ObjectUtil.checkNotNull(tailTaskQueue, "tailTaskQueue");
+    }
+
+    @Override
+    public EventLoopGroup parent() {
+        return (EventLoopGroup) super.parent();
+>>>>>>> dev
     }
 
     /**
@@ -173,8 +186,16 @@ public class SingleThreadEventLoop extends SingleThreadEventExecutor implements 
     }
 
     @Override
+<<<<<<< HEAD
     protected final boolean wakesUpForTask(Runnable task) {
         return !(task instanceof NonWakeupRunnable);
+=======
+    public ChannelFuture register(final Channel channel, final ChannelPromise promise) {
+        ObjectUtil.checkNotNull(promise, "promise");
+        ObjectUtil.checkNotNull(channel, "channel");
+        channel.unsafe().register(this, promise);
+        return promise;
+>>>>>>> dev
     }
 
     /**
@@ -187,6 +208,7 @@ public class SingleThreadEventLoop extends SingleThreadEventExecutor implements 
         return unsafe;
     }
 
+<<<<<<< HEAD
     // Methods that a user can override to easily add instrumentation and other things.
 
     @Override
@@ -199,6 +221,11 @@ public class SingleThreadEventLoop extends SingleThreadEventExecutor implements 
             }
             runAllTasks(maxTasksPerRun);
         } while (!confirmShutdown());
+=======
+        if (!(task instanceof LazyRunnable) && wakesUpForTask(task)) {
+            wakeup(inEventLoop());
+        }
+>>>>>>> dev
     }
 
     /**
@@ -212,6 +239,7 @@ public class SingleThreadEventLoop extends SingleThreadEventExecutor implements 
         return ioHandler.run(context);
     }
 
+<<<<<<< HEAD
     /**
      * Called once a {@link Channel} should be registered on this {@link SingleThreadEventLoop}.
      *
@@ -228,6 +256,11 @@ public class SingleThreadEventLoop extends SingleThreadEventExecutor implements 
     protected void deregister(Channel channel) throws Exception {
         assert inEventLoop();
         ioHandler.deregister(channel);
+=======
+    @Override
+    protected void afterRunningAllTasks() {
+        runAllTasksFrom(tailTasks);
+>>>>>>> dev
     }
 
     @Override
@@ -240,4 +273,17 @@ public class SingleThreadEventLoop extends SingleThreadEventExecutor implements 
         assert inEventLoop();
         ioHandler.destroy();
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * Returns the number of {@link Channel}s registered with this {@link EventLoop} or {@code -1}
+     * if operation is not supported. The returned value is not guaranteed to be exact accurate and
+     * should be viewed as a best effort.
+     */
+    @UnstableApi
+    public int registeredChannels() {
+        return -1;
+    }
+>>>>>>> dev
 }

@@ -15,7 +15,11 @@
  */
 package io.netty.handler.codec.http.websocketx.extensions;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 import java.util.Collections;
 import java.util.Map;
@@ -31,10 +35,16 @@ public final class WebSocketExtensionData {
     private final Map<String, String> parameters;
 
     public WebSocketExtensionData(String name, Map<String, String> parameters) {
+<<<<<<< HEAD
         requireNonNull(name, "name");
         requireNonNull(parameters, "parameters");
         this.name = name;
         this.parameters = Collections.unmodifiableMap(parameters);
+=======
+        this.name = ObjectUtil.checkNotNull(name, "name");
+        this.parameters = Collections.unmodifiableMap(
+                ObjectUtil.checkNotNull(parameters, "parameters"));
+>>>>>>> dev
     }
 
     /**

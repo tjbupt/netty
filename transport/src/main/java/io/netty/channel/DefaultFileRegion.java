@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.util.AbstractReferenceCounted;
 import io.netty.util.IllegalReferenceCountException;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -28,6 +29,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
 import java.nio.channels.WritableByteChannel;
+
+import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 
 /**
  * Default {@link FileRegion} implementation which transfer data from a {@link FileChannel} or {@link File}.
@@ -52,6 +55,7 @@ public class DefaultFileRegion extends AbstractReferenceCounted implements FileR
      * @param count     the number of bytes to transfer
      */
     public DefaultFileRegion(FileChannel file, long position, long count) {
+<<<<<<< HEAD
         requireNonNull(file, "file");
         checkPositiveOrZero(position, "position");
         checkPositiveOrZero(count, "count");
@@ -59,6 +63,12 @@ public class DefaultFileRegion extends AbstractReferenceCounted implements FileR
         this.position = position;
         this.count = count;
         f = null;
+=======
+        this.file = ObjectUtil.checkNotNull(file, "file");
+        this.position = checkPositiveOrZero(position, "position");
+        this.count = checkPositiveOrZero(count, "count");
+        this.f = null;
+>>>>>>> dev
     }
 
     /**
@@ -70,12 +80,18 @@ public class DefaultFileRegion extends AbstractReferenceCounted implements FileR
      * @param count     the number of bytes to transfer
      */
     public DefaultFileRegion(File f, long position, long count) {
+<<<<<<< HEAD
         requireNonNull(f, "f");
         checkPositiveOrZero(position, "position");
         checkPositiveOrZero(count, "count");
         this.position = position;
         this.count = count;
         this.f = f;
+=======
+        this.f = ObjectUtil.checkNotNull(f, "f");
+        this.position = checkPositiveOrZero(position, "position");
+        this.count = checkPositiveOrZero(count, "count");
+>>>>>>> dev
     }
 
     /**

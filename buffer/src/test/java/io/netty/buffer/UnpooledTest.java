@@ -17,6 +17,10 @@ package io.netty.buffer;
 
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 import org.mockito.Mockito;
 
 import java.io.InputStream;
@@ -701,9 +705,18 @@ public class UnpooledTest {
 
     @Test
     public void skipBytesNegativeLength() {
-        ByteBuf buf = buffer(8);
+        final ByteBuf buf = buffer(8);
         try {
+<<<<<<< HEAD
             assertThrows(IllegalArgumentException.class, () -> buf.skipBytes(-1));
+=======
+            assertThrows(IllegalArgumentException.class, new Executable() {
+                @Override
+                public void execute() throws Throwable {
+                    buf.skipBytes(-1);
+                }
+            });
+>>>>>>> dev
         } finally {
             buf.release();
         }
@@ -731,11 +744,20 @@ public class UnpooledTest {
     public void testGetBytesByteBuffer() {
         byte[] bytes = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
         // Ensure destination buffer is bigger then what is wrapped in the ByteBuf.
-        ByteBuffer nioBuffer = ByteBuffer.allocate(bytes.length + 1);
-        ByteBuf wrappedBuffer = wrappedBuffer(bytes);
+        final ByteBuffer nioBuffer = ByteBuffer.allocate(bytes.length + 1);
+        final ByteBuf wrappedBuffer = wrappedBuffer(bytes);
         try {
+<<<<<<< HEAD
             assertThrows(IndexOutOfBoundsException.class,
                 () -> wrappedBuffer.getBytes(wrappedBuffer.readerIndex(), nioBuffer));
+=======
+            assertThrows(IndexOutOfBoundsException.class, new Executable() {
+                @Override
+                public void execute() throws Throwable {
+                    wrappedBuffer.getBytes(wrappedBuffer.readerIndex(), nioBuffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             wrappedBuffer.release();
         }
@@ -745,11 +767,20 @@ public class UnpooledTest {
     public void testGetBytesByteBuffer2() {
         byte[] bytes = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
         // Ensure destination buffer is bigger then what is wrapped in the ByteBuf.
-        ByteBuffer nioBuffer = ByteBuffer.allocate(bytes.length + 1);
-        ByteBuf wrappedBuffer = wrappedBuffer(bytes, 0, bytes.length);
+        final ByteBuffer nioBuffer = ByteBuffer.allocate(bytes.length + 1);
+        final ByteBuf wrappedBuffer = wrappedBuffer(bytes, 0, bytes.length);
         try {
+<<<<<<< HEAD
             assertThrows(IndexOutOfBoundsException.class,
                 () -> wrappedBuffer.getBytes(wrappedBuffer.readerIndex(), nioBuffer));
+=======
+            assertThrows(IndexOutOfBoundsException.class, new Executable() {
+                @Override
+                public void execute() throws Throwable {
+                    wrappedBuffer.getBytes(wrappedBuffer.readerIndex(), nioBuffer);
+                }
+            });
+>>>>>>> dev
         } finally {
             wrappedBuffer.release();
         }

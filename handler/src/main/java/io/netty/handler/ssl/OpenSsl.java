@@ -60,6 +60,10 @@ public final class OpenSsl {
     private static final Set<String> AVAILABLE_OPENSSL_CIPHER_SUITES;
     private static final Set<String> AVAILABLE_JAVA_CIPHER_SUITES;
     private static final boolean SUPPORTS_KEYMANAGER_FACTORY;
+<<<<<<< HEAD
+=======
+    private static final boolean USE_KEYMANAGER_FACTORY;
+>>>>>>> dev
     private static final boolean SUPPORTS_OCSP;
     private static final boolean TLSV13_SUPPORTED;
     private static final boolean IS_BORINGSSL;
@@ -265,6 +269,32 @@ public final class OpenSsl {
 
                             SSL.setKeyMaterial(ssl, cert, key);
                             supportsKeyManagerFactory = true;
+<<<<<<< HEAD
+=======
+                            try {
+                                boolean propertySet = SystemPropertyUtil.contains(
+                                        "io.netty.handler.ssl.openssl.useKeyManagerFactory");
+                                if (!IS_BORINGSSL) {
+                                    useKeyManagerFactory = SystemPropertyUtil.getBoolean(
+                                            "io.netty.handler.ssl.openssl.useKeyManagerFactory", true);
+
+                                    if (propertySet) {
+                                        logger.info("System property " +
+                                                "'io.netty.handler.ssl.openssl.useKeyManagerFactory'" +
+                                                " is deprecated and so will be ignored in the future");
+                                    }
+                                } else {
+                                    useKeyManagerFactory = true;
+                                    if (propertySet) {
+                                        logger.info("System property " +
+                                                "'io.netty.handler.ssl.openssl.useKeyManagerFactory'" +
+                                                " is deprecated and will be ignored when using BoringSSL");
+                                    }
+                                }
+                            } catch (Throwable ignore) {
+                                logger.debug("Failed to get useKeyManagerFactory system property.");
+                            }
+>>>>>>> dev
                         } catch (Error ignore) {
                             logger.debug("KeyManagerFactory not supported.");
                         } finally {
@@ -320,6 +350,10 @@ public final class OpenSsl {
 
             AVAILABLE_CIPHER_SUITES = availableCipherSuites;
             SUPPORTS_KEYMANAGER_FACTORY = supportsKeyManagerFactory;
+<<<<<<< HEAD
+=======
+            USE_KEYMANAGER_FACTORY = useKeyManagerFactory;
+>>>>>>> dev
 
             Set<String> protocols = new LinkedHashSet<>(6);
             // Seems like there is no way to explicitly disable SSLv2Hello in openssl so it is always enabled
@@ -361,6 +395,10 @@ public final class OpenSsl {
             AVAILABLE_JAVA_CIPHER_SUITES = Collections.emptySet();
             AVAILABLE_CIPHER_SUITES = Collections.emptySet();
             SUPPORTS_KEYMANAGER_FACTORY = false;
+<<<<<<< HEAD
+=======
+            USE_KEYMANAGER_FACTORY = false;
+>>>>>>> dev
             SUPPORTED_PROTOCOLS_SET = Collections.emptySet();
             SUPPORTS_OCSP = false;
             TLSV13_SUPPORTED = false;
@@ -576,6 +614,13 @@ public final class OpenSsl {
     @Deprecated
     public static boolean supportsHostnameValidation() {
         return isAvailable();
+<<<<<<< HEAD
+=======
+    }
+
+    static boolean useKeyManagerFactory() {
+        return USE_KEYMANAGER_FACTORY;
+>>>>>>> dev
     }
 
     static long memoryAddress(ByteBuf buf) {
@@ -591,7 +636,11 @@ public final class OpenSsl {
         String os = PlatformDependent.normalizedOs();
         String arch = PlatformDependent.normalizedArch();
 
+<<<<<<< HEAD
         Set<String> libNames = new LinkedHashSet<>(5);
+=======
+        Set<String> libNames = new LinkedHashSet<String>(5);
+>>>>>>> dev
         String staticLibName = "netty_tcnative";
 
         // First, try loading the platform-specific library. Platform-specific

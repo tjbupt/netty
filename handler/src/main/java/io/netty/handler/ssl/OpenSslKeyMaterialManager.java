@@ -74,7 +74,11 @@ final class OpenSslKeyMaterialManager {
         // authMethods may contain duplicates or may result in the same type
         // but call chooseServerAlias(...) may be expensive. So let's ensure
         // we filter out duplicates.
+<<<<<<< HEAD
         Set<String> typeSet = new HashSet<>(KEY_TYPES.size());
+=======
+        Set<String> typeSet = new HashSet<String>(KEY_TYPES.size());
+>>>>>>> dev
         for (String authMethod : authMethods) {
             String type = KEY_TYPES.get(authMethod);
             if (type != null && typeSet.add(type)) {

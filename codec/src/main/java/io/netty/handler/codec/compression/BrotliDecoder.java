@@ -72,7 +72,11 @@ public final class BrotliDecoder extends ByteToMessageDecoder {
         return copy;
     }
 
+<<<<<<< HEAD
     private State decompress(ChannelHandlerContext ctx, ByteBuf input, ByteBufAllocator alloc) {
+=======
+    private State decompress(ByteBuf input, List<Object> output, ByteBufAllocator alloc) {
+>>>>>>> dev
         for (;;) {
             switch (decoder.getStatus()) {
                 case DONE:
@@ -84,7 +88,11 @@ public final class BrotliDecoder extends ByteToMessageDecoder {
 
                 case NEEDS_MORE_INPUT:
                     if (decoder.hasOutput()) {
+<<<<<<< HEAD
                         ctx.fireChannelRead(pull(alloc));
+=======
+                        output.add(pull(alloc));
+>>>>>>> dev
                     }
 
                     if (!input.isReadable()) {
@@ -98,7 +106,11 @@ public final class BrotliDecoder extends ByteToMessageDecoder {
                     break;
 
                 case NEEDS_MORE_OUTPUT:
+<<<<<<< HEAD
                     ctx.fireChannelRead(pull(alloc));
+=======
+                    output.add(pull(alloc));
+>>>>>>> dev
                     break;
 
                 default:
@@ -117,12 +129,20 @@ public final class BrotliDecoder extends ByteToMessageDecoder {
     }
 
     @Override
+<<<<<<< HEAD
     public void handlerAdded0(ChannelHandlerContext ctx) throws Exception {
+=======
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+>>>>>>> dev
         decoder = new DecoderJNI.Wrapper(inputBufferSize);
     }
 
     @Override
+<<<<<<< HEAD
     protected void decode(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
+=======
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+>>>>>>> dev
         if (destroyed) {
             // Skip data received after finished.
             in.skipBytes(in.readableBytes());
@@ -134,7 +154,11 @@ public final class BrotliDecoder extends ByteToMessageDecoder {
         }
 
         try {
+<<<<<<< HEAD
             State state = decompress(ctx, in, ctx.alloc());
+=======
+            State state = decompress(in, out, ctx.alloc());
+>>>>>>> dev
             if (state == State.DONE) {
                 destroy();
             } else if (state == State.ERROR) {

@@ -37,6 +37,10 @@ import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.internal.EmptyArrays;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
@@ -114,7 +118,11 @@ public abstract class WebSocketServerHandshaker {
         } else {
             this.subprotocols = EmptyArrays.EMPTY_STRINGS;
         }
+<<<<<<< HEAD
         this.decoderConfig = Objects.requireNonNull(decoderConfig, "decoderConfig");
+=======
+        this.decoderConfig = ObjectUtil.checkNotNull(decoderConfig, "decoderConfig");
+>>>>>>> dev
     }
 
     /**
@@ -341,7 +349,11 @@ public abstract class WebSocketServerHandshaker {
      *            Closing Frame that was received.
      */
     public ChannelFuture close(Channel channel, CloseWebSocketFrame frame) {
+<<<<<<< HEAD
         requireNonNull(channel, "channel");
+=======
+        ObjectUtil.checkNotNull(channel, "channel");
+>>>>>>> dev
         return close(channel, frame, channel.newPromise());
     }
 
@@ -359,7 +371,10 @@ public abstract class WebSocketServerHandshaker {
      *            the {@link ChannelPromise} to be notified when the closing handshake is done
      */
     public ChannelFuture close(Channel channel, CloseWebSocketFrame frame, ChannelPromise promise) {
+<<<<<<< HEAD
         requireNonNull(channel, "channel");
+=======
+>>>>>>> dev
         return close0(channel, frame, promise);
     }
 
@@ -372,7 +387,11 @@ public abstract class WebSocketServerHandshaker {
      *            Closing Frame that was received.
      */
     public ChannelFuture close(ChannelHandlerContext ctx, CloseWebSocketFrame frame) {
+<<<<<<< HEAD
         requireNonNull(ctx, "ctx");
+=======
+        ObjectUtil.checkNotNull(ctx, "ctx");
+>>>>>>> dev
         return close(ctx, frame, ctx.newPromise());
     }
 
@@ -387,7 +406,11 @@ public abstract class WebSocketServerHandshaker {
      *            the {@link ChannelPromise} to be notified when the closing handshake is done.
      */
     public ChannelFuture close(ChannelHandlerContext ctx, CloseWebSocketFrame frame, ChannelPromise promise) {
+<<<<<<< HEAD
         requireNonNull(ctx, "ctx");
+=======
+        ObjectUtil.checkNotNull(ctx, "ctx");
+>>>>>>> dev
         return close0(ctx, frame, promise).addListener(ChannelFutureListener.CLOSE);
     }
 

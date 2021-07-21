@@ -208,7 +208,11 @@ public class WebSocketServerExtensionHandlerTest {
         // initialize
         when(mainHandshakerMock.handshakeExtension(webSocketExtensionDataMatcher("main")))
                 .thenReturn(mainExtensionMock);
+<<<<<<< HEAD
         when(mainExtensionMock.newResponseData()).thenReturn(
+=======
+        when(mainExtensionMock.newReponseData()).thenReturn(
+>>>>>>> dev
                 new WebSocketExtensionData("main", Collections.<String, String>emptyMap()));
 
         // execute

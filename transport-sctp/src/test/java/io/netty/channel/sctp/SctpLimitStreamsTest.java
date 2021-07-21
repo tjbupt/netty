@@ -44,7 +44,11 @@ public abstract class SctpLimitStreamsTest {
     @SuppressForbidden(reason = "test-only")
     @Test
     @Timeout(value = 5000, unit = TimeUnit.MILLISECONDS)
+<<<<<<< HEAD:transport-sctp/src/test/java/io/netty/channel/sctp/SctpLimitStreamsTest.java
     public void testSctpInitMaxstreams() {
+=======
+    public void testSctpInitMaxstreams() throws Exception {
+>>>>>>> dev:transport-sctp/src/main/test/io/netty/channel/sctp/SctpLimitStreamsTest.java
         EventLoopGroup loop = newEventLoopGroup();
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();

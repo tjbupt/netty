@@ -35,6 +35,10 @@ import io.netty.channel.nio.NioHandler;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.util.CharsetUtil;
 import io.netty.util.NetUtil;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 
@@ -53,11 +57,19 @@ import java.nio.channels.NetworkChannel;
 import java.util.Queue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
+<<<<<<< HEAD
+=======
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+
+>>>>>>> dev
 
 
 public class NioSocketChannelTest extends AbstractNioChannelTest<NioSocketChannel> {
@@ -162,7 +174,21 @@ public class NioSocketChannelTest extends AbstractNioChannelTest<NioSocketChanne
     @Test
     @Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
     public void testChannelReRegisterReadSameEventLoop() throws Exception {
+<<<<<<< HEAD
         final EventLoopGroup group = new MultithreadEventLoopGroup(2, NioHandler.newFactory());
+=======
+        testChannelReRegisterRead(true);
+    }
+
+    @Test
+    @Timeout(value = 3000, unit = TimeUnit.MILLISECONDS)
+    public void testChannelReRegisterReadDifferentEventLoop() throws Exception {
+        testChannelReRegisterRead(false);
+    }
+
+    private static void testChannelReRegisterRead(final boolean sameEventLoop) throws Exception {
+        final EventLoopGroup group = new NioEventLoopGroup(2);
+>>>>>>> dev
         final CountDownLatch latch = new CountDownLatch(1);
 
         // Just some random bytes

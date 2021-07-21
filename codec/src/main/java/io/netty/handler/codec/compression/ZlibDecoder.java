@@ -31,7 +31,10 @@ public abstract class ZlibDecoder extends ByteToMessageDecoder {
      * Maximum allowed size of the decompression buffer.
      */
     protected final int maxAllocation;
+<<<<<<< HEAD
     protected final boolean preferDirect = false;
+=======
+>>>>>>> dev
 
     /**
      * Same as {@link #ZlibDecoder(int)} with maxAllocation = 0.
@@ -63,10 +66,17 @@ public abstract class ZlibDecoder extends ByteToMessageDecoder {
     protected ByteBuf prepareDecompressBuffer(ChannelHandlerContext ctx, ByteBuf buffer, int preferredSize) {
         if (buffer == null) {
             if (maxAllocation == 0) {
+<<<<<<< HEAD
                 return ctx.alloc().buffer(preferredSize);
             }
 
             return ctx.alloc().buffer(Math.min(preferredSize, maxAllocation), maxAllocation);
+=======
+                return ctx.alloc().heapBuffer(preferredSize);
+            }
+
+            return ctx.alloc().heapBuffer(Math.min(preferredSize, maxAllocation), maxAllocation);
+>>>>>>> dev
         }
 
         // this always expands the buffer if possible, even if the expansion is less than preferredSize

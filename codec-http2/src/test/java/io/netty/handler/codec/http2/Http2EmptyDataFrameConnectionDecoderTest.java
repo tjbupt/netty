@@ -17,6 +17,10 @@ package io.netty.handler.codec.http2;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+<<<<<<< HEAD
+=======
+import org.mockito.invocation.InvocationOnMock;
+>>>>>>> dev
 import org.mockito.stubbing.Answer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,8 +36,17 @@ public class Http2EmptyDataFrameConnectionDecoderTest {
         Http2ConnectionDecoder delegate = mock(Http2ConnectionDecoder.class);
         final ArgumentCaptor<Http2FrameListener> listenerArgumentCaptor =
                 ArgumentCaptor.forClass(Http2FrameListener.class);
+<<<<<<< HEAD
         when(delegate.frameListener()).then(
                 (Answer<Http2FrameListener>) invocationOnMock -> listenerArgumentCaptor.getValue());
+=======
+        when(delegate.frameListener()).then(new Answer<Http2FrameListener>() {
+            @Override
+            public Http2FrameListener answer(InvocationOnMock invocationOnMock) {
+                return listenerArgumentCaptor.getValue();
+            }
+        });
+>>>>>>> dev
         Http2FrameListener listener = mock(Http2FrameListener.class);
         Http2EmptyDataFrameConnectionDecoder decoder = new Http2EmptyDataFrameConnectionDecoder(delegate, 2);
         decoder.frameListener(listener);

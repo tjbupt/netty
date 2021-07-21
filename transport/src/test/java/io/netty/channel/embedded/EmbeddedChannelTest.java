@@ -253,9 +253,15 @@ public class EmbeddedChannelTest {
 
     @Test
     public void testHasNoDisconnectSkipDisconnect() throws InterruptedException {
+<<<<<<< HEAD
         EmbeddedChannel channel = new EmbeddedChannel(false, new ChannelHandler() {
             @Override
             public void close(ChannelHandlerContext ctx, ChannelPromise promise) {
+=======
+        EmbeddedChannel channel = new EmbeddedChannel(false, new ChannelOutboundHandlerAdapter() {
+            @Override
+            public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+>>>>>>> dev
                 promise.tryFailure(new Throwable());
             }
         });

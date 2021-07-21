@@ -23,6 +23,10 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.util.internal.UnstableApi;
 
 import java.net.InetSocketAddress;
+<<<<<<< HEAD
+=======
+import java.util.List;
+>>>>>>> dev
 
 /**
  * Decodes a {@link DatagramPacket} into a {@link DatagramDnsResponse}.
@@ -54,6 +58,7 @@ public class DatagramDnsResponseDecoder extends MessageToMessageDecoder<Datagram
     }
 
     @Override
+<<<<<<< HEAD
     protected void decode(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {
         final DnsResponse response;
         try {
@@ -62,6 +67,14 @@ public class DatagramDnsResponseDecoder extends MessageToMessageDecoder<Datagram
             throw new CorruptedFrameException("Unable to decode response", e);
         }
         ctx.fireChannelRead(response);
+=======
+    protected void decode(ChannelHandlerContext ctx, DatagramPacket packet, List<Object> out) throws Exception {
+        try {
+            out.add(decodeResponse(ctx, packet));
+        } catch (IndexOutOfBoundsException e) {
+            throw new CorruptedFrameException("Unable to decode response", e);
+        }
+>>>>>>> dev
     }
 
     protected DnsResponse decodeResponse(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {

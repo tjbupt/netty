@@ -86,6 +86,7 @@ public final class SocketUtils {
         }
     }
 
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     public static void bind(final SocketChannel socketChannel, final SocketAddress address) throws IOException {
         try {
             AccessController.doPrivileged((PrivilegedExceptionAction<Void>) () -> {
@@ -106,6 +107,7 @@ public final class SocketUtils {
         }
     }
 
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     public static void bind(final DatagramChannel networkChannel, final SocketAddress address) throws IOException {
         try {
             AccessController.doPrivileged((PrivilegedExceptionAction<Void>) () -> {
@@ -146,7 +148,16 @@ public final class SocketUtils {
 
     public static Enumeration<InetAddress> addressesFromNetworkInterface(final NetworkInterface intf) {
         Enumeration<InetAddress> addresses =
+<<<<<<< HEAD
                 AccessController.doPrivileged((PrivilegedAction<Enumeration<InetAddress>>) intf::getInetAddresses);
+=======
+                AccessController.doPrivileged(new PrivilegedAction<Enumeration<InetAddress>>() {
+            @Override
+            public Enumeration<InetAddress> run() {
+                return intf.getInetAddresses();
+            }
+        });
+>>>>>>> dev
         // Android seems to sometimes return null even if this is not a valid return value by the api docs.
         // Just return an empty Enumeration in this case.
         // See https://github.com/netty/netty/issues/10045
@@ -156,6 +167,7 @@ public final class SocketUtils {
         return addresses;
     }
 
+    @SuppressJava6Requirement(reason = "Usage guarded by java version check")
     public static InetAddress loopbackAddress() {
         return AccessController.doPrivileged((PrivilegedAction<InetAddress>) InetAddress::getLoopbackAddress);
     }

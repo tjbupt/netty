@@ -17,10 +17,16 @@ package io.netty.channel.epoll;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultithreadEventLoopGroup;
+=======
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.EventLoopGroup;
+>>>>>>> dev
 import io.netty.channel.socket.InternetProtocolFamily;
 import io.netty.channel.unix.Socket;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +52,7 @@ public class EpollDatagramChannelTest {
 
     @Test
     public void testNotActiveNoLocalRemoteAddress() throws IOException {
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(1, EpollHandler.newFactory());
         try {
             checkNotActiveNoLocalRemoteAddress(new EpollDatagramChannel(group.next()));
@@ -54,10 +61,16 @@ public class EpollDatagramChannelTest {
         } finally {
             group.shutdownGracefully();
         }
+=======
+        checkNotActiveNoLocalRemoteAddress(new EpollDatagramChannel());
+        checkNotActiveNoLocalRemoteAddress(new EpollDatagramChannel(InternetProtocolFamily.IPv4));
+        checkNotActiveNoLocalRemoteAddress(new EpollDatagramChannel(InternetProtocolFamily.IPv6));
+>>>>>>> dev
     }
 
     @Test
     public void testActiveHasLocalAddress() throws IOException {
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(1, EpollHandler.newFactory());
         try {
             Socket socket = Socket.newSocketDgram();
@@ -70,11 +83,24 @@ public class EpollDatagramChannelTest {
         } finally {
             group.shutdownGracefully();
         }
+=======
+        Socket socket = Socket.newSocketDgram();
+        EpollDatagramChannel channel = new EpollDatagramChannel(socket.intValue());
+        InetSocketAddress localAddress = channel.localAddress();
+        assertTrue(channel.active);
+        assertNotNull(localAddress);
+        assertEquals(socket.localAddress(), localAddress);
+        channel.fd().close();
+>>>>>>> dev
     }
 
     @Test
     public void testLocalAddressBeforeAndAfterBind() {
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(1, EpollHandler.newFactory());
+=======
+        EventLoopGroup group = new EpollEventLoopGroup(1);
+>>>>>>> dev
         try {
             TestHandler handler = new TestHandler();
             InetSocketAddress localAddressBeforeBind = new InetSocketAddress(LOCALHOST, 0);
@@ -107,13 +133,21 @@ public class EpollDatagramChannelTest {
         channel.fd().close();
     }
 
+<<<<<<< HEAD
     private static final class TestHandler implements ChannelHandler {
+=======
+    private static final class TestHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         private volatile SocketAddress localAddress;
 
         @Override
         public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
             this.localAddress = ctx.channel().localAddress();
+<<<<<<< HEAD
             ctx.fireChannelRegistered();
+=======
+            super.channelRegistered(ctx);
+>>>>>>> dev
         }
     }
 }

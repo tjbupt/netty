@@ -25,12 +25,20 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+<<<<<<< HEAD
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.local.LocalAddress;
 import io.netty.channel.local.LocalChannel;
 import io.netty.channel.local.LocalHandler;
+=======
+import io.netty.channel.DefaultEventLoopGroup;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.local.LocalAddress;
+import io.netty.channel.local.LocalChannel;
+>>>>>>> dev
 import io.netty.channel.local.LocalServerChannel;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
@@ -38,6 +46,10 @@ import io.netty.util.ReferenceCountUtil;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.ImmediateEventExecutor;
 import io.netty.util.concurrent.Promise;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ThreadLocalRandom;
+>>>>>>> dev
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -61,7 +73,11 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+import java.util.concurrent.ThreadFactory;
+>>>>>>> dev
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -100,9 +116,20 @@ public class OpenSslPrivateKeyMethodTest {
         assumeCipherAvailable(SslProvider.OPENSSL);
         assumeCipherAvailable(SslProvider.JDK);
 
+<<<<<<< HEAD
         GROUP = new MultithreadEventLoopGroup(LocalHandler.newFactory());
         CERT = new SelfSignedCertificate();
         EXECUTOR = Executors.newCachedThreadPool(DelegateThread::new);
+=======
+        GROUP = new DefaultEventLoopGroup();
+        CERT = new SelfSignedCertificate();
+        EXECUTOR = Executors.newCachedThreadPool(new ThreadFactory() {
+            @Override
+            public Thread newThread(Runnable r) {
+                return new DelegateThread(r);
+            }
+        });
+>>>>>>> dev
     }
 
     @AfterAll
@@ -244,7 +271,11 @@ public class OpenSslPrivateKeyMethodTest {
                             }
 
                             @Override
+<<<<<<< HEAD
                             public void messageReceived(ChannelHandlerContext ctx, Object msg) {
+=======
+                            public void channelRead0(ChannelHandlerContext ctx, Object msg) {
+>>>>>>> dev
                                 if (serverPromise.trySuccess(null)) {
                                     ctx.writeAndFlush(Unpooled.wrappedBuffer(new byte[] {'P', 'O', 'N', 'G'}));
                                 }
@@ -280,7 +311,11 @@ public class OpenSslPrivateKeyMethodTest {
                                 }
 
                                 @Override
+<<<<<<< HEAD
                                 public void messageReceived(ChannelHandlerContext ctx, Object msg) {
+=======
+                                public void channelRead0(ChannelHandlerContext ctx, Object msg) {
+>>>>>>> dev
                                     clientPromise.trySuccess(null);
                                     ctx.close();
                                 }

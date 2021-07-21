@@ -15,10 +15,14 @@
  */
 package io.netty.handler.codec.socksx.v5;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
 
 import io.netty.handler.codec.DecoderResult;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.util.ArrayList;
@@ -33,7 +37,11 @@ public class DefaultSocks5InitialRequest extends AbstractSocks5Message implement
     private final List<Socks5AuthMethod> authMethods;
 
     public DefaultSocks5InitialRequest(Socks5AuthMethod... authMethods) {
+<<<<<<< HEAD
         requireNonNull(authMethods, "authMethods");
+=======
+        ObjectUtil.checkNotNull(authMethods, "authMethods");
+>>>>>>> dev
 
         List<Socks5AuthMethod> list = new ArrayList<>(authMethods.length);
         for (Socks5AuthMethod m: authMethods) {
@@ -47,7 +55,11 @@ public class DefaultSocks5InitialRequest extends AbstractSocks5Message implement
     }
 
     public DefaultSocks5InitialRequest(Iterable<Socks5AuthMethod> authMethods) {
+<<<<<<< HEAD
         requireNonNull(authMethods, "authMethods");
+=======
+        ObjectUtil.checkNotNull(authMethods, "authSchemes");
+>>>>>>> dev
 
         List<Socks5AuthMethod> list = new ArrayList<>();
         for (Socks5AuthMethod m: authMethods) {

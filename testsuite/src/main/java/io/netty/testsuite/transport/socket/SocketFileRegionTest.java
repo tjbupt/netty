@@ -22,6 +22,11 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelInboundHandler;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.ChannelOption;
 import io.netty.channel.DefaultFileRegion;
 import io.netty.channel.FileRegion;
@@ -43,6 +48,10 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+<<<<<<< HEAD
+=======
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+>>>>>>> dev
 
 public class SocketFileRegionTest extends AbstractSocketTest {
 
@@ -54,6 +63,7 @@ public class SocketFileRegionTest extends AbstractSocketTest {
 
     @Test
     public void testFileRegion(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testFileRegion);
     }
 
@@ -70,6 +80,64 @@ public class SocketFileRegionTest extends AbstractSocketTest {
     @Test
     public void testFileRegionCountLargerThenFile(TestInfo testInfo) throws Throwable {
         run(testInfo, this::testFileRegionCountLargerThenFile);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testFileRegion(serverBootstrap, bootstrap);
+            }
+        });
+    }
+
+    @Test
+    public void testCustomFileRegion(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testCustomFileRegion(serverBootstrap, bootstrap);
+            }
+        });
+    }
+
+    @Test
+    public void testFileRegionNotAutoRead(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testFileRegionNotAutoRead(serverBootstrap, bootstrap);
+            }
+        });
+    }
+
+    @Test
+    public void testFileRegionVoidPromise(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testFileRegionVoidPromise(serverBootstrap, bootstrap);
+            }
+        });
+    }
+
+    @Test
+    public void testFileRegionVoidPromiseNotAutoRead(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testFileRegionVoidPromiseNotAutoRead(serverBootstrap, bootstrap);
+            }
+        });
+    }
+
+    @Test
+    public void testFileRegionCountLargerThenFile(TestInfo testInfo) throws Throwable {
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testFileRegionCountLargerThenFile(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testFileRegion(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -99,6 +167,34 @@ public class SocketFileRegionTest extends AbstractSocketTest {
             }
         });
         cb.handler(new ChannelHandler() { });
+
+        Channel sc = sb.bind().sync().channel();
+        Channel cc = cb.connect(sc.localAddress()).sync().channel();
+
+        // Request file region which is bigger then the underlying file.
+        FileRegion region = new DefaultFileRegion(
+                new RandomAccessFile(file, "r").getChannel(), 0, data.length + 1024);
+
+        assertThat(cc.writeAndFlush(region).await().cause(), CoreMatchers.<Throwable>instanceOf(IOException.class));
+        cc.close().sync();
+        sc.close().sync();
+    }
+
+    public void testFileRegionCountLargerThenFile(ServerBootstrap sb, Bootstrap cb) throws Throwable {
+        File file = PlatformDependent.createTempFile("netty-", ".tmp", null);
+        file.deleteOnExit();
+
+        final FileOutputStream out = new FileOutputStream(file);
+        out.write(data);
+        out.close();
+
+        sb.childHandler(new SimpleChannelInboundHandler<ByteBuf>() {
+            @Override
+            protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) {
+                // Just drop the message.
+            }
+        });
+        cb.handler(new ChannelInboundHandlerAdapter());
 
         Channel sc = sb.bind().sync().channel();
         Channel cc = cb.connect(sc.localAddress()).sync().channel();

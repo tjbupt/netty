@@ -29,6 +29,10 @@ public class OpenSslServerContextTest extends SslContextTest {
 
     @Override
     protected SslContext newSslContext(File crtFile, File keyFile, String pass) throws SSLException {
+<<<<<<< HEAD
         return SslContextBuilder.forServer(crtFile, keyFile, pass).sslProvider(SslProvider.OPENSSL).build();
+=======
+        return new OpenSslServerContext(crtFile, keyFile, pass);
+>>>>>>> dev
     }
 }

@@ -23,6 +23,10 @@ import io.netty.handler.codec.CorruptedFrameException;
 import io.netty.handler.codec.TooLongFrameException;
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -189,7 +193,7 @@ public class JsonObjectDecoderTest {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
         // {"foo" : "bar\""}
         String json = "{\"foo\" : \"bar\\\"\"}";
-        System.out.println(json);
+
         ch.writeInbound(Unpooled.copiedBuffer(json, CharsetUtil.UTF_8));
 
         ByteBuf res = ch.readInbound();
@@ -204,7 +208,7 @@ public class JsonObjectDecoderTest {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
         // {"foo" : "bar\\"}
         String json = "{\"foo\" : \"bar\\\\\"}";
-        System.out.println(json);
+
         ch.writeInbound(Unpooled.copiedBuffer(json, CharsetUtil.UTF_8));
 
         ByteBuf res = ch.readInbound();
@@ -219,7 +223,7 @@ public class JsonObjectDecoderTest {
         EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
         // {"foo" : "bar\\\""}
         String json = "{\"foo\" : \"bar\\\\\\\"\"}";
-        System.out.println(json);
+
         ch.writeInbound(Unpooled.copiedBuffer(json, CharsetUtil.UTF_8));
 
         ByteBuf res = ch.readInbound();
@@ -254,10 +258,19 @@ public class JsonObjectDecoderTest {
 
     @Test
     public void testNonJsonContent1() {
-        EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
+        final EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
         try {
+<<<<<<< HEAD
             assertThrows(CorruptedFrameException.class,
                 () -> ch.writeInbound(Unpooled.copiedBuffer("  b [1,2,3]", CharsetUtil.UTF_8)));
+=======
+            assertThrows(CorruptedFrameException.class, new Executable() {
+                @Override
+                public void execute() {
+                    ch.writeInbound(Unpooled.copiedBuffer("  b [1,2,3]", CharsetUtil.UTF_8));
+                }
+            });
+>>>>>>> dev
         } finally {
             assertFalse(ch.finish());
         }
@@ -265,7 +278,7 @@ public class JsonObjectDecoderTest {
 
     @Test
     public void testNonJsonContent2() {
-        EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
+        final EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder());
         ch.writeInbound(Unpooled.copiedBuffer("  [1,2,3]  ", CharsetUtil.UTF_8));
 
         ByteBuf res = ch.readInbound();
@@ -273,8 +286,17 @@ public class JsonObjectDecoderTest {
         res.release();
 
         try {
+<<<<<<< HEAD
             assertThrows(CorruptedFrameException.class,
                 () -> ch.writeInbound(Unpooled.copiedBuffer(" a {\"key\" : 10}", CharsetUtil.UTF_8)));
+=======
+            assertThrows(CorruptedFrameException.class, new Executable() {
+                @Override
+                public void execute() {
+                    ch.writeInbound(Unpooled.copiedBuffer(" a {\"key\" : 10}", CharsetUtil.UTF_8));
+                }
+            });
+>>>>>>> dev
         } finally {
             assertFalse(ch.finish());
         }
@@ -282,10 +304,19 @@ public class JsonObjectDecoderTest {
 
     @Test
     public void testMaxObjectLength() {
-        EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder(6));
+        final EmbeddedChannel ch = new EmbeddedChannel(new JsonObjectDecoder(6));
         try {
+<<<<<<< HEAD
             assertThrows(TooLongFrameException.class,
                 () -> ch.writeInbound(Unpooled.copiedBuffer("[2,4,5]", CharsetUtil.UTF_8)));
+=======
+            assertThrows(TooLongFrameException.class, new Executable() {
+                @Override
+                public void execute() throws Throwable {
+                    ch.writeInbound(Unpooled.copiedBuffer("[2,4,5]", CharsetUtil.UTF_8));
+                }
+            });
+>>>>>>> dev
         } finally {
             assertFalse(ch.finish());
         }

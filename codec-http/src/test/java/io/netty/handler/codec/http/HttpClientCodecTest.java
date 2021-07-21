@@ -400,7 +400,11 @@ public class HttpClientCodecTest {
         String response = "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: 0\r\n\r\n";
 
+<<<<<<< HEAD
         HttpClientCodec codec = new HttpClientCodec(4096, 8192, true);
+=======
+        HttpClientCodec codec = new HttpClientCodec(4096, 8192, 8192, true);
+>>>>>>> dev
         EmbeddedChannel ch = new EmbeddedChannel(codec, new HttpObjectAggregator(1024));
 
         HttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "http://localhost/");

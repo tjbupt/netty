@@ -230,10 +230,14 @@ public abstract class AbstractCoalescingBufferQueue {
                 if (entry == null) {
                     if (previousBuf != null) {
                         decrementReadableBytes(previousBuf.readableBytes());
+<<<<<<< HEAD
                         // If the write fails we want to at least propagate the exception through the ChannelPipeline
                         // as otherwise the user will not be made aware of the failure at all.
                         ctx.write(previousBuf).addListener(
                                 ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+=======
+                        ctx.write(previousBuf, ctx.voidPromise());
+>>>>>>> dev
                     }
                     break;
                 }
@@ -241,10 +245,14 @@ public abstract class AbstractCoalescingBufferQueue {
                 if (entry instanceof ByteBufConvertible) {
                     if (previousBuf != null) {
                         decrementReadableBytes(previousBuf.readableBytes());
+<<<<<<< HEAD
                         // If the write fails we want to at least propagate the exception through the ChannelPipeline
                         // as otherwise the user will not be made aware of the failure at all.
                         ctx.write(previousBuf).addListener(
                                 ChannelFutureListener.FIRE_EXCEPTION_ON_FAILURE);
+=======
+                        ctx.write(previousBuf, ctx.voidPromise());
+>>>>>>> dev
                     }
                     previousBuf = ((ByteBufConvertible) entry).asByteBuf();
                 } else if (entry instanceof ChannelPromise) {
@@ -348,8 +356,13 @@ public abstract class AbstractCoalescingBufferQueue {
                 break;
             }
             try {
+<<<<<<< HEAD
                 if (entry instanceof ByteBufConvertible) {
                     ByteBuf buffer = ((ByteBufConvertible) entry).asByteBuf();
+=======
+                if (entry instanceof ByteBuf) {
+                    ByteBuf buffer = (ByteBuf) entry;
+>>>>>>> dev
                     decrementReadableBytes(buffer.readableBytes());
                     safeRelease(buffer);
                 } else {

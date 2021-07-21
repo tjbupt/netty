@@ -28,6 +28,10 @@ import io.netty.channel.ChannelPromise;
 import io.netty.channel.DefaultChannelConfig;
 import io.netty.channel.DefaultChannelPromise;
 import io.netty.handler.codec.http.HttpResponseStatus;
+<<<<<<< HEAD
+=======
+import io.netty.handler.codec.http2.Http2CodecUtil.SimpleChannelPromiseAggregator;
+>>>>>>> dev
 import io.netty.handler.codec.http2.Http2Exception.ShutdownHint;
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.concurrent.EventExecutor;
@@ -141,6 +145,10 @@ public class Http2ConnectionHandlerTest {
         MockitoAnnotations.initMocks(this);
 
         promise = new DefaultChannelPromise(channel, ImmediateEventExecutor.INSTANCE);
+<<<<<<< HEAD
+=======
+        voidPromise = new DefaultChannelPromise(channel, ImmediateEventExecutor.INSTANCE);
+>>>>>>> dev
 
         when(channel.metadata()).thenReturn(new ChannelMetadata(false));
         DefaultChannelConfig config = new DefaultChannelConfig(channel);
@@ -289,8 +297,13 @@ public class Http2ConnectionHandlerTest {
         handler = newHandler();
         handler.channelRead(ctx, copiedBuffer("BAD_PREFACE", UTF_8));
         ArgumentCaptor<ByteBuf> captor = ArgumentCaptor.forClass(ByteBuf.class);
+<<<<<<< HEAD
         verify(frameWriter).writeGoAway(any(ChannelHandlerContext.class),
                 eq(Integer.MAX_VALUE), eq(PROTOCOL_ERROR.code()), captor.capture(), eq(promise));
+=======
+        verify(frameWriter).writeGoAway(eq(ctx), eq(Integer.MAX_VALUE), eq(PROTOCOL_ERROR.code()),
+                captor.capture(), eq(promise));
+>>>>>>> dev
         assertEquals(0, captor.getValue().refCnt());
     }
 
@@ -300,8 +313,13 @@ public class Http2ConnectionHandlerTest {
         handler = newHandler();
         handler.channelRead(ctx, copiedBuffer("GET /path HTTP/1.1", US_ASCII));
         ArgumentCaptor<ByteBuf> captor = ArgumentCaptor.forClass(ByteBuf.class);
+<<<<<<< HEAD
         verify(frameWriter).writeGoAway(any(ChannelHandlerContext.class), eq(Integer.MAX_VALUE),
                 eq(PROTOCOL_ERROR.code()), captor.capture(), eq(promise));
+=======
+        verify(frameWriter).writeGoAway(eq(ctx), eq(Integer.MAX_VALUE), eq(PROTOCOL_ERROR.code()),
+            captor.capture(), eq(promise));
+>>>>>>> dev
         assertEquals(0, captor.getValue().refCnt());
         assertTrue(goAwayDebugCap.contains("/path"));
     }
@@ -316,8 +334,13 @@ public class Http2ConnectionHandlerTest {
         ByteBuf buf = Unpooled.buffer().writeBytes(connectionPrefaceBuf()).writeZero(10);
         handler.channelRead(ctx, buf);
         ArgumentCaptor<ByteBuf> captor = ArgumentCaptor.forClass(ByteBuf.class);
+<<<<<<< HEAD
         verify(frameWriter, atLeastOnce()).writeGoAway(any(ChannelHandlerContext.class),
                 eq(Integer.MAX_VALUE), eq(PROTOCOL_ERROR.code()), captor.capture(), eq(promise));
+=======
+        verify(frameWriter, atLeastOnce()).writeGoAway(eq(ctx), eq(Integer.MAX_VALUE), eq(PROTOCOL_ERROR.code()),
+                captor.capture(), eq(promise));
+>>>>>>> dev
         assertEquals(0, captor.getValue().refCnt());
     }
 
@@ -641,6 +664,26 @@ public class Http2ConnectionHandlerTest {
     }
 
     @Test
+<<<<<<< HEAD
+    public void channelReadCompleteCallsReadWhenAutoReadFalse() throws Exception {
+        channel.config().setAutoRead(false);
+=======
+    public void canCloseStreamWithVoidPromise() throws Exception {
+        handler = newHandler();
+        handler.closeStream(stream, ctx.voidPromise());
+        verify(stream, times(1)).close();
+        verifyNoMoreInteractions(stream);
+    }
+
+    @Test
+    public void channelReadCompleteTriggersFlush() throws Exception {
+>>>>>>> dev
+        handler = newHandler();
+        handler.channelReadComplete(ctx);
+        verify(ctx, times(1)).read();
+    }
+
+    @Test
     public void channelReadCompleteCallsReadWhenAutoReadFalse() throws Exception {
         channel.config().setAutoRead(false);
         handler = newHandler();
@@ -668,6 +711,30 @@ public class Http2ConnectionHandlerTest {
         when(channel.isActive()).thenReturn(true);
         handler.close(ctx, promise);
         verifyZeroInteractions(frameWriter);
+    }
+
+    @Test
+<<<<<<< HEAD
+    public void gracefulShutdownTimeoutWhenConnectionErrorHardShutdownTest() throws Exception {
+        gracefulShutdownTimeoutWhenConnectionErrorTest0(ShutdownHint.HARD_SHUTDOWN);
+=======
+    public void writeRstStreamForUnknownStreamUsingVoidPromise() throws Exception {
+        writeRstStreamUsingVoidPromise(NON_EXISTANT_STREAM_ID);
+>>>>>>> dev
+    }
+
+    @Test
+    public void gracefulShutdownTimeoutWhenConnectionErrorGracefulShutdownTest() throws Exception {
+        gracefulShutdownTimeoutWhenConnectionErrorTest0(ShutdownHint.GRACEFUL_SHUTDOWN);
+    }
+
+    private void gracefulShutdownTimeoutWhenConnectionErrorTest0(ShutdownHint hint) throws Exception {
+        handler = newHandler();
+        final long expectedMillis = 1234;
+        handler.gracefulShutdownTimeoutMillis(expectedMillis);
+        Http2Exception exception = new Http2Exception(PROTOCOL_ERROR, "Test error", hint);
+        handler.onConnectionError(ctx, false, exception, exception);
+        verify(executor, atLeastOnce()).schedule(any(Runnable.class), eq(expectedMillis), eq(TimeUnit.MILLISECONDS));
     }
 
     @Test
@@ -718,6 +785,53 @@ public class Http2ConnectionHandlerTest {
 
     @Test
     public void writeMultipleRstFramesForSameStream() throws Exception {
+<<<<<<< HEAD
+=======
+        handler = newHandler();
+        when(stream.id()).thenReturn(STREAM_ID);
+
+        final AtomicBoolean resetSent = new AtomicBoolean();
+        when(stream.resetSent()).then(new Answer<Http2Stream>() {
+            @Override
+            public Http2Stream answer(InvocationOnMock invocationOnMock) {
+                resetSent.set(true);
+                return stream;
+            }
+        });
+        when(stream.isResetSent()).then(new Answer<Boolean>() {
+            @Override
+            public Boolean answer(InvocationOnMock invocationOnMock) {
+                return resetSent.get();
+            }
+        });
+        when(frameWriter.writeRstStream(eq(ctx), eq(STREAM_ID), anyLong(), any(ChannelPromise.class)))
+                .then(new Answer<ChannelFuture>() {
+                    @Override
+                    public ChannelFuture answer(InvocationOnMock invocationOnMock) throws Throwable {
+                        ChannelPromise promise = invocationOnMock.getArgument(3);
+                        return promise.setSuccess();
+                    }
+                });
+
+        ChannelPromise promise =
+                new DefaultChannelPromise(channel, ImmediateEventExecutor.INSTANCE);
+        final ChannelPromise promise2 =
+                new DefaultChannelPromise(channel, ImmediateEventExecutor.INSTANCE);
+        promise.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                handler.resetStream(ctx, STREAM_ID, STREAM_CLOSED.code(), promise2);
+            }
+        });
+
+        handler.resetStream(ctx, STREAM_ID, CANCEL.code(), promise);
+        verify(frameWriter).writeRstStream(eq(ctx), eq(STREAM_ID), anyLong(), any(ChannelPromise.class));
+        assertTrue(promise.isSuccess());
+        assertTrue(promise2.isSuccess());
+    }
+
+    private void writeRstStreamUsingVoidPromise(int streamId) throws Exception {
+>>>>>>> dev
         handler = newHandler();
         when(stream.id()).thenReturn(STREAM_ID);
 

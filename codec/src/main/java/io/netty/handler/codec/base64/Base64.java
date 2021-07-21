@@ -22,6 +22,11 @@ package io.netty.handler.codec.base64;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.util.ByteProcessor;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 
 import java.nio.ByteOrder;
 
@@ -51,6 +56,7 @@ public final class Base64 {
     private static final byte EQUALS_SIGN_ENC = -1; // Indicates equals sign in encoding
 
     private static byte[] alphabet(Base64Dialect dialect) {
+<<<<<<< HEAD
         requireNonNull(dialect, "dialect");
         return dialect.alphabet;
     }
@@ -63,6 +69,17 @@ public final class Base64 {
     private static boolean breakLines(Base64Dialect dialect) {
         requireNonNull(dialect, "dialect");
         return dialect.breakLinesByDefault;
+=======
+        return ObjectUtil.checkNotNull(dialect, "dialect").alphabet;
+    }
+
+    private static byte[] decodabet(Base64Dialect dialect) {
+        return ObjectUtil.checkNotNull(dialect, "dialect").decodabet;
+    }
+
+    private static boolean breakLines(Base64Dialect dialect) {
+        return ObjectUtil.checkNotNull(dialect, "dialect").breakLinesByDefault;
+>>>>>>> dev
     }
 
     public static ByteBuf encode(ByteBuf src) {
@@ -78,7 +95,11 @@ public final class Base64 {
     }
 
     public static ByteBuf encode(ByteBuf src, boolean breakLines, Base64Dialect dialect) {
+<<<<<<< HEAD
         requireNonNull(src, "src");
+=======
+        ObjectUtil.checkNotNull(src, "src");
+>>>>>>> dev
 
         ByteBuf dest = encode(src, src.readerIndex(), src.readableBytes(), breakLines, dialect);
         src.readerIndex(src.writerIndex());
@@ -105,8 +126,13 @@ public final class Base64 {
 
     public static ByteBuf encode(
             ByteBuf src, int off, int len, boolean breakLines, Base64Dialect dialect, ByteBufAllocator allocator) {
+<<<<<<< HEAD
         requireNonNull(src, "src");
         requireNonNull(dialect, "dialect");
+=======
+        ObjectUtil.checkNotNull(src, "src");
+        ObjectUtil.checkNotNull(dialect, "dialect");
+>>>>>>> dev
 
         ByteBuf dest = allocator.buffer(encodedBufferSize(len, breakLines)).order(src.order());
         byte[] alphabet = alphabet(dialect);
@@ -279,7 +305,11 @@ public final class Base64 {
     }
 
     public static ByteBuf decode(ByteBuf src, Base64Dialect dialect) {
+<<<<<<< HEAD
         requireNonNull(src, "src");
+=======
+        ObjectUtil.checkNotNull(src, "src");
+>>>>>>> dev
 
         ByteBuf dest = decode(src, src.readerIndex(), src.readableBytes(), dialect);
         src.readerIndex(src.writerIndex());
@@ -298,8 +328,13 @@ public final class Base64 {
 
     public static ByteBuf decode(
             ByteBuf src, int off, int len, Base64Dialect dialect, ByteBufAllocator allocator) {
+<<<<<<< HEAD
         requireNonNull(src, "src");
         requireNonNull(dialect, "dialect");
+=======
+        ObjectUtil.checkNotNull(src, "src");
+        ObjectUtil.checkNotNull(dialect, "dialect");
+>>>>>>> dev
 
         // Using a ByteProcessor to reduce bound and reference count checking.
         return new Decoder().decode(src, off, len, allocator, dialect);
@@ -331,7 +366,11 @@ public final class Base64 {
         }
 
         @Override
+<<<<<<< HEAD
         public boolean process(byte value) {
+=======
+        public boolean process(byte value) throws Exception {
+>>>>>>> dev
             if (value > 0) {
                 byte sbiDecode = decodabet[value];
                 if (sbiDecode >= WHITE_SPACE_ENC) { // White space, Equals sign or better

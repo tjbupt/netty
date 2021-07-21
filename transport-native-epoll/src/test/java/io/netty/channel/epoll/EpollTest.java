@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 The Netty Project
+ * Copyright 2019 The Netty Project
  *
  * The Netty Project licenses this file to you under the Apache License,
  * version 2.0 (the "License"); you may not use this file except in compliance
@@ -45,6 +45,7 @@ public class EpollTest {
             Native.epollCtlAdd(epoll.intValue(), timerFd.intValue(), Native.EPOLLIN);
             Native.epollCtlAdd(epoll.intValue(), eventfd.intValue(), Native.EPOLLIN);
 
+<<<<<<< HEAD
             final AtomicReference<Throwable> ref = new AtomicReference<>();
             Thread t = new Thread(() -> {
                 try {
@@ -53,6 +54,19 @@ public class EpollTest {
                     assertEquals(eventfd.intValue(), eventArray.fd(0));
                 } catch (Throwable cause) {
                     ref.set(cause);
+=======
+            final AtomicReference<Throwable> ref = new AtomicReference<Throwable>();
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        assertEquals(1, Native.epollWait(epoll, eventArray, false));
+                        // This should have been woken up because of eventfd_write.
+                        assertEquals(eventfd.intValue(), eventArray.fd(0));
+                    } catch (Throwable cause) {
+                        ref.set(cause);
+                    }
+>>>>>>> dev
                 }
             });
             t.start();

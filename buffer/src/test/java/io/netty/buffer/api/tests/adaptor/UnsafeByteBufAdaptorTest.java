@@ -17,9 +17,18 @@ package io.netty.buffer.api.tests.adaptor;
 
 import org.junit.jupiter.api.BeforeAll;
 
+<<<<<<< HEAD:buffer/src/test/java/io/netty/buffer/api/tests/adaptor/UnsafeByteBufAdaptorTest.java
 public class UnsafeByteBufAdaptorTest extends ByteBufAdaptorTest {
     @BeforeAll
     public static void setUpAllocator() {
         setUpAllocator("Unsafe");
+=======
+@SuppressJava6Requirement(reason = "Usage guarded by java version check")
+final class LongAdderCounter extends LongAdder implements LongCounter {
+
+    @Override
+    public long value() {
+        return longValue();
+>>>>>>> dev:common/src/main/java/io/netty/util/internal/LongAdderCounter.java
     }
 }

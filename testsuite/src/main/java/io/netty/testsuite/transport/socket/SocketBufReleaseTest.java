@@ -43,7 +43,16 @@ public class SocketBufReleaseTest extends AbstractSocketTest {
 
     @Test
     public void testBufRelease(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testBufRelease);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testBufRelease(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testBufRelease(ServerBootstrap sb, Bootstrap cb) throws Throwable {

@@ -22,19 +22,31 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.MessageSizeEstimator;
 import io.netty.channel.RecvByteBufAllocator;
 import io.netty.channel.WriteBufferWaterMark;
+import io.netty.channel.socket.DuplexChannelConfig;
 import io.netty.channel.unix.DomainSocketChannelConfig;
 import io.netty.channel.unix.DomainSocketReadMode;
+import io.netty.util.internal.ObjectUtil;
 
 import java.io.IOException;
 import java.util.Map;
 
+<<<<<<< HEAD
+=======
+import static io.netty.channel.ChannelOption.ALLOW_HALF_CLOSURE;
+>>>>>>> dev
 import static io.netty.channel.ChannelOption.SO_RCVBUF;
 import static io.netty.channel.ChannelOption.SO_SNDBUF;
 import static io.netty.channel.unix.UnixChannelOption.DOMAIN_SOCKET_READ_MODE;
 
+<<<<<<< HEAD
 public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConfig
         implements DomainSocketChannelConfig {
+=======
+public final class EpollDomainSocketChannelConfig extends EpollChannelConfig
+        implements DomainSocketChannelConfig, DuplexChannelConfig {
+>>>>>>> dev
     private volatile DomainSocketReadMode mode = DomainSocketReadMode.BYTES;
+    private volatile boolean allowHalfClosure;
 
     EpollDomainSocketChannelConfig(AbstractEpollChannel channel) {
         super(channel);
@@ -42,7 +54,11 @@ public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConf
 
     @Override
     public Map<ChannelOption<?>, Object> getOptions() {
+<<<<<<< HEAD
         return getOptions(super.getOptions(), SO_RCVBUF, SO_SNDBUF, DOMAIN_SOCKET_READ_MODE);
+=======
+        return getOptions(super.getOptions(), DOMAIN_SOCKET_READ_MODE, ALLOW_HALF_CLOSURE, SO_SNDBUF, SO_RCVBUF);
+>>>>>>> dev
     }
 
     @SuppressWarnings("unchecked")
@@ -51,6 +67,12 @@ public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConf
         if (option == DOMAIN_SOCKET_READ_MODE) {
             return (T) getReadMode();
         }
+<<<<<<< HEAD
+=======
+        if (option == ALLOW_HALF_CLOSURE) {
+            return (T) Boolean.valueOf(isAllowHalfClosure());
+        }
+>>>>>>> dev
         if (option == SO_SNDBUF) {
             return (T) Integer.valueOf(getSendBufferSize());
         }
@@ -66,6 +88,11 @@ public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConf
 
         if (option == DOMAIN_SOCKET_READ_MODE) {
             setReadMode((DomainSocketReadMode) value);
+<<<<<<< HEAD
+=======
+        } else if (option == ALLOW_HALF_CLOSURE) {
+            setAllowHalfClosure((Boolean) value);
+>>>>>>> dev
         } else if (option == SO_SNDBUF) {
             setSendBufferSize((Integer) value);
         } else if (option == SO_RCVBUF) {
@@ -153,8 +180,12 @@ public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConf
 
     @Override
     public EpollDomainSocketChannelConfig setReadMode(DomainSocketReadMode mode) {
+<<<<<<< HEAD
         requireNonNull(mode, "mode");
         this.mode = mode;
+=======
+        this.mode = ObjectUtil.checkNotNull(mode, "mode");
+>>>>>>> dev
         return this;
     }
 
@@ -164,6 +195,19 @@ public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConf
     }
 
     @Override
+<<<<<<< HEAD
+=======
+    public boolean isAllowHalfClosure() {
+        return allowHalfClosure;
+    }
+
+    @Override
+    public EpollDomainSocketChannelConfig setAllowHalfClosure(boolean allowHalfClosure) {
+        this.allowHalfClosure = allowHalfClosure;
+        return this;
+    }
+
+>>>>>>> dev
     public int getSendBufferSize() {
         try {
             return ((EpollDomainSocketChannel) channel).socket.getSendBufferSize();
@@ -172,7 +216,10 @@ public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConf
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> dev
     public EpollDomainSocketChannelConfig setSendBufferSize(int sendBufferSize) {
         try {
             ((EpollDomainSocketChannel) channel).socket.setSendBufferSize(sendBufferSize);
@@ -182,7 +229,10 @@ public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConf
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> dev
     public int getReceiveBufferSize() {
         try {
             return ((EpollDomainSocketChannel) channel).socket.getReceiveBufferSize();
@@ -191,7 +241,10 @@ public final class EpollDomainSocketChannelConfig extends EpollDuplexChannelConf
         }
     }
 
+<<<<<<< HEAD
     @Override
+=======
+>>>>>>> dev
     public EpollDomainSocketChannelConfig setReceiveBufferSize(int receiveBufferSize) {
         try {
             ((EpollDomainSocketChannel) channel).socket.setReceiveBufferSize(receiveBufferSize);

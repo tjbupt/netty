@@ -16,7 +16,11 @@
 
 package io.netty.handler.codec.socksx.v5;
 
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 
 /**
  * The authentication method of SOCKS5.
@@ -56,10 +60,13 @@ public class Socks5AuthMethod implements Comparable<Socks5AuthMethod> {
     }
 
     public Socks5AuthMethod(int byteValue, String name) {
+<<<<<<< HEAD
         requireNonNull(name, "name");
 
+=======
+        this.name = ObjectUtil.checkNotNull(name, "name");
+>>>>>>> dev
         this.byteValue = (byte) byteValue;
-        this.name = name;
     }
 
     public byte byteValue() {

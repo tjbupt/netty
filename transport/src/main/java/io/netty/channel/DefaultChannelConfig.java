@@ -36,9 +36,15 @@ import static io.netty.channel.ChannelOption.WRITE_BUFFER_HIGH_WATER_MARK;
 import static io.netty.channel.ChannelOption.WRITE_BUFFER_LOW_WATER_MARK;
 import static io.netty.channel.ChannelOption.WRITE_BUFFER_WATER_MARK;
 import static io.netty.channel.ChannelOption.WRITE_SPIN_COUNT;
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkPositive;
 import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+import static io.netty.util.internal.ObjectUtil.checkPositive;
+import static io.netty.util.internal.ObjectUtil.checkPositiveOrZero;
+>>>>>>> dev
 
 /**
  * The default {@link ChannelConfig} implementation.
@@ -86,7 +92,12 @@ public class DefaultChannelConfig implements ChannelConfig {
                 null,
                 CONNECT_TIMEOUT_MILLIS, MAX_MESSAGES_PER_READ, WRITE_SPIN_COUNT,
                 ALLOCATOR, AUTO_READ, AUTO_CLOSE, RCVBUF_ALLOCATOR, WRITE_BUFFER_HIGH_WATER_MARK,
+<<<<<<< HEAD
                 WRITE_BUFFER_LOW_WATER_MARK, WRITE_BUFFER_WATER_MARK, MESSAGE_SIZE_ESTIMATOR, MAX_MESSAGES_PER_WRITE);
+=======
+                WRITE_BUFFER_LOW_WATER_MARK, WRITE_BUFFER_WATER_MARK, MESSAGE_SIZE_ESTIMATOR,
+                SINGLE_EVENTEXECUTOR_PER_GROUP, MAX_MESSAGES_PER_WRITE);
+>>>>>>> dev
     }
 
     protected Map<ChannelOption<?>, Object> getOptions(
@@ -103,7 +114,11 @@ public class DefaultChannelConfig implements ChannelConfig {
     @SuppressWarnings("unchecked")
     @Override
     public boolean setOptions(Map<ChannelOption<?>, ?> options) {
+<<<<<<< HEAD
         requireNonNull(options, "options");
+=======
+        ObjectUtil.checkNotNull(options, "options");
+>>>>>>> dev
 
         boolean setAllOptions = true;
         for (Entry<ChannelOption<?>, ?> e: options.entrySet()) {
@@ -118,7 +133,11 @@ public class DefaultChannelConfig implements ChannelConfig {
     @Override
     @SuppressWarnings({ "unchecked", "deprecation" })
     public <T> T getOption(ChannelOption<T> option) {
+<<<<<<< HEAD
         requireNonNull(option, "option");
+=======
+        ObjectUtil.checkNotNull(option, "option");
+>>>>>>> dev
 
         if (option == CONNECT_TIMEOUT_MILLIS) {
             return (T) Integer.valueOf(getConnectTimeoutMillis());
@@ -156,6 +175,9 @@ public class DefaultChannelConfig implements ChannelConfig {
         if (option == MAX_MESSAGES_PER_WRITE) {
             return (T) Integer.valueOf(getMaxMessagesPerWrite());
         }
+        if (option == MAX_MESSAGES_PER_WRITE) {
+            return (T) Integer.valueOf(getMaxMessagesPerWrite());
+        }
         return null;
     }
 
@@ -186,6 +208,11 @@ public class DefaultChannelConfig implements ChannelConfig {
             setWriteBufferWaterMark((WriteBufferWaterMark) value);
         } else if (option == MESSAGE_SIZE_ESTIMATOR) {
             setMessageSizeEstimator((MessageSizeEstimator) value);
+<<<<<<< HEAD
+=======
+        } else if (option == SINGLE_EVENTEXECUTOR_PER_GROUP) {
+            setPinEventExecutorPerGroup((Boolean) value);
+>>>>>>> dev
         } else if (option == MAX_MESSAGES_PER_WRITE) {
             setMaxMessagesPerWrite((Integer) value);
         } else {
@@ -196,8 +223,12 @@ public class DefaultChannelConfig implements ChannelConfig {
     }
 
     protected <T> void validate(ChannelOption<T> option, T value) {
+<<<<<<< HEAD
         requireNonNull(option, "option");
         option.validate(value);
+=======
+        ObjectUtil.checkNotNull(option, "option").validate(value);
+>>>>>>> dev
     }
 
     @Override
@@ -292,8 +323,12 @@ public class DefaultChannelConfig implements ChannelConfig {
 
     @Override
     public ChannelConfig setAllocator(ByteBufAllocator allocator) {
+<<<<<<< HEAD
         requireNonNull(allocator, "allocator");
         this.allocator = allocator;
+=======
+        this.allocator = ObjectUtil.checkNotNull(allocator, "allocator");
+>>>>>>> dev
         return this;
     }
 
@@ -316,8 +351,13 @@ public class DefaultChannelConfig implements ChannelConfig {
      * is of type {@link MaxMessagesRecvByteBufAllocator}.
      */
     private void setRecvByteBufAllocator(RecvByteBufAllocator allocator, ChannelMetadata metadata) {
+<<<<<<< HEAD
         requireNonNull(allocator, "allocator");
         requireNonNull(metadata, "metadata");
+=======
+        checkNotNull(allocator, "allocator");
+        checkNotNull(metadata, "metadata");
+>>>>>>> dev
         if (allocator instanceof MaxMessagesRecvByteBufAllocator) {
             ((MaxMessagesRecvByteBufAllocator) allocator).maxMessagesPerRead(metadata.defaultMaxMessagesPerRead());
         }
@@ -421,8 +461,12 @@ public class DefaultChannelConfig implements ChannelConfig {
 
     @Override
     public ChannelConfig setMessageSizeEstimator(MessageSizeEstimator estimator) {
+<<<<<<< HEAD
         requireNonNull(estimator, "estimator");
         msgSizeEstimator = estimator;
+=======
+        this.msgSizeEstimator = ObjectUtil.checkNotNull(estimator, "estimator");
+>>>>>>> dev
         return this;
     }
 }

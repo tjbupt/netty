@@ -171,9 +171,22 @@ public interface ChannelHandler {
      * Gets called after the {@link ChannelHandler} was removed from the actual context and it doesn't handle events
      * anymore.
      */
+<<<<<<< HEAD
     default void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
         // NOOP
     }
+=======
+    void handlerRemoved(ChannelHandlerContext ctx) throws Exception;
+
+    /**
+     * Gets called if a {@link Throwable} was thrown.
+     *
+     * @deprecated if you want to handle this event you should implement {@link ChannelInboundHandler} and
+     * implement the method there.
+     */
+    @Deprecated
+    void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception;
+>>>>>>> dev
 
     /**
      * Indicates that the same instance of the annotated {@link ChannelHandler}

@@ -17,7 +17,10 @@ package io.netty.util.internal;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+>>>>>>> dev
 import java.util.Map;
 
 /**
@@ -74,6 +77,40 @@ public final class ObjectUtil {
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * Check that the given varargs is not null and does not contain elements
+     * null elements.
+     *
+     * If it is, throws {@link NullPointerException}.
+     * Otherwise, returns the argument.
+     */
+    public static <T> T[] deepCheckNotNull(String text, T... varargs) {
+        if (varargs == null) {
+            throw new NullPointerException(text);
+        }
+
+        for (T element : varargs) {
+            if (element == null) {
+                throw new NullPointerException(text);
+            }
+        }
+        return varargs;
+    }
+
+    /**
+     * Checks that the given argument is not null. If it is, throws {@link IllegalArgumentException}.
+     * Otherwise, returns the argument.
+     */
+    public static <T> T checkNotNullWithIAE(final T arg, final String paramName) throws IllegalArgumentException {
+        if (arg == null) {
+            throw new IllegalArgumentException("Param '" + paramName + "' must not be null");
+        }
+        return arg;
+    }
+
+    /**
+>>>>>>> dev
      * Checks that the given argument is not null. If it is, throws {@link IllegalArgumentException}.
      * Otherwise, returns the argument.
      *
@@ -209,8 +246,13 @@ public final class ObjectUtil {
      */
     public static <T> T[] checkNonEmpty(T[] array, String name) {
         //No String concatenation for check
+<<<<<<< HEAD
         if (requireNonNull(array, name).length == 0) {
             throw new IllegalArgumentException("Param '" + name + "' must not be emtpy");
+=======
+        if (checkNotNull(array, name).length == 0) {
+            throw new IllegalArgumentException("Param '" + name + "' must not be empty");
+>>>>>>> dev
         }
         return array;
     }
@@ -223,7 +265,11 @@ public final class ObjectUtil {
     public static byte[] checkNonEmpty(byte[] array, String name) {
         //No String concatenation for check
         if (checkNotNull(array, name).length == 0) {
+<<<<<<< HEAD
             throw new IllegalArgumentException("Param '" + name + "' must not be emtpy");
+=======
+            throw new IllegalArgumentException("Param '" + name + "' must not be empty");
+>>>>>>> dev
         }
         return array;
     }
@@ -248,7 +294,11 @@ public final class ObjectUtil {
      */
     public static <T extends Collection<?>> T checkNonEmpty(T collection, String name) {
         //No String concatenation for check
+<<<<<<< HEAD
         if (requireNonNull(collection, name).size() == 0) {
+=======
+        if (checkNotNull(collection, name).size() == 0) {
+>>>>>>> dev
             throw new IllegalArgumentException("Param '" + name + "' must not be empty");
         }
         return collection;
@@ -273,7 +323,11 @@ public final class ObjectUtil {
      */
     public static <K, V, T extends Map<K, V>> T checkNonEmpty(T value, String name) {
         if (checkNotNull(value, name).isEmpty()) {
+<<<<<<< HEAD
             throw new IllegalArgumentException("Param '" + name + "' must not be emtpy");
+=======
+            throw new IllegalArgumentException("Param '" + name + "' must not be empty");
+>>>>>>> dev
         }
         return value;
     }
@@ -285,7 +339,11 @@ public final class ObjectUtil {
      */
     public static CharSequence checkNonEmpty(final CharSequence value, final String name) {
         if (checkNotNull(value, name).length() == 0) {
+<<<<<<< HEAD
             throw new IllegalArgumentException("Param '" + name + "' must not be emtpy");
+=======
+            throw new IllegalArgumentException("Param '" + name + "' must not be empty");
+>>>>>>> dev
         }
         return value;
     }

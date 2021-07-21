@@ -15,8 +15,13 @@
  */
 package io.netty.example.objectecho;
 
+<<<<<<< HEAD
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelFuture;
+=======
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+>>>>>>> dev
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.ArrayList;

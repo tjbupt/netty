@@ -16,6 +16,10 @@ package io.netty.handler.codec.http2;
 
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+<<<<<<< HEAD
+=======
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.embedded.EmbeddedChannel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -29,14 +33,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public abstract class Http2MultiplexClientUpgradeTest<C extends Http2FrameCodec> {
 
     @ChannelHandler.Sharable
+<<<<<<< HEAD
     static final class NoopHandler implements ChannelHandler {
+=======
+    static final class NoopHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         @Override
         public void channelActive(ChannelHandlerContext ctx) {
             ctx.channel().close();
         }
     }
 
+<<<<<<< HEAD
     private static final class UpgradeHandler implements ChannelHandler {
+=======
+    private static final class UpgradeHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         Http2Stream.State stateOnActive;
         int streamId;
         boolean channelInactiveCalled;
@@ -46,13 +58,21 @@ public abstract class Http2MultiplexClientUpgradeTest<C extends Http2FrameCodec>
             Http2StreamChannel ch = (Http2StreamChannel) ctx.channel();
             stateOnActive = ch.stream().state();
             streamId = ch.stream().id();
+<<<<<<< HEAD
             ctx.fireChannelActive();
+=======
+            super.channelActive(ctx);
+>>>>>>> dev
         }
 
         @Override
         public void channelInactive(ChannelHandlerContext ctx) throws Exception {
             channelInactiveCalled = true;
+<<<<<<< HEAD
             ctx.fireChannelInactive();
+=======
+            super.channelInactive(ctx);
+>>>>>>> dev
         }
     }
 

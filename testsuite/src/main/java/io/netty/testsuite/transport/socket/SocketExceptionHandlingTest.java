@@ -38,7 +38,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SocketExceptionHandlingTest extends AbstractSocketTest {
     @Test
     public void testReadPendingIsResetAfterEachRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testReadPendingIsResetAfterEachRead);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testReadPendingIsResetAfterEachRead(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testReadPendingIsResetAfterEachRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {

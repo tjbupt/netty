@@ -25,6 +25,7 @@ import io.netty.handler.codec.DecoderResult;
 import io.netty.handler.codec.ReplayingDecoder;
 import io.netty.handler.codec.socksx.SocksVersion;
 import io.netty.handler.codec.socksx.v5.Socks5CommandRequestDecoder.State;
+import io.netty.util.internal.ObjectUtil;
 
 /**
  * Decodes a single {@link Socks5CommandRequest} from the inbound {@link ByteBuf}s.
@@ -48,9 +49,13 @@ public class Socks5CommandRequestDecoder extends ReplayingDecoder<State> {
 
     public Socks5CommandRequestDecoder(Socks5AddressDecoder addressDecoder) {
         super(State.INIT);
+<<<<<<< HEAD
         requireNonNull(addressDecoder, "addressDecoder");
 
         this.addressDecoder = addressDecoder;
+=======
+        this.addressDecoder = ObjectUtil.checkNotNull(addressDecoder, "addressDecoder");
+>>>>>>> dev
     }
 
     @Override

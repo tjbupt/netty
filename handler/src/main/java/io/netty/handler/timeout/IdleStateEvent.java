@@ -18,7 +18,11 @@ package io.netty.handler.timeout;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.channel.Channel;
+<<<<<<< HEAD
 
+=======
+import io.netty.util.internal.ObjectUtil;
+>>>>>>> dev
 import io.netty.util.internal.StringUtil;
 
 /**

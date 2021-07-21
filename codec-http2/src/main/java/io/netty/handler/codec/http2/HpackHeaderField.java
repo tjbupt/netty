@@ -32,7 +32,11 @@
 package io.netty.handler.codec.http2;
 
 import static io.netty.handler.codec.http2.HpackUtil.equalsVariableTime;
+<<<<<<< HEAD
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 
 class HpackHeaderField {
 

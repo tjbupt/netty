@@ -559,6 +559,20 @@ public class StreamBufferingEncoderTest {
         };
     }
 
+    private Answer<ChannelFuture> noopAnswer() {
+        return new Answer<ChannelFuture>() {
+            @Override
+            public ChannelFuture answer(InvocationOnMock invocation) throws Throwable {
+                for (Object a : invocation.getArguments()) {
+                    if (a instanceof ChannelPromise) {
+                        return (ChannelFuture) a;
+                    }
+                }
+                return newPromise();
+            }
+        };
+    }
+
     private ChannelPromise newPromise() {
         return new DefaultChannelPromise(channel, ImmediateEventExecutor.INSTANCE);
     }

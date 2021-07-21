@@ -115,7 +115,11 @@ public abstract class Recycler<T> {
     private final FastThreadLocal<Stack<T>> threadLocal = new FastThreadLocal<Stack<T>>() {
         @Override
         protected Stack<T> initialValue() {
+<<<<<<< HEAD
             return new Stack<>(Recycler.this, Thread.currentThread(), maxCapacityPerThread, maxSharedCapacityFactor,
+=======
+            return new Stack<T>(Recycler.this, Thread.currentThread(), maxCapacityPerThread, maxSharedCapacityFactor,
+>>>>>>> dev
                     interval, maxDelayedQueuesPerThread, delayedQueueInterval);
         }
 

@@ -42,7 +42,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class SocketAutoReadTest extends AbstractSocketTest {
     @Test
     public void testAutoReadOffDuringReadOnlyReadsOneTime(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testAutoReadOffDuringReadOnlyReadsOneTime);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testAutoReadOffDuringReadOnlyReadsOneTime(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testAutoReadOffDuringReadOnlyReadsOneTime(ServerBootstrap sb, Bootstrap cb) throws Throwable {

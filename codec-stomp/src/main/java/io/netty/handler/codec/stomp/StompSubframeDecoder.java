@@ -15,7 +15,10 @@
  */
 package io.netty.handler.codec.stomp;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,12 +29,21 @@ import io.netty.handler.codec.TooLongFrameException;
 import io.netty.handler.codec.stomp.StompSubframeDecoder.State;
 import io.netty.util.ByteProcessor;
 import io.netty.util.internal.AppendableCharSequence;
+<<<<<<< HEAD
 import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.util.Objects;
 
 import static io.netty.buffer.ByteBufUtil.*;
+=======
+import io.netty.util.internal.StringUtil;
+
+import java.util.List;
+
+import static io.netty.buffer.ByteBufUtil.*;
+import static io.netty.util.internal.ObjectUtil.*;
+>>>>>>> dev
 
 /**
  * Decodes {@link ByteBuf}s into {@link StompHeadersSubframe}s and {@link StompContentSubframe}s.
@@ -86,8 +98,13 @@ public class StompSubframeDecoder extends ReplayingDecoder<State> {
 
     public StompSubframeDecoder(int maxLineLength, int maxChunkSize, boolean validateHeaders) {
         super(State.SKIP_CONTROL_CHARACTERS);
+<<<<<<< HEAD
         ObjectUtil.checkPositive(maxLineLength, "maxLineLength");
         ObjectUtil.checkPositive(maxChunkSize, "maxChunkSize");
+=======
+        checkPositive(maxLineLength, "maxLineLength");
+        checkPositive(maxChunkSize, "maxChunkSize");
+>>>>>>> dev
         this.maxChunkSize = maxChunkSize;
         commandParser = new Utf8LineParser(new AppendableCharSequence(16), maxLineLength);
         headerParser = new HeaderParser(new AppendableCharSequence(128), maxLineLength, validateHeaders);
@@ -254,7 +271,11 @@ public class StompSubframeDecoder extends ReplayingDecoder<State> {
         private boolean nextRead;
 
         Utf8LineParser(AppendableCharSequence charSeq, int maxLineLength) {
+<<<<<<< HEAD
             this.charSeq = Objects.requireNonNull(charSeq, "charSeq");
+=======
+            this.charSeq = checkNotNull(charSeq, "charSeq");
+>>>>>>> dev
             this.maxLineLength = maxLineLength;
         }
 
@@ -274,7 +295,11 @@ public class StompSubframeDecoder extends ReplayingDecoder<State> {
         }
 
         @Override
+<<<<<<< HEAD
         public boolean process(byte nextByte) {
+=======
+        public boolean process(byte nextByte) throws Exception {
+>>>>>>> dev
             if (nextByte == StompConstants.CR) {
                 ++lineLength;
                 return true;
@@ -353,7 +378,11 @@ public class StompSubframeDecoder extends ReplayingDecoder<State> {
         }
 
         @Override
+<<<<<<< HEAD
         public boolean process(byte nextByte) {
+=======
+        public boolean process(byte nextByte) throws Exception {
+>>>>>>> dev
             if (nextByte == StompConstants.COLON) {
                 if (name == null) {
                     AppendableCharSequence charSeq = charSequence();

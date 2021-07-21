@@ -185,6 +185,7 @@ public final class NetUtil {
                         logger.debug("Failed to get SOMAXCONN from sysctl and file {}. Default: {}", file,
                                      somaxconn);
                     }
+<<<<<<< HEAD
                 }
             } catch (Exception e) {
                 if (logger.isDebugEnabled()) {
@@ -197,6 +198,20 @@ public final class NetUtil {
                         in.close();
                     } catch (Exception e) {
                         // Ignored.
+=======
+                } catch (Exception e) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("Failed to get SOMAXCONN from sysctl and file {}. Default: {}",
+                                file, somaxconn, e);
+                    }
+                } finally {
+                    if (in != null) {
+                        try {
+                            in.close();
+                        } catch (Exception e) {
+                            // Ignored.
+                        }
+>>>>>>> dev
                     }
                 }
             }
@@ -213,9 +228,17 @@ public final class NetUtil {
     private static Integer sysctlGetInt(String sysctlKey) throws IOException {
         Process process = new ProcessBuilder("sysctl", sysctlKey).start();
         try {
+<<<<<<< HEAD
             InputStream is = process.getInputStream();
             InputStreamReader isr = new InputStreamReader(is);
             try (BufferedReader br = new BufferedReader(isr)) {
+=======
+            // Suppress warnings about resource leaks since the buffered reader is closed below
+            InputStream is = process.getInputStream();  // lgtm[java/input-resource-leak
+            InputStreamReader isr = new InputStreamReader(is);  // lgtm[java/input-resource-leak
+            BufferedReader br = new BufferedReader(isr);
+            try {
+>>>>>>> dev
                 String line = br.readLine();
                 if (line != null && line.startsWith(sysctlKey)) {
                     for (int i = line.length() - 1; i > sysctlKey.length(); --i) {

@@ -21,6 +21,7 @@ import io.netty.channel.DefaultChannelConfig;
 import io.netty.channel.MessageSizeEstimator;
 import io.netty.channel.RecvByteBufAllocator;
 import io.netty.channel.WriteBufferWaterMark;
+import io.netty.util.internal.ObjectUtil;
 
 import static io.netty.channel.unix.Limits.SSIZE_MAX;
 
@@ -98,6 +99,56 @@ public class EpollChannelConfig extends DefaultChannelConfig {
         return this;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * Return the {@link EpollMode} used. Default is
+     * {@link EpollMode#EDGE_TRIGGERED}. If you want to use {@link #isAutoRead()} {@code false} or
+     * {@link #getMaxMessagesPerRead()} and have an accurate behaviour you should use
+     * {@link EpollMode#LEVEL_TRIGGERED}.
+     */
+    public EpollMode getEpollMode() {
+        return ((AbstractEpollChannel) channel).isFlagSet(Native.EPOLLET)
+                ? EpollMode.EDGE_TRIGGERED : EpollMode.LEVEL_TRIGGERED;
+    }
+
+    /**
+     * Set the {@link EpollMode} used. Default is
+     * {@link EpollMode#EDGE_TRIGGERED}. If you want to use {@link #isAutoRead()} {@code false} or
+     * {@link #getMaxMessagesPerRead()} and have an accurate behaviour you should use
+     * {@link EpollMode#LEVEL_TRIGGERED}.
+     *
+     * <strong>Be aware this config setting can only be adjusted before the channel was registered.</strong>
+     */
+    public EpollChannelConfig setEpollMode(EpollMode mode) {
+        ObjectUtil.checkNotNull(mode, "mode");
+
+        try {
+            switch (mode) {
+            case EDGE_TRIGGERED:
+                checkChannelNotRegistered();
+                ((AbstractEpollChannel) channel).setFlag(Native.EPOLLET);
+                break;
+            case LEVEL_TRIGGERED:
+                checkChannelNotRegistered();
+                ((AbstractEpollChannel) channel).clearFlag(Native.EPOLLET);
+                break;
+            default:
+                throw new Error();
+            }
+        } catch (IOException e) {
+            throw new ChannelException(e);
+        }
+        return this;
+    }
+
+    private void checkChannelNotRegistered() {
+        if (channel.isRegistered()) {
+            throw new IllegalStateException("EpollMode can only be changed before channel is registered");
+        }
+    }
+
+>>>>>>> dev
     @Override
     protected final void autoReadCleared() {
         ((AbstractEpollChannel) channel).clearEpollIn();

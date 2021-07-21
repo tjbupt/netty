@@ -53,7 +53,16 @@ public class SocketHalfClosedTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 10000, unit = MILLISECONDS)
     public void testHalfClosureOnlyOneEventWhenAutoRead(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testHalfClosureOnlyOneEventWhenAutoRead);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testHalfClosureOnlyOneEventWhenAutoRead(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testHalfClosureOnlyOneEventWhenAutoRead(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -118,7 +127,16 @@ public class SocketHalfClosedTest extends AbstractSocketTest {
 
     @Test
     public void testAllDataReadAfterHalfClosure(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testAllDataReadAfterHalfClosure);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testAllDataReadAfterHalfClosure(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testAllDataReadAfterHalfClosure(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -226,7 +244,16 @@ public class SocketHalfClosedTest extends AbstractSocketTest {
     public void testAutoCloseFalseDoesShutdownOutput(TestInfo testInfo) throws Throwable {
         // This test only works on Linux / BSD / MacOS as we assume some semantics that are not true for Windows.
         assumeFalse(PlatformDependent.isWindows());
+<<<<<<< HEAD
         run(testInfo, this::testAutoCloseFalseDoesShutdownOutput);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testAutoCloseFalseDoesShutdownOutput(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testAutoCloseFalseDoesShutdownOutput(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -415,7 +442,16 @@ public class SocketHalfClosedTest extends AbstractSocketTest {
 
     @Test
     public void testAllDataReadClosure(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testAllDataReadClosure);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testAllDataReadClosure(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testAllDataReadClosure(ServerBootstrap sb, Bootstrap cb) throws Throwable {

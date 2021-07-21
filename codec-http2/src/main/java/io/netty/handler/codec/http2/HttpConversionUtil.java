@@ -268,6 +268,7 @@ public final class HttpConversionUtil {
         return toFullHttpRequest(streamId, http2Headers, alloc.buffer(), validateHttpHeaders);
     }
 
+<<<<<<< HEAD
     private static CharSequence extractPath(CharSequence method, Http2Headers headers) {
         if (HttpMethod.CONNECT.asciiName().contentEqualsIgnoreCase(method)) {
             // See https://tools.ietf.org/html/rfc7231#section-4.3.6
@@ -276,6 +277,16 @@ public final class HttpConversionUtil {
         } else {
             return requireNonNull(headers.path(),
                     "path header cannot be null in conversion to HTTP/1.x");
+=======
+    private static String extractPath(CharSequence method, Http2Headers headers) {
+        if (HttpMethod.CONNECT.asciiName().contentEqualsIgnoreCase(method)) {
+            // See https://tools.ietf.org/html/rfc7231#section-4.3.6
+            return checkNotNull(headers.authority(),
+                    "authority header cannot be null in the conversion to HTTP/1.x").toString();
+        } else {
+            return checkNotNull(headers.path(),
+                    "path header cannot be null in conversion to HTTP/1.x").toString();
+>>>>>>> dev
         }
     }
 

@@ -18,6 +18,10 @@ package io.netty.buffer;
 import io.netty.util.AsciiString;
 import io.netty.util.CharsetUtil;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -99,12 +103,30 @@ public class ByteBufUtilTest {
 
     @Test
     public void decodeHexDumpWithOddLength() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> ByteBufUtil.decodeHexDump("abc"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                ByteBufUtil.decodeHexDump("abc");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void decodeHexDumpWithInvalidChar() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> ByteBufUtil.decodeHexDump("fg"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                ByteBufUtil.decodeHexDump("fg");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -189,8 +211,8 @@ public class ByteBufUtilTest {
 
     @Test
     public void notEqualsBufferUnderflow() {
-        byte[] b1 = new byte[8];
-        byte[] b2 = new byte[16];
+        final byte[] b1 = new byte[8];
+        final byte[] b2 = new byte[16];
         Random rand = new Random();
         rand.nextBytes(b1);
         rand.nextBytes(b2);
@@ -198,8 +220,17 @@ public class ByteBufUtilTest {
         final int iB2 = iB1 + b1.length;
         final int length = b1.length - iB1;
         System.arraycopy(b1, iB1, b2, iB2, length - 1);
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class,
             () -> ByteBufUtil.equals(Unpooled.wrappedBuffer(b1), iB1, Unpooled.wrappedBuffer(b2), iB2, -1));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                ByteBufUtil.equals(Unpooled.wrappedBuffer(b1), iB1, Unpooled.wrappedBuffer(b2), iB2, -1);
+            }
+        });
+>>>>>>> dev
     }
 
     @SuppressWarnings("deprecation")
@@ -218,7 +249,11 @@ public class ByteBufUtilTest {
         buf = buffer(bufferType, 2).order(ByteOrder.LITTLE_ENDIAN);
         ByteBufUtil.writeShortBE(buf, expected);
         assertEquals(ByteBufUtil.swapShort((short) expected), buf.readShortLE());
+<<<<<<< HEAD
         buf.readerIndex(0);
+=======
+        buf.resetReaderIndex();
+>>>>>>> dev
         assertEquals(ByteBufUtil.swapShort((short) expected), buf.readShort());
         buf.release();
     }
@@ -238,7 +273,11 @@ public class ByteBufUtilTest {
         buf = Unpooled.wrappedBuffer(new byte[2]).order(ByteOrder.LITTLE_ENDIAN);
         ByteBufUtil.setShortBE(buf, 0, shortValue);
         assertEquals(ByteBufUtil.swapShort((short) shortValue), buf.readShortLE());
+<<<<<<< HEAD
         buf.readerIndex(0);
+=======
+        buf.resetReaderIndex();
+>>>>>>> dev
         assertEquals(ByteBufUtil.swapShort((short) shortValue), buf.readShort());
         buf.release();
     }
@@ -259,7 +298,11 @@ public class ByteBufUtilTest {
         buf = buffer(bufferType, 4).order(ByteOrder.LITTLE_ENDIAN);
         ByteBufUtil.writeMediumBE(buf, mediumValue);
         assertEquals(ByteBufUtil.swapMedium(mediumValue), buf.readMediumLE());
+<<<<<<< HEAD
         buf.readerIndex(0);
+=======
+        buf.resetReaderIndex();
+>>>>>>> dev
         assertEquals(ByteBufUtil.swapMedium(mediumValue), buf.readMedium());
         buf.release();
     }
@@ -678,22 +721,51 @@ public class ByteBufUtilTest {
     @ParameterizedTest(name = PARAMETERIZED_NAME)
     @MethodSource("noUnsafe")
     public void testWriteUtf8InvalidSubsequences(BufferType bufferType) {
+<<<<<<< HEAD
         testInvalidSubsequences(bufferType, args -> ByteBufUtil.writeUtf8((ByteBuf) args[0], (String) args[1],
                 (Integer) args[2], (Integer) args[3]));
+=======
+        testInvalidSubsequences(bufferType, new TestMethod() {
+            @Override
+            public int invoke(Object... args) {
+                return ByteBufUtil.writeUtf8((ByteBuf) args[0], (String) args[1],
+                        (Integer) args[2], (Integer) args[3]);
+            }
+        });
+>>>>>>> dev
     }
 
     @ParameterizedTest(name = PARAMETERIZED_NAME)
     @MethodSource("noUnsafe")
     public void testReserveAndWriteUtf8InvalidSubsequences(BufferType bufferType) {
+<<<<<<< HEAD
         testInvalidSubsequences(bufferType, args -> ByteBufUtil.reserveAndWriteUtf8((ByteBuf) args[0], (String) args[1],
                 (Integer) args[2], (Integer) args[3], 32));
+=======
+        testInvalidSubsequences(bufferType, new TestMethod() {
+            @Override
+            public int invoke(Object... args) {
+                return ByteBufUtil.reserveAndWriteUtf8((ByteBuf) args[0], (String) args[1],
+                        (Integer) args[2], (Integer) args[3], 32);
+            }
+        });
+>>>>>>> dev
     }
 
     @ParameterizedTest(name = PARAMETERIZED_NAME)
     @MethodSource("noUnsafe")
     public void testUtf8BytesInvalidSubsequences(BufferType bufferType) {
         testInvalidSubsequences(bufferType,
+<<<<<<< HEAD
             args -> ByteBufUtil.utf8Bytes((String) args[1], (Integer) args[2], (Integer) args[3]));
+=======
+                new TestMethod() {
+                    @Override
+                    public int invoke(Object... args) {
+                        return ByteBufUtil.utf8Bytes((String) args[1], (Integer) args[2], (Integer) args[3]);
+                    }
+                });
+>>>>>>> dev
     }
 
     @Test

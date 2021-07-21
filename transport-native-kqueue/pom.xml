@@ -19,7 +19,11 @@
   <parent>
     <groupId>io.netty</groupId>
     <artifactId>netty-parent</artifactId>
+<<<<<<< HEAD
     <version>5.0.0.Final-SNAPSHOT</version>
+=======
+    <version>4.1.67.Final-SNAPSHOT</version>
+>>>>>>> dev
   </parent>
   <artifactId>netty-transport-native-kqueue</artifactId>
 
@@ -353,6 +357,11 @@
 
   <properties>
     <javaModuleName>io.netty.transport.kqueue</javaModuleName>
+<<<<<<< HEAD
+=======
+    <!-- Needed as we use SelfSignedCertificate in our tests -->
+    <argLine.java9.extras>--add-exports java.base/sun.security.x509=ALL-UNNAMED</argLine.java9.extras>
+>>>>>>> dev
     <unix.common.lib.name>netty-unix-common</unix.common.lib.name>
     <unix.common.lib.dir>${project.build.directory}/unix-common-lib</unix.common.lib.dir>
     <unix.common.lib.unpacked.dir>${unix.common.lib.dir}/META-INF/native/lib</unix.common.lib.unpacked.dir>

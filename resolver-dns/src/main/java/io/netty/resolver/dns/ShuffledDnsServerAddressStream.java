@@ -19,7 +19,10 @@ package io.netty.resolver.dns;
 import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.concurrent.ThreadLocalRandom;
+=======
+>>>>>>> dev
 
 final class ShuffledDnsServerAddressStream implements DnsServerAddressStream {
 

@@ -24,12 +24,25 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.concurrent.FutureTask;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 public class ImmediateExecutorTest {
 
     @Test
     public void testExecuteNullRunnable() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> ImmediateExecutor.INSTANCE.execute(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                ImmediateExecutor.INSTANCE.execute(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

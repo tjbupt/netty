@@ -16,6 +16,10 @@
 package io.netty.util.internal;
 
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -163,7 +167,16 @@ public class StringUtilTest {
 
     @Test
     public void escapeCsvNull() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> StringUtil.escapeCsv(null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                StringUtil.escapeCsv(null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -410,27 +423,72 @@ public class StringUtilTest {
 
     @Test
     public void unescapeCsvWithSingleQuote() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsv("\""));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsv("\"");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void unescapeCsvWithOddQuote() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsv("\"\"\""));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsv("\"\"\"");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void unescapeCsvWithCRAndWithoutQuote() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsv("\r"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsv("\r");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void unescapeCsvWithLFAndWithoutQuote() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsv("\n"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsv("\n");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void unescapeCsvWithCommaAndWithoutQuote() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsv(","));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsv(",");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
@@ -467,27 +525,72 @@ public class StringUtilTest {
 
     @Test
     public void unescapeCsvFieldsWithCRWithoutQuote() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsvFields("a,\r"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsvFields("a,\r");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void unescapeCsvFieldsWithLFWithoutQuote() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsvFields("a,\r"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsvFields("a,\r");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void unescapeCsvFieldsWithQuote() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsvFields("a,\""));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsvFields("a,\"");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void unescapeCsvFieldsWithQuote2() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsvFields("\",a"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsvFields("\",a");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void unescapeCsvFieldsWithQuote3() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> unescapeCsvFields("a\"b,a"));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                unescapeCsvFields("a\"b,a");
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

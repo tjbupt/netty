@@ -34,6 +34,11 @@ import io.netty.handler.codec.http.HttpUtil;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.LastHttpContent;
 import io.netty.handler.stream.ChunkedInput;
+<<<<<<< HEAD
+=======
+import io.netty.util.internal.ObjectUtil;
+import io.netty.util.internal.PlatformDependent;
+>>>>>>> dev
 import io.netty.util.internal.StringUtil;
 
 import java.io.File;
@@ -310,7 +315,11 @@ public class HttpPostRequestEncoder implements ChunkedInput<HttpContent> {
      *             if the encoding is in error or if the finalize were already done
      */
     public void setBodyHttpDatas(List<InterfaceHttpData> datas) throws ErrorDataEncoderException {
+<<<<<<< HEAD
         requireNonNull(datas, "datas");
+=======
+        ObjectUtil.checkNotNull(datas, "datas");
+>>>>>>> dev
         globalBodySize = 0;
         bodyListDatas.clear();
         currentFileUpload = null;

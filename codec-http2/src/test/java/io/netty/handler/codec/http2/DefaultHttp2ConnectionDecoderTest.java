@@ -143,6 +143,23 @@ public class DefaultHttp2ConnectionDecoderTest {
 
         final Map<Object, Object> properties = new IdentityHashMap<Object, Object>();
         when(stream.getProperty(ArgumentMatchers.<Http2Connection.PropertyKey>any())).thenAnswer(new Answer<Object>() {
+<<<<<<< HEAD
+=======
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) {
+                return properties.get(invocationOnMock.getArgument(0));
+            }
+        });
+        when(stream.setProperty(ArgumentMatchers.<Http2Connection.PropertyKey>any(), any())).then(new Answer<Object>() {
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) {
+                return properties.put(invocationOnMock.getArgument(0), invocationOnMock.getArgument(1));
+            }
+        });
+
+        when(pushStream.id()).thenReturn(PUSH_STREAM_ID);
+        doAnswer(new Answer<Boolean>() {
+>>>>>>> dev
             @Override
             public Object answer(InvocationOnMock invocationOnMock) {
                 return properties.get(invocationOnMock.getArgument(0));

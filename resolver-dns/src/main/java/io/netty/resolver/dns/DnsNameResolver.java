@@ -82,6 +82,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static io.netty.resolver.dns.DefaultDnsServerAddressStreamProvider.DNS_PORT;
+<<<<<<< HEAD
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+>>>>>>> dev
 import static io.netty.util.internal.ObjectUtil.checkPositive;
 import static java.util.Objects.requireNonNull;
 
@@ -364,7 +368,11 @@ public class DnsNameResolver extends InetNameResolver {
             boolean decodeIdn) {
         this(eventLoop, channelFactory, null, resolveCache, NoopDnsCnameCache.INSTANCE, authoritativeDnsServerCache,
              dnsQueryLifecycleObserverFactory, queryTimeoutMillis, resolvedAddressTypes, recursionDesired,
+<<<<<<< HEAD
              maxQueriesPerResolve, maxPayloadSize, optResourceEnabled, hostsFileEntriesResolver,
+=======
+             maxQueriesPerResolve, traceEnabled, maxPayloadSize, optResourceEnabled, hostsFileEntriesResolver,
+>>>>>>> dev
              dnsServerAddressStreamProvider, searchDomains, ndots, decodeIdn, false);
     }
 
@@ -390,7 +398,11 @@ public class DnsNameResolver extends InetNameResolver {
             boolean completeOncePreferredResolved) {
         this(eventLoop, channelFactory, socketChannelFactory, resolveCache, cnameCache, authoritativeDnsServerCache,
                 null, dnsQueryLifecycleObserverFactory, queryTimeoutMillis, resolvedAddressTypes,
+<<<<<<< HEAD
                 recursionDesired, maxQueriesPerResolve, maxPayloadSize, optResourceEnabled,
+=======
+                recursionDesired, maxQueriesPerResolve, traceEnabled, maxPayloadSize, optResourceEnabled,
+>>>>>>> dev
                 hostsFileEntriesResolver, dnsServerAddressStreamProvider, searchDomains, ndots, decodeIdn,
                 completeOncePreferredResolved);
     }
@@ -408,6 +420,10 @@ public class DnsNameResolver extends InetNameResolver {
             ResolvedAddressTypes resolvedAddressTypes,
             boolean recursionDesired,
             int maxQueriesPerResolve,
+<<<<<<< HEAD
+=======
+            boolean traceEnabled,
+>>>>>>> dev
             int maxPayloadSize,
             boolean optResourceEnabled,
             HostsFileEntriesResolver hostsFileEntriesResolver,
@@ -427,11 +443,23 @@ public class DnsNameResolver extends InetNameResolver {
         this.optResourceEnabled = optResourceEnabled;
         this.hostsFileEntriesResolver = requireNonNull(hostsFileEntriesResolver, "hostsFileEntriesResolver");
         this.dnsServerAddressStreamProvider =
+<<<<<<< HEAD
                 requireNonNull(dnsServerAddressStreamProvider, "dnsServerAddressStreamProvider");
         this.resolveCache = requireNonNull(resolveCache, "resolveCache");
         this.cnameCache = requireNonNull(cnameCache, "cnameCache");
         this.dnsQueryLifecycleObserverFactory =
                 requireNonNull(dnsQueryLifecycleObserverFactory, "dnsQueryLifecycleObserverFactory");
+=======
+                checkNotNull(dnsServerAddressStreamProvider, "dnsServerAddressStreamProvider");
+        this.resolveCache = checkNotNull(resolveCache, "resolveCache");
+        this.cnameCache = checkNotNull(cnameCache, "cnameCache");
+        this.dnsQueryLifecycleObserverFactory = traceEnabled ?
+                dnsQueryLifecycleObserverFactory instanceof NoopDnsQueryLifecycleObserverFactory ?
+                        new LoggingDnsQueryLifeCycleObserverFactory() :
+                        new BiDnsQueryLifecycleObserverFactory(new LoggingDnsQueryLifeCycleObserverFactory(),
+                                                               dnsQueryLifecycleObserverFactory) :
+                checkNotNull(dnsQueryLifecycleObserverFactory, "dnsQueryLifecycleObserverFactory");
+>>>>>>> dev
         this.searchDomains = searchDomains != null ? searchDomains.clone() : DEFAULT_SEARCH_DOMAINS;
         this.ndots = ndots >= 0 ? ndots : DEFAULT_OPTIONS.ndots();
         this.decodeIdn = decodeIdn;
@@ -771,7 +799,11 @@ public class DnsNameResolver extends InetNameResolver {
      */
     public final Future<List<InetAddress>> resolveAll(String inetHost, Iterable<DnsRecord> additionals,
                                                       Promise<List<InetAddress>> promise) {
+<<<<<<< HEAD
         requireNonNull(promise, "promise");
+=======
+        checkNotNull(promise, "promise");
+>>>>>>> dev
         DnsRecord[] additionalsArray = toArray(additionals, true);
         try {
             doResolveAll(inetHost, additionalsArray, promise, resolveCache);
@@ -1005,11 +1037,22 @@ public class DnsNameResolver extends InetNameResolver {
                                    DnsCache resolveCache, boolean completeEarlyIfPossible) {
         final Promise<List<InetAddress>> allPromise = executor().newPromise();
         doResolveAllUncached(hostname, additionals, promise, allPromise, resolveCache, true);
+<<<<<<< HEAD
         allPromise.addListener((FutureListener<List<InetAddress>>) future -> {
             if (future.isSuccess()) {
                 trySuccess(promise, future.getNow().get(0));
             } else {
                 tryFailure(promise, future.cause());
+=======
+        allPromise.addListener(new FutureListener<List<InetAddress>>() {
+            @Override
+            public void operationComplete(Future<List<InetAddress>> future) {
+                if (future.isSuccess()) {
+                    trySuccess(promise, future.getNow().get(0));
+                } else {
+                    tryFailure(promise, future.cause());
+                }
+>>>>>>> dev
             }
         });
     }
@@ -1102,9 +1145,19 @@ public class DnsNameResolver extends InetNameResolver {
             doResolveAllUncached0(hostname, additionals, originalPromise,
                                   promise, resolveCache, completeEarlyIfPossible);
         } else {
+<<<<<<< HEAD
             executor.execute(() ->
                     doResolveAllUncached0(hostname, additionals, originalPromise,
                             promise, resolveCache, completeEarlyIfPossible));
+=======
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    doResolveAllUncached0(hostname, additionals, originalPromise,
+                                          promise, resolveCache, completeEarlyIfPossible);
+                }
+            });
+>>>>>>> dev
         }
     }
 
@@ -1168,7 +1221,11 @@ public class DnsNameResolver extends InetNameResolver {
             InetSocketAddress nameServerAddr, DnsQuestion question) {
 
         return query0(nameServerAddr, question, EMPTY_ADDITIONALS, true, ch.newPromise(),
+<<<<<<< HEAD
                       ch.eventLoop().newPromise());
+=======
+                      ch.eventLoop().<AddressedEnvelope<? extends DnsResponse, InetSocketAddress>>newPromise());
+>>>>>>> dev
     }
 
     /**
@@ -1178,7 +1235,11 @@ public class DnsNameResolver extends InetNameResolver {
             InetSocketAddress nameServerAddr, DnsQuestion question, Iterable<DnsRecord> additionals) {
 
         return query0(nameServerAddr, question, toArray(additionals, false), true, ch.newPromise(),
+<<<<<<< HEAD
                      ch.eventLoop().newPromise());
+=======
+                     ch.eventLoop().<AddressedEnvelope<? extends DnsResponse, InetSocketAddress>>newPromise());
+>>>>>>> dev
     }
 
     /**
@@ -1286,6 +1347,7 @@ public class DnsNameResolver extends InetNameResolver {
             .group(executor())
             .channelFactory(socketChannelFactory)
             .handler(TCP_ENCODER);
+<<<<<<< HEAD
             bs.connect(res.sender()).addListener((ChannelFutureListener) future -> {
                 if (!future.isSuccess()) {
                     if (logger.isDebugEnabled()) {
@@ -1358,6 +1420,83 @@ public class DnsNameResolver extends InetNameResolver {
                     }
                 });
                 tcpCtx.query(true, future.channel().newPromise());
+=======
+            bs.connect(res.sender()).addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) {
+                    if (!future.isSuccess()) {
+                        if (logger.isDebugEnabled()) {
+                            logger.debug("Unable to fallback to TCP [{}]", queryId, future.cause());
+                        }
+
+                        // TCP fallback failed, just use the truncated response.
+                        qCtx.finish(res);
+                        return;
+                    }
+                    final Channel channel = future.channel();
+
+                    Promise<AddressedEnvelope<DnsResponse, InetSocketAddress>> promise =
+                            channel.eventLoop().newPromise();
+                    final TcpDnsQueryContext tcpCtx = new TcpDnsQueryContext(DnsNameResolver.this, channel,
+                            (InetSocketAddress) channel.remoteAddress(), qCtx.question(),
+                            EMPTY_ADDITIONALS, promise);
+
+                    channel.pipeline().addLast(new TcpDnsResponseDecoder());
+                    channel.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+                        @Override
+                        public void channelRead(ChannelHandlerContext ctx, Object msg) {
+                            Channel channel = ctx.channel();
+                            DnsResponse response = (DnsResponse) msg;
+                            int queryId = response.id();
+
+                            if (logger.isDebugEnabled()) {
+                                logger.debug("{} RECEIVED: TCP [{}: {}], {}", channel, queryId,
+                                        channel.remoteAddress(), response);
+                            }
+
+                            DnsQueryContext foundCtx = queryContextManager.get(res.sender(), queryId);
+                            if (foundCtx == tcpCtx) {
+                                tcpCtx.finish(new AddressedEnvelopeAdapter(
+                                        (InetSocketAddress) ctx.channel().remoteAddress(),
+                                        (InetSocketAddress) ctx.channel().localAddress(),
+                                        response));
+                            } else {
+                                response.release();
+                                tcpCtx.tryFailure("Received TCP DNS response with unexpected ID", null, false);
+                                logger.debug("Received a DNS response with an unexpected ID: TCP [{}: {}]",
+                                        channel, queryId);
+                            }
+                        }
+
+                        @Override
+                        public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+                            if (tcpCtx.tryFailure("TCP fallback error", cause, false) && logger.isDebugEnabled()) {
+                                logger.debug("{} Error during processing response: TCP [{}: {}]",
+                                        ctx.channel(), queryId,
+                                        ctx.channel().remoteAddress(), cause);
+                            }
+                        }
+                    });
+
+                    promise.addListener(
+                            new FutureListener<AddressedEnvelope<DnsResponse, InetSocketAddress>>() {
+                        @Override
+                        public void operationComplete(
+                                Future<AddressedEnvelope<DnsResponse, InetSocketAddress>> future) {
+                            channel.close();
+
+                            if (future.isSuccess()) {
+                                qCtx.finish(future.getNow());
+                                res.release();
+                            } else {
+                                // TCP fallback failed, just use the truncated response.
+                                qCtx.finish(res);
+                            }
+                        }
+                    });
+                    tcpCtx.query(true, future.channel().newPromise());
+                }
+>>>>>>> dev
             });
         }
 

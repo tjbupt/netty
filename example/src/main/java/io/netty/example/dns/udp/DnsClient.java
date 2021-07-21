@@ -25,9 +25,14 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
+<<<<<<< HEAD
 import io.netty.channel.MultithreadEventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioHandler;
+=======
+import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.nio.NioEventLoopGroup;
+>>>>>>> dev
 import io.netty.channel.socket.DatagramChannel;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.handler.codec.dns.DatagramDnsQuery;
@@ -68,20 +73,32 @@ public final class DnsClient {
 
     public static void main(String[] args) throws Exception {
         InetSocketAddress addr = new InetSocketAddress(DNS_SERVER_HOST, DNS_SERVER_PORT);
+<<<<<<< HEAD
         EventLoopGroup group = new MultithreadEventLoopGroup(NioHandler.newFactory());
+=======
+        EventLoopGroup group = new NioEventLoopGroup();
+>>>>>>> dev
         try {
             Bootstrap b = new Bootstrap();
             b.group(group)
              .channel(NioDatagramChannel.class)
              .handler(new ChannelInitializer<DatagramChannel>() {
                  @Override
+<<<<<<< HEAD
                  protected void initChannel(DatagramChannel ch) {
+=======
+                 protected void initChannel(DatagramChannel ch) throws Exception {
+>>>>>>> dev
                      ChannelPipeline p = ch.pipeline();
                      p.addLast(new DatagramDnsQueryEncoder())
                      .addLast(new DatagramDnsResponseDecoder())
                      .addLast(new SimpleChannelInboundHandler<DatagramDnsResponse>() {
                         @Override
+<<<<<<< HEAD
                         protected void messageReceived(ChannelHandlerContext ctx, DatagramDnsResponse msg) {
+=======
+                        protected void channelRead0(ChannelHandlerContext ctx, DatagramDnsResponse msg) {
+>>>>>>> dev
                             try {
                                 handleQueryResp(msg);
                             } finally {

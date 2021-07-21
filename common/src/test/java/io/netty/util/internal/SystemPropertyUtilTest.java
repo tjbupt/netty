@@ -17,6 +17,10 @@ package io.netty.util.internal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -32,12 +36,30 @@ public class SystemPropertyUtilTest {
 
     @Test
     public void testGetWithKeyNull() {
+<<<<<<< HEAD
         assertThrows(NullPointerException.class, () -> SystemPropertyUtil.get(null, null));
+=======
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                SystemPropertyUtil.get(null, null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testGetWithKeyEmpty() {
+<<<<<<< HEAD
         assertThrows(IllegalArgumentException.class, () -> SystemPropertyUtil.get("", null));
+=======
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                SystemPropertyUtil.get("", null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test

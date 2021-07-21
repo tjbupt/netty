@@ -20,6 +20,7 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.util.ReferenceCountUtil;
 import io.netty.util.ReferenceCounted;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import java.net.SocketAddress;
@@ -41,8 +42,12 @@ public class DefaultAddressedEnvelope<M, A extends SocketAddress> implements Add
      * {@code sender} address.
      */
     public DefaultAddressedEnvelope(M message, A recipient, A sender) {
+<<<<<<< HEAD
         requireNonNull(message, "message");
 
+=======
+        ObjectUtil.checkNotNull(message, "message");
+>>>>>>> dev
         if (recipient == null && sender == null) {
             throw new NullPointerException("recipient and sender");
         }

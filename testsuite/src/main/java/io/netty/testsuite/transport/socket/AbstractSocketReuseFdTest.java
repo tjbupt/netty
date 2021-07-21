@@ -20,9 +20,16 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+<<<<<<< HEAD
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
+=======
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
+>>>>>>> dev
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.testsuite.transport.TestsuitePermutation;
@@ -50,7 +57,16 @@ public abstract class AbstractSocketReuseFdTest extends AbstractSocketTest {
     @Test
     @Timeout(value = 60000, unit = TimeUnit.MILLISECONDS)
     public void testReuseFd(TestInfo testInfo) throws Throwable {
+<<<<<<< HEAD
         run(testInfo, this::testReuseFd);
+=======
+        run(testInfo, new Runner<ServerBootstrap, Bootstrap>() {
+            @Override
+            public void run(ServerBootstrap serverBootstrap, Bootstrap bootstrap) throws Throwable {
+                testReuseFd(serverBootstrap, bootstrap);
+            }
+        });
+>>>>>>> dev
     }
 
     public void testReuseFd(ServerBootstrap sb, Bootstrap cb) throws Throwable {
@@ -90,9 +106,18 @@ public abstract class AbstractSocketReuseFdTest extends AbstractSocketTest {
             }
         });
 
+<<<<<<< HEAD
         ChannelFutureListener listener = future -> {
             if (!future.isSuccess()) {
                 clientDonePromise.tryFailure(future.cause());
+=======
+        ChannelFutureListener listener = new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) {
+                if (!future.isSuccess()) {
+                    clientDonePromise.tryFailure(future.cause());
+                }
+>>>>>>> dev
             }
         };
 
@@ -110,7 +135,11 @@ public abstract class AbstractSocketReuseFdTest extends AbstractSocketTest {
         }
     }
 
+<<<<<<< HEAD
     static class ReuseFdHandler implements ChannelHandler {
+=======
+    static class ReuseFdHandler extends ChannelInboundHandlerAdapter {
+>>>>>>> dev
         private static final String EXPECTED_PAYLOAD = "payload";
 
         private final Promise<Void> donePromise;

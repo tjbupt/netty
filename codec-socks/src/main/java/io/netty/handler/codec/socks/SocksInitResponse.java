@@ -18,6 +18,7 @@ package io.netty.handler.codec.socks;
 import static java.util.Objects.requireNonNull;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.util.internal.ObjectUtil;
 
 /**
  * An socks init response.
@@ -30,8 +31,12 @@ public final class SocksInitResponse extends SocksResponse {
 
     public SocksInitResponse(SocksAuthScheme authScheme) {
         super(SocksResponseType.INIT);
+<<<<<<< HEAD
         requireNonNull(authScheme, "authScheme");
         this.authScheme = authScheme;
+=======
+        this.authScheme = ObjectUtil.checkNotNull(authScheme, "authScheme");
+>>>>>>> dev
     }
 
     /**

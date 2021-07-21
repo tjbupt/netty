@@ -21,8 +21,13 @@ import java.util.List;
 import javax.net.ssl.SSLEngine;
 
 import static io.netty.handler.ssl.ApplicationProtocolUtil.toList;
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
+>>>>>>> dev
 
 /**
  * Provides an {@link SSLEngine} agnostic way to configure a {@link ApplicationProtocolNegotiator}.

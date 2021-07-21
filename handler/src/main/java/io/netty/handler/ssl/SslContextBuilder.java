@@ -39,9 +39,15 @@ import java.util.Map;
 
 import static io.netty.util.internal.EmptyArrays.EMPTY_STRINGS;
 import static io.netty.util.internal.EmptyArrays.EMPTY_X509_CERTIFICATES;
+<<<<<<< HEAD
 import static io.netty.util.internal.ObjectUtil.checkNotNullWithIAE;
 import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
 import static java.util.Objects.requireNonNull;
+=======
+import static io.netty.util.internal.ObjectUtil.checkNotNull;
+import static io.netty.util.internal.ObjectUtil.checkNotNullWithIAE;
+import static io.netty.util.internal.ObjectUtil.checkNonEmpty;
+>>>>>>> dev
 
 /**
  * Builder for configuring a new SslContext for creation.
@@ -430,7 +436,11 @@ public final class SslContextBuilder {
     public SslContextBuilder keyManager(PrivateKey key, String keyPassword, X509Certificate... keyCertChain) {
         if (forServer) {
             checkNonEmpty(keyCertChain, "keyCertChain"); // lgtm[java/dereferenced-value-may-be-null]
+<<<<<<< HEAD
             requireNonNull(key, "key required for servers");
+=======
+            checkNotNull(key, "key required for servers");
+>>>>>>> dev
         }
         if (keyCertChain == null || keyCertChain.length == 0) {
             this.keyCertChain = null;
@@ -491,7 +501,11 @@ public final class SslContextBuilder {
      */
     public SslContextBuilder keyManager(KeyManager keyManager) {
         if (forServer) {
+<<<<<<< HEAD
             requireNonNull(keyManager, "keyManager required for servers");
+=======
+            checkNotNull(keyManager, "keyManager required for servers");
+>>>>>>> dev
         }
         if (keyManager != null) {
             this.keyManagerFactory = new KeyManagerFactoryWrapper(keyManager);
@@ -518,9 +532,12 @@ public final class SslContextBuilder {
      * cipher suites will be used.
      */
     public SslContextBuilder ciphers(Iterable<String> ciphers, CipherSuiteFilter cipherFilter) {
+<<<<<<< HEAD
         requireNonNull(cipherFilter, "cipherFilter");
+=======
+        this.cipherFilter = checkNotNull(cipherFilter, "cipherFilter");
+>>>>>>> dev
         this.ciphers = ciphers;
-        this.cipherFilter = cipherFilter;
         return this;
     }
 
@@ -620,7 +637,11 @@ public final class SslContextBuilder {
         if (iterable == null) {
             return null;
         }
+<<<<<<< HEAD
         final List<T> list = new ArrayList<>();
+=======
+        final List<T> list = new ArrayList<T>();
+>>>>>>> dev
         for (T element : iterable) {
             list.add(element);
         }

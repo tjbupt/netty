@@ -20,8 +20,9 @@ import static java.util.Objects.requireNonNull;
 
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
-import io.netty.util.internal.EmptyArrays;
 import io.netty.util.concurrent.FastThreadLocal;
+import io.netty.util.internal.EmptyArrays;
+import io.netty.util.internal.ObjectUtil;
 import io.netty.util.internal.StringUtil;
 
 import javax.net.ssl.ManagerFactoryParameters;
@@ -144,6 +145,7 @@ public final class FingerprintTrustManagerFactory extends SimpleTrustManagerFact
     /**
      * Creates a new instance.
      *
+<<<<<<< HEAD
      * @param algorithm a hash algorithm
      * @param fingerprints a list of fingerprints
      */
@@ -155,6 +157,61 @@ public final class FingerprintTrustManagerFactory extends SimpleTrustManagerFact
             throw new IllegalArgumentException("No fingerprints provided");
         }
 
+=======
+     * @deprecated This deprecated constructor uses SHA-1 that is considered insecure.
+     *      It is recommended to specify a stronger hash algorithm, such as SHA-256,
+     *      by calling {@link FingerprintTrustManagerFactory#builder(String)} method.
+     *
+     * @param fingerprints a list of SHA1 fingerprints in hexadecimal form
+     */
+    @Deprecated
+    public FingerprintTrustManagerFactory(Iterable<String> fingerprints) {
+        this("SHA1", toFingerprintArray(fingerprints));
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @deprecated This deprecated constructor uses SHA-1 that is considered insecure.
+     *      It is recommended to specify a stronger hash algorithm, such as SHA-256,
+     *      by calling {@link FingerprintTrustManagerFactory#builder(String)} method.
+     *
+     * @param fingerprints a list of SHA1 fingerprints in hexadecimal form
+     */
+    @Deprecated
+    public FingerprintTrustManagerFactory(String... fingerprints) {
+        this("SHA1", toFingerprintArray(Arrays.asList(fingerprints)));
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @deprecated This deprecated constructor uses SHA-1 that is considered insecure.
+     *      It is recommended to specify a stronger hash algorithm, such as SHA-256,
+     *      by calling {@link FingerprintTrustManagerFactory#builder(String)} method.
+     *
+     * @param fingerprints a list of SHA1 fingerprints
+     */
+    @Deprecated
+    public FingerprintTrustManagerFactory(byte[]... fingerprints) {
+        this("SHA1", fingerprints);
+    }
+
+    /**
+     * Creates a new instance.
+     *
+     * @param algorithm a hash algorithm
+     * @param fingerprints a list of fingerprints
+     */
+    FingerprintTrustManagerFactory(final String algorithm, byte[][] fingerprints) {
+        ObjectUtil.checkNotNull(algorithm, "algorithm");
+        ObjectUtil.checkNotNull(fingerprints, "fingerprints");
+
+        if (fingerprints.length == 0) {
+            throw new IllegalArgumentException("No fingerprints provided");
+        }
+
+>>>>>>> dev
         // check early if the hash algorithm is available
         final MessageDigest md;
         try {
@@ -195,7 +252,11 @@ public final class FingerprintTrustManagerFactory extends SimpleTrustManagerFact
     }
 
     static byte[][] toFingerprintArray(Iterable<String> fingerprints) {
+<<<<<<< HEAD
         requireNonNull(fingerprints, "fingerprints");
+=======
+        ObjectUtil.checkNotNull(fingerprints, "fingerprints");
+>>>>>>> dev
 
         List<byte[]> list = new ArrayList<>();
         for (String f: fingerprints) {

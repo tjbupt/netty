@@ -15,9 +15,14 @@
  */
 package io.netty.util.concurrent;
 
+<<<<<<< HEAD
 import io.netty.util.internal.EmptyArrays;
 
 import java.util.Arrays;
+=======
+import static io.netty.util.internal.ObjectUtil.checkPositive;
+
+>>>>>>> dev
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -115,8 +120,13 @@ public class MultithreadEventExecutorGroup extends AbstractEventExecutorGroup {
      * @param args              arguments which will passed to each {@link #newChild(Executor, int,
      * RejectedExecutionHandler, Object...)} call
      */
+<<<<<<< HEAD
     protected MultithreadEventExecutorGroup(int nThreads, Executor executor, int maxPendingTasks,
                                             RejectedExecutionHandler rejectedHandler, Object... args) {
+=======
+    protected MultithreadEventExecutorGroup(int nThreads, Executor executor,
+                                            EventExecutorChooserFactory chooserFactory, Object... args) {
+>>>>>>> dev
         checkPositive(nThreads, "nThreads");
 
         if (executor == null) {

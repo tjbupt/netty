@@ -17,6 +17,10 @@ package io.netty.handler.codec.http;
 
 import io.netty.util.AsciiString;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
+=======
+import org.junit.jupiter.api.function.Executable;
+>>>>>>> dev
 
 import java.util.List;
 
@@ -64,20 +68,50 @@ public class HttpHeadersTest {
 
     @Test
     public void testSetNullHeaderValueValidate() {
+<<<<<<< HEAD
         HttpHeaders headers = new DefaultHttpHeaders(true);
         assertThrows(NullPointerException.class, () -> headers.set(of("test"), (CharSequence) null));
+=======
+        final HttpHeaders headers = new DefaultHttpHeaders(true);
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                headers.set(of("test"), (CharSequence) null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testSetNullHeaderValueNotValidate() {
+<<<<<<< HEAD
         HttpHeaders headers = new DefaultHttpHeaders(false);
         assertThrows(NullPointerException.class, () -> headers.set(of("test"), (CharSequence) null));
+=======
+        final HttpHeaders headers = new DefaultHttpHeaders(false);
+        assertThrows(NullPointerException.class, new Executable() {
+            @Override
+            public void execute() {
+                headers.set(of("test"), (CharSequence) null);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
     public void testAddSelf() {
+<<<<<<< HEAD
         HttpHeaders headers = new DefaultHttpHeaders(false);
         assertThrows(IllegalArgumentException.class, () -> headers.add(headers));
+=======
+        final HttpHeaders headers = new DefaultHttpHeaders(false);
+        assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() {
+                headers.add(headers);
+            }
+        });
+>>>>>>> dev
     }
 
     @Test
